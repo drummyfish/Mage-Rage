@@ -66,7 +66,16 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="graphic_object.cpp" />
+    <ClCompile Include="local_texts.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="map.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="general.h" />
+    <ClInclude Include="graphic_object.h" />
+    <ClInclude Include="local_texts.h" />
+    <ClInclude Include="map.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
