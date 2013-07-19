@@ -8,6 +8,11 @@
  * year: 2013
  */
 
+#include <iostream>
+#include "allegro5/allegro.h"
+#include "allegro5/allegro_image.h"
+#include "allegro5/allegro_native_dialog.h"
+
 typedef enum
   /**
    Possible directions in 2D space.
