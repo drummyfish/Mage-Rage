@@ -66,16 +66,22 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="character.cpp" />
+    <ClCompile Include="game.cpp" />
     <ClCompile Include="graphic_object.cpp" />
     <ClCompile Include="local_texts.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="map.cpp" />
+    <ClCompile Include="player_character.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="character.h" />
+    <ClInclude Include="game.h" />
     <ClInclude Include="general.h" />
     <ClInclude Include="graphic_object.h" />
     <ClInclude Include="local_texts.h" />
     <ClInclude Include="map.h" />
+    <ClInclude Include="player_character.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

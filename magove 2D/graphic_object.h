@@ -1,5 +1,5 @@
-﻿#ifndef GRAPHIC_OBJECT
-#define GRAPHIC_OBJECT
+﻿#ifndef GRAPHIC_OBJECT_H
+#define GRAPHIC_OBJECT_H
 
 /**
  * Graphic object class header file.
@@ -18,7 +18,7 @@ class c_graphic_object
 	  animations.
 	*/
 
-    private:
+    protected:
 	  int playing_animation;  /// Id of the current animation, -1 means no animation.
 	  int animation_frame;    /// Current animation frame. 
 	  bool looping_animation; /// True if the animation is looping, false otherwise.

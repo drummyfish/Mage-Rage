@@ -1,5 +1,5 @@
-﻿#ifndef LOCAL_TEXTS
-#define LOCAL_TEXTS
+﻿#ifndef LOCAL_TEXTS_H
+#define LOCAL_TEXTS_H
 
 /**
  * Local texts class header file.
