@@ -39,6 +39,8 @@ class c_map: c_graphic_object
 	  ALLEGRO_BITMAP *tile_cliff_north;                    /** bitmap - north cliff (any height) */
 	  ALLEGRO_BITMAP *tile_cliff_northwest;                /** bitmap - northwest cliff (any height) */
 	  ALLEGRO_BITMAP *tile_cliff_northeast;                /** bitmap - northeast cliff (any height) */
+	  ALLEGRO_BITMAP *tile_edge;                           /** bitmap - used as south border with other surface */
+	  ALLEGRO_BITMAP *tile_water[5];                       /** bitmap - water, 5 animation frames */
 
     public:
 
@@ -77,7 +79,30 @@ class c_map: c_graphic_object
 		  @return map height at given position
 		*/
 
-	  virtual void c_map::draw(int x, int y);
+	  t_square_type get_square_type(int x, int y);
+	    
+	    /**
+		  Returns type of square at given position
+		  of the map. If the position is outside
+		  the map, SQUARE_NORMAL is returned.
+
+		  @param x x position
+		  @param y y position
+		  @return square type at given position
+		*/
+
+	  void update(long int global_time);
+
+	    /**
+		  Updates the map, which means it handles
+		  it's another frame, including drawing
+		  it and handling events.
+
+		  @param global_time global time counter
+		    which is needed for animations etc.
+		*/
+
+	  virtual void draw(int x, int y);
 
 	    /**
 		  Draws the map at given position on the

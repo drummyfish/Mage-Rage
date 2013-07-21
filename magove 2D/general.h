@@ -50,6 +50,13 @@ typedef enum
 	PLAYER_STAROVOUS
   } t_player_type;
 
+typedef enum
+  {
+	SQUARE_NORMAL,
+	SQUARE_WATER,
+	SQUARE_ICE
+  } t_square_type;
+
 typedef struct
   /**
     Holds info about one map square.
@@ -57,6 +64,7 @@ typedef struct
 
   {
 	int height;         /** square height, min is 0, max is 2 */
+	t_square_type type; /** square type, like normal, water, ice and so on. */ 
   } t_map_square;
 
 #endif

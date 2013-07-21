@@ -18,9 +18,12 @@ class c_game
 	  of the whole game.
 	*/
 
-    private:
+    protected:
 	  c_map *map;                           /** handles the map */
+	  ALLEGRO_DISPLAY *display;             /** the game screen */
 	  ALLEGRO_EVENT_QUEUE *event_queue;     /** event queue */
+	  ALLEGRO_TIMER *global_timer;          /** holds the global time */
+	  long int global_time;                 /** global time counter */
 
     public:
 	  c_game();
