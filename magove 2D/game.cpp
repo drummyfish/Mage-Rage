@@ -10,24 +10,29 @@
 //--------------------------------------------------
 
 c_game::c_game()
-  {
+  {   
 	if(!al_init())                                 // initialise allegro
 	  {
 	    cerr << "Failed to initialize allegro." << endl;
 	  }
  
-	if(!al_init_image_addon())
+	if(!al_init_image_addon())                     // initialise image addon
 	  {
 		cerr << "Failed to initialize al_init_image_addon." << endl; 
 	  }
  
+	if(!al_install_keyboard())                     // initialise keyboard
+	  {
+        cerr << "Failed to initialize the keyboard." << endl;
+      }
+
 	display = al_create_display(800,600);          // initialise screen
  
 	if(!this->display)
 	  {
 		cerr << "Failed to initialize display." << endl; 
 	  }
-
+	
 	this->event_queue = al_create_event_queue();   // initialise event queue
 
 	if(!this->event_queue)
@@ -35,25 +40,35 @@ c_game::c_game()
         cerr << "failed to create event_queue." << endl;
       }
 	
-	this->global_timer = al_create_timer(0.01);    // initialise the timer
+	this->global_timer = al_create_timer(0.05);    // initialise the timer
 	
 	if(!this->global_timer)
 	  {
         cerr << "failed to create global timer." << endl;
       }
-
+	
 	al_register_event_source(this->event_queue,al_get_display_event_source(display));
 	al_register_event_source(this->event_queue,al_get_timer_event_source(this->global_timer));
+	al_register_event_source(this->event_queue,al_get_keyboard_event_source());
 	this->global_time = 0;
+
+	this->input_state.key_down = false;            // set keyboard/mouse state
+	this->input_state.key_up = false;
+	this->input_state.key_left = false;
+	this->input_state.key_right = false;
+	this->input_state.key_1 = false;
+	this->input_state.key_2 = false;
+	this->input_state.key_3 = false;
+	this->input_state.mouse_x = 0;
+	this->input_state.mouse_y = 0;
   }
 
 //--------------------------------------------------
 
 void c_game::run()
   {
-	
 	c_map *map;
-    map = new c_map();
+	map = new c_map(&this->input_state);
 	ALLEGRO_EVENT program_event;
 	bool quit_program;
 	
@@ -71,22 +86,90 @@ void c_game::run()
 		map->update(this->global_time);
 	    al_flip_display();
 
-		event_occured = al_wait_for_event_until(event_queue, &program_event, &timeout);
+		event_occured = al_get_next_event(this->event_queue, &program_event);
 
-		if (event_occured)
+		if (event_occured)                             // handle events
 		  switch (program_event.type)
 		    {
-		      case ALLEGRO_EVENT_DISPLAY_CLOSE:
+		      case ALLEGRO_EVENT_DISPLAY_CLOSE:        // program close
                 quit_program = true;
 				break;
 
-			  case ALLEGRO_EVENT_TIMER:
+			  case ALLEGRO_EVENT_TIMER:                // global timer event
 				this->global_time++;
+				break;
+
+			  case ALLEGRO_EVENT_KEY_DOWN:             // key down event
+				switch(program_event.keyboard.keycode)
+				  {
+					case ALLEGRO_KEY_UP:
+					   this->input_state.key_up = true;
+					   break;
+ 
+					case ALLEGRO_KEY_DOWN:
+					   this->input_state.key_down = true;
+					   break;
+ 
+					case ALLEGRO_KEY_LEFT: 
+					   this->input_state.key_left = true;
+					   break;
+ 
+					case ALLEGRO_KEY_RIGHT:
+					   this->input_state.key_right = true;
+					   break;
+
+					case ALLEGRO_KEY_1:
+					   this->input_state.key_1 = true;
+					   break;
+
+					case ALLEGRO_KEY_2:
+					   this->input_state.key_2 = true;
+					   break;
+
+					case ALLEGRO_KEY_3:
+					   this->input_state.key_3 = true;
+					   break;
+				  }
+				break;
+
+			  case ALLEGRO_EVENT_KEY_UP:               // key up event
+				switch(program_event.keyboard.keycode)
+				  {
+					case ALLEGRO_KEY_UP:
+					   this->input_state.key_up = false;
+					   break;
+ 
+					case ALLEGRO_KEY_DOWN:
+					   this->input_state.key_down = false;
+					   break;
+ 
+					case ALLEGRO_KEY_LEFT: 
+					   this->input_state.key_left = false;
+					   break;
+ 
+					case ALLEGRO_KEY_RIGHT:
+					   this->input_state.key_right = false;
+					   break;
+
+					case ALLEGRO_KEY_1:
+					   this->input_state.key_1 = false;
+					   break;
+
+					case ALLEGRO_KEY_2:
+					   this->input_state.key_2 = false;
+					   break;
+
+					case ALLEGRO_KEY_3:
+					   this->input_state.key_3 = false;
+					   break;
+				  }
 				break;
 		    }
 
 		if (quit_program)
 		  break;
+
+		al_rest(0.01);
 	  }
 
 	delete map;

@@ -24,6 +24,7 @@ class c_game
 	  ALLEGRO_EVENT_QUEUE *event_queue;     /** event queue */
 	  ALLEGRO_TIMER *global_timer;          /** holds the global time */
 	  long int global_time;                 /** global time counter */
+	  t_input_state input_state;            /** keyboard and mouse state */
 
     public:
 	  c_game();

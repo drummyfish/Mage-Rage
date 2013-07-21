@@ -9,7 +9,7 @@
 
 //--------------------------------------------------
 
-void c_graphic_object::draw(int x, int y)
+void c_graphic_object::draw(int x, int y, long int global_time)
   {
   }
 

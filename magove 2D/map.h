@@ -23,9 +23,16 @@ class c_map: c_graphic_object
     private:
 	  int width;                                           /** map width in squares */
 	  int height;                                          /** map height in squares */
+	  int current_player;                                  /** current player number */
 	  t_environment environment;                           /** map environment */
 	  t_map_square squares[MAP_MAX_WIDTH][MAP_MAX_HEIGHT]; /** map squares */
 	  c_player_character *player_characters[3];            /** player characters, NULL means no character */            
+	  t_input_state *input_state;                          /** pointer to information about keyboard and mouse */
+	  double time_before;                                  /** to compute time difference between frames (for movement etc.) */
+
+	  ALLEGRO_BITMAP *portrait_mia;                        /** bitmap - GUI portrait of Mia */
+	  ALLEGRO_BITMAP *portrait_metodej;                    /** bitmap - GUI portrait of Metodej */
+	  ALLEGRO_BITMAP *portrait_starovous;                  /** bitmap - GUI portrait of Starovous */
 
 	  ALLEGRO_BITMAP *tile;                                /** bitmap - normal tile */
 	  ALLEGRO_BITMAP *tile_cliff_south_1;                  /** bitmap - south cliff, height 1 */
@@ -44,11 +51,15 @@ class c_map: c_graphic_object
 
     public:
 
-      c_map();
+      c_map(t_input_state *input_state);
 
 	    /** 
 	      Class constructor, initialises new map
 	  	  object.
+
+		  @param input_state pointer to structure,
+		    which will be used to pass information
+			about keyboard and mouse to this object.
 	    */
 
 	  ~c_map();
@@ -102,7 +113,7 @@ class c_map: c_graphic_object
 		    which is needed for animations etc.
 		*/
 
-	  virtual void draw(int x, int y);
+	  virtual void draw(int x, int y, long int global_time);
 
 	    /**
 		  Draws the map at given position on the
@@ -110,6 +121,8 @@ class c_map: c_graphic_object
 
 		  @param x x position of the screen
 		  @param y y position of the screen
+		  @param global_time global time counter
+		    which is needed for animations etc.
 		*/
   };
 

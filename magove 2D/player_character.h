@@ -53,13 +53,23 @@ class c_player_character: public c_character
 	    Class destructor, frees it's memory.
 	  */
 
-	  virtual void c_player_character::draw(int x, int y);
+	  virtual void c_player_character::draw(int x, int y, long int global_time);
 
 	  /**
 	    Draws player character at given position.
 
 		@param x x position on the scrren
 		@param y y position on the screen
+		@param global_time global time counter
+		    which is needed for animations etc.
+	  */
+
+	  t_player_type get_player_type();
+
+	  /**
+	    Returns type of this character.
+
+		@return character type
 	  */
   };
 

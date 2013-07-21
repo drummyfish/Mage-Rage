@@ -71,7 +71,14 @@ c_player_character::~c_player_character()
 
 //--------------------------------------------------
 
-void c_player_character::draw(int x, int y)
+t_player_type c_player_character::get_player_type()
+  {
+	return this->player_type;
+  }
+
+//--------------------------------------------------
+
+void c_player_character::draw(int x, int y, long int global_time)
   {
     al_draw_bitmap(this->shadow,x,y,0);
 

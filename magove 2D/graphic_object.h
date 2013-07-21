@@ -25,7 +25,7 @@ class c_graphic_object
 
     public:
 
-      virtual void c_graphic_object::draw(int x, int y);
+      virtual void c_graphic_object::draw(int x, int y, long int global_time);
 
 	    /**
 	      Tells the object to draw itself at given
@@ -33,6 +33,8 @@ class c_graphic_object
 
 		  @param x x coordination of the screen
 		  @param y y coordination of the screen
+		  @param global_time global time counter
+		    which is needed for animations etc.
 	    */
 
 	  void play_animation(int animation_id);

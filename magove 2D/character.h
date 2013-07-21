@@ -35,6 +35,16 @@ class c_character: public c_graphic_object
 		@param y new position y
 	  */
 
+	  void move_by(double x, double y);
+
+	  /**
+	    Sets the character's position relatively
+		to current position.
+
+		@param x value to be added to x position
+		@param y value to be added to y position
+	  */
+
 	  double get_position_x();
 
 	  /**

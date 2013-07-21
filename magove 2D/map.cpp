@@ -59,6 +59,13 @@ void c_map::set_environment(t_environment new_environment)
 	al_destroy_bitmap(this->tile_cliff_northwest);
 	al_destroy_bitmap(this->tile_cliff_northeast);
 	al_destroy_bitmap(this->tile_edge);
+	al_destroy_bitmap(this->portrait_mia);
+	al_destroy_bitmap(this->portrait_metodej);
+	al_destroy_bitmap(this->portrait_starovous);
+
+	this->portrait_mia = al_load_bitmap("resources/portrait_mia.png");
+	this->portrait_metodej = al_load_bitmap("resources/portrait_metodej.png");
+	this->portrait_starovous = al_load_bitmap("resources/portrait_starovous.png");
 
 	this->tile = al_load_bitmap(("resources/tile_" + help_string + ".png").c_str());
 	this->tile_cliff_south_1 = al_load_bitmap(("resources/tile_" + help_string + "_cliff_south_1.png").c_str());
@@ -82,7 +89,7 @@ void c_map::set_environment(t_environment new_environment)
 
 //--------------------------------------------------
 
-c_map::c_map()
+c_map::c_map(t_input_state *input_state)
   {
     // TEMPORARY CODE!!!!!!!!!!!!!!!!!!!!
 
@@ -91,7 +98,11 @@ c_map::c_map()
 	this->width = 10;
 	this->height = 10;
 
+	this->current_player = 0;
+
 	this->animation_frame = 0;
+
+	this->time_before = 0.0;
 	
 	for (j = 0; j < this->height; j++)
 	  for (i = 0; i < this->width; i++)
@@ -126,6 +137,10 @@ c_map::c_map()
 //	this->squares[6][7].height = 2;
 	this->squares[7][6].height = 2;
 
+	this->portrait_mia = NULL;
+	this->portrait_metodej = NULL;
+	this->portrait_starovous = NULL;
+
 	this->tile = NULL;
 	this->tile_cliff_south_1 = NULL;
 	this->tile_cliff_south_2 = NULL;
@@ -146,11 +161,16 @@ c_map::c_map()
 	this->set_environment(ENVIRONMENT_GRASS);
   
 	this->player_characters[0] = new c_player_character(PLAYER_STAROVOUS);
+	this->player_characters[1] = new c_player_character(PLAYER_MIA);
+	this->player_characters[2] = new c_player_character(PLAYER_METODEJ);
 
 	this->player_characters[0]->set_position(8.0,8.0);
 
-	this->player_characters[1] = NULL;
-	this->player_characters[2] = NULL;
+	this->player_characters[1]->set_position(6.0,8.0);
+
+	this->player_characters[2]->set_position(4.0,8.0);
+
+	this->input_state = input_state;
   }
 
 //--------------------------------------------------
@@ -174,6 +194,9 @@ c_map::~c_map()
 	al_destroy_bitmap(this->tile_cliff_north);
 	al_destroy_bitmap(this->tile_cliff_northwest);
 	al_destroy_bitmap(this->tile_edge);
+	al_destroy_bitmap(this->portrait_mia);
+	al_destroy_bitmap(this->portrait_metodej);
+	al_destroy_bitmap(this->portrait_starovous);
 
 	for (i = 0; i < 5; i++)
 	  al_destroy_bitmap(this->tile_water[i]);
@@ -181,11 +204,13 @@ c_map::~c_map()
 
 //--------------------------------------------------
 
-void c_map::draw(int x, int y)
+void c_map::draw(int x, int y, long int global_time)
   {
 	int i, j, help_height, elevation;
 
 	al_clear_to_color(al_map_rgb(0,0,0));                  // clear the screen
+
+	this->animation_frame = global_time / 32;
 
 	// we'll draw the map from ground level up, from north to south:
 
@@ -221,7 +246,7 @@ void c_map::draw(int x, int y)
 					  if (this->get_square_type(i,j + 1) != SQUARE_WATER   // south border
 						  || this->get_height(i,j + 1) != help_height)
                         al_draw_bitmap(this->tile_cliff_north,x + i * 64,y + j * 50 - elevation + 40,0);
-                        
+         
 					  break;
 
 				    case SQUARE_ICE:        // ice
@@ -251,7 +276,7 @@ void c_map::draw(int x, int y)
 						  al_draw_bitmap(this->tile_cliff_southeast_2,x + i * 64 + 64,y + j * 50 - elevation + 50,0);
 				    
 					    if (this->get_height(i - 1,j + 1) != help_height &&
-						  this->get_height(i - 1,j) != help_height)                  // southwest 2
+						  this->get_height(i - 1,j) != help_height)                    // southwest 2
 						  al_draw_bitmap(this->tile_cliff_southwest_2,x + i * 64 - 10,y + j * 50 - elevation + 50,0);
 					  }
 
@@ -260,11 +285,11 @@ void c_map::draw(int x, int y)
 					    al_draw_bitmap(this->tile_cliff_north,x + i * 64,y + j * 50 - elevation - 10,0);
 				    
 					    if (this->get_height(i + 1,j - 1) != help_height &&
-						  this->get_height(i + 1,j) != help_height)                  // northeast
+						  this->get_height(i + 1,j) != help_height)                    // northeast
 						  al_draw_bitmap(this->tile_cliff_northeast,x + i * 64 + 64,y + j * 50 - elevation - 10,0);
 
 					    if (this->get_height(i - 1,j - 1) != help_height &&
-						  this->get_height(i - 1,j) != help_height)                  // northwest
+						  this->get_height(i - 1,j) != help_height)                    // northwest
 						  al_draw_bitmap(this->tile_cliff_northwest,x + i * 64 -10,y + j * 50 - elevation - 10,0);
 					  }
 
@@ -278,15 +303,58 @@ void c_map::draw(int x, int y)
 		      } 
 		  }
 
-	  this->player_characters[0]->draw(50,50);
+		for (i = 0; i < 3; i++)                                 // draw portraits
+		  if (this->player_characters[i] != NULL)
+		    {
+			  switch (this->player_characters[i]->get_player_type())            
+			    {
+			      case PLAYER_MIA:
+                    al_draw_bitmap(this->portrait_mia,10 + i * 150,10,0);
+					break;
+
+				  case PLAYER_METODEJ:
+                    al_draw_bitmap(this->portrait_metodej,10 + i * 150,10,0);
+					break;
+
+				  case PLAYER_STAROVOUS:
+                    al_draw_bitmap(this->portrait_starovous,10 + i * 150,10,0);
+					break;
+
+			    }		
+		    }
+
+        for (i = 0; i < 3; i++)                                 // draw portraits
+		  if (this->player_characters[i] != NULL)
+		    this->player_characters[i]->draw(int (this->player_characters[i]->get_position_x() * 64),int (this->player_characters[i]->get_position_y() * 64),global_time);
   }
 
 //--------------------------------------------------
 
 void c_map::update(long int global_time)
   {
-	this->animation_frame = global_time / 100;
-	this->draw(50,75);
+	double time_difference;
+
+	time_difference = al_current_time() - this->time_before;
+
+	this->draw(50,75,global_time);
+
+	if (this->input_state->key_left)
+		this->player_characters[this->current_player]->move_by(-2 * time_difference,0.0);
+	if (this->input_state->key_right)
+		this->player_characters[this->current_player]->move_by(2 * time_difference,0.0);
+	if (this->input_state->key_down)
+		this->player_characters[this->current_player]->move_by(0.0,2 * time_difference);
+	if (this->input_state->key_up)
+		this->player_characters[this->current_player]->move_by(0.0,-2 * time_difference);
+
+	if (this->input_state->key_1)        // switching players
+	  this->current_player = 0;
+	else if (this->input_state->key_2)
+	  this->current_player = 1;
+	else if (this->input_state->key_3)
+	  this->current_player = 2;
+
+	this->time_before = al_current_time();
   }
 
 //--------------------------------------------------
