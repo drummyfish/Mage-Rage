@@ -14,6 +14,14 @@ void c_character::move_by(double x, double y)
 	this->position_x += x;
 	this->position_y += y;
   }
+
+//--------------------------------------------------
+
+void c_character::set_direction(t_direction direction)
+  {
+	this->direction = direction;
+  }
+
 //--------------------------------------------------
 
 void c_character::set_position(double x, double y)

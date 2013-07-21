@@ -59,13 +59,8 @@ void c_map::set_environment(t_environment new_environment)
 	al_destroy_bitmap(this->tile_cliff_northwest);
 	al_destroy_bitmap(this->tile_cliff_northeast);
 	al_destroy_bitmap(this->tile_edge);
-	al_destroy_bitmap(this->portrait_mia);
-	al_destroy_bitmap(this->portrait_metodej);
-	al_destroy_bitmap(this->portrait_starovous);
 
-	this->portrait_mia = al_load_bitmap("resources/portrait_mia.png");
-	this->portrait_metodej = al_load_bitmap("resources/portrait_metodej.png");
-	this->portrait_starovous = al_load_bitmap("resources/portrait_starovous.png");
+
 
 	this->tile = al_load_bitmap(("resources/tile_" + help_string + ".png").c_str());
 	this->tile_cliff_south_1 = al_load_bitmap(("resources/tile_" + help_string + "_cliff_south_1.png").c_str());
@@ -160,6 +155,12 @@ c_map::c_map(t_input_state *input_state)
 
 	this->set_environment(ENVIRONMENT_GRASS);
   
+	this->portrait_mia = al_load_bitmap("resources/portrait_mia.png");
+	this->portrait_metodej = al_load_bitmap("resources/portrait_metodej.png");
+	this->portrait_starovous = al_load_bitmap("resources/portrait_starovous.png");
+
+	this->portrait_selection = al_load_bitmap("resources/selection.png");
+
 	this->player_characters[0] = new c_player_character(PLAYER_STAROVOUS);
 	this->player_characters[1] = new c_player_character(PLAYER_MIA);
 	this->player_characters[2] = new c_player_character(PLAYER_METODEJ);
@@ -197,6 +198,7 @@ c_map::~c_map()
 	al_destroy_bitmap(this->portrait_mia);
 	al_destroy_bitmap(this->portrait_metodej);
 	al_destroy_bitmap(this->portrait_starovous);
+	al_destroy_bitmap(this->portrait_selection);
 
 	for (i = 0; i < 5; i++)
 	  al_destroy_bitmap(this->tile_water[i]);
@@ -306,6 +308,9 @@ void c_map::draw(int x, int y, long int global_time)
 		for (i = 0; i < 3; i++)                                 // draw portraits
 		  if (this->player_characters[i] != NULL)
 		    {
+			  if (this->current_player == i)
+                al_draw_bitmap(this->portrait_selection,8 + i * 150,7,0);
+
 			  switch (this->player_characters[i]->get_player_type())            
 			    {
 			      case PLAYER_MIA:
@@ -319,13 +324,14 @@ void c_map::draw(int x, int y, long int global_time)
 				  case PLAYER_STAROVOUS:
                     al_draw_bitmap(this->portrait_starovous,10 + i * 150,10,0);
 					break;
-
 			    }		
 		    }
 
-        for (i = 0; i < 3; i++)                                 // draw portraits
+        for (i = 0; i < 3; i++)                                 // draw players
 		  if (this->player_characters[i] != NULL)
-		    this->player_characters[i]->draw(int (this->player_characters[i]->get_position_x() * 64),int (this->player_characters[i]->get_position_y() * 64),global_time);
+		    {
+		      this->player_characters[i]->draw(int (this->player_characters[i]->get_position_x() * 64),int (this->player_characters[i]->get_position_y() * 64),global_time);
+		    }
   }
 
 //--------------------------------------------------
@@ -339,20 +345,70 @@ void c_map::update(long int global_time)
 	this->draw(50,75,global_time);
 
 	if (this->input_state->key_left)
+	  {
+		this->player_characters[this->current_player]->set_direction(DIRECTION_WEST);
 		this->player_characters[this->current_player]->move_by(-2 * time_difference,0.0);
-	if (this->input_state->key_right)
+		
+		if (!this->player_characters[this->current_player]->is_animating())
+		  {
+			this->player_characters[this->current_player]->stop_animation();
+		    this->player_characters[this->current_player]->loop_animation(ANIMATION_RUN,global_time);
+		  }
+	  }
+	else if (this->input_state->key_right)
+	  {
+		this->player_characters[this->current_player]->set_direction(DIRECTION_EAST);
 		this->player_characters[this->current_player]->move_by(2 * time_difference,0.0);
-	if (this->input_state->key_down)
+
+		if (!this->player_characters[this->current_player]->is_animating())
+		  {
+			this->player_characters[this->current_player]->stop_animation();
+		    this->player_characters[this->current_player]->loop_animation(ANIMATION_RUN,global_time);
+		  }
+	  }
+	else if (this->input_state->key_down)
+	  {
+		this->player_characters[this->current_player]->set_direction(DIRECTION_SOUTH);
 		this->player_characters[this->current_player]->move_by(0.0,2 * time_difference);
-	if (this->input_state->key_up)
+
+		if (!this->player_characters[this->current_player]->is_animating())
+		  {
+			this->player_characters[this->current_player]->stop_animation();
+		    this->player_characters[this->current_player]->loop_animation(ANIMATION_RUN,global_time);
+		  }
+	  }
+	else if (this->input_state->key_up)
+	  {
+		this->player_characters[this->current_player]->set_direction(DIRECTION_NORTH);
 		this->player_characters[this->current_player]->move_by(0.0,-2 * time_difference);
 
+		if (!this->player_characters[this->current_player]->is_animating())
+		  {
+			this->player_characters[this->current_player]->stop_animation();
+		    this->player_characters[this->current_player]->loop_animation(ANIMATION_RUN,global_time);
+		  }
+	  }
+	else
+	  {
+		this->player_characters[this->current_player]->stop_animation();
+		this->player_characters[this->current_player]->stop_animation();
+	  }
+
 	if (this->input_state->key_1)        // switching players
-	  this->current_player = 0;
+	  {
+		this->player_characters[this->current_player]->stop_animation();
+	    this->current_player = 0;
+	  }
 	else if (this->input_state->key_2)
-	  this->current_player = 1;
+	  {
+		this->player_characters[this->current_player]->stop_animation();
+	    this->current_player = 1;
+	  }
 	else if (this->input_state->key_3)
-	  this->current_player = 2;
+	  {
+		this->player_characters[this->current_player]->stop_animation();
+		this->current_player = 2;
+	  }
 
 	this->time_before = al_current_time();
   }

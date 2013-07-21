@@ -8,6 +8,8 @@
  * year: 2013
  */
 
+#include "general.h"
+
 using namespace std;
 
 class c_graphic_object
@@ -19,9 +21,10 @@ class c_graphic_object
 	*/
 
     protected:
-	  int playing_animation;  /// Id of the current animation, -1 means no animation.
-	  int animation_frame;    /// Current animation frame. 
-	  bool looping_animation; /// True if the animation is looping, false otherwise.
+	  t_animation_type playing_animation;  /** Type of animation being played or looped. */
+	  long int started_playing;            /** Time when the animation started playing to count the animation frame. */
+	  int animation_frame;                 /** Current animation frame. */
+	  bool looping_animation;              /** True if the animation is looping, false otherwise. */
 
     public:
 
@@ -37,29 +40,38 @@ class c_graphic_object
 		    which is needed for animations etc.
 	    */
 
-	  void play_animation(int animation_id);
+	  virtual void play_animation(t_animation_type animation, long int global_time);
 
 	    /**
 		  Plays given animation.
 
-		  @param animation_id id of the animation,
-		    which must not be negative
+		  @param animation animation to be played
+		  @param global_time global time counter
 		*/
 
-	  void loop_animation(int animation_id);
+	  virtual void loop_animation(t_animation_type animation, long int global_time);
 
 	    /**
 		  Loops the given animation untill it's
 		  stopped by stop_animation().
 
-		  @param animation_id id of the animation,
-		    which must not be negative
+		  @param animation animation to be looped
+		  @param global_time global time counter
 		*/
 
-	  void stop_animation();
+	  virtual void stop_animation();
 	    
 	    /**
 		  Stops playing the current animation.
+		*/
+
+	  bool is_animating();
+
+	    /**
+		  Checks if any animation is playing.
+
+		  @return true if any animation is
+		    playing or looping, false otherwise
 		*/
   };
 

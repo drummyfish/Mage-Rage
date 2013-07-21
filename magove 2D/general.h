@@ -89,4 +89,10 @@ typedef struct
 
   } t_input_state;
 
+typedef enum
+  {
+	ANIMATION_NONE,
+	ANIMATION_RUN,
+	ANIMATION_CAST
+  } t_animation_type;
 #endif

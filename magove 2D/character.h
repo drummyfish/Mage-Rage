@@ -35,6 +35,14 @@ class c_character: public c_graphic_object
 		@param y new position y
 	  */
 
+	  void set_direction(t_direction direction);
+
+	  /**
+	    Sets the character's facing direction.
+
+		@param direction new direction
+	  */
+
 	  void move_by(double x, double y);
 
 	  /**

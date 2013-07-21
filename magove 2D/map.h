@@ -30,6 +30,8 @@ class c_map: c_graphic_object
 	  t_input_state *input_state;                          /** pointer to information about keyboard and mouse */
 	  double time_before;                                  /** to compute time difference between frames (for movement etc.) */
 
+	  ALLEGRO_BITMAP *portrait_selection;                  /** bitmap - GUI selection behind the portrait */ 
+
 	  ALLEGRO_BITMAP *portrait_mia;                        /** bitmap - GUI portrait of Mia */
 	  ALLEGRO_BITMAP *portrait_metodej;                    /** bitmap - GUI portrait of Metodej */
 	  ALLEGRO_BITMAP *portrait_starovous;                  /** bitmap - GUI portrait of Starovous */
