@@ -77,6 +77,7 @@
     <ClCompile Include="local_texts.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="map.cpp" />
+    <ClCompile Include="map_object.cpp" />
     <ClCompile Include="player_character.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -86,6 +87,7 @@
     <ClInclude Include="graphic_object.h" />
     <ClInclude Include="local_texts.h" />
     <ClInclude Include="map.h" />
+    <ClInclude Include="map_object.h" />
     <ClInclude Include="player_character.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

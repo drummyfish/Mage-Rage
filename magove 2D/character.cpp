@@ -45,3 +45,17 @@ double c_character::get_position_y()
   }
 
 //--------------------------------------------------
+
+int c_character::get_square_x()
+  {
+	return floor(this->position_x + 0.3);
+  }
+
+//--------------------------------------------------
+
+int c_character::get_square_y()
+  {
+	return floor(this->position_y + 0.3) + 1;
+  }
+
+//--------------------------------------------------

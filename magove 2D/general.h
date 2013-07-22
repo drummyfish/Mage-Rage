@@ -10,6 +10,7 @@
 
 #include <iostream>
 #include <string>
+#include <math.h>
 #include "allegro5/allegro.h"
 #include "allegro5/allegro_image.h"
 #include "allegro5/allegro_native_dialog.h"
@@ -95,4 +96,16 @@ typedef enum
 	ANIMATION_RUN,
 	ANIMATION_CAST
   } t_animation_type;
+
+typedef enum
+  {
+	/**
+	  Possible map object types.
+	*/
+
+	OBJECT_TREE,
+	OBJECT_CRATE,
+	OBJECT_STONE,
+	OBJECT_LEVER
+  } t_object_type;
 #endif

@@ -210,128 +210,133 @@ void c_map::draw(int x, int y, long int global_time)
   {
 	int i, j, help_height, elevation;
 
-	al_clear_to_color(al_map_rgb(0,0,0));                  // clear the screen
+	al_clear_to_color(al_map_rgb(0,0,0));      // clear the screen
 
 	this->animation_frame = global_time / 32;
 
-	// we'll draw the map from ground level up, from north to south:
+	for (j = 0; j < this->height; j++)                         // go through lines
+	  {
+        for (help_height = 0; help_height < 3; help_height++)  // go through all 3 heights
+	      {
+			elevation = help_height * 27;
 
-    for (help_height = 0; help_height < 3; help_height++)  // I'm really sorry for this ugly piece of code
-      for (j = 0; j < this->height; j++)
-        for (i = 0; i < this->width; i++)
-		  {
-		    elevation = 27 * help_height;                  // elevation of the tile in pixels
+			for (i = 0; i < this->height; i++)                 // go through columns
+			  {
+				if (this->squares[i][j].height == help_height)
+		          {
+			        switch (this->squares[i][j].type)
+			          {
+			            case SQUARE_NORMAL:                      // normal square
+					      al_draw_bitmap(this->tile,x + i * 64,y + j * 50 - elevation,0); // draw floor
+					      break;
 
-		    if (this->squares[i][j].height == help_height)
-		      {
-			    switch (this->squares[i][j].type)
-			      {
-			        case SQUARE_NORMAL:                      // normal square
-					  al_draw_bitmap(this->tile,x + i * 64,y + j * 50 - elevation,0); // draw floor
-					  break;
+				        case SQUARE_WATER:      // water
+					      al_draw_bitmap(this->tile_water[this->animation_frame % 5],x + i * 64,y + j * 50 - elevation,0);
+			          
+					      if (this->get_square_type(i,j - 1) != SQUARE_WATER   // north border
+						    || this->get_height(i,j - 1) != help_height)     
+                            al_draw_bitmap(this->tile_edge,x + i * 64,y + j * 50 - elevation,0);
 
-				    case SQUARE_WATER:      // water
-					  al_draw_bitmap(this->tile_water[this->animation_frame % 5],x + i * 64,y + j * 50 - elevation,0);
+					      if (this->get_square_type(i + 1,j) != SQUARE_WATER   // east border
+						    || this->get_height(i + 1,j) != help_height)
+                            al_draw_bitmap(this->tile_cliff_west,x + i * 64 + 54,y + j * 50 - elevation,0);
 
-					  if (this->get_square_type(i,j - 1) != SQUARE_WATER   // north border
-						  || this->get_height(i,j - 1) != help_height)     
-                        al_draw_bitmap(this->tile_edge,x + i * 64,y + j * 50 - elevation,0);
+					      if (this->get_square_type(i - 1,j) != SQUARE_WATER   // west border
+						    || this->get_height(i - 1,j) != help_height)
+                            al_draw_bitmap(this->tile_cliff_east,x + i * 64,y + j * 50 - elevation,0);
 
-					  if (this->get_square_type(i + 1,j) != SQUARE_WATER   // east border
-						  || this->get_height(i + 1,j) != help_height)
-                        al_draw_bitmap(this->tile_cliff_west,x + i * 64 + 54,y + j * 50 - elevation,0);
+					      if (this->get_square_type(i,j + 1) != SQUARE_WATER   // south border
+						    || this->get_height(i,j + 1) != help_height)
+                            al_draw_bitmap(this->tile_cliff_north,x + i * 64,y + j * 50 - elevation + 40,0);
+					      
+						  break;
+					  }
 
-					  if (this->get_square_type(i - 1,j) != SQUARE_WATER   // west border
-						  || this->get_height(i - 1,j) != help_height)
-                        al_draw_bitmap(this->tile_cliff_east,x + i * 64,y + j * 50 - elevation,0);
-
-					  if (this->get_square_type(i,j + 1) != SQUARE_WATER   // south border
-						  || this->get_height(i,j + 1) != help_height)
-                        al_draw_bitmap(this->tile_cliff_north,x + i * 64,y + j * 50 - elevation + 40,0);
-         
-					  break;
-
-				    case SQUARE_ICE:        // ice
-					  break;
-			      }
-
-			    if (help_height != 0)                                                  // draw cliffs
-				  {
-				    if (this->get_height(i,j + 1) == help_height - 1)                  // south
-					  {
-				  	    al_draw_bitmap(this->tile_cliff_south_1,x + i * 64,y + j * 50 - elevation + 50,0);
+			        if (help_height != 3)                                                    // draw south cliffs
+				      {
+				        if (this->get_height(i,j - 1) == help_height + 1)                    // south
+					      {
+				  	        al_draw_bitmap(this->tile_cliff_south_1,x + i * 64,y + j * 50 - elevation - 27,0);
 				      
-					    if (this->get_height(i + 1,j + 1) != help_height &&
-						  this->get_height(i + 1,j) != help_height)                    // southeast 1
-						  al_draw_bitmap(this->tile_cliff_southeast_1,x + i * 64 + 64,y + j * 50 - elevation + 50,0);
+					        if (this->get_height(i + 1,j - 1) != this->get_height(i,j - 1))  // southeast 1
+						      al_draw_bitmap(this->tile_cliff_southeast_1,x + i * 64 + 64,y + j * 50 - elevation - 27,0);
 				    
-					    if (this->get_height(i - 1,j + 1) != help_height &&
-						  this->get_height(i - 1,j) != help_height)                    // southwest 1
-					      al_draw_bitmap(this->tile_cliff_southwest_1,x + i * 64 - 10,y + j * 50 - elevation + 50,0);
-					  }
-				    else if (this->get_height(i,j + 1) == help_height - 2)
-					  {
-					    al_draw_bitmap(this->tile_cliff_south_2,x + i * 64,y + j * 50 - elevation + 50,0);
+					        if (this->get_height(i - 1,j - 1) != this->get_height(i,j - 1))  // southwest 1
+					          al_draw_bitmap(this->tile_cliff_southwest_1,x + i * 64 - 10,y + j * 50 - elevation - 27,0);
+					      }
+				        else if (this->get_height(i,j - 1) == help_height + 2)
+					      {
+					        al_draw_bitmap(this->tile_cliff_south_2,x + i * 64,y + j * 50 - elevation - 54,0);
 
-					    if (this->get_height(i + 1,j + 1) != help_height &&
-						  this->get_height(i + 1,j) != help_height)                    // southeast 2
-						  al_draw_bitmap(this->tile_cliff_southeast_2,x + i * 64 + 64,y + j * 50 - elevation + 50,0);
+					        if (this->get_height(i + 1,j - 1) != this->get_height(i,j - 1))  // southeast 2
+						      al_draw_bitmap(this->tile_cliff_southeast_2,x + i * 64 + 64,y + j * 50 - elevation - 54,0);
 				    
-					    if (this->get_height(i - 1,j + 1) != help_height &&
-						  this->get_height(i - 1,j) != help_height)                    // southwest 2
-						  al_draw_bitmap(this->tile_cliff_southwest_2,x + i * 64 - 10,y + j * 50 - elevation + 50,0);
-					  }
+					        if (this->get_height(i - 1,j - 1) != this->get_height(i,j - 1))  // southwest 2
+						      al_draw_bitmap(this->tile_cliff_southwest_2,x + i * 64 - 10,y + j * 50 - elevation - 54,0);
+					      }
+				      }
 
-				    if (this->get_height(i,j - 1) != help_height)                      // north
-					  {
-					    al_draw_bitmap(this->tile_cliff_north,x + i * 64,y + j * 50 - elevation - 10,0);
+				    if (help_height != 0)                                                  // draw other cliffs
+				      {
+				        if (this->get_height(i,j - 1) < help_height)                       // north
+					      {
+					        al_draw_bitmap(this->tile_cliff_north,x + i * 64,y + j * 50 - elevation - 10,0);
 				    
-					    if (this->get_height(i + 1,j - 1) != help_height &&
-						  this->get_height(i + 1,j) != help_height)                    // northeast
-						  al_draw_bitmap(this->tile_cliff_northeast,x + i * 64 + 64,y + j * 50 - elevation - 10,0);
+					        if (this->get_height(i + 1,j - 1) != help_height &&
+						      this->get_height(i + 1,j) != help_height)                    // northeast
+						     al_draw_bitmap(this->tile_cliff_northeast,x + i * 64 + 64,y + j * 50 - elevation - 10,0);
 
-					    if (this->get_height(i - 1,j - 1) != help_height &&
-						  this->get_height(i - 1,j) != help_height)                    // northwest
-						  al_draw_bitmap(this->tile_cliff_northwest,x + i * 64 -10,y + j * 50 - elevation - 10,0);
-					  }
+					        if (this->get_height(i - 1,j - 1) != help_height &&
+						      this->get_height(i - 1,j) != help_height)                    // northwest
+						      al_draw_bitmap(this->tile_cliff_northwest,x + i * 64 -10,y + j * 50 - elevation - 10,0);
+					      }
 
-				    if (this->get_height(i - 1,j) != help_height)                      // west
-					  al_draw_bitmap(this->tile_cliff_west,x + i * 64 - 10,y + j * 50 - elevation,0);
+				        if (this->get_height(i - 1,j) < help_height)                       // west
+					      al_draw_bitmap(this->tile_cliff_west,x + i * 64 - 10,y + j * 50 - elevation,0);
 
-				    if (this->get_height(i + 1,j) != help_height)                      // east
-					  al_draw_bitmap(this->tile_cliff_east,x + i * 64 + 64,y + j * 50 - elevation,0);
-				  } // draw cliffs
+				        if (this->get_height(i + 1,j) < help_height)                       // east
+					      al_draw_bitmap(this->tile_cliff_east,x + i * 64 + 64,y + j * 50 - elevation,0);
+		        
+				      }
+				  } 
+			  }
+	      }
 
-		      } 
-		  }
+		for (i = 0; i < this->width; i++)      // draw the same line of objects
+	      {
+	      }
 
-		for (i = 0; i < 3; i++)                                 // draw portraits
-		  if (this->player_characters[i] != NULL)
+		for (i = 0; i < 3; i++)
+		  if (this->player_characters[i] != NULL && this->player_characters[i]->get_square_y() == j)
 		    {
-			  if (this->current_player == i)
-                al_draw_bitmap(this->portrait_selection,8 + i * 150,7,0);
+			  elevation = this->squares[this->player_characters[i]->get_square_x()][this->player_characters[i]->get_square_y()].height * 27;
 
-			  switch (this->player_characters[i]->get_player_type())            
-			    {
-			      case PLAYER_MIA:
-                    al_draw_bitmap(this->portrait_mia,10 + i * 150,10,0);
-					break;
-
-				  case PLAYER_METODEJ:
-                    al_draw_bitmap(this->portrait_metodej,10 + i * 150,10,0);
-					break;
-
-				  case PLAYER_STAROVOUS:
-                    al_draw_bitmap(this->portrait_starovous,10 + i * 150,10,0);
-					break;
-			    }		
+			  this->player_characters[i]->draw((int) (x + this->player_characters[i]->get_position_x() * 64),
+			  (int) (y + this->player_characters[i]->get_position_y() * 50) - elevation,global_time);
 		    }
+	  }
 
-        for (i = 0; i < 3; i++)                                 // draw players
-		  if (this->player_characters[i] != NULL)
-		    {
-		      this->player_characters[i]->draw(int (this->player_characters[i]->get_position_x() * 64),int (this->player_characters[i]->get_position_y() * 64),global_time);
-		    }
+	for (i = 0; i < 3; i++)                                 // draw portraits
+	  if (this->player_characters[i] != NULL)
+		{
+		  if (this->current_player == i)
+            al_draw_bitmap(this->portrait_selection,8 + i * 150,7,0);
+
+			switch (this->player_characters[i]->get_player_type())            
+			  {
+			    case PLAYER_MIA:
+                  al_draw_bitmap(this->portrait_mia,10 + i * 150,10,0);
+			      break;
+
+				case PLAYER_METODEJ:
+                  al_draw_bitmap(this->portrait_metodej,10 + i * 150,10,0);
+			      break;
+
+				case PLAYER_STAROVOUS:
+                  al_draw_bitmap(this->portrait_starovous,10 + i * 150,10,0);
+			      break;
+			  }		
+		}
   }
 
 //--------------------------------------------------
@@ -343,7 +348,7 @@ void c_map::update(long int global_time)
 	time_difference = al_current_time() - this->time_before;
 
 	this->draw(50,75,global_time);
-
+	
 	if (this->input_state->key_left)
 	  {
 		this->player_characters[this->current_player]->set_direction(DIRECTION_WEST);

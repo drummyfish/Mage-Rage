@@ -68,6 +68,26 @@ class c_character: public c_graphic_object
 		
 		@return y position
 	  */
+
+	  int get_square_x();
+
+	  /**
+	    Returns x coordination of the square at
+		which the character is standing.
+
+		@return x coordination of the
+		  character's square 
+	  */
+
+	  int get_square_y();
+
+	  /**
+	    Returns y coordination of the square at
+		which the character is standing.
+
+		@return y coordination of the
+		  character's square 
+	  */
   };
 
 #endif
