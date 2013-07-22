@@ -65,6 +65,16 @@ c_game::c_game()
 
 //--------------------------------------------------
 
+c_game::~c_game()
+  {
+	al_destroy_display(this->display);
+	al_destroy_event_queue(this->event_queue);
+	al_destroy_timer(this->global_timer); 
+    delete this->map;
+  }
+
+//--------------------------------------------------
+
 void c_game::run()
   {
 	c_map *map;
@@ -171,8 +181,6 @@ void c_game::run()
 
 		al_rest(0.01);
 	  }
-
-	delete map;
   }
 
 //--------------------------------------------------

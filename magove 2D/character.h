@@ -88,6 +88,26 @@ class c_character: public c_graphic_object
 		@return y coordination of the
 		  character's square 
 	  */
+
+	  double get_fraction_x();
+
+	  /**
+	    Returns fraction part of the position,
+		which is position within current square.
+
+		@return x position within current
+		  square (value in range <0;1>)
+	  */
+
+	  double get_fraction_y();
+
+	  /**
+	    Returns fraction part of the position,
+		which is position within current square.
+
+		@return y position within current
+		  square (value in range <0;1>)
+	  */
   };
 
 #endif

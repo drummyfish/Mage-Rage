@@ -61,7 +61,7 @@ c_player_character::~c_player_character()
 	al_destroy_bitmap(this->sprite_east_casting);
 	al_destroy_bitmap(this->sprite_east_running_1);
 	al_destroy_bitmap(this->sprite_east_running_2);
-	al_destroy_bitmap(this->sprite_south);
+	al_destroy_bitmap(this->sprite_south); 
 	al_destroy_bitmap(this->sprite_south_casting);
 	al_destroy_bitmap(this->sprite_south_running_1);
 	al_destroy_bitmap(this->sprite_south_running_2);

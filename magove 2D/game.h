@@ -22,7 +22,7 @@ class c_game
 	  c_map *map;                           /** handles the map */
 	  ALLEGRO_DISPLAY *display;             /** the game screen */
 	  ALLEGRO_EVENT_QUEUE *event_queue;     /** event queue */
-	  ALLEGRO_TIMER *global_timer;          /** holds the global time */
+	  ALLEGRO_TIMER *global_timer;          /** global clock */
 	  long int global_time;                 /** global time counter */
 	  t_input_state input_state;            /** keyboard and mouse state */
 
@@ -32,6 +32,13 @@ class c_game
 	  /**
 	    Class constructor, initialises new game
 		object.
+	  */
+
+	  ~c_game();
+
+	  /**
+	    Class destructor, frees the object's
+		memory.
 	  */
 
 	  void run();

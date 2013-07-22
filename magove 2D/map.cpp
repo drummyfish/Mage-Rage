@@ -6,30 +6,31 @@
  */
 
 #include "map.h"
+#include "map_object.h"
 
-//--------------------------------------------------
+//-----------------------------------------------
 
 int c_map::get_height(int x, int y)
   {
-	  if (x > this->width || x < 0 ||
-	    y > this->height || y < 0)
-	    return 0;
+	if (x > this->width || x < 0 ||
+	  y > this->height || y < 0)
+	  return 0;
 
-	  return this->squares[x][y].height;
+	return this->squares[x][y].height;
   }
 
-//--------------------------------------------------
+//-----------------------------------------------
 
 t_square_type c_map::get_square_type(int x, int y)
   {
-	  if (x > this->width || x < 0 ||
-	    y > this->height || y < 0)
-	    return SQUARE_NORMAL;
+	if (x > this->width || x < 0 ||
+	  y > this->height || y < 0)
+	  return SQUARE_NORMAL;
 
-	  return this->squares[x][y].type;
+	return this->squares[x][y].type;
   }
 
-//--------------------------------------------------
+//-----------------------------------------------
 
 void c_map::set_environment(t_environment new_environment)
   {
@@ -80,9 +81,11 @@ void c_map::set_environment(t_environment new_environment)
 	this->tile_water[2] = al_load_bitmap("resources/tile_water_3.png");
 	this->tile_water[3] = al_load_bitmap("resources/tile_water_4.png");
 	this->tile_water[4] = al_load_bitmap("resources/tile_water_5.png");
+
+	this->object_crate = al_load_bitmap("resources/object_crate.png");
   }
 
-//--------------------------------------------------
+//-----------------------------------------------
 
 c_map::c_map(t_input_state *input_state)
   {
@@ -104,6 +107,7 @@ c_map::c_map(t_input_state *input_state)
 	    {
 		  this->squares[i][j].height = 0;
 		  this->squares[i][j].type = SQUARE_NORMAL;
+		  this->squares[i][j].height = NULL;
 	    }
 
 	this->squares[0][0].height = 0;
@@ -135,6 +139,9 @@ c_map::c_map(t_input_state *input_state)
 	this->portrait_mia = NULL;
 	this->portrait_metodej = NULL;
 	this->portrait_starovous = NULL;
+
+	this->squares[5][8].map_object = new c_map_object(OBJECT_CRATE);
+	this->squares[4][8].map_object = new c_map_object(OBJECT_TREE);
 
 	this->tile = NULL;
 	this->tile_cliff_south_1 = NULL;
@@ -174,18 +181,20 @@ c_map::c_map(t_input_state *input_state)
 	this->input_state = input_state;
   }
 
-//--------------------------------------------------
+//-----------------------------------------------
 
 c_map::~c_map()
   {
-	int i;
-
+	int i, j;
+	
 	for (i = 0; i < 3; i++)                // free players
-	  delete this->player_characters[i];
-	                                       // free bitmaps
+	  {
+		delete this->player_characters[i];
+	  }
+		                                   // free bitmaps 
 	al_destroy_bitmap(this->tile);
 	al_destroy_bitmap(this->tile_cliff_south_1);
-	al_destroy_bitmap(this->tile_cliff_south_2);
+	al_destroy_bitmap(this->tile_cliff_south_2); 
 	al_destroy_bitmap(this->tile_cliff_southwest_1);
 	al_destroy_bitmap(this->tile_cliff_southwest_2);
 	al_destroy_bitmap(this->tile_cliff_southeast_1);
@@ -199,12 +208,19 @@ c_map::~c_map()
 	al_destroy_bitmap(this->portrait_metodej);
 	al_destroy_bitmap(this->portrait_starovous);
 	al_destroy_bitmap(this->portrait_selection);
+	al_destroy_bitmap(this->object_crate); 
 
 	for (i = 0; i < 5; i++)
 	  al_destroy_bitmap(this->tile_water[i]);
+
+	for (j = 0; j < this->height; j++)            // destroy objects
+	  for (i = 0; i < this->width; i++)
+	    {
+		  delete this->squares[i][j].map_object;
+	    } 
   }
 
-//--------------------------------------------------
+//-----------------------------------------------
 
 void c_map::draw(int x, int y, long int global_time)
   {
@@ -304,6 +320,8 @@ void c_map::draw(int x, int y, long int global_time)
 
 		for (i = 0; i < this->width; i++)      // draw the same line of objects
 	      {
+			if (this->squares[i][j].map_object != NULL)
+			  this->squares[i][j].map_object->draw(x + i * 64, y + j * 50 - this->squares[i][j].height * 27,global_time);
 	      }
 
 		for (i = 0; i < 3; i++)
@@ -339,59 +357,81 @@ void c_map::draw(int x, int y, long int global_time)
 		}
   }
 
-//--------------------------------------------------
+//-----------------------------------------------
+
+void c_map::move_character(c_character *character, t_direction direction, long int global_time)
+  {
+	int square_position[2];                // player position in map squares
+	double step_length;
+
+	step_length = 0.026;
+
+	square_position[0] = character->get_square_x();
+	square_position[1] = character->get_square_y();
+
+	character->set_direction(direction);
+	
+	if (!character->is_animating())
+	  {
+		character->stop_animation();
+		character->loop_animation(ANIMATION_RUN,global_time);
+	  }
+
+	switch (direction)
+	  {
+	    case DIRECTION_NORTH:
+		  if (!(this->get_height(square_position[0],square_position[1])
+			!= this->get_height(square_position[0],square_position[1] - 1)
+			&& character->get_fraction_y() < 0.4)) 
+			character->move_by(0.0,-1 * step_length);
+		  break;
+
+	    case DIRECTION_EAST:
+          if (!(this->get_height(square_position[0],square_position[1])
+			!= this->get_height(square_position[0] + 1,square_position[1])
+			&& character->get_fraction_x() > 0.7))
+		    character->move_by(step_length,0.0);
+		  break;
+
+	    case DIRECTION_WEST:
+		  if (!(this->get_height(square_position[0],square_position[1])
+			!= this->get_height(square_position[0] - 1,square_position[1])
+			&& character->get_fraction_x() < 0.2))
+		      character->move_by(-1 * step_length,0.0);
+		  break;
+
+	    case DIRECTION_SOUTH:
+		  if (!(this->get_height(square_position[0],square_position[1])
+			!= this->get_height(square_position[0],square_position[1] + 1)
+			&& character->get_fraction_y() > 0.9))
+		    character->move_by(0.0,step_length);
+		  break;
+	  }
+  }
+
+//-----------------------------------------------
 
 void c_map::update(long int global_time)
   {
-	double time_difference;
-
-	time_difference = al_current_time() - this->time_before;
+	this->time_difference = al_current_time() - this->time_before;
 
 	this->draw(50,75,global_time);
 	
 	if (this->input_state->key_left)
 	  {
-		this->player_characters[this->current_player]->set_direction(DIRECTION_WEST);
-		this->player_characters[this->current_player]->move_by(-2 * time_difference,0.0);
-		
-		if (!this->player_characters[this->current_player]->is_animating())
-		  {
-			this->player_characters[this->current_player]->stop_animation();
-		    this->player_characters[this->current_player]->loop_animation(ANIMATION_RUN,global_time);
-		  }
+		this->move_character(this->player_characters[this->current_player],DIRECTION_WEST,global_time);
 	  }
 	else if (this->input_state->key_right)
 	  {
-		this->player_characters[this->current_player]->set_direction(DIRECTION_EAST);
-		this->player_characters[this->current_player]->move_by(2 * time_difference,0.0);
-
-		if (!this->player_characters[this->current_player]->is_animating())
-		  {
-			this->player_characters[this->current_player]->stop_animation();
-		    this->player_characters[this->current_player]->loop_animation(ANIMATION_RUN,global_time);
-		  }
+		this->move_character(this->player_characters[this->current_player],DIRECTION_EAST,global_time);
 	  }
 	else if (this->input_state->key_down)
 	  {
-		this->player_characters[this->current_player]->set_direction(DIRECTION_SOUTH);
-		this->player_characters[this->current_player]->move_by(0.0,2 * time_difference);
-
-		if (!this->player_characters[this->current_player]->is_animating())
-		  {
-			this->player_characters[this->current_player]->stop_animation();
-		    this->player_characters[this->current_player]->loop_animation(ANIMATION_RUN,global_time);
-		  }
+		this->move_character(this->player_characters[this->current_player],DIRECTION_SOUTH,global_time);
 	  }
 	else if (this->input_state->key_up)
 	  {
-		this->player_characters[this->current_player]->set_direction(DIRECTION_NORTH);
-		this->player_characters[this->current_player]->move_by(0.0,-2 * time_difference);
-
-		if (!this->player_characters[this->current_player]->is_animating())
-		  {
-			this->player_characters[this->current_player]->stop_animation();
-		    this->player_characters[this->current_player]->loop_animation(ANIMATION_RUN,global_time);
-		  }
+		this->move_character(this->player_characters[this->current_player],DIRECTION_NORTH,global_time);
 	  }
 	else
 	  {
@@ -418,4 +458,4 @@ void c_map::update(long int global_time)
 	this->time_before = al_current_time();
   }
 
-//--------------------------------------------------
+//-----------------------------------------------
