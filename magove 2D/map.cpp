@@ -96,6 +96,10 @@ c_map::c_map(t_input_state *input_state)
 	this->width = 10;
 	this->height = 10;
 
+	this->edge_south = 0.4;
+	this->edge_north = 0.1;
+	this->edge_east_west = 0.25;
+
 	this->current_player = 0;
 
 	this->animation_frame = 0;
@@ -382,31 +386,52 @@ void c_map::move_character(c_character *character, t_direction direction, long i
 	    case DIRECTION_NORTH:
 		  if (!(this->get_height(square_position[0],square_position[1])
 			!= this->get_height(square_position[0],square_position[1] - 1)
-			&& character->get_fraction_y() < 0.4)) 
+			&& character->get_fraction_y() < this->edge_south)) 
 			character->move_by(0.0,-1 * step_length);
 		  break;
 
 	    case DIRECTION_EAST:
-          if (!(this->get_height(square_position[0],square_position[1])
+		  if (!(this->get_height(square_position[0],square_position[1])
 			!= this->get_height(square_position[0] + 1,square_position[1])
-			&& character->get_fraction_x() > 0.7))
-		    character->move_by(step_length,0.0);
+			&& character->get_fraction_x() > 1 - this->edge_east_west)) 
+			character->move_by(step_length,0.0);
 		  break;
 
 	    case DIRECTION_WEST:
 		  if (!(this->get_height(square_position[0],square_position[1])
 			!= this->get_height(square_position[0] - 1,square_position[1])
-			&& character->get_fraction_x() < 0.2))
-		      character->move_by(-1 * step_length,0.0);
+			&& character->get_fraction_x() < this->edge_east_west)) 
+			character->move_by(-1 *step_length,0.0);
 		  break;
 
 	    case DIRECTION_SOUTH:
 		  if (!(this->get_height(square_position[0],square_position[1])
 			!= this->get_height(square_position[0],square_position[1] + 1)
-			&& character->get_fraction_y() > 0.9))
-		    character->move_by(0.0,step_length);
+			&& character->get_fraction_y() > 1 - this->edge_north)) 
+			character->move_by(0.0,step_length);
 		  break;
 	  }
+
+	// adjust the position (so the character keeps a little distance from cliffs):
+
+	if (direction != DIRECTION_NORTH &&
+	  this->get_height(square_position[0],square_position[1])         
+	  != this->get_height(square_position[0],square_position[1] - 1)
+	  && character->get_fraction_y() < this->edge_south)
+	  character->move_by(0.0,0.02);
+	
+	if (direction != DIRECTION_EAST &&
+	  this->get_height(square_position[0],square_position[1])         
+	  != this->get_height(square_position[0] + 1,square_position[1])
+	  && character->get_fraction_x() > 1 - this->edge_east_west)
+	  character->move_by(-0.02,0.0);
+
+	if (direction != DIRECTION_WEST &&
+	  this->get_height(square_position[0],square_position[1])         
+	  != this->get_height(square_position[0] - 1,square_position[1])
+	  && character->get_fraction_x() < this->edge_east_west)
+	  character->move_by(0.02,0.0);
+
   }
 
 //-----------------------------------------------

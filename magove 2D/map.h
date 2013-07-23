@@ -50,6 +50,10 @@ class c_map: c_graphic_object
 	  double time_before;                                  /** to compute time difference between frames (for movement etc.) */
 	  double time_difference;                              /** stores time between two frames to calculate step length etc. */
 
+	  double edge_south;                                   /** fraction of square in which collision with south cliffs will occur */
+	  double edge_north;                                   /** fraction of square in which collision with north cliffs will occur */
+	  double edge_east_west;                               /** fraction of square in which collision with east and west cliffs will occur */
+
 	  ALLEGRO_BITMAP *portrait_selection;                  /** bitmap - GUI selection behind the portrait */ 
 
 	  ALLEGRO_BITMAP *portrait_mia;                        /** bitmap - GUI portrait of Mia */
