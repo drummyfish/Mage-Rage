@@ -45,6 +45,7 @@ bool c_graphic_object::is_animating()
 void c_graphic_object::stop_animation()
   {
     this->playing_animation = ANIMATION_NONE;
+	this->animation_frame = 0;
   }
 
 //--------------------------------------------------

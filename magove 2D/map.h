@@ -90,6 +90,64 @@ class c_map: c_graphic_object
 		  @param global_time global time counter
 		*/
 
+	  bool character_can_move_to_square(c_character *character, t_direction direction);
+
+	    /**
+		  Checks if given character can move to
+		  the next square in given direction.
+
+		  @param character character to be
+		    checked
+		  @param direction direction of the next
+		    square relative to character's
+			current square
+		  @return true if the character can
+		    move to the next square in that
+			direction, otherwise false
+		*/
+
+	  bool square_has_object(int x, int y, t_object_type object_type);
+
+	    /**
+	      Checks if there is object of given
+		  type at given square.
+
+		  @param x x coordination of the square
+		  @param y y coordination of the square
+		  @param object_type type of object to
+		    check
+          @return true if there is object of
+		    given type on given square,
+			otherwise false
+		*/
+
+	  bool object_is_stepable(int x, int y);
+
+	    /**
+	      Checks whether object at given
+		  position can't be moved over.
+
+		  @param x x coordination of the square
+		  @param y y coordination of the square
+		  @return true if the object at given
+		    square is stepable, otherwise false,
+			for coordinations outside the map
+			false is returned
+		*/
+
+	  int get_elevation_for_character(c_character *character);
+
+	    /**
+	      Gets elevation in pixels for given
+		  character depending on their position
+		  on the map, objects they're standing on
+		  etc.
+
+		  @param character character to be
+		    checked
+		  @return height offset in pixels
+		*/
+
     public:
 
       c_map(t_input_state *input_state);

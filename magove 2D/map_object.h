@@ -23,6 +23,7 @@ class c_map_object: public c_graphic_object
 	  int link_id;                /** identifies link between objects so they affect each other */
 	  int object_state;           /** identifies object state (on/off, open/closed etc.) */
 	  ALLEGRO_BITMAP *bitmaps[5]; /** bitmaps used to draw this object */
+	  bool stepable;              /** true if this object can be stepped over */
 
     public:
 	  c_map_object(t_object_type object_type);
@@ -53,6 +54,16 @@ class c_map_object: public c_graphic_object
 		  @param y y position of the screen
 		  @param global_time global time counter
 		    which is needed for animations etc.
+		*/
+
+	  bool is_stepable();
+
+	    /**
+		  Checks whether this object can be
+		  stepped over.
+
+		  @return true if this object is
+		    stepable, otherwise false
 		*/
   };
 

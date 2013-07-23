@@ -147,6 +147,14 @@ c_map::c_map(t_input_state *input_state)
 	this->squares[5][8].map_object = new c_map_object(OBJECT_CRATE);
 	this->squares[4][8].map_object = new c_map_object(OBJECT_TREE);
 
+	this->squares[2][2].map_object = new c_map_object(OBJECT_STAIRS_NORTH);
+	this->squares[1][1].map_object = new c_map_object(OBJECT_STAIRS_EAST);
+	this->squares[3][1].map_object = new c_map_object(OBJECT_STAIRS_WEST);
+
+	this->squares[2][4].map_object = new c_map_object(OBJECT_STAIRS_SOUTH);
+
+	this->squares[2][5].height = 1;
+
 	this->tile = NULL;
 	this->tile_cliff_south_1 = NULL;
 	this->tile_cliff_south_2 = NULL;
@@ -328,10 +336,10 @@ void c_map::draw(int x, int y, long int global_time)
 			  this->squares[i][j].map_object->draw(x + i * 64, y + j * 50 - this->squares[i][j].height * 27,global_time);
 	      }
 
-		for (i = 0; i < 3; i++)
+		for (i = 0; i < 3; i++)                // draw players
 		  if (this->player_characters[i] != NULL && this->player_characters[i]->get_square_y() == j)
 		    {
-			  elevation = this->squares[this->player_characters[i]->get_square_x()][this->player_characters[i]->get_square_y()].height * 27;
+			  elevation = this->get_elevation_for_character(this->player_characters[i]);
 
 			  this->player_characters[i]->draw((int) (x + this->player_characters[i]->get_position_x() * 64),
 			  (int) (y + this->player_characters[i]->get_position_y() * 50) - elevation,global_time);
@@ -363,6 +371,135 @@ void c_map::draw(int x, int y, long int global_time)
 
 //-----------------------------------------------
 
+int c_map::get_elevation_for_character(c_character *character)
+  {
+	int height, x, y;
+	double fraction_x, fraction_y;
+
+	x = character->get_square_x();
+	y = character->get_square_y();
+	fraction_x = character->get_fraction_x();
+	fraction_y = character->get_fraction_y();
+
+	height = this->get_height(x,y) * 27;
+
+	if (this->square_has_object(x,y,OBJECT_STAIRS_NORTH) && fraction_y < 0.5)
+	  height += (int) ((0.5 - fraction_y) * 35);
+	else if (this->square_has_object(x,y,OBJECT_STAIRS_EAST) && fraction_x > 0.5)
+	  height += (int) ((fraction_x - 0.5) * 35);
+	else if (this->square_has_object(x,y,OBJECT_STAIRS_SOUTH) && fraction_y > 0.5)
+	  height += (int) ((fraction_y - 0.5) * 35);
+	else if (this->square_has_object(x,y,OBJECT_STAIRS_WEST) && fraction_x < 0.5)
+	  height += (int) ((0.5 - fraction_x) * 35);
+
+	return height;
+  }
+
+//-----------------------------------------------
+
+bool c_map::character_can_move_to_square(c_character *character, t_direction direction)
+  {
+	int square_position[2];                // player position in map squares
+	int square_position_next[2];           // next square coordinations in player's direction
+	t_object_type help_object_type;        // to checks stairs
+	t_object_type help_object_type2;       // to checks stairs
+	int height_difference;                 // height difference between start and destination squares
+
+	square_position[0] = character->get_square_x();
+	square_position[1] = character->get_square_y();
+
+    switch (direction)
+	  {
+		case DIRECTION_NORTH:
+          square_position_next[0] = square_position[0];
+          square_position_next[1] = square_position[1] - 1;
+		  help_object_type = OBJECT_STAIRS_NORTH;
+		  help_object_type2 = OBJECT_STAIRS_SOUTH;
+		  break;
+
+		case DIRECTION_EAST:
+          square_position_next[0] = square_position[0] + 1;
+          square_position_next[1] = square_position[1];
+		  help_object_type = OBJECT_STAIRS_EAST;
+		  help_object_type2 = OBJECT_STAIRS_WEST;
+		  break;
+
+		case DIRECTION_WEST:
+          square_position_next[0] = square_position[0] - 1;
+          square_position_next[1] = square_position[1];
+		  help_object_type = OBJECT_STAIRS_WEST;
+		  help_object_type2 = OBJECT_STAIRS_EAST;
+		  break;
+
+		case DIRECTION_SOUTH:
+          square_position_next[0] = square_position[0];
+          square_position_next[1] = square_position[1] + 1;
+		  help_object_type = OBJECT_STAIRS_SOUTH;
+		  help_object_type2 = OBJECT_STAIRS_NORTH;
+		  break;
+	  }
+
+	if (square_position_next[0] < 0 || square_position_next[0] >= this->width ||   // check map range
+	  square_position_next[1] < 0 || square_position_next[1] >= this->height ||
+	  !this->object_is_stepable(square_position_next[0],square_position_next[1])   // check stepable objects
+	  )
+	  return false;
+
+	height_difference = this->get_height(square_position[0],square_position[1]) -  // check terrain height differences
+	  this->get_height(square_position_next[0],square_position_next[1]);
+
+	switch (height_difference)
+	  {
+	    case 0:        // no difference -> OK
+		  return true;
+		  break;
+
+		case 1:        // source square is higher
+		  return this->square_has_object(square_position_next[0],square_position_next[1],help_object_type2);
+		  break;
+
+		case -1:       // source square is lower  
+			return this->square_has_object(square_position[0],square_position[1],help_object_type); 
+		  break;
+		   
+		default:       // can't be accesed even by stairs
+		  return false;
+		  break;
+	  }		  
+
+	return true;
+  }
+
+//-----------------------------------------------
+
+bool c_map::square_has_object(int x, int y, t_object_type object_type)
+  {
+    if (x > this->width || x < 0 || y > this->height ||
+	  this->height < 0)
+	  return false;
+
+	return (this->squares[x][y].map_object != NULL &&
+		this->squares[x][y].map_object->get_type() ==
+		object_type);
+  }
+
+
+//-----------------------------------------------
+
+bool c_map::object_is_stepable(int x, int y)
+  {
+	if (x < 0 || x >= this->width ||
+		y < 0 || y >= this->height)
+	  return false;
+
+	if (this->squares[x][y].map_object != NULL)
+	  return this->squares[x][y].map_object->is_stepable();
+
+	return true;
+  }
+
+//-----------------------------------------------
+
 void c_map::move_character(c_character *character, t_direction direction, long int global_time)
   {
 	int square_position[2];                // player position in map squares
@@ -384,29 +521,25 @@ void c_map::move_character(c_character *character, t_direction direction, long i
 	switch (direction)
 	  {
 	    case DIRECTION_NORTH:
-		  if (!(this->get_height(square_position[0],square_position[1])
-			!= this->get_height(square_position[0],square_position[1] - 1)
+		  if (!(!character_can_move_to_square(character,direction)
 			&& character->get_fraction_y() < this->edge_south)) 
 			character->move_by(0.0,-1 * step_length);
 		  break;
 
 	    case DIRECTION_EAST:
-		  if (!(this->get_height(square_position[0],square_position[1])
-			!= this->get_height(square_position[0] + 1,square_position[1])
+		  if (!(!character_can_move_to_square(character,direction)
 			&& character->get_fraction_x() > 1 - this->edge_east_west)) 
 			character->move_by(step_length,0.0);
 		  break;
 
 	    case DIRECTION_WEST:
-		  if (!(this->get_height(square_position[0],square_position[1])
-			!= this->get_height(square_position[0] - 1,square_position[1])
+		  if (!(!character_can_move_to_square(character,direction)
 			&& character->get_fraction_x() < this->edge_east_west)) 
 			character->move_by(-1 *step_length,0.0);
 		  break;
 
 	    case DIRECTION_SOUTH:
-		  if (!(this->get_height(square_position[0],square_position[1])
-			!= this->get_height(square_position[0],square_position[1] + 1)
+		  if (!(!character_can_move_to_square(character,direction)
 			&& character->get_fraction_y() > 1 - this->edge_north)) 
 			character->move_by(0.0,step_length);
 		  break;
@@ -431,7 +564,35 @@ void c_map::move_character(c_character *character, t_direction direction, long i
 	  != this->get_height(square_position[0] - 1,square_position[1])
 	  && character->get_fraction_x() < this->edge_east_west)
 	  character->move_by(0.02,0.0);
+	
+	// the movement's done, now handle interaction with objects
 
+	square_position[0] = character->get_square_x();
+	square_position[1] = character->get_square_y();
+
+	if (this->squares[square_position[0]][square_position[1]].map_object != NULL // shifting a crate
+	  && this->squares[square_position[0]][square_position[1]].map_object->get_type() == OBJECT_CRATE
+	  && !this->squares[square_position[0]][square_position[1]].map_object->is_animating())
+	  { 
+		switch (direction)
+		  {
+		    case DIRECTION_SOUTH:
+			  this->squares[square_position[0]][square_position[1]].map_object->play_animation(ANIMATION_SHIFT_SOUTH,global_time);
+			  break;
+
+			case DIRECTION_EAST:
+			  this->squares[square_position[0]][square_position[1]].map_object->play_animation(ANIMATION_SHIFT_EAST,global_time);
+			  break;
+
+			case DIRECTION_WEST:
+			  this->squares[square_position[0]][square_position[1]].map_object->play_animation(ANIMATION_SHIFT_WEST,global_time);
+			  break;
+
+			case DIRECTION_NORTH: 
+			  this->squares[square_position[0]][square_position[1]].map_object->play_animation(ANIMATION_SHIFT_NORTH,global_time);
+			  break;
+		  }
+	  }
   }
 
 //-----------------------------------------------
