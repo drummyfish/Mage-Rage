@@ -77,3 +77,10 @@ double c_character::get_fraction_y()
   }
 
 //-----------------------------------------------
+
+t_direction c_character::get_direction()
+  {
+	return this->direction;
+  }
+
+//-----------------------------------------------

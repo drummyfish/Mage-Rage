@@ -7,7 +7,7 @@
 
 #include "game.h"
 
-//--------------------------------------------------
+//-----------------------------------------------
 
 c_game::c_game()
   {   
@@ -61,9 +61,10 @@ c_game::c_game()
 	this->input_state.key_3 = false;
 	this->input_state.mouse_x = 0;
 	this->input_state.mouse_y = 0;
+	this->input_state.key_use = false;
   }
 
-//--------------------------------------------------
+//-----------------------------------------------
 
 c_game::~c_game()
   {
@@ -73,12 +74,13 @@ c_game::~c_game()
     delete this->map;
   }
 
-//--------------------------------------------------
+//-----------------------------------------------
 
 void c_game::run()
   {
 	c_map *map;
-	map = new c_map(&this->input_state);
+	string help_str;
+	map = new c_map(help_str,&this->input_state);
 	ALLEGRO_EVENT program_event;
 	bool quit_program;
 	
@@ -95,6 +97,8 @@ void c_game::run()
 	  {
 		map->update(this->global_time);
 	    al_flip_display();
+
+		this->input_state.key_use = false;             // we only want to detect one press
 
 		event_occured = al_get_next_event(this->event_queue, &program_event);
 
@@ -139,6 +143,10 @@ void c_game::run()
 					case ALLEGRO_KEY_3:
 					   this->input_state.key_3 = true;
 					   break;
+
+					case ALLEGRO_KEY_Q:
+					  this->input_state.key_use = true;
+					  break;
 				  }
 				break;
 
@@ -183,4 +191,4 @@ void c_game::run()
 	  }
   }
 
-//--------------------------------------------------
+//-----------------------------------------------

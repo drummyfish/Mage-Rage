@@ -23,8 +23,7 @@ int c_map::get_height(int x, int y)
 
 t_square_type c_map::get_square_type(int x, int y)
   {
-	if (x > this->width || x < 0 ||
-	  y > this->height || y < 0)
+	if (x > this->width || x < 0 || y > this->height || y < 0)
 	  return SQUARE_NORMAL;
 
 	return this->squares[x][y].type;
@@ -47,22 +46,6 @@ void c_map::set_environment(t_environment new_environment)
 		default: help_string = "grass"; break;
 	  }
 
-	al_destroy_bitmap(this->tile);
-	al_destroy_bitmap(this->tile_cliff_south_1);
-	al_destroy_bitmap(this->tile_cliff_south_2);
-	al_destroy_bitmap(this->tile_cliff_southwest_1);
-	al_destroy_bitmap(this->tile_cliff_southwest_2);
-	al_destroy_bitmap(this->tile_cliff_southeast_1);
-	al_destroy_bitmap(this->tile_cliff_southeast_2);
-	al_destroy_bitmap(this->tile_cliff_west);
-	al_destroy_bitmap(this->tile_cliff_east);
-	al_destroy_bitmap(this->tile_cliff_north);
-	al_destroy_bitmap(this->tile_cliff_northwest);
-	al_destroy_bitmap(this->tile_cliff_northeast);
-	al_destroy_bitmap(this->tile_edge);
-
-
-
 	this->tile = al_load_bitmap(("resources/tile_" + help_string + ".png").c_str());
 	this->tile_cliff_south_1 = al_load_bitmap(("resources/tile_" + help_string + "_cliff_south_1.png").c_str());
 	this->tile_cliff_south_2 = al_load_bitmap(("resources/tile_" + help_string + "_cliff_south_2.png").c_str());
@@ -82,36 +65,57 @@ void c_map::set_environment(t_environment new_environment)
 	this->tile_water[3] = al_load_bitmap("resources/tile_water_4.png");
 	this->tile_water[4] = al_load_bitmap("resources/tile_water_5.png");
 
-	this->object_crate = al_load_bitmap("resources/object_crate.png");
+	
   }
 
 //-----------------------------------------------
 
-c_map::c_map(t_input_state *input_state)
+c_map::c_map(string filename, t_input_state *input_state)
   {
-    // TEMPORARY CODE!!!!!!!!!!!!!!!!!!!!
+    this->current_player = 0;
+	this->animation_frame = 0;
+	this->time_before = 0.0;
+    this->input_state = input_state;
+	this->load_from_file(filename);
+	this->set_environment(ENVIRONMENT_GRASS);
+	
+	this->portrait_mia = al_load_bitmap("resources/portrait_mia.png");
+	this->portrait_metodej = al_load_bitmap("resources/portrait_metodej.png");
+	this->portrait_starovous = al_load_bitmap("resources/portrait_starovous.png");
+	this->portrait_selection = al_load_bitmap("resources/selection.png");
+  }
 
-	int i, j;
+//-----------------------------------------------
+
+void c_map::add_map_object(c_map_object *map_object, int x, int y)
+  {
+	int i;
+
+	for (i = 0; i < MAX_OBJECTS_PER_SQUARE; i++)       // find the first free place for the object
+	  if (this->squares[x][y].map_objects[i] == NULL)
+		this->squares[x][y].map_objects[i] = map_object;
+  }
+
+//-----------------------------------------------
+
+bool c_map::load_from_file(string filename)
+  { // TEMPORARY CODE!!!!!!!!!!!!!
+	int i, j, k;
 
 	this->width = 10;
 	this->height = 10;
 
-	this->edge_south = 0.4;
-	this->edge_north = 0.1;
-	this->edge_east_west = 0.25;
+	this->set_environment(ENVIRONMENT_GRASS);
 
-	this->current_player = 0;
-
-	this->animation_frame = 0;
-
-	this->time_before = 0.0;
-	
 	for (j = 0; j < this->height; j++)
 	  for (i = 0; i < this->width; i++)
 	    {
 		  this->squares[i][j].height = 0;
 		  this->squares[i][j].type = SQUARE_NORMAL;
 		  this->squares[i][j].height = NULL;
+
+		  for (k = 0; k < MAX_OBJECTS_PER_SQUARE; k++)
+		    this->squares[i][j].map_objects[k] = NULL;
 	    }
 
 	this->squares[0][0].height = 0;
@@ -119,7 +123,6 @@ c_map::c_map(t_input_state *input_state)
 	this->squares[2][0].height = 2;
 	this->squares[2][1].height = 1;
 	this->squares[3][0].height = 1;
-
 	this->squares[6][2].height = 2;
 	this->squares[5][2].height = 2;
 	this->squares[4][2].height = 2;
@@ -127,31 +130,14 @@ c_map::c_map(t_input_state *input_state)
 	this->squares[5][4].height = 1;
 	this->squares[5][5].height = 1;
 	this->squares[4][3].height = 1;
-	
 	this->squares[0][5].height = 2;
 	this->squares[0][6].height = 2;
 	this->squares[1][6].height = 2;
-
 	this->squares[7][7].type = SQUARE_WATER;
 	this->squares[6][7].type = SQUARE_WATER;
 	this->squares[7][6].type = SQUARE_WATER;
-
 	this->squares[7][7].height = 2;
-//	this->squares[6][7].height = 2;
 	this->squares[7][6].height = 2;
-
-	this->portrait_mia = NULL;
-	this->portrait_metodej = NULL;
-	this->portrait_starovous = NULL;
-
-	this->squares[5][8].map_object = new c_map_object(OBJECT_CRATE);
-	this->squares[4][8].map_object = new c_map_object(OBJECT_TREE);
-
-	this->squares[2][2].map_object = new c_map_object(OBJECT_STAIRS_NORTH);
-	this->squares[1][1].map_object = new c_map_object(OBJECT_STAIRS_EAST);
-	this->squares[3][1].map_object = new c_map_object(OBJECT_STAIRS_WEST);
-
-	this->squares[2][4].map_object = new c_map_object(OBJECT_STAIRS_SOUTH);
 
 	this->squares[2][5].height = 1;
 
@@ -172,74 +158,48 @@ c_map::c_map(t_input_state *input_state)
 	for (i = 0; i < 5; i++)
 	  this->tile_water[i] = NULL;
 
-	this->set_environment(ENVIRONMENT_GRASS);
-  
-	this->portrait_mia = al_load_bitmap("resources/portrait_mia.png");
-	this->portrait_metodej = al_load_bitmap("resources/portrait_metodej.png");
-	this->portrait_starovous = al_load_bitmap("resources/portrait_starovous.png");
-
-	this->portrait_selection = al_load_bitmap("resources/selection.png");
-
 	this->player_characters[0] = new c_player_character(PLAYER_STAROVOUS);
 	this->player_characters[1] = new c_player_character(PLAYER_MIA);
 	this->player_characters[2] = new c_player_character(PLAYER_METODEJ);
 
 	this->player_characters[0]->set_position(8.0,8.0);
-
 	this->player_characters[1]->set_position(6.0,8.0);
-
 	this->player_characters[2]->set_position(4.0,8.0);
 
-	this->input_state = input_state;
+	this->add_map_object(new c_map_object(OBJECT_CRATE),5,5);
+	this->add_map_object(new c_map_object(OBJECT_STAIRS_EAST),3,3);
+	this->add_map_object(new c_map_object(OBJECT_LEVER),2,7);
+
+	return true;
   }
 
 //-----------------------------------------------
 
 c_map::~c_map()
   {
-	int i, j;
-	
-	for (i = 0; i < 3; i++)                // free players
-	  {
-		delete this->player_characters[i];
-	  }
-		                                   // free bitmaps 
-	al_destroy_bitmap(this->tile);
-	al_destroy_bitmap(this->tile_cliff_south_1);
-	al_destroy_bitmap(this->tile_cliff_south_2); 
-	al_destroy_bitmap(this->tile_cliff_southwest_1);
-	al_destroy_bitmap(this->tile_cliff_southwest_2);
-	al_destroy_bitmap(this->tile_cliff_southeast_1);
-	al_destroy_bitmap(this->tile_cliff_southeast_2);
-	al_destroy_bitmap(this->tile_cliff_west);
-	al_destroy_bitmap(this->tile_cliff_east);
-	al_destroy_bitmap(this->tile_cliff_north);
-	al_destroy_bitmap(this->tile_cliff_northwest);
-	al_destroy_bitmap(this->tile_edge);
-	al_destroy_bitmap(this->portrait_mia);
-	al_destroy_bitmap(this->portrait_metodej);
-	al_destroy_bitmap(this->portrait_starovous);
-	al_destroy_bitmap(this->portrait_selection);
-	al_destroy_bitmap(this->object_crate); 
+  }
 
-	for (i = 0; i < 5; i++)
-	  al_destroy_bitmap(this->tile_water[i]);
+//-----------------------------------------------
 
-	for (j = 0; j < this->height; j++)            // destroy objects
-	  for (i = 0; i < this->width; i++)
-	    {
-		  delete this->squares[i][j].map_object;
-	    } 
+void shift_crate(int x, int y, t_direction direction)
+  {
+  }
+
+//-----------------------------------------------
+
+bool crate_can_be_shifted(int x, int y, t_direction direction)
+  {
+	return true;
   }
 
 //-----------------------------------------------
 
 void c_map::draw(int x, int y, long int global_time)
-  {
-	int i, j, help_height, elevation;
+  { 
+	int i, j, k, help_height, elevation;
 
+	
 	al_clear_to_color(al_map_rgb(0,0,0));      // clear the screen
-
 	this->animation_frame = global_time / 32;
 
 	for (j = 0; j < this->height; j++)                         // go through lines
@@ -247,11 +207,11 @@ void c_map::draw(int x, int y, long int global_time)
         for (help_height = 0; help_height < 3; help_height++)  // go through all 3 heights
 	      {
 			elevation = help_height * 27;
-
+				
 			for (i = 0; i < this->height; i++)                 // go through columns
-			  {
+			  { 
 				if (this->squares[i][j].height == help_height)
-		          {
+		          { 
 			        switch (this->squares[i][j].type)
 			          {
 			            case SQUARE_NORMAL:                      // normal square
@@ -279,7 +239,7 @@ void c_map::draw(int x, int y, long int global_time)
 					      
 						  break;
 					  }
-
+					
 			        if (help_height != 3)                                                    // draw south cliffs
 				      {
 				        if (this->get_height(i,j - 1) == help_height + 1)                    // south
@@ -303,7 +263,7 @@ void c_map::draw(int x, int y, long int global_time)
 						      al_draw_bitmap(this->tile_cliff_southwest_2,x + i * 64 - 10,y + j * 50 - elevation - 54,0);
 					      }
 				      }
-
+					  
 				    if (help_height != 0)                                                  // draw other cliffs
 				      {
 				        if (this->get_height(i,j - 1) < help_height)                       // north
@@ -325,15 +285,18 @@ void c_map::draw(int x, int y, long int global_time)
 				        if (this->get_height(i + 1,j) < help_height)                       // east
 					      al_draw_bitmap(this->tile_cliff_east,x + i * 64 + 64,y + j * 50 - elevation,0);
 		        
-				      }
+				      } 
 				  } 
 			  }
 	      }
 
 		for (i = 0; i < this->width; i++)      // draw the same line of objects
 	      {
-			if (this->squares[i][j].map_object != NULL)
-			  this->squares[i][j].map_object->draw(x + i * 64, y + j * 50 - this->squares[i][j].height * 27,global_time);
+			for (k = 0; k < MAX_OBJECTS_PER_SQUARE; k++)
+			  if (this->squares[i][j].map_objects[k] != NULL)
+				this->squares[i][j].map_objects[k]->draw(x + i * 64, y + j * 50 - this->squares[i][j].height * 27,global_time);
+			  else
+				break;
 	      }
 
 		for (i = 0; i < 3; i++)                // draw players
@@ -345,7 +308,7 @@ void c_map::draw(int x, int y, long int global_time)
 			  (int) (y + this->player_characters[i]->get_position_y() * 50) - elevation,global_time);
 		    }
 	  }
-
+/*
 	for (i = 0; i < 3; i++)                                 // draw portraits
 	  if (this->player_characters[i] != NULL)
 		{
@@ -366,7 +329,7 @@ void c_map::draw(int x, int y, long int global_time)
                   al_draw_bitmap(this->portrait_starovous,10 + i * 150,10,0);
 			      break;
 			  }		
-		}
+		}  */
   }
 
 //-----------------------------------------------
@@ -440,9 +403,10 @@ bool c_map::character_can_move_to_square(c_character *character, t_direction dir
 	  }
 
 	if (square_position_next[0] < 0 || square_position_next[0] >= this->width ||   // check map range
-	  square_position_next[1] < 0 || square_position_next[1] >= this->height ||
-	  !this->object_is_stepable(square_position_next[0],square_position_next[1])   // check stepable objects
-	  )
+	  square_position_next[1] < 0 || square_position_next[1] >= this->height)
+	  return false;
+
+	if(!this->square_is_stepable(square_position_next[0],square_position_next[1])) // check stepable objects
 	  return false;
 
 	height_difference = this->get_height(square_position[0],square_position[1]) -  // check terrain height differences
@@ -467,35 +431,52 @@ bool c_map::character_can_move_to_square(c_character *character, t_direction dir
 		  break;
 	  }		  
 
-	return true;
+	return true; 
   }
 
 //-----------------------------------------------
 
 bool c_map::square_has_object(int x, int y, t_object_type object_type)
-  {
+  { 
+	int i;
+
     if (x > this->width || x < 0 || y > this->height ||
 	  this->height < 0)
 	  return false;
 
-	return (this->squares[x][y].map_object != NULL &&
-		this->squares[x][y].map_object->get_type() ==
-		object_type);
+	for (i = 0; i < MAX_OBJECTS_PER_SQUARE; i++)
+	  if (this->squares[x][y].map_objects[i] != NULL)
+	    {
+		  if (this->squares[x][y].map_objects[i]->get_type() == object_type)
+		    return true;
+	    }
+	  else
+		break;
+
+	return false;
   }
 
 
 //-----------------------------------------------
 
-bool c_map::object_is_stepable(int x, int y)
-  {
+bool c_map::square_is_stepable(int x, int y)
+  { 
+	int i;
+
 	if (x < 0 || x >= this->width ||
 		y < 0 || y >= this->height)
 	  return false;
 
-	if (this->squares[x][y].map_object != NULL)
-	  return this->squares[x][y].map_object->is_stepable();
+	for (i = 0; i < MAX_OBJECTS_PER_SQUARE; i++)
+      if (this->squares[x][y].map_objects[i] != NULL)
+	    {
+		  if (!this->squares[x][y].map_objects[i]->is_stepable())
+		    return false;
+	    }
+	  else
+		break;
 
-	return true;
+	return true; 
   }
 
 //-----------------------------------------------
@@ -521,78 +502,57 @@ void c_map::move_character(c_character *character, t_direction direction, long i
 	switch (direction)
 	  {
 	    case DIRECTION_NORTH:
-		  if (!(!character_can_move_to_square(character,direction)
-			&& character->get_fraction_y() < this->edge_south)) 
+		  if (character_can_move_to_square(character,direction)
+			|| character->get_fraction_y() > CLIFF_DISTANCE_SOUTH) 
 			character->move_by(0.0,-1 * step_length);
 		  break;
 
 	    case DIRECTION_EAST:
-		  if (!(!character_can_move_to_square(character,direction)
-			&& character->get_fraction_x() > 1 - this->edge_east_west)) 
+		  if (character_can_move_to_square(character,direction)
+			|| character->get_fraction_x() < 1 - CLIFF_DISTANCE_EAST_WEST) 
 			character->move_by(step_length,0.0);
 		  break;
 
 	    case DIRECTION_WEST:
-		  if (!(!character_can_move_to_square(character,direction)
-			&& character->get_fraction_x() < this->edge_east_west)) 
+		  if (character_can_move_to_square(character,direction)
+			|| character->get_fraction_x() > CLIFF_DISTANCE_EAST_WEST) 
 			character->move_by(-1 *step_length,0.0);
 		  break;
 
 	    case DIRECTION_SOUTH:
-		  if (!(!character_can_move_to_square(character,direction)
-			&& character->get_fraction_y() > 1 - this->edge_north)) 
+		  if (character_can_move_to_square(character,direction)
+			|| character->get_fraction_y() < 1 - CLIFF_DISTANCE_NORTH) 
 			character->move_by(0.0,step_length);
 		  break;
 	  }
 
 	// adjust the position (so the character keeps a little distance from cliffs):
-
+	
 	if (direction != DIRECTION_NORTH &&
 	  this->get_height(square_position[0],square_position[1])         
 	  != this->get_height(square_position[0],square_position[1] - 1)
-	  && character->get_fraction_y() < this->edge_south)
+	  && character->get_fraction_y() < CLIFF_DISTANCE_SOUTH)
 	  character->move_by(0.0,0.02);
 	
 	if (direction != DIRECTION_EAST &&
 	  this->get_height(square_position[0],square_position[1])         
 	  != this->get_height(square_position[0] + 1,square_position[1])
-	  && character->get_fraction_x() > 1 - this->edge_east_west)
+	  && character->get_fraction_x() > 1 - CLIFF_DISTANCE_EAST_WEST)
 	  character->move_by(-0.02,0.0);
 
 	if (direction != DIRECTION_WEST &&
 	  this->get_height(square_position[0],square_position[1])         
 	  != this->get_height(square_position[0] - 1,square_position[1])
-	  && character->get_fraction_x() < this->edge_east_west)
-	  character->move_by(0.02,0.0);
+	  && character->get_fraction_x() < CLIFF_DISTANCE_EAST_WEST)
+	  character->move_by(0.02,0.0); 
 	
 	// the movement's done, now handle interaction with objects
 
 	square_position[0] = character->get_square_x();
 	square_position[1] = character->get_square_y();
-
-	if (this->squares[square_position[0]][square_position[1]].map_object != NULL // shifting a crate
-	  && this->squares[square_position[0]][square_position[1]].map_object->get_type() == OBJECT_CRATE
-	  && !this->squares[square_position[0]][square_position[1]].map_object->is_animating())
-	  { 
-		switch (direction)
-		  {
-		    case DIRECTION_SOUTH:
-			  this->squares[square_position[0]][square_position[1]].map_object->play_animation(ANIMATION_SHIFT_SOUTH,global_time);
-			  break;
-
-			case DIRECTION_EAST:
-			  this->squares[square_position[0]][square_position[1]].map_object->play_animation(ANIMATION_SHIFT_EAST,global_time);
-			  break;
-
-			case DIRECTION_WEST:
-			  this->squares[square_position[0]][square_position[1]].map_object->play_animation(ANIMATION_SHIFT_WEST,global_time);
-			  break;
-
-			case DIRECTION_NORTH: 
-			  this->squares[square_position[0]][square_position[1]].map_object->play_animation(ANIMATION_SHIFT_NORTH,global_time);
-			  break;
-		  }
-	  }
+	/*
+	if (this->square_has_object(square_position[0],square_position[1],OBJECT_CRATE))
+	  this->shift_crate(square_position[0],square_position[1],direction); */
   }
 
 //-----------------------------------------------
@@ -604,21 +564,13 @@ void c_map::update(long int global_time)
 	this->draw(50,75,global_time);
 	
 	if (this->input_state->key_left)
-	  {
-		this->move_character(this->player_characters[this->current_player],DIRECTION_WEST,global_time);
-	  }
+	  this->move_character(this->player_characters[this->current_player],DIRECTION_WEST,global_time);
 	else if (this->input_state->key_right)
-	  {
-		this->move_character(this->player_characters[this->current_player],DIRECTION_EAST,global_time);
-	  }
+	  this->move_character(this->player_characters[this->current_player],DIRECTION_EAST,global_time);
 	else if (this->input_state->key_down)
-	  {
-		this->move_character(this->player_characters[this->current_player],DIRECTION_SOUTH,global_time);
-	  }
+	  this->move_character(this->player_characters[this->current_player],DIRECTION_SOUTH,global_time);
 	else if (this->input_state->key_up)
-	  {
-		this->move_character(this->player_characters[this->current_player],DIRECTION_NORTH,global_time);
-	  }
+	  this->move_character(this->player_characters[this->current_player],DIRECTION_NORTH,global_time);
 	else
 	  {
 		this->player_characters[this->current_player]->stop_animation();
@@ -641,7 +593,53 @@ void c_map::update(long int global_time)
 		this->current_player = 2;
 	  }
 
+	if (this->input_state->key_use)
+	  {
+		this->use_key_press();
+	  }
+	  
 	this->time_before = al_current_time();
+  }
+
+//-----------------------------------------------
+
+void c_map::use_key_press()
+  {
+	int i;
+	int facing_square[2];  // coordinations of the square the player is facing
+	int coordinations[2];
+
+	coordinations[0] = this->player_characters[this->current_player]->get_square_x();
+    coordinations[1] = this->player_characters[this->current_player]->get_square_y();
+
+	switch(this->player_characters[this->current_player]->get_direction())
+	  {
+	    case DIRECTION_NORTH:
+		  facing_square[0] = coordinations[0];
+		  facing_square[1] = coordinations[1] - 1;
+		  break;
+
+		case DIRECTION_EAST:
+		  facing_square[0] = coordinations[0] + 1;
+		  facing_square[1] = coordinations[1];
+		  break;
+
+		case DIRECTION_SOUTH:
+		  facing_square[0] = coordinations[0];
+		  facing_square[1] = coordinations[1] + 1;
+		  break;
+
+		case DIRECTION_WEST:
+		  facing_square[0] = coordinations[0] - 1;
+		  facing_square[1] = coordinations[1];
+		  break;
+	  }
+
+	for (i = 0; i < MAX_OBJECTS_PER_SQUARE; i++)
+	  if (this->squares[facing_square[0]][facing_square[1]].map_objects[i] != NULL)
+        this->squares[facing_square[0]][facing_square[1]].map_objects[i]->use();
+	  else
+	    break;
   }
 
 //-----------------------------------------------

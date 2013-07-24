@@ -19,30 +19,38 @@ class c_map_object: public c_graphic_object
 	*/
 
     protected:
-      t_object_type type;         /** type of the object */
-	  int link_id;                /** identifies link between objects so they affect each other */
-	  int object_state;           /** identifies object state (on/off, open/closed etc.) */
-	  ALLEGRO_BITMAP *bitmaps[5]; /** bitmaps used to draw this object */
-	  bool stepable;              /** true if this object can be stepped over */
+      t_object_type type;          /** type of the object */
+	  int link_id;                 /** identifies link between objects so they affect each other */
+	  t_object_state object_state; /** identifies object state (on/off, open/closed etc.) */
+	  ALLEGRO_BITMAP *bitmaps[5];  /** bitmaps used to draw this object */
+	  bool stepable;               /** true if this object can be stepped over */
 
     public:
 	  c_map_object(t_object_type object_type);
 
-	  /**
-	    Class constructor, initialises new
-		map object.
+	    /**
+	      Class constructor, initialises new
+		  map object.
 
-		@param object_type object type of the
-		  new map object.
-	  */
+		  @param object_type object type of the
+		    new map object.
+	    */
 
 	  t_object_type get_type();
 
-	  /**
-	    Returns this object's type.
+	    /**
+	      Returns this object's type.
 
-		@return this object's type
-	  */
+		  @return this object's type
+	    */
+
+	  void change_state(t_object_state object_state);
+
+	    /**
+		  Changes the object's state.
+
+		  @param object_state new object state
+		*/
 
 	  virtual void draw(int x, int y, long int global_time);
 
@@ -64,6 +72,13 @@ class c_map_object: public c_graphic_object
 
 		  @return true if this object is
 		    stepable, otherwise false
+		*/
+
+	  void use();
+
+	    /**
+		  This method is called when player uses
+		  the object.
 		*/
   };
 

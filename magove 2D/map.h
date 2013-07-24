@@ -26,9 +26,9 @@ typedef struct
       Holds info about one map square.
     */
 
-	int height;               /** square height, min is 0, max is 2 */
-	t_square_type type;       /** square type, like normal, water, ice and so on. */
-	c_map_object *map_object; /** object on this square (NULL means no object) */
+	int height;                                         /** square height, min is 0, max is 2 */
+	t_square_type type;                                 /** square type, like normal, water, ice and so on. */
+	c_map_object *map_objects[MAX_OBJECTS_PER_SQUARE];  /** objects on this square (NULL means no object) */
   } t_map_square;
 
 class c_map: c_graphic_object
@@ -40,42 +40,34 @@ class c_map: c_graphic_object
 	*/
 
     private:
-	  int width;                                           /** map width in squares */
-	  int height;                                          /** map height in squares */
-	  int current_player;                                  /** current player number */
-	  t_environment environment;                           /** map environment */
-	  t_map_square squares[MAP_MAX_WIDTH][MAP_MAX_HEIGHT]; /** map squares */
-	  c_player_character *player_characters[3];            /** player characters, NULL means no character */            
-	  t_input_state *input_state;                          /** pointer to information about keyboard and mouse */
-	  double time_before;                                  /** to compute time difference between frames (for movement etc.) */
-	  double time_difference;                              /** stores time between two frames to calculate step length etc. */
+	  int width;                                                       /** map width in squares */
+	  int height;                                                      /** map height in squares */
+	  int current_player;                                              /** current player number */
+	  t_environment environment;                                       /** map environment */
+	  t_map_square squares[MAP_MAX_WIDTH][MAP_MAX_HEIGHT];             /** map squares */
+	  c_player_character *player_characters[3];                        /** player characters, NULL means no character */            
+	  t_input_state *input_state;                                      /** pointer to information about keyboard and mouse */
+	  double time_before;                                              /** to compute time difference between frames (for movement etc.) */
+	  double time_difference;                                          /** stores time between two frames to calculate step length etc. */
 
-	  double edge_south;                                   /** fraction of square in which collision with south cliffs will occur */
-	  double edge_north;                                   /** fraction of square in which collision with north cliffs will occur */
-	  double edge_east_west;                               /** fraction of square in which collision with east and west cliffs will occur */
-
-	  ALLEGRO_BITMAP *portrait_selection;                  /** bitmap - GUI selection behind the portrait */ 
-
-	  ALLEGRO_BITMAP *portrait_mia;                        /** bitmap - GUI portrait of Mia */
-	  ALLEGRO_BITMAP *portrait_metodej;                    /** bitmap - GUI portrait of Metodej */
-	  ALLEGRO_BITMAP *portrait_starovous;                  /** bitmap - GUI portrait of Starovous */
-
-	  ALLEGRO_BITMAP *object_crate;                        /** bitmap - crate */
-
-	  ALLEGRO_BITMAP *tile;                                /** bitmap - normal tile */
-	  ALLEGRO_BITMAP *tile_cliff_south_1;                  /** bitmap - south cliff, height 1 */
-	  ALLEGRO_BITMAP *tile_cliff_south_2;                  /** bitmap - south cliff, height 2 */
-	  ALLEGRO_BITMAP *tile_cliff_southwest_1;              /** bitmap - southwest cliff, height 1 */
-	  ALLEGRO_BITMAP *tile_cliff_southwest_2;              /** bitmap - southwest cliff, height 2 */
-	  ALLEGRO_BITMAP *tile_cliff_southeast_1;              /** bitmap - southeast cliff, height 1 */
-	  ALLEGRO_BITMAP *tile_cliff_southeast_2;              /** bitmap - southeast cliff, height 2 */
-	  ALLEGRO_BITMAP *tile_cliff_west;                     /** bitmap - west cliff (any height) */
-	  ALLEGRO_BITMAP *tile_cliff_east;                     /** bitmap - east cliff (any height) */
-	  ALLEGRO_BITMAP *tile_cliff_north;                    /** bitmap - north cliff (any height) */
-	  ALLEGRO_BITMAP *tile_cliff_northwest;                /** bitmap - northwest cliff (any height) */
-	  ALLEGRO_BITMAP *tile_cliff_northeast;                /** bitmap - northeast cliff (any height) */
-	  ALLEGRO_BITMAP *tile_edge;                           /** bitmap - used as south border with other surface */
-	  ALLEGRO_BITMAP *tile_water[5];                       /** bitmap - water, 5 animation frames */
+	  ALLEGRO_BITMAP *portrait_selection;                              /** bitmap - GUI selection behind the portrait */ 
+	  ALLEGRO_BITMAP *portrait_mia;                                    /** bitmap - GUI portrait of Mia */
+	  ALLEGRO_BITMAP *portrait_metodej;                                /** bitmap - GUI portrait of Metodej */
+	  ALLEGRO_BITMAP *portrait_starovous;                              /** bitmap - GUI portrait of Starovous */
+	  ALLEGRO_BITMAP *tile;                                            /** bitmap - normal tile */
+	  ALLEGRO_BITMAP *tile_cliff_south_1;                              /** bitmap - south cliff, height 1 */
+	  ALLEGRO_BITMAP *tile_cliff_south_2;                              /** bitmap - south cliff, height 2 */
+	  ALLEGRO_BITMAP *tile_cliff_southwest_1;                          /** bitmap - southwest cliff, height 1 */
+	  ALLEGRO_BITMAP *tile_cliff_southwest_2;                          /** bitmap - southwest cliff, height 2 */
+	  ALLEGRO_BITMAP *tile_cliff_southeast_1;                          /** bitmap - southeast cliff, height 1 */
+	  ALLEGRO_BITMAP *tile_cliff_southeast_2;                          /** bitmap - southeast cliff, height 2 */
+	  ALLEGRO_BITMAP *tile_cliff_west;                                 /** bitmap - west cliff (any height) */
+	  ALLEGRO_BITMAP *tile_cliff_east;                                 /** bitmap - east cliff (any height) */
+	  ALLEGRO_BITMAP *tile_cliff_north;                                /** bitmap - north cliff (any height) */
+	  ALLEGRO_BITMAP *tile_cliff_northwest;                            /** bitmap - northwest cliff (any height) */
+	  ALLEGRO_BITMAP *tile_cliff_northeast;                            /** bitmap - northeast cliff (any height) */
+	  ALLEGRO_BITMAP *tile_edge;                                       /** bitmap - used as south border with other surface */
+	  ALLEGRO_BITMAP *tile_water[5];                                   /** bitmap - water, 5 animation frames */
 
 	  void move_character(c_character *character, t_direction direction, long int global_time);
 
@@ -88,6 +80,34 @@ class c_map: c_graphic_object
 		  @param direction direction in which
 		    the player is moving
 		  @param global_time global time counter
+		*/
+
+	  void add_map_object(c_map_object *map_object, int x, int y);
+
+	    /**
+	      Places an object on the map square.
+		  The map must be loaded.
+
+		  @param map_object map object to be
+		    put onto map
+		  @param x x coordination of the square
+		  @param y y coordination of the square
+		*/
+
+	  void use_key_press();
+
+	    /**
+		  Handles use key press.
+		*/
+
+	  bool load_from_file(string filename);
+
+	    /**
+	      Loads the map from given file.
+
+		  @param filename path to the file
+		  @return true if the map was loaded
+		    succesfully, otherwise false
 		*/
 
 	  bool character_can_move_to_square(c_character *character, t_direction direction);
@@ -121,18 +141,18 @@ class c_map: c_graphic_object
 			otherwise false
 		*/
 
-	  bool object_is_stepable(int x, int y);
+	  bool square_is_stepable(int x, int y);
 
 	    /**
-	      Checks whether object at given
-		  position can't be moved over.
+	      Checks whether given position can
+		  be moved to by a character.
 
 		  @param x x coordination of the square
 		  @param y y coordination of the square
-		  @return true if the object at given
-		    square is stepable, otherwise false,
-			for coordinations outside the map
-			false is returned
+		  @return true if the square at given
+		    position is stepable, otherwise
+			false, for coordinations outside
+			the map false is returned
 		*/
 
 	  int get_elevation_for_character(c_character *character);
@@ -148,30 +168,14 @@ class c_map: c_graphic_object
 		  @return height offset in pixels
 		*/
 
-    public:
-
-      c_map(t_input_state *input_state);
-
-	    /** 
-	      Class constructor, initialises new map
-	  	  object.
-
-		  @param input_state pointer to structure,
-		    which will be used to pass information
-			about keyboard and mouse to this object.
-	    */
-
-	  ~c_map();
-	    
-	    /**
-		  Class destructor, frees all it's memory.
-		*/
-
 	  void set_environment(t_environment new_environment);
 
 	    /**
-		  Changes the maps environment, which
-		  affects it's tileset (it's look).
+		  Sets the map environment, which affects
+		  it's tileset (it's look). This should
+		  only be called once for the object
+		  because the method doesn't free any
+		  previously allocated memory.
 
 		  @param new_environment new environment to
 		    be set
@@ -189,6 +193,35 @@ class c_map: c_graphic_object
 		  @return map height at given position
 		*/
 
+	  void shift_crate(int x, int y, t_direction direction);
+
+		/**
+		  Shift a crate at given square in given
+		  direction. It must be checked that it is
+		  possible to shift the crate.
+
+		  @param x x coordination of the square
+		  @param y y coordination of the square
+		  @param direction direction in which to
+		    shift the crate
+		*/
+
+	  bool crate_can_be_shifted(int x, int y, t_direction direction);
+
+	    /**
+		  Checks if a crate at given square can
+		  be shifted in given direction. It is
+		  assumed that the square given really
+		  holds a crate object.
+
+		  @param x x coordination of the square
+		  @param y y coordination of the square
+		  @param direction direction in which
+		    the crate is to be shifted
+		  @return true if the crate can be
+		    shifted, otherwise false
+		*/
+
 	  t_square_type get_square_type(int x, int y);
 	    
 	    /**
@@ -199,6 +232,26 @@ class c_map: c_graphic_object
 		  @param x x position
 		  @param y y position
 		  @return square type at given position
+		*/
+
+    public:
+
+      c_map(string filename, t_input_state *input_state);
+
+	    /** 
+	      Class constructor, loads new map from
+		  given file.
+
+		  @param filename path to the map file
+		  @param input_state pointer to structure,
+		    which will be used to pass information
+			about keyboard and mouse to this object.
+	    */
+
+	  ~c_map();
+	    
+	    /**
+		  Class destructor, frees all it's memory.
 		*/
 
 	  void update(long int global_time);

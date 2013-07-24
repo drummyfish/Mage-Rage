@@ -15,8 +15,12 @@
 #include "allegro5/allegro_image.h"
 #include "allegro5/allegro_native_dialog.h"
 
-#define MAP_MAX_WIDTH 30            // maximum map width in squares
-#define MAP_MAX_HEIGHT 30           // maximum map height in squares
+#define MAP_MAX_WIDTH 30                /// maximum map width in squares
+#define MAP_MAX_HEIGHT 30               /// maximum map height in squares
+#define CLIFF_DISTANCE_SOUTH 0.4        /// character collision distance with south cliff (in fraction of one square)
+#define CLIFF_DISTANCE_NORTH 0.1        /// character collision distance with north cliff (in fraction of one square)
+#define CLIFF_DISTANCE_EAST_WEST 0.25   /// character collision distance with east and west cliff (in fraction of one square) 
+#define MAX_OBJECTS_PER_SQUARE 5        /// maximum number of objects on one square
 
 typedef enum
   {
@@ -53,6 +57,12 @@ typedef enum
 	PLAYER_STAROVOUS
   } t_player_type;
 
+typedef enum
+  {
+	OBJECT_STATE_ON,
+	OBJECT_STATE_OFF
+  } t_object_state;
+
 typedef struct
   {
 	/**
@@ -67,6 +77,7 @@ typedef struct
 	bool key_1;         /** key switch to player 1 */
 	bool key_2;         /** key switch to player 2 */
 	bool key_3;         /** key switch to player 3 */
+	bool key_use;       /** key used to manipulate map objects */
 
 	int mouse_x;        /** mouse x position */
 	int mouse_y;        /** mouse y position */

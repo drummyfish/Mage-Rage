@@ -28,86 +28,94 @@ class c_character: public c_graphic_object
 
 	  void set_position(double x, double y);
 
-	  /**
-	    Sets the character's new position.
+	    /**
+	      Sets the character's new position.
 
-		@param x new position x
-		@param y new position y
-	  */
+		  @param x new position x
+		  @param y new position y
+	    */
 
 	  void set_direction(t_direction direction);
 
-	  /**
-	    Sets the character's facing direction.
+	    /**
+	      Sets the character's facing direction.
 
-		@param direction new direction
-	  */
+		  @param direction new direction
+	    */
 
 	  void move_by(double x, double y);
 
-	  /**
-	    Sets the character's position relatively
-		to current position.
+	    /**
+	      Sets the character's position relatively
+		  to current position.
 
-		@param x value to be added to x position
-		@param y value to be added to y position
-	  */
+		  @param x value to be added to x position
+		  @param y value to be added to y position
+	    */
 
 	  double get_position_x();
 
-	  /**
-	    Returns x position of the character.
+	    /**
+	      Returns x position of the character.
 
-		@return x position
-	  */
+		  @return x position
+	    */
 
 	  double get_position_y();
      
-	  /**
-	    Returns y position of the character.
+	    /**
+	      Returns y position of the character.
 		
-		@return y position
-	  */
+		  @return y position
+	    */
 
 	  int get_square_x();
 
-	  /**
-	    Returns x coordination of the square at
-		which the character is standing.
+	    /**
+	      Returns x coordination of the square at
+		  which the character is standing.
 
-		@return x coordination of the
-		  character's square 
-	  */
+		  @return x coordination of the
+		    character's square 
+	    */
 
 	  int get_square_y();
 
-	  /**
-	    Returns y coordination of the square at
-		which the character is standing.
+	    /**
+	      Returns y coordination of the square at
+		  which the character is standing.
 
-		@return y coordination of the
-		  character's square 
-	  */
+		  @return y coordination of the
+		    character's square 
+	    */
 
 	  double get_fraction_x();
 
-	  /**
-	    Returns fraction part of the position,
-		which is position within current square.
+	    /**
+	      Returns fraction part of the position,
+		  which is position within current square.
 
-		@return x position within current
-		  square (value in range <0;1>)
-	  */
+		  @return x position within current
+		    square (value in range <0;1>)
+	    */
 
 	  double get_fraction_y();
 
-	  /**
-	    Returns fraction part of the position,
-		which is position within current square.
+	    /**
+	      Returns fraction part of the position,
+		  which is position within current square.
 
-		@return y position within current
-		  square (value in range <0;1>)
-	  */
+	  	  @return y position within current
+		    square (value in range <0;1>)
+	    */
+
+	  t_direction get_direction();
+
+	    /**
+	      Returns character's direction.
+
+		  @return character's direction
+	    */
   };
 
 #endif
