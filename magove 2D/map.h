@@ -42,6 +42,9 @@ class c_map: c_graphic_object
     private:
 	  int width;                                                       /** map width in squares */
 	  int height;                                                      /** map height in squares */
+	  int *button_positions_x;                                         /** an array containing x coordinations of all button objects on the map for faster browsing */
+	  int *button_positions_y;                                         /** an array containing y coordinations of all buttons */
+	  int number_of_buttons;                                           /** number of buttons on the map */
 	  int current_player;                                              /** current player number */
 	  t_environment environment;                                       /** map environment */
 	  t_map_square squares[MAP_MAX_WIDTH][MAP_MAX_HEIGHT];             /** map squares */
@@ -251,6 +254,15 @@ class c_map: c_graphic_object
 		  Establishes pointer connections between
 		  map objects depending on their link
 		  ids.
+		*/
+
+	  void check_buttons(long int global_time);
+
+	    /**
+		  Tests all the button objects on the
+		  map and performs appropriate actions.
+
+		  @param global_time global time counter
 		*/
 
     public:

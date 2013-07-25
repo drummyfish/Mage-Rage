@@ -79,6 +79,13 @@ c_map_object::c_map_object(t_object_type object_type, int link_id)
 		  this->bitmaps[2] = al_load_bitmap("resources/object_door_vertical_3.png");
 		  this->bitmaps[3] = al_load_bitmap("resources/object_door_vertical_4.png");
 		  break; 
+
+		case OBJECT_BUTTON:
+		  this->stepable = true;
+		  this->input = true;
+		  this->bitmaps[0] = al_load_bitmap("resources/object_button_1.png");
+		  this->bitmaps[1] = al_load_bitmap("resources/object_button_2.png");
+		  break; 		  
 	  }
   }
 
@@ -130,6 +137,9 @@ void c_map_object::switch_state(long int global_time)
 			
 		  break;
 	  }
+
+	if (this->is_input())
+      this->update_controlled_objects(global_time);
   }
 
 //-----------------------------------------------
@@ -248,6 +258,13 @@ void c_map_object::draw(int x, int y, long int global_time)
 
 		  break;
 
+		case OBJECT_BUTTON:
+		  if (this->object_state == OBJECT_STATE_ON)
+		    bitmap_to_draw = this->bitmaps[1];
+		  else
+            bitmap_to_draw = this->bitmaps[0];
+		  break;
+
 	    default:
           bitmap_to_draw = this->bitmaps[0];
 		  break;
@@ -258,7 +275,7 @@ void c_map_object::draw(int x, int y, long int global_time)
 
 //-----------------------------------------------
 
-void c_map_object::change_state(t_object_state object_state)
+void c_map_object::set_state(t_object_state object_state)
   {
 	this->object_state = object_state;
   }

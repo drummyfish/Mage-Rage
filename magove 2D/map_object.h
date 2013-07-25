@@ -97,10 +97,12 @@ class c_map_object: public c_graphic_object
 		    input, otherwise false
 		*/
 
-	  void change_state(t_object_state object_state);
+	  void set_state(t_object_state object_state);
 
 	    /**
-		  Changes the object's state.
+		  Sets the object's state (but does
+		  nothing else like updating controlled
+		  objects etc.).
 
 		  @param object_state new object state
 		*/

@@ -104,6 +104,7 @@ void c_map::add_map_object(c_map_object *map_object, int x, int y)
 bool c_map::load_from_file(string filename)
   { // TEMPORARY CODE!!!!!!!!!!!!!
 	int i, j, k;
+	int button_positions[512][2];        // buffer to hold button positions
 
 	this->width = 10;
 	this->height = 10;
@@ -176,10 +177,31 @@ bool c_map::load_from_file(string filename)
 	this->add_map_object(aaa,3,7);
 
 	this->add_map_object(new c_map_object(OBJECT_LEVER,1),2,7);
+	this->add_map_object(new c_map_object(OBJECT_BUTTON,1),9,9);
 
 	this->add_map_object(new c_map_object(OBJECT_DOOR_VERTICAL,1),4,8);
 
 	this->link_objects();
+
+	this->number_of_buttons = 0;
+
+	for (j = 0; j < this->height; j++)              // record all button positions
+	  for (i = 0; i < this->width; i++)
+		if (this->square_has_object(i,j,OBJECT_BUTTON))
+		  {
+			button_positions[this->number_of_buttons][0] = i;
+			button_positions[this->number_of_buttons][1] = j;
+			this->number_of_buttons++;
+		  }
+
+	this->button_positions_x = new int[this->number_of_buttons];
+	this->button_positions_y = new int[this->number_of_buttons];
+
+	for (i = 0; i < this->number_of_buttons; i++)
+	  {
+        this->button_positions_x[i] = button_positions[i][0];
+		this->button_positions_y[i] = button_positions[i][1];
+	  }
 
 	return true;
   }
@@ -195,6 +217,69 @@ c_map::~c_map()
 void c_map::shift_crate(int x, int y, t_direction direction)
   {
   }
+
+//-----------------------------------------------
+
+void c_map::check_buttons(long int global_time)
+  {
+	int i, j;
+	int nuber_of_objects;    // number of objects on one square
+	c_map_object *help_object;
+	bool is_pressed;
+
+	for (i = 0; i < this->number_of_buttons; i++)
+	  {
+		is_pressed = false;
+	
+		for (j = 0; j < 3; j++)  // check if any player is standing on the square
+		  if (this->player_characters[j] != NULL)
+			if (this->player_characters[j]->get_square_x() == this->button_positions_x[i] &&
+			    this->player_characters[j]->get_square_y() == this->button_positions_y[i])
+			  {
+				is_pressed = true;
+				break;
+			  }
+
+		if (!is_pressed)
+		  {
+		    nuber_of_objects = 0;
+
+	        for (j = 0; j < MAX_OBJECTS_PER_SQUARE; j++)
+	          {
+		        help_object = this->squares[this->button_positions_x[i]][this->button_positions_y[i]].map_objects[j];
+
+		        if (help_object != NULL)
+		          {
+			        nuber_of_objects++;
+		          }
+		        else
+		          break;
+	          }
+
+			if (nuber_of_objects > 1)  // if there are more objects than just the button
+			  is_pressed = true;
+		  }
+
+		for (j = 0; j < MAX_OBJECTS_PER_SQUARE; j++) // find the button and do actions
+		  {
+			help_object = this->squares[this->button_positions_x[i]][this->button_positions_y[i]].map_objects[j];
+		  
+		    if (help_object != NULL && help_object->get_type() == OBJECT_BUTTON)
+			  {
+                if (is_pressed)
+				  {
+					if (help_object->get_state() == OBJECT_STATE_OFF)
+					  help_object->switch_state(global_time);
+				  }
+				else
+				  {
+					if (help_object->get_state() == OBJECT_STATE_ON)
+					  help_object->switch_state(global_time);
+				  }
+			  }
+		  }
+      }
+}
 
 //-----------------------------------------------
 
@@ -546,7 +631,9 @@ bool c_map::square_is_stepable(int x, int y)
 void c_map::move_character(c_character *character, t_direction direction, long int global_time)
   {
 	int square_position[2];                // player position in map squares
+	int i;
 	double step_length;
+	c_map_object *help_object;
 
 	step_length = 0.026;
 
@@ -612,9 +699,8 @@ void c_map::move_character(c_character *character, t_direction direction, long i
 
 	square_position[0] = character->get_square_x();
 	square_position[1] = character->get_square_y();
-	/*
-	if (this->square_has_object(square_position[0],square_position[1],OBJECT_CRATE))
-	  this->shift_crate(square_position[0],square_position[1],direction); */
+
+	this->check_buttons(global_time);
   }
 
 //-----------------------------------------------
