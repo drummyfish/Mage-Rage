@@ -25,6 +25,7 @@ class c_graphic_object
 	  long int started_playing;            /** Time when the animation started playing to count the animation frame. */
 	  int animation_frame;                 /** Current animation frame. */
 	  bool looping_animation;              /** True if the animation is looping, false otherwise. */
+	  int animation_period;                /** number of frames of the current animation */
 
     public:
 
@@ -72,6 +73,13 @@ class c_graphic_object
 
 		  @return true if any animation is
 		    playing or looping, false otherwise
+		*/
+
+	  virtual void update_animation_period();
+
+	    /**
+		  Depending on current animation sets
+		  the animation period attribute.
 		*/
   };
 

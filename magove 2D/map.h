@@ -94,10 +94,12 @@ class c_map: c_graphic_object
 		  @param y y coordination of the square
 		*/
 
-	  void use_key_press();
+	  void use_key_press(long int global_time);
 
 	    /**
 		  Handles use key press.
+
+		  @param global_time global time counter
 		*/
 
 	  bool load_from_file(string filename);
@@ -232,6 +234,23 @@ class c_map: c_graphic_object
 		  @param x x position
 		  @param y y position
 		  @return square type at given position
+		*/
+
+	  void update_map_object_states(long int global_time);
+	    
+	    /**
+		  Updates object states depending on
+		  links between them.
+
+		  @param global_time global time counter
+		*/
+
+	  void link_objects();
+
+	    /**
+		  Establishes pointer connections between
+		  map objects depending on their link
+		  ids.
 		*/
 
     public:

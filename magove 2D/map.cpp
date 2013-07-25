@@ -77,7 +77,7 @@ c_map::c_map(string filename, t_input_state *input_state)
 	this->time_before = 0.0;
     this->input_state = input_state;
 	this->load_from_file(filename);
-	this->set_environment(ENVIRONMENT_GRASS);
+	this->set_environment(ENVIRONMENT_SNOW);
 	
 	this->portrait_mia = al_load_bitmap("resources/portrait_mia.png");
 	this->portrait_metodej = al_load_bitmap("resources/portrait_metodej.png");
@@ -93,7 +93,10 @@ void c_map::add_map_object(c_map_object *map_object, int x, int y)
 
 	for (i = 0; i < MAX_OBJECTS_PER_SQUARE; i++)       // find the first free place for the object
 	  if (this->squares[x][y].map_objects[i] == NULL)
-		this->squares[x][y].map_objects[i] = map_object;
+	    {
+		  this->squares[x][y].map_objects[i] = map_object;
+	      break;
+	    }
   }
 
 //-----------------------------------------------
@@ -166,9 +169,17 @@ bool c_map::load_from_file(string filename)
 	this->player_characters[1]->set_position(6.0,8.0);
 	this->player_characters[2]->set_position(4.0,8.0);
 
-	this->add_map_object(new c_map_object(OBJECT_CRATE),5,5);
-	this->add_map_object(new c_map_object(OBJECT_STAIRS_EAST),3,3);
-	this->add_map_object(new c_map_object(OBJECT_LEVER),2,7);
+	this->add_map_object(new c_map_object(OBJECT_CRATE,0),5,5);
+	this->add_map_object(new c_map_object(OBJECT_STAIRS_EAST,0),3,3);
+	
+	c_map_object *aaa = new c_map_object(OBJECT_DOOR_HORIZONTAL,1);
+	this->add_map_object(aaa,3,7);
+
+	this->add_map_object(new c_map_object(OBJECT_LEVER,1),2,7);
+
+	this->add_map_object(new c_map_object(OBJECT_DOOR_VERTICAL,1),4,8);
+
+	this->link_objects();
 
 	return true;
   }
@@ -181,15 +192,66 @@ c_map::~c_map()
 
 //-----------------------------------------------
 
-void shift_crate(int x, int y, t_direction direction)
+void c_map::shift_crate(int x, int y, t_direction direction)
   {
   }
 
 //-----------------------------------------------
 
-bool crate_can_be_shifted(int x, int y, t_direction direction)
+bool c_map::crate_can_be_shifted(int x, int y, t_direction direction)
   {
 	return true;
+  }
+
+//-----------------------------------------------
+
+void c_map::link_objects()
+  {
+	int i, j, k, l, m, n;
+	c_map_object *help_object, *help_object2;
+	c_map_object *object_array[256];            // buffer to temporarily hold object
+	int array_length;
+
+	for (j = 0; j < this->height; j++)
+	  for (i = 0; i < this->width; i++)
+		for (k = 0; k < MAX_OBJECTS_PER_SQUARE; k++)
+		  {
+			help_object = this->squares[i][j].map_objects[k];
+
+		    if (help_object != NULL && help_object->is_input())
+			  {
+                array_length = 0;
+
+				for (m = 0; m < this->height; m++)        // find the corresponding map object
+	              for (l = 0; l < this->width; l++)
+					for (n = 0; n < this->width; n++)
+					  {
+						help_object2 = this->squares[l][m].map_objects[n];
+
+						if (help_object2 != NULL)
+						  {
+							if (!help_object2->is_input() &&
+						      help_object->get_link_id() == help_object2->get_link_id())
+							  {
+								object_array[array_length] = help_object2;
+								array_length++;
+							  }
+						  }
+						else
+						  break;
+					  }
+
+			    help_object->add_controlled_objects(array_length,object_array);
+		      }
+		    else
+		      break;
+		}
+  }
+
+//-----------------------------------------------
+
+void c_map::update_map_object_states(long int global_time)
+  {
   }
 
 //-----------------------------------------------
@@ -595,7 +657,7 @@ void c_map::update(long int global_time)
 
 	if (this->input_state->key_use)
 	  {
-		this->use_key_press();
+		this->use_key_press(global_time);
 	  }
 	  
 	this->time_before = al_current_time();
@@ -603,11 +665,12 @@ void c_map::update(long int global_time)
 
 //-----------------------------------------------
 
-void c_map::use_key_press()
+void c_map::use_key_press(long int global_time)
   {
 	int i;
 	int facing_square[2];  // coordinations of the square the player is facing
 	int coordinations[2];
+	c_map_object *help_object;
 
 	coordinations[0] = this->player_characters[this->current_player]->get_square_x();
     coordinations[1] = this->player_characters[this->current_player]->get_square_y();
@@ -637,7 +700,14 @@ void c_map::use_key_press()
 
 	for (i = 0; i < MAX_OBJECTS_PER_SQUARE; i++)
 	  if (this->squares[facing_square[0]][facing_square[1]].map_objects[i] != NULL)
-        this->squares[facing_square[0]][facing_square[1]].map_objects[i]->use();
+	    {
+		  help_object = this->squares[facing_square[0]][facing_square[1]].map_objects[i];
+
+		  if (!help_object->is_animating())
+		    {
+			  help_object->use(global_time);
+		    }
+	    }
 	  else
 	    break;
   }
