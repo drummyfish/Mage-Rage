@@ -39,7 +39,7 @@ class c_map: c_graphic_object
 	  help of the game class.
 	*/
 
-    private:
+    protected:
 	  int width;                                                       /** map width in squares */
 	  int height;                                                      /** map height in squares */
 	  int *button_positions_x;                                         /** an array containing x coordinations of all button objects on the map for faster browsing */
@@ -71,6 +71,24 @@ class c_map: c_graphic_object
 	  ALLEGRO_BITMAP *tile_cliff_northeast;                            /** bitmap - northeast cliff (any height) */
 	  ALLEGRO_BITMAP *tile_edge;                                       /** bitmap - used as south border with other surface */
 	  ALLEGRO_BITMAP *tile_water[5];                                   /** bitmap - water, 5 animation frames */
+
+	  void static next_square(int x, int y, t_direction direction, int *next_x, int *next_y);
+
+	    /**
+		  Computes the next square coordination
+		  depending on a position and direction.
+
+		  @param x x coordination of the square
+		  @param y y coordination of the square
+		  @param direction direction of the next
+		    square
+		  @param next_x in this variable will be
+		    the x coordination of the next square
+			returned
+		  @param next_y in this variable will be
+		    the y coordination of the next square
+			returned
+		*/
 
 	  void move_character(c_character *character, t_direction direction, long int global_time);
 
@@ -246,6 +264,20 @@ class c_map: c_graphic_object
 		  links between them.
 
 		  @param global_time global time counter
+		*/
+
+	  void remove_object(int x, int y, int index);
+
+	    /**
+		  Removes nth object from given square
+		  and shifts all remaining to the left
+		  so the object array stays consistent.
+		  The object's memory is not freed.
+
+		  @param x x coordination of the square
+		  @param y y coordination of the square
+		  @param n index of the object to be
+		    removed
 		*/
 
 	  void link_objects();

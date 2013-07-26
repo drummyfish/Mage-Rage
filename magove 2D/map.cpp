@@ -10,6 +10,34 @@
 
 //-----------------------------------------------
 
+void c_map::next_square(int x, int y, t_direction direction, int *next_x, int *next_y)
+  {
+	switch (direction)
+	  {
+	    case DIRECTION_NORTH:
+		  *next_x = x;
+		  *next_y = y - 1;
+		  break;
+
+		case DIRECTION_EAST:
+		  *next_x = x + 1;
+		  *next_y = y;
+		  break;
+
+		case DIRECTION_SOUTH:
+		  *next_x = x;
+		  *next_y = y + 1;
+		  break;
+
+		case DIRECTION_WEST:
+		  *next_x = x - 1;
+		  *next_y = y;
+		  break;
+	  }
+  }
+
+//-----------------------------------------------
+
 int c_map::get_height(int x, int y)
   {
 	if (x > this->width || x < 0 ||
@@ -63,9 +91,7 @@ void c_map::set_environment(t_environment new_environment)
 	this->tile_water[1] = al_load_bitmap("resources/tile_water_2.png");
 	this->tile_water[2] = al_load_bitmap("resources/tile_water_3.png");
 	this->tile_water[3] = al_load_bitmap("resources/tile_water_4.png");
-	this->tile_water[4] = al_load_bitmap("resources/tile_water_5.png");
-
-	
+	this->tile_water[4] = al_load_bitmap("resources/tile_water_5.png");	
   }
 
 //-----------------------------------------------
@@ -214,12 +240,6 @@ c_map::~c_map()
 
 //-----------------------------------------------
 
-void c_map::shift_crate(int x, int y, t_direction direction)
-  {
-  }
-
-//-----------------------------------------------
-
 void c_map::check_buttons(long int global_time)
   {
 	int i, j;
@@ -286,6 +306,40 @@ void c_map::check_buttons(long int global_time)
 bool c_map::crate_can_be_shifted(int x, int y, t_direction direction)
   {
 	return true;
+  }
+
+//-----------------------------------------------
+
+void c_map::remove_object(int x, int y, int index)
+  {
+	int i;
+
+	for (i = index + 1; i < MAX_OBJECTS_PER_SQUARE; i++)
+	  {
+		this->squares[x][y].map_objects[i - 1] = this->squares[x][y].map_objects[i];
+		this->squares[x][y].map_objects[i] = NULL;
+	  }
+  }
+
+//-----------------------------------------------
+
+void c_map::shift_crate(int x, int y, t_direction direction)
+  {
+	int i;
+	int next_square[2];
+
+	for (i = 0; i < MAX_OBJECTS_PER_SQUARE; i++)
+	  if (this->squares[x][y].map_objects[i] != NULL)
+	    {
+		  if (this->squares[x][y].map_objects[i]->get_type() == OBJECT_CRATE)
+		    {
+			  this->next_square(x,y,direction,&next_square[0],&next_square[1]);
+			  this->add_map_object(this->squares[x][y].map_objects[i],next_square[0],next_square[1]);
+			  this->remove_object(x,y,i);
+		    }
+	    }
+	  else
+		break;
   }
 
 //-----------------------------------------------
@@ -518,32 +572,27 @@ bool c_map::character_can_move_to_square(c_character *character, t_direction dir
 	square_position[0] = character->get_square_x();
 	square_position[1] = character->get_square_y();
 
+	this->next_square(square_position[0],square_position[1],direction,
+	  &square_position_next[0],&square_position_next[1]);
+
     switch (direction)
 	  {
 		case DIRECTION_NORTH:
-          square_position_next[0] = square_position[0];
-          square_position_next[1] = square_position[1] - 1;
 		  help_object_type = OBJECT_STAIRS_NORTH;
 		  help_object_type2 = OBJECT_STAIRS_SOUTH;
 		  break;
 
 		case DIRECTION_EAST:
-          square_position_next[0] = square_position[0] + 1;
-          square_position_next[1] = square_position[1];
 		  help_object_type = OBJECT_STAIRS_EAST;
 		  help_object_type2 = OBJECT_STAIRS_WEST;
 		  break;
 
 		case DIRECTION_WEST:
-          square_position_next[0] = square_position[0] - 1;
-          square_position_next[1] = square_position[1];
 		  help_object_type = OBJECT_STAIRS_WEST;
 		  help_object_type2 = OBJECT_STAIRS_EAST;
 		  break;
 
 		case DIRECTION_SOUTH:
-          square_position_next[0] = square_position[0];
-          square_position_next[1] = square_position[1] + 1;
 		  help_object_type = OBJECT_STAIRS_SOUTH;
 		  help_object_type2 = OBJECT_STAIRS_NORTH;
 		  break;
@@ -761,35 +810,21 @@ void c_map::use_key_press(long int global_time)
 	coordinations[0] = this->player_characters[this->current_player]->get_square_x();
     coordinations[1] = this->player_characters[this->current_player]->get_square_y();
 
-	switch(this->player_characters[this->current_player]->get_direction())
-	  {
-	    case DIRECTION_NORTH:
-		  facing_square[0] = coordinations[0];
-		  facing_square[1] = coordinations[1] - 1;
-		  break;
-
-		case DIRECTION_EAST:
-		  facing_square[0] = coordinations[0] + 1;
-		  facing_square[1] = coordinations[1];
-		  break;
-
-		case DIRECTION_SOUTH:
-		  facing_square[0] = coordinations[0];
-		  facing_square[1] = coordinations[1] + 1;
-		  break;
-
-		case DIRECTION_WEST:
-		  facing_square[0] = coordinations[0] - 1;
-		  facing_square[1] = coordinations[1];
-		  break;
-	  }
+	this->next_square(coordinations[0],coordinations[1],
+	  this->player_characters[this->current_player]->get_direction(),
+	  &facing_square[0],&facing_square[1]);
 
 	for (i = 0; i < MAX_OBJECTS_PER_SQUARE; i++)
 	  if (this->squares[facing_square[0]][facing_square[1]].map_objects[i] != NULL)
 	    {
 		  help_object = this->squares[facing_square[0]][facing_square[1]].map_objects[i];
 
-		  if (!help_object->is_animating())
+		  if (help_object->get_type() == OBJECT_CRATE)
+		    {
+			  if (this->crate_can_be_shifted(facing_square[0],facing_square[1],this->player_characters[this->current_player]->get_direction()))
+				this->shift_crate(facing_square[0],facing_square[1],this->player_characters[this->current_player]->get_direction());
+		    }
+		  else if (!help_object->is_animating())
 		    {
 			  help_object->use(global_time);
 		    }
