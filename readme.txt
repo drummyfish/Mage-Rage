@@ -1,4 +1,9 @@
-zkouška
-siadjasidjsoadsajdasd
-asdaskodkasodsa
-dsdasd
+fdsfdsfdsfsdfs
+gf
+dg
+fds
+gs
+g
+sg
+sfd
+gfdgdgdsgd
