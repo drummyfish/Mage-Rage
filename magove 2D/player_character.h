@@ -37,6 +37,8 @@ class c_player_character: public c_character
 	  ALLEGRO_BITMAP *sprite_west_running_1;         /** player running west, frame 1 */
 	  ALLEGRO_BITMAP *sprite_west_running_2;         /** player running west, frame 2 */
 
+	  ALLEGRO_SAMPLE *sound_footsteps;               /** sound - footsteps */
+
     public:
 	  c_player_character(t_player_type player_type, long int *global_time);
 
@@ -79,6 +81,29 @@ class c_player_character: public c_character
 
 		  @return character type
 	    */
+
+	  virtual void play_animation(t_animation_type animation);
+
+	    /**
+		  Plays given animation.
+
+		  @param animation animation to be played
+		*/
+
+	  virtual void loop_animation(t_animation_type animation);
+
+	    /**
+		  Loops the given animation untill it's
+		  stopped by stop_animation().
+
+		  @param animation animation to be looped
+		*/
+
+	  virtual void stop_animation();
+	    
+	    /**
+		  Stops playing the current animation.
+		*/
   };
 
 #endif

@@ -42,7 +42,7 @@ c_map_object::c_map_object(t_object_type object_type, int link_id, long int *glo
 
 	    case OBJECT_CRATE:
 		  this->bitmaps[0] = al_load_bitmap("resources/object_crate.png");
-		  this->stepable = false;
+		  this->stepable = true;
 		  break;
 
 		case OBJECT_TREE:
@@ -101,6 +101,14 @@ c_map_object::c_map_object(t_object_type object_type, int link_id, long int *glo
 		  this->bitmaps[2] = al_load_bitmap("resources/object_fountain_2.png");
 		  this->loop_animation(ANIMATION_IDLE);
 		  number_of_bitmaps = 3;
+		  break;
+
+		case OBJECT_TREE_WINTER:
+		  this->bitmaps[0] = al_load_bitmap("resources/object_tree_winter.png");
+		  break;
+
+		case OBJECT_ROCK:
+		  this->bitmaps[0] = al_load_bitmap("resources/object_rock.png");
 		  break;
 	  }
 

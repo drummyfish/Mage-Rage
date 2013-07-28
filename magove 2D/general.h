@@ -14,6 +14,8 @@
 #include "allegro5/allegro.h"
 #include "allegro5/allegro_image.h"
 #include "allegro5/allegro_native_dialog.h"
+#include <allegro5/allegro_audio.h>
+#include <allegro5/allegro_acodec.h>
 
 #define MAP_MAX_WIDTH 30                /// maximum map width in squares
 #define MAP_MAX_HEIGHT 30               /// maximum map height in squares
@@ -105,6 +107,8 @@ typedef enum
 	*/
 
 	OBJECT_TREE,
+	OBJECT_TREE_WINTER,
+	OBJECT_ROCK,
 	OBJECT_CRATE,
 	OBJECT_STONE,
 	OBJECT_LEVER,

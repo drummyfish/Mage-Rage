@@ -24,10 +24,11 @@ class c_graphic_object
 	  t_animation_type playing_animation;  /** type of animation being played or looped */
 	  long int started_playing;            /** time when the animation started playing to count the animation frame */
 	  long int *global_time;               /** reference to a global time counter variable (for animations) */
-	  int animation_frame;                 /** current animation frame */
+	  long int animation_frame;            /** current animation frame */
 	  bool looping_animation;              /** true if the animation is looping, false otherwise */
 	  int animation_period;                /** number of frames of the current animation */
 	  bool succesfully_loaded;             /** stores information about errors */
+	  ALLEGRO_SAMPLE_ID playing_sound_id;  /** an ID of the sound being played */
 
     public:
 

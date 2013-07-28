@@ -208,7 +208,23 @@ class c_map: public c_graphic_object
 	    /**
 		  Returns map height at given position. If
 		  the position is outside the map, 0 is
-		  returned.
+		  returned. The height is calculated as
+		  terrain height + height of objects
+		  (crates, elevators etc.).
+
+		  @param x x position
+		  @param y y position
+		  @return map height at given position
+		    including object heights
+		*/
+
+	  int get_terrain_height(int x, int y);
+
+	  	/**
+		  Returns map height at given position. If
+		  the position is outside the map, 0 is
+		  returned. Only the height of the terrain
+		  is returned.
 
 		  @param x x position
 		  @param y y position

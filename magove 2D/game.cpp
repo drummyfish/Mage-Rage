@@ -11,42 +11,52 @@
 
 c_game::c_game()
   {   
-	if(!al_init())                                 // initialise allegro
+	if (!al_init())                                // initialise allegro
 	  {
-	    cerr << "Failed to initialize allegro." << endl;
+	    cerr << "ERROR: failed to initialize allegro." << endl;
 	  }
  
-	if(!al_init_image_addon())                     // initialise image addon
+	if (!al_init_image_addon())                    // initialise image addon
 	  {
-		cerr << "Failed to initialize al_init_image_addon." << endl; 
+		cerr << "ERROR: failed to initialize al_init_image_addon." << endl; 
 	  }
  
-	if(!al_install_keyboard())                     // initialise keyboard
+	if (!al_install_keyboard())                    // initialise keyboard
 	  {
-        cerr << "Failed to initialize the keyboard." << endl;
+        cerr << "ERROR: failed to initialize the keyboard." << endl;
+      }
+
+	if (!al_install_audio())                       // initialise audio
+	  {
+        cerr << "ERROR: failed to initialize audio." << endl;
+      }
+ 
+    if (!al_init_acodec_addon())
+	  {
+        cerr << "ERROR: failed to initialize audio codecs." << endl;
       }
 
 	display = al_create_display(800,600);          // initialise screen
  
 	if(!this->display)
 	  {
-		cerr << "Failed to initialize display." << endl; 
+		cerr << "ERROR: failed to initialize display." << endl; 
 	  }
 	
 	this->event_queue = al_create_event_queue();   // initialise event queue
 
 	if(!this->event_queue)
 	  {
-        cerr << "failed to create event_queue." << endl;
+        cerr << "ERROR: failed to create event_queue." << endl;
       }
-	
+
 	this->global_timer = al_create_timer(0.05);    // initialise the timer
 	
 	if(!this->global_timer)
 	  {
-        cerr << "failed to create global timer." << endl;
+        cerr << "ERROR: failed to create global timer." << endl;
       }
-	
+
 	al_register_event_source(this->event_queue,al_get_display_event_source(display));
 	al_register_event_source(this->event_queue,al_get_timer_event_source(this->global_timer));
 	al_register_event_source(this->event_queue,al_get_keyboard_event_source());

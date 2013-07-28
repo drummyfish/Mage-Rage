@@ -18,6 +18,11 @@ c_player_character::c_player_character(t_player_type player_type, long int *glob
 	this->player_type = player_type;
 	this->direction = DIRECTION_SOUTH;
 
+	if (!al_reserve_samples(1))
+	  {
+        cerr << "failed to reserve samples." << endl;
+      }
+
 	this->playing_animation = ANIMATION_NONE;
 
 	switch (this->player_type)
@@ -48,13 +53,16 @@ c_player_character::c_player_character(t_player_type player_type, long int *glob
 	this->sprite_west_running_1 = al_load_bitmap(("resources/character_" + help_string + "_west_running_1.png").c_str());
 	this->sprite_west_running_2 = al_load_bitmap(("resources/character_" + help_string + "_west_running_2.png").c_str());
   
+	this->sound_footsteps = al_load_sample("resources/footsteps.wav");
+
 	this->succesfully_loaded =
 	   (this->shadow && this->sprite_north && this->sprite_north_casting &&
 		this->sprite_north_running_1 && this->sprite_north_running_2 &&
 		this->sprite_east && this->sprite_east_casting && this->sprite_east_running_1 && 
 		this->sprite_east_running_2 && this->sprite_south && this->sprite_south_casting &&
 		this->sprite_south_running_1 && this->sprite_south_running_2 && this->sprite_west &&
-		this->sprite_west_casting && this->sprite_west_running_1 && this->sprite_west_running_2);
+		this->sprite_west_casting && this->sprite_west_running_1 && this->sprite_west_running_2
+		&& this->sound_footsteps);
   }
 
 //-----------------------------------------------
@@ -195,6 +203,45 @@ void c_player_character::draw(int x, int y)
 		 if (this->animation_frame >= this->animation_period)
 		   this->stop_animation();
 	  }
+  }
+
+//--------------------------------------------------
+
+void c_player_character::play_animation(t_animation_type animation)
+  {
+	this->playing_animation = animation;
+	this->animation_frame = 0;
+	this->looping_animation = false;
+	this->started_playing = *this->global_time;
+	this->update_animation_period();
+  }
+
+//--------------------------------------------------
+
+void c_player_character::loop_animation(t_animation_type animation)
+  {
+	this->playing_animation = animation;
+	this->animation_frame = 0;
+	this->looping_animation = true;
+	this->started_playing = *this->global_time;
+	this->update_animation_period();
+
+	switch (animation)
+	  {
+	    case ANIMATION_RUN:
+		  al_play_sample(this->sound_footsteps,2.0, 0.0,1.0,ALLEGRO_PLAYMODE_LOOP,&this->playing_sound_id);
+		  break;
+	  }
+  }
+
+//--------------------------------------------------
+
+void c_player_character::stop_animation()
+  {
+	al_stop_sample(&this->playing_sound_id);
+
+    this->playing_animation = ANIMATION_NONE;
+	this->animation_frame = 0;
   }
 
 //--------------------------------------------------
