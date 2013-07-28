@@ -1,15 +1,15 @@
 ﻿/**
- * Local texts class implementation.
+ * Associative array class implementation.
  *
  * authors: Miloslav Číž, Martin Gabriel
  * year: 2013
  */
 
-#include "local_texts.h"
+#include "associative_array.h"
 
 //--------------------------------------------------
 
-  c_local_texts::c_local_texts()
+  c_associative_array::c_associative_array()
     {
 	  
     }
