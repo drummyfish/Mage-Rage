@@ -38,39 +38,47 @@ class c_player_character: public c_character
 	  ALLEGRO_BITMAP *sprite_west_running_2;         /** player running west, frame 2 */
 
     public:
-	  c_player_character(t_player_type player_type);
+	  c_player_character(t_player_type player_type, long int *global_time);
 
-	  /**
-	    Class constructor, initialises new player
-		character.
+	    /**
+	      Class constructor, initialises new player
+		  character.
 
-		@param player_type type of player character
-	  */
+	  	  @param player_type type of player character
+		  @param global_time reference to a global
+		    time counter which is needed for
+			animations
+	    */
 
 	  ~c_player_character();
 
-	  /**
-	    Class destructor, frees it's memory.
-	  */
+	    /**
+	      Class destructor, frees it's memory.
+	    */
 
-	  virtual void c_player_character::draw(int x, int y, long int global_time);
+	  virtual void update_animation_period();
 
-	  /**
-	    Draws player character at given position.
+	    /**
+		  Depending on current animation sets
+		  the animation period attribute.
+		*/
 
-		@param x x position on the scrren
-		@param y y position on the screen
-		@param global_time global time counter
-		    which is needed for animations etc.
-	  */
+	  virtual void c_player_character::draw(int x, int y);
+
+	    /**
+	      Draws player character at given position.
+
+		  @param x x position on the scrren
+		  @param y y position on the screen
+	    */
 
 	  t_player_type get_player_type();
 
-	  /**
-	    Returns type of this character.
+	    /**
+	      Returns type of this character.
 
-		@return character type
-	  */
+		  @return character type
+	    */
   };
 
 #endif

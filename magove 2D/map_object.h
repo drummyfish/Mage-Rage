@@ -29,7 +29,7 @@ class c_map_object: public c_graphic_object
 	  int number_of_controlled;    /** length of controlled array */
 
     public:
-	  c_map_object(t_object_type object_type, int link_id);
+	  c_map_object(t_object_type object_type, int link_id, long int *global_time);
 
 	    /**
 	      Class constructor, initialises new
@@ -41,14 +41,15 @@ class c_map_object: public c_graphic_object
 		    the connection between objects,
 			objects with same link id will
 			affect each other
+		  @param global_time reference to a 
+		    global time counter variable which
+			is needed for animations
 	    */
 
-	  void update_controlled_objects(long int global_time);
+	  void update_controlled_objects();
 	    /**
 		  Updated states of objects that are
 		  controlled by this object.
-
-		  @param global_time global time counter
 		*/
 
 	  void add_controlled_objects(int number_of_objects, c_map_object *objects[]);
@@ -107,16 +108,14 @@ class c_map_object: public c_graphic_object
 		  @param object_state new object state
 		*/
 
-	  void switch_state(long int global_time);
+	  void switch_state();
 
 	    /**
 		  Switches states of the object between
 		  on and off.
-
-		  @param global_time global time counter
 		*/
 
-	  virtual void draw(int x, int y, long int global_time);
+	  virtual void draw(int x, int y);
 
 	    /**
 		  Draws the map at given position on the
@@ -124,8 +123,6 @@ class c_map_object: public c_graphic_object
 
 		  @param x x position of the screen
 		  @param y y position of the screen
-		  @param global_time global time counter
-		    which is needed for animations etc.
 		*/
 
 	  bool is_stepable();
@@ -138,14 +135,11 @@ class c_map_object: public c_graphic_object
 		    stepable, otherwise false
 		*/
 
-	  void use(long int global_time);
+	  void use();
 
 	    /**
 		  This method is called when player uses
 		  the object.
-
-		  @param global_time global time count
-		    for animations
 		*/
 
 	  void update_animation_period();

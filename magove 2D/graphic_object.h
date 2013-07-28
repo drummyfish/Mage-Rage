@@ -21,15 +21,17 @@ class c_graphic_object
 	*/
 
     protected:
-	  t_animation_type playing_animation;  /** Type of animation being played or looped. */
-	  long int started_playing;            /** Time when the animation started playing to count the animation frame. */
-	  int animation_frame;                 /** Current animation frame. */
-	  bool looping_animation;              /** True if the animation is looping, false otherwise. */
+	  t_animation_type playing_animation;  /** type of animation being played or looped */
+	  long int started_playing;            /** time when the animation started playing to count the animation frame */
+	  long int *global_time;               /** reference to a global time counter variable (for animations) */
+	  int animation_frame;                 /** current animation frame */
+	  bool looping_animation;              /** true if the animation is looping, false otherwise */
 	  int animation_period;                /** number of frames of the current animation */
+	  bool succesfully_loaded;             /** stores information about errors */
 
     public:
 
-      virtual void c_graphic_object::draw(int x, int y, long int global_time);
+      virtual void c_graphic_object::draw(int x, int y);
 
 	    /**
 	      Tells the object to draw itself at given
@@ -37,27 +39,23 @@ class c_graphic_object
 
 		  @param x x coordination of the screen
 		  @param y y coordination of the screen
-		  @param global_time global time counter
-		    which is needed for animations etc.
 	    */
 
-	  virtual void play_animation(t_animation_type animation, long int global_time);
+	  virtual void play_animation(t_animation_type animation);
 
 	    /**
 		  Plays given animation.
 
 		  @param animation animation to be played
-		  @param global_time global time counter
 		*/
 
-	  virtual void loop_animation(t_animation_type animation, long int global_time);
+	  virtual void loop_animation(t_animation_type animation);
 
 	    /**
 		  Loops the given animation untill it's
 		  stopped by stop_animation().
 
 		  @param animation animation to be looped
-		  @param global_time global time counter
 		*/
 
 	  virtual void stop_animation();
@@ -80,6 +78,25 @@ class c_graphic_object
 	    /**
 		  Depending on current animation sets
 		  the animation period attribute.
+		*/
+
+	  t_animation_type get_playing_animation();
+
+	    /**
+		  Returns a type of animation being
+		  played or looped.
+
+		  @return type of animation
+		*/
+
+	  bool is_succesfully_loaded();
+
+	    /**
+		  Checks if the map has been loaded
+		  succesfully.
+
+		  @return true if the map is loaded
+		    succesfully, false otherwise
 		*/
   };
 

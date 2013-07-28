@@ -68,9 +68,9 @@ c_game::c_game()
 
 c_game::~c_game()
   {
-	al_destroy_display(this->display);
 	al_destroy_event_queue(this->event_queue);
 	al_destroy_timer(this->global_timer); 
+	al_destroy_display(this->display);
     delete this->map;
   }
 
@@ -80,7 +80,14 @@ void c_game::run()
   {
 	c_map *map;
 	string help_str;
-	map = new c_map(help_str,&this->input_state);
+
+	map = new c_map(help_str,&this->input_state,&this->global_time);
+
+	if (!map->is_succesfully_loaded())
+	  {
+		cerr << "ERROR: the map couldn't be loaded." << endl;
+	  }
+
 	ALLEGRO_EVENT program_event;
 	bool quit_program;
 	
@@ -92,12 +99,12 @@ void c_game::run()
 	al_init_timeout(&timeout, 0.05);
 
 	quit_program = false;
-
+	
 	while (true)                   // main loop
-	  {
-		map->update(this->global_time);
+	  { 
+		map->update(); 
 	    al_flip_display();
-
+		
 		this->input_state.key_use = false;             // we only want to detect one press
 
 		event_occured = al_get_next_event(this->event_queue, &program_event);
@@ -187,7 +194,7 @@ void c_game::run()
 		if (quit_program)
 		  break;
 
-		al_rest(0.01);
+		al_rest(0.01); 
 	  }
   }
 

@@ -31,7 +31,7 @@ typedef struct
 	c_map_object *map_objects[MAX_OBJECTS_PER_SQUARE];  /** objects on this square (NULL means no object) */
   } t_map_square;
 
-class c_map: c_graphic_object
+class c_map: public c_graphic_object
   {
 	/**
 	  This class represents a game map. It is
@@ -90,7 +90,7 @@ class c_map: c_graphic_object
 			returned
 		*/
 
-	  void move_character(c_character *character, t_direction direction, long int global_time);
+	  void move_character(c_character *character, t_direction direction);
 
 	    /**
 	      Updates character's movement in given
@@ -100,7 +100,6 @@ class c_map: c_graphic_object
 		  @param character character to be moved
 		  @param direction direction in which
 		    the player is moving
-		  @param global_time global time counter
 		*/
 
 	  void add_map_object(c_map_object *map_object, int x, int y);
@@ -115,12 +114,10 @@ class c_map: c_graphic_object
 		  @param y y coordination of the square
 		*/
 
-	  void use_key_press(long int global_time);
+	  void use_key_press();
 
 	    /**
 		  Handles use key press.
-
-		  @param global_time global time counter
 		*/
 
 	  bool load_from_file(string filename);
@@ -191,7 +188,7 @@ class c_map: c_graphic_object
 		  @return height offset in pixels
 		*/
 
-	  void set_environment(t_environment new_environment);
+	  bool set_environment(t_environment new_environment);
 
 	    /**
 		  Sets the map environment, which affects
@@ -202,6 +199,8 @@ class c_map: c_graphic_object
 
 		  @param new_environment new environment to
 		    be set
+		  @return true, if the environment was
+		    succesfully set, otherwise false
 		*/
 
 	  int get_height(int x, int y);
@@ -257,13 +256,11 @@ class c_map: c_graphic_object
 		  @return square type at given position
 		*/
 
-	  void update_map_object_states(long int global_time);
+	  void update_map_object_states();
 	    
 	    /**
 		  Updates object states depending on
 		  links between them.
-
-		  @param global_time global time counter
 		*/
 
 	  void remove_object(int x, int y, int index);
@@ -288,18 +285,16 @@ class c_map: c_graphic_object
 		  ids.
 		*/
 
-	  void check_buttons(long int global_time);
+	  void check_buttons();
 
 	    /**
 		  Tests all the button objects on the
 		  map and performs appropriate actions.
-
-		  @param global_time global time counter
 		*/
 
     public:
 
-      c_map(string filename, t_input_state *input_state);
+      c_map(string filename, t_input_state *input_state, long int *global_time);
 
 	    /** 
 	      Class constructor, loads new map from
@@ -309,6 +304,9 @@ class c_map: c_graphic_object
 		  @param input_state pointer to structure,
 		    which will be used to pass information
 			about keyboard and mouse to this object.
+		  @param global_time reference to a
+		    global time counter variable which is
+			needed for animations
 	    */
 
 	  ~c_map();
@@ -317,18 +315,15 @@ class c_map: c_graphic_object
 		  Class destructor, frees all it's memory.
 		*/
 
-	  void update(long int global_time);
+	  void update();
 
 	    /**
 		  Updates the map, which means it handles
 		  it's another frame, including drawing
 		  it and handling events.
-
-		  @param global_time global time counter
-		    which is needed for animations etc.
 		*/
 
-	  virtual void draw(int x, int y, long int global_time);
+	  virtual void draw(int x, int y);
 
 	    /**
 		  Draws the map at given position on the
@@ -336,8 +331,6 @@ class c_map: c_graphic_object
 
 		  @param x x position of the screen
 		  @param y y position of the screen
-		  @param global_time global time counter
-		    which is needed for animations etc.
 		*/
   };
 
