@@ -31,6 +31,11 @@ c_game::c_game()
         cerr << "ERROR: failed to initialize audio." << endl;
       }
  
+	if (!al_reserve_samples(10))
+	  {
+        cerr << "ERROR: failed to reserve samples." << endl;
+      }
+
     if (!al_init_acodec_addon())
 	  {
         cerr << "ERROR: failed to initialize audio codecs." << endl;

@@ -336,12 +336,18 @@ void c_map::check_buttons()
                 if (is_pressed)
 				  {
 					if (help_object->get_state() == OBJECT_STATE_OFF)
-					  help_object->switch_state();
+					  {
+					    help_object->switch_state();
+					    help_object->play_animation(ANIMATION_SWITCH_OFF);
+					  }
 				  }
 				else
 				  {
 					if (help_object->get_state() == OBJECT_STATE_ON)
-					  help_object->switch_state();
+					  {
+						help_object->switch_state();
+					    help_object->play_animation(ANIMATION_SWITCH_ON);
+					  }
 				  }
 			  }
 		  }
@@ -790,7 +796,6 @@ void c_map::update()
 	  this->move_character(this->player_characters[this->current_player],DIRECTION_NORTH);
 	else if (this->player_characters[this->current_player]->get_playing_animation() != ANIMATION_CAST)
 	  {
-		this->player_characters[this->current_player]->stop_animation();
 		this->player_characters[this->current_player]->stop_animation();
 	  }
 

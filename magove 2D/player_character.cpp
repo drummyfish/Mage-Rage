@@ -18,11 +18,6 @@ c_player_character::c_player_character(t_player_type player_type, long int *glob
 	this->player_type = player_type;
 	this->direction = DIRECTION_SOUTH;
 
-	if (!al_reserve_samples(1))
-	  {
-        cerr << "failed to reserve samples." << endl;
-      }
-
 	this->playing_animation = ANIMATION_NONE;
 
 	switch (this->player_type)
@@ -229,7 +224,7 @@ void c_player_character::loop_animation(t_animation_type animation)
 	switch (animation)
 	  {
 	    case ANIMATION_RUN:
-		  al_play_sample(this->sound_footsteps,2.0, 0.0,1.0,ALLEGRO_PLAYMODE_LOOP,&this->playing_sound_id);
+		  al_play_sample(this->sound_footsteps,2.0,0.0,1.0,ALLEGRO_PLAYMODE_LOOP,&this->playing_sound_id);
 		  break;
 	  }
   }

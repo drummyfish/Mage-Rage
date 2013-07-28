@@ -21,7 +21,9 @@ c_map_object::c_map_object(t_object_type object_type, int link_id, long int *glo
 	this->stepable = false;
 	this->animation_frame = 0;
 	this->playing_animation = ANIMATION_NONE;
-
+	this->sound_for_animation = NULL;
+	this->sound_gain = 1.0;
+	 
 	for (i = 0; i < 5; i++)
       this->bitmaps[i] = NULL;
 
@@ -35,6 +37,8 @@ c_map_object::c_map_object(t_object_type object_type, int link_id, long int *glo
           this->bitmaps[2] = al_load_bitmap("resources/object_lever_3.png");
 		  this->bitmaps[3] = al_load_bitmap("resources/object_lever_4.png");
 		  this->bitmaps[4] = al_load_bitmap("resources/object_lever_5.png");
+		  this->sound_for_animation = al_load_sample("resources/switch.wav");
+		  this->sound_gain = 0.5;
 		  number_of_bitmaps = 5;
 
 		  this->input = true;
@@ -75,6 +79,8 @@ c_map_object::c_map_object(t_object_type object_type, int link_id, long int *glo
 		  this->bitmaps[1] = al_load_bitmap("resources/object_door_horizontal_2.png");
 		  this->bitmaps[2] = al_load_bitmap("resources/object_door_horizontal_3.png");
 		  this->bitmaps[3] = al_load_bitmap("resources/object_door_horizontal_4.png");
+		  this->sound_for_animation = al_load_sample("resources/door.wav");
+		  this->sound_gain = 0.5;
 		  number_of_bitmaps = 4;
 		  break; 
 
@@ -84,6 +90,8 @@ c_map_object::c_map_object(t_object_type object_type, int link_id, long int *glo
 		  this->bitmaps[1] = al_load_bitmap("resources/object_door_vertical_2.png");
 		  this->bitmaps[2] = al_load_bitmap("resources/object_door_vertical_3.png");
 		  this->bitmaps[3] = al_load_bitmap("resources/object_door_vertical_4.png");
+		  this->sound_for_animation = al_load_sample("resources/door.wav");
+		  this->sound_gain = 0.3;
 		  number_of_bitmaps = 4;
 		  break; 
 
@@ -92,6 +100,8 @@ c_map_object::c_map_object(t_object_type object_type, int link_id, long int *glo
 		  this->input = true;
 		  this->bitmaps[0] = al_load_bitmap("resources/object_button_1.png");
 		  this->bitmaps[1] = al_load_bitmap("resources/object_button_2.png");
+		  this->sound_for_animation = al_load_sample("resources/click.wav");
+		  this->sound_gain = 0.3;
 		  number_of_bitmaps = 2;
 		  break; 
 
@@ -389,3 +399,43 @@ void c_map_object::update_controlled_objects()
   }
 
 //-----------------------------------------------
+
+
+void c_map_object::play_animation(t_animation_type animation)
+  {
+	this->playing_animation = animation;
+	this->animation_frame = 0;
+	this->looping_animation = false;
+	this->started_playing = *this->global_time;
+	this->update_animation_period();
+
+	if (this->sound_for_animation != NULL)
+	  al_play_sample(this->sound_for_animation,this->sound_gain,0.0,1.0,ALLEGRO_PLAYMODE_ONCE,&this->playing_sound_id);
+  }
+
+//--------------------------------------------------
+
+void c_map_object::loop_animation(t_animation_type animation)
+  {
+	this->playing_animation = animation;
+	this->animation_frame = 0;
+	this->looping_animation = true;
+	this->started_playing = *this->global_time;
+	this->update_animation_period();
+
+	if (this->sound_for_animation != NULL)
+	  al_play_sample(this->sound_for_animation,this->sound_gain,0.0,1.0,ALLEGRO_PLAYMODE_LOOP,&this->playing_sound_id);
+  }
+
+//--------------------------------------------------
+
+void c_map_object::stop_animation()
+  {
+	if (this->looping_animation && this->sound_for_animation != NULL)
+	  al_stop_sample(&this->playing_sound_id);
+
+    this->playing_animation = ANIMATION_NONE;
+	this->animation_frame = 0;
+  }
+
+//--------------------------------------------------
