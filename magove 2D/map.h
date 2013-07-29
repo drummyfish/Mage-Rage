@@ -71,6 +71,7 @@ class c_map: public c_graphic_object
 	  ALLEGRO_BITMAP *tile_cliff_northeast;                            /** bitmap - northeast cliff (any height) */
 	  ALLEGRO_BITMAP *tile_edge;                                       /** bitmap - used as south border with other surface */
 	  ALLEGRO_BITMAP *tile_water[5];                                   /** bitmap - water, 5 animation frames */
+	  ALLEGRO_BITMAP *tile_ice;                                        /** bitmap - ice */
 
 	  void static next_square(int x, int y, t_direction direction, int *next_x, int *next_y);
 
@@ -306,6 +307,21 @@ class c_map: public c_graphic_object
 	    /**
 		  Tests all the button objects on the
 		  map and performs appropriate actions.
+		*/
+
+	  void draw_borders(int x, int y, int plus_x, int plus_y);
+
+	    /**
+		  Draws borders for given square
+		  depending on neighbour squares (for
+		  example if there is water-grass,
+		  there must be a border drawn between
+		  them). This can't be used for cliffs.
+
+		  @param x x coordination of the square
+		  @param y y coordination of the square
+		  @param plus_x x offset in pixels
+		  @param plus_y y offset in pixels
 		*/
 
     public:

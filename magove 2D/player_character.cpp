@@ -200,7 +200,7 @@ void c_player_character::draw(int x, int y)
 	  }
   }
 
-//--------------------------------------------------
+//-----------------------------------------------
 
 void c_player_character::play_animation(t_animation_type animation)
   {
@@ -211,7 +211,7 @@ void c_player_character::play_animation(t_animation_type animation)
 	this->update_animation_period();
   }
 
-//--------------------------------------------------
+//-----------------------------------------------
 
 void c_player_character::loop_animation(t_animation_type animation)
   {
@@ -229,7 +229,7 @@ void c_player_character::loop_animation(t_animation_type animation)
 	  }
   }
 
-//--------------------------------------------------
+//-----------------------------------------------
 
 void c_player_character::stop_animation()
   {
@@ -239,4 +239,4 @@ void c_player_character::stop_animation()
 	this->animation_frame = 0;
   }
 
-//--------------------------------------------------
+//-----------------------------------------------

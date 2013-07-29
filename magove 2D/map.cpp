@@ -116,13 +116,14 @@ bool c_map::set_environment(t_environment new_environment)
 	this->tile_water[2] = al_load_bitmap("resources/tile_water_3.png");
 	this->tile_water[3] = al_load_bitmap("resources/tile_water_4.png");
 	this->tile_water[4] = al_load_bitmap("resources/tile_water_5.png");
+	this->tile_ice = al_load_bitmap("resources/tile_ice.png");
 
 	if (!this->tile || !this->tile_cliff_south_1 || !this->tile_cliff_south_2 ||
 	  !this->tile_cliff_southwest_1 || !this->tile_cliff_southwest_2 || !this->tile_cliff_southeast_1 ||
 	  !this->tile_cliff_southeast_2 || !this->tile_cliff_west || !this->tile_cliff_east ||
 	  !this->tile_cliff_north || !this->tile_cliff_northwest || !this->tile_cliff_northeast || 
 	  !this->tile_edge || !this->tile_water[0] || !this->tile_water[1] || !this->tile_water[2] || 
-	  !this->tile_water[3] || !this->tile_water[4])
+	  !this->tile_water[3] || !this->tile_water[4] || !this->tile_ice)
 	  return false;
 
 	return true;
@@ -205,6 +206,11 @@ bool c_map::load_from_file(string filename)
 	this->squares[7][7].type = SQUARE_WATER;
 	this->squares[6][7].type = SQUARE_WATER;
 	this->squares[7][6].type = SQUARE_WATER;
+
+	this->squares[9][0].type = SQUARE_ICE;
+	this->squares[9][1].type = SQUARE_ICE;
+	this->squares[8][1].type = SQUARE_ICE;
+
 	this->squares[7][7].height = 2;
 	this->squares[7][6].height = 2;
 
@@ -237,8 +243,9 @@ bool c_map::load_from_file(string filename)
 	help_objects[7] = new c_map_object(OBJECT_TREE,0,this->global_time);
 	help_objects[8] = new c_map_object(OBJECT_TREE_WINTER,0,this->global_time);
 	help_objects[9] = new c_map_object(OBJECT_ROCK,0,this->global_time);
+	help_objects[10] = new c_map_object(OBJECT_CRATE,0,this->global_time);
 
-	for (i = 0; i < 10; i++)
+	for (i = 0; i < 11; i++)
 	  if (!help_objects[i]->is_succesfully_loaded())
 		cerr << "ERROR: the object isn't successfully loaded." << endl;
 
@@ -253,6 +260,7 @@ bool c_map::load_from_file(string filename)
 	this->add_map_object(help_objects[7],2,9);
 	this->add_map_object(help_objects[8],4,9);
 	this->add_map_object(help_objects[9],5,9);
+	this->add_map_object(help_objects[10],3,6);
 
 	this->link_objects();
 
@@ -448,9 +456,37 @@ void c_map::update_map_object_states()
 
 //-----------------------------------------------
 
+void c_map::draw_borders(int x, int y, int plus_x, int plus_y)
+  {
+	int elevation, square_height;
+	t_square_type square_type;
+
+	square_type = this->squares[x][y].type;
+	square_height = this->squares[x][y].height;
+	elevation = square_height * 27;
+			          
+	if (this->get_square_type(x,y - 1) != square_type    // north border
+	  || this->get_terrain_height(x,y - 1) != square_height)     
+	  al_draw_bitmap(this->tile_edge,plus_x + x * 64,plus_y + y * 50 - elevation,0);
+
+	if (this->get_square_type(x + 1,y) != square_type    // east border
+	  || this->get_terrain_height(x + 1,y) != square_height)
+      al_draw_bitmap(this->tile_cliff_west,plus_x + x * 64 + 54,plus_y + y * 50 - elevation,0);
+
+	if (this->get_square_type(x - 1,y) != square_type    // west border
+	  || this->get_terrain_height(x - 1,y) != square_height)
+      al_draw_bitmap(this->tile_cliff_east,plus_x + x * 64,plus_y + y * 50 - elevation,0);
+
+	if (this->get_square_type(x,y + 1) != square_type    // south border
+	  || this->get_terrain_height(x,y + 1) != square_height)
+      al_draw_bitmap(this->tile_cliff_north,plus_x + x * 64,plus_y + y * 50 - elevation + 40,0);
+  }
+
+//-----------------------------------------------
+
 void c_map::draw(int x, int y)
   {
-	int i, j, k, help_height, elevation;
+	int i, j, k, help_height, elevation, number_of_crates;
 	al_clear_to_color(al_map_rgb(0,0,0));      // clear the screen
 	this->animation_frame = *this->global_time / 16;
 	
@@ -471,24 +507,14 @@ void c_map::draw(int x, int y)
 						  al_draw_bitmap(this->tile,x + i * 64,y + j * 50 - elevation,0); // draw floor
 						  break;
 
-				        case SQUARE_WATER:      // water
+				        case SQUARE_WATER:                       // water square
 					      al_draw_bitmap(this->tile_water[this->animation_frame % 5],x + i * 64,y + j * 50 - elevation,0);			          
-					      if (this->get_square_type(i,j - 1) != SQUARE_WATER   // north border
-						    || this->get_terrain_height(i,j - 1) != help_height)     
-						    al_draw_bitmap(this->tile_edge,x + i * 64,y + j * 50 - elevation,0);
+					      this->draw_borders(i,j,x,y);
+						  break;
 
-					      if (this->get_square_type(i + 1,j) != SQUARE_WATER   // east border
-						    || this->get_terrain_height(i + 1,j) != help_height)
-                            al_draw_bitmap(this->tile_cliff_west,x + i * 64 + 54,y + j * 50 - elevation,0);
-
-					      if (this->get_square_type(i - 1,j) != SQUARE_WATER   // west border
-						    || this->get_terrain_height(i - 1,j) != help_height)
-                            al_draw_bitmap(this->tile_cliff_east,x + i * 64,y + j * 50 - elevation,0);
-
-					      if (this->get_square_type(i,j + 1) != SQUARE_WATER   // south border
-						    || this->get_terrain_height(i,j + 1) != help_height)
-                            al_draw_bitmap(this->tile_cliff_north,x + i * 64,y + j * 50 - elevation + 40,0);
-					      
+						case SQUARE_ICE:                          // ice square
+						  al_draw_bitmap(this->tile_ice,x + i * 64,y + j * 50 - elevation,0);
+						  this->draw_borders(i,j,x,y);
 						  break;
 					  }
 					
@@ -544,9 +570,18 @@ void c_map::draw(int x, int y)
 
 		for (i = 0; i < this->width; i++)      // draw the same line of objects
 	      {
+			number_of_crates = 0;
+
 			for (k = 0; k < MAX_OBJECTS_PER_SQUARE; k++)
 			  if (this->squares[i][j].map_objects[k] != NULL)
-				this->squares[i][j].map_objects[k]->draw(x + i * 64, y + j * 50 - this->squares[i][j].height * 27);
+                if (this->squares[i][j].map_objects[k]->get_type() == OBJECT_CRATE) // draw crates one on another
+				  {
+				    this->squares[i][j].map_objects[k]->draw(x + i * 64, y + j * 50 - this->squares[i][j].height * 27 - number_of_crates * 27);
+				    number_of_crates++;
+				  }
+				else
+				  this->squares[i][j].map_objects[k]->draw(x + i * 64, y + j * 50 - this->squares[i][j].height * 27);
+			  
 			  else
 				break;
 	      }

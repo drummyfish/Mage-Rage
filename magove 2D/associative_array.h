@@ -43,6 +43,15 @@ class c_associative_array
 		    succesfully, false otherwise
 	    */
 
+	  bool save_to_file(string file_name);
+	  	/**
+	      Saves the array to given file.
+
+		  @param file_name path to the file
+		  @return true if the file was saved
+		    succesfully, false otherwise
+	    */
+
 	  string get_text(string identifier);
 	    /**
           Returns text with given identifier.		  
@@ -50,6 +59,30 @@ class c_associative_array
 		  @param identifier identifier of the
 		    text to be returned
 		  @return text with given identifier
+		*/
+
+	  void set_text(string identifier, string value);
+
+	    /**
+          Sets the value for given identifier.
+		  If the identifier already exists,
+		  it's current walue will be
+		  overwritten, otherwise a new key is
+		  created with this value.
+		
+		  @param identifier identifier of the
+		    text to be returned
+		  @param value value for the identifier
+		*/
+
+	  void delete_item(string identifier);
+	    
+	    /**
+		  Deletes given item. If the item
+		  doesn't exist, nothing happens.
+
+		  @param identifier identifier of the
+		    item to be deleted
 		*/
   };
 
