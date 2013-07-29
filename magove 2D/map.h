@@ -17,7 +17,9 @@ typedef enum
   {
 	SQUARE_NORMAL,
 	SQUARE_WATER,
-	SQUARE_ICE
+	SQUARE_ICE,
+	SQUARE_COLLAPSE,
+	SQUARE_HOLE
   } t_square_type;
 
 typedef struct
@@ -72,6 +74,8 @@ class c_map: public c_graphic_object
 	  ALLEGRO_BITMAP *tile_edge;                                       /** bitmap - used as south border with other surface */
 	  ALLEGRO_BITMAP *tile_water[5];                                   /** bitmap - water, 5 animation frames */
 	  ALLEGRO_BITMAP *tile_ice;                                        /** bitmap - ice */
+	  ALLEGRO_BITMAP *tile_collapse;                                   /** bitmap - collapse square */
+	  ALLEGRO_BITMAP *tile_hole;                                       /** bitmap - hole square */
 
 	  void static next_square(int x, int y, t_direction direction, int *next_x, int *next_y);
 
@@ -322,6 +326,18 @@ class c_map: public c_graphic_object
 		  @param y y coordination of the square
 		  @param plus_x x offset in pixels
 		  @param plus_y y offset in pixels
+		*/
+
+	  bool must_have_border(t_square_type type1, t_square_type type2);
+
+	    /**
+		  Checks if two given square types
+		  must have border drawn between them.
+		  
+		  @param type1 type of the first square
+		  @param type2 type of the seconf square
+		  @return true if the border should be
+		    drawn, otherwise false
 		*/
 
     public:

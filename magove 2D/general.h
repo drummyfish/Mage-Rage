@@ -61,8 +61,9 @@ typedef enum
 
 typedef enum
   {
-	OBJECT_STATE_ON,
-	OBJECT_STATE_OFF
+	OBJECT_STATE_ON,            /** switched on */
+	OBJECT_STATE_OFF,           /** sqitched off */
+	OBJECT_STATE_ON_ACTIVE      /** switched on and active (for example bursting flames) */
   } t_object_state;
 
 typedef struct
@@ -92,6 +93,7 @@ typedef enum
 	ANIMATION_IDLE,
 	ANIMATION_RUN,
 	ANIMATION_CAST,
+	ANIMATION_USE,
 	ANIMATION_SHIFT_NORTH,
 	ANIMATION_SHIFT_EAST,
 	ANIMATION_SHIFT_SOUTH,
@@ -106,19 +108,22 @@ typedef enum
 	  Possible map object types.
 	*/
 
-	OBJECT_TREE,
-	OBJECT_TREE_WINTER,
-	OBJECT_ROCK,
-	OBJECT_CRATE,
-	OBJECT_STONE,
-	OBJECT_LEVER,
-	OBJECT_BUTTON,
-	OBJECT_STAIRS_NORTH,
-	OBJECT_STAIRS_EAST,
-	OBJECT_STAIRS_SOUTH,
-	OBJECT_STAIRS_WEST,
-	OBJECT_DOOR_HORIZONTAL,
-	OBJECT_DOOR_VERTICAL,
-	OBJECT_FOUNTAIN
+	OBJECT_TREE,               /** tree - only blocks way */
+	OBJECT_TREE_WINTER,        /** winter tree - only blocks way */
+	OBJECT_ROCK,               /** rock - only blocks way */
+	OBJECT_CRATE,              /** crate - can be shifted and walked on */
+	OBJECT_LEVER,              /** lever - can be switched on or off */
+	OBJECT_BUTTON,             /** button - can be switched on or off by standing on it */
+	OBJECT_STAIRS_NORTH,       /** stairs north - allow access to different height levels */
+	OBJECT_STAIRS_EAST,        /** stairs east - allow access to different height levels */
+	OBJECT_STAIRS_SOUTH,       /** stairs south - allow access to different height levels */
+	OBJECT_STAIRS_WEST,        /** stairs west - allow access to different height levels */
+	OBJECT_DOOR_HORIZONTAL,    /** horizontal door - can be opened or closed by other objects */
+	OBJECT_DOOR_VERTICAL,      /** vertical door - can be opened or closed by other objects */
+	OBJECT_FOUNTAIN,           /** fountain - regenerates player's magic energy */
+	OBJECT_FLAMES,             /** flames - bursts flames when on */
+	OBJECT_ELEVATOR,           /** elevator - elevator controlled by other objects */
+	OBJECT_ICE,                /** ice - blocks way but can be melted */
+	OBJECT_GATE                /** gate - a gate player must reach in the level */
   } t_object_type;
 #endif

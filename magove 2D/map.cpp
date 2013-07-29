@@ -117,13 +117,16 @@ bool c_map::set_environment(t_environment new_environment)
 	this->tile_water[3] = al_load_bitmap("resources/tile_water_4.png");
 	this->tile_water[4] = al_load_bitmap("resources/tile_water_5.png");
 	this->tile_ice = al_load_bitmap("resources/tile_ice.png");
+	this->tile_collapse = al_load_bitmap("resources/tile_collapse.png");
+	this->tile_hole = al_load_bitmap("resources/tile_hole.png");   
 
 	if (!this->tile || !this->tile_cliff_south_1 || !this->tile_cliff_south_2 ||
 	  !this->tile_cliff_southwest_1 || !this->tile_cliff_southwest_2 || !this->tile_cliff_southeast_1 ||
 	  !this->tile_cliff_southeast_2 || !this->tile_cliff_west || !this->tile_cliff_east ||
 	  !this->tile_cliff_north || !this->tile_cliff_northwest || !this->tile_cliff_northeast || 
 	  !this->tile_edge || !this->tile_water[0] || !this->tile_water[1] || !this->tile_water[2] || 
-	  !this->tile_water[3] || !this->tile_water[4] || !this->tile_ice)
+	  !this->tile_water[3] || !this->tile_water[4] || !this->tile_ice || !this->tile_collapse ||
+	  !this->tile_hole)
 	  return false;
 
 	return true;
@@ -210,6 +213,13 @@ bool c_map::load_from_file(string filename)
 	this->squares[9][0].type = SQUARE_ICE;
 	this->squares[9][1].type = SQUARE_ICE;
 	this->squares[8][1].type = SQUARE_ICE;
+
+	this->squares[9][4].type = SQUARE_COLLAPSE;
+	this->squares[9][5].type = SQUARE_COLLAPSE;
+	this->squares[8][5].type = SQUARE_COLLAPSE;
+
+	this->squares[8][6].type = SQUARE_HOLE;
+	this->squares[8][7].type = SQUARE_HOLE;
 
 	this->squares[7][7].height = 2;
 	this->squares[7][6].height = 2;
@@ -456,6 +466,16 @@ void c_map::update_map_object_states()
 
 //-----------------------------------------------
 
+bool c_map::must_have_border(t_square_type type1, t_square_type type2)
+  {
+	if (type1 == SQUARE_COLLAPSE || type1 == SQUARE_HOLE)
+	  return (type2 != SQUARE_COLLAPSE && type2 != SQUARE_HOLE);
+	
+	return (type1 != type2);
+  }
+
+//-----------------------------------------------
+
 void c_map::draw_borders(int x, int y, int plus_x, int plus_y)
   {
 	int elevation, square_height;
@@ -465,19 +485,19 @@ void c_map::draw_borders(int x, int y, int plus_x, int plus_y)
 	square_height = this->squares[x][y].height;
 	elevation = square_height * 27;
 			          
-	if (this->get_square_type(x,y - 1) != square_type    // north border
+	if (this->must_have_border(this->get_square_type(x,y - 1),square_type)    // north border
 	  || this->get_terrain_height(x,y - 1) != square_height)     
 	  al_draw_bitmap(this->tile_edge,plus_x + x * 64,plus_y + y * 50 - elevation,0);
 
-	if (this->get_square_type(x + 1,y) != square_type    // east border
+	if (this->must_have_border(this->get_square_type(x + 1,y),square_type)    // east border
 	  || this->get_terrain_height(x + 1,y) != square_height)
       al_draw_bitmap(this->tile_cliff_west,plus_x + x * 64 + 54,plus_y + y * 50 - elevation,0);
 
-	if (this->get_square_type(x - 1,y) != square_type    // west border
+	if (this->must_have_border(this->get_square_type(x - 1,y),square_type)    // west border
 	  || this->get_terrain_height(x - 1,y) != square_height)
       al_draw_bitmap(this->tile_cliff_east,plus_x + x * 64,plus_y + y * 50 - elevation,0);
 
-	if (this->get_square_type(x,y + 1) != square_type    // south border
+	if (this->must_have_border(this->get_square_type(x,y + 1),square_type)    // south border
 	  || this->get_terrain_height(x,y + 1) != square_height)
       al_draw_bitmap(this->tile_cliff_north,plus_x + x * 64,plus_y + y * 50 - elevation + 40,0);
   }
@@ -514,6 +534,16 @@ void c_map::draw(int x, int y)
 
 						case SQUARE_ICE:                          // ice square
 						  al_draw_bitmap(this->tile_ice,x + i * 64,y + j * 50 - elevation,0);
+						  this->draw_borders(i,j,x,y);
+						  break;
+
+						case SQUARE_COLLAPSE:                     // collapse square
+						  al_draw_bitmap(this->tile_collapse,x + i * 64,y + j * 50 - elevation,0);
+						  this->draw_borders(i,j,x,y);
+						  break;
+
+						case SQUARE_HOLE:                         // hole
+						  al_draw_bitmap(this->tile_hole,x + i * 64,y + j * 50 - elevation,0);
 						  this->draw_borders(i,j,x,y);
 						  break;
 					  }
