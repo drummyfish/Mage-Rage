@@ -375,9 +375,37 @@ void c_map::check_buttons()
 
 //-----------------------------------------------
 
-bool c_map::crate_can_be_shifted(int x, int y, t_direction direction)
+bool c_map::crate_can_be_shifted(int x, int y, int height, t_direction direction)
   {
+	int next_square[2];
+
+	this->next_square(x,y,direction,&next_square[0],&next_square[1]);
+
+	if (this->get_height(x,y) - 1 != height)
+	  return false;
+
+	if (this->square_has_character(next_square[0],next_square[1]))
+	  return false;
+
+	if (this->get_height(next_square[0],next_square[1]) > height)
+	  return false;
+
 	return true;
+  }
+
+//-----------------------------------------------
+
+bool c_map::square_has_character(int x, int y)
+  {
+	int i;
+
+	for (i = 0; i < 3; i++)
+	  if (this->player_characters[i] != NULL &&
+	    this->player_characters[i]->get_square_x() == x &&
+		this->player_characters[i]->get_square_y() == y)
+		  return true;
+
+	return false;
   }
 
 //-----------------------------------------------
@@ -709,13 +737,16 @@ bool c_map::character_can_move_to_square(c_character *character, t_direction dir
 	  square_position_next[1] < 0 || square_position_next[1] >= this->height)
 	  return false;
 
+	if (this->get_square_type(square_position_next[0],square_position_next[1]) == SQUARE_HOLE)  // check holes
+	  return false;
+
 	if(!this->square_is_stepable(square_position_next[0],square_position_next[1])) // check stepable objects
 	  return false;
 
 	height_difference = this->get_height(square_position[0],square_position[1]) -  // check height differences
 	  this->get_height(square_position_next[0],square_position_next[1]);
 
-	if (this->get_square_type(square_position_next[0],square_position_next[1]) == SQUARE_WATER)
+	if (this->get_square_type(square_position_next[0],square_position_next[1]) == SQUARE_WATER)  // check water (and possible crates)
 	  if (this->square_has_object(square_position_next[0],square_position_next[1],OBJECT_CRATE))
 	    height_difference++;
 	  else
@@ -934,7 +965,7 @@ void c_map::use_key_press()
 	      {
 		    if (help_object->get_type() == OBJECT_CRATE)
 		      {
-			    if (this->crate_can_be_shifted(facing_square[0],facing_square[1],this->player_characters[this->current_player]->get_direction()))
+				if (this->crate_can_be_shifted(facing_square[0],facing_square[1],this->get_height(coordinations[0],coordinations[1]),this->player_characters[this->current_player]->get_direction()))
 			      {  
 				    this->shift_crate(facing_square[0],facing_square[1],this->player_characters[this->current_player]->get_direction());
 		            this->player_characters[this->current_player]->play_animation(ANIMATION_CAST);

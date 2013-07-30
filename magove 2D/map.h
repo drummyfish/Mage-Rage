@@ -250,7 +250,7 @@ class c_map: public c_graphic_object
 		    shift the crate
 		*/
 
-	  bool crate_can_be_shifted(int x, int y, t_direction direction);
+	  bool crate_can_be_shifted(int x, int y, int height, t_direction direction);
 
 	    /**
 		  Checks if a crate at given square can
@@ -260,6 +260,8 @@ class c_map: public c_graphic_object
 
 		  @param x x coordination of the square
 		  @param y y coordination of the square
+		  @param height height from which the
+		    crate is being pushed
 		  @param direction direction in which
 		    the crate is to be shifted
 		  @return true if the crate can be
@@ -339,6 +341,19 @@ class c_map: public c_graphic_object
 		  @param type2 type of the seconf square
 		  @return true if the border should be
 		    drawn, otherwise false
+		*/
+
+	  bool square_has_character(int x, int y);
+
+	    /**
+		  Checks if there is a character on
+		  given square.
+
+		  @param x x coordination of the square
+		  @param y y coordination of the square
+		  @return true if there is at least
+		    one character on the square,
+			otherwise false
 		*/
 
     public:
