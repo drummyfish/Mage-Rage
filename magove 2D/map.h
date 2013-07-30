@@ -76,6 +76,7 @@ class c_map: public c_graphic_object
 	  ALLEGRO_BITMAP *tile_ice;                                        /** bitmap - ice */
 	  ALLEGRO_BITMAP *tile_collapse;                                   /** bitmap - collapse square */
 	  ALLEGRO_BITMAP *tile_hole;                                       /** bitmap - hole square */
+	  ALLEGRO_BITMAP *bitmap_crate_water;                              /** bitmap - crate in water */
 
 	  void static next_square(int x, int y, t_direction direction, int *next_x, int *next_y);
 

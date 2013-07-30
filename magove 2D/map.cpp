@@ -119,6 +119,7 @@ bool c_map::set_environment(t_environment new_environment)
 	this->tile_ice = al_load_bitmap("resources/tile_ice.png");
 	this->tile_collapse = al_load_bitmap("resources/tile_collapse.png");
 	this->tile_hole = al_load_bitmap("resources/tile_hole.png");   
+	this->bitmap_crate_water = al_load_bitmap("resources/object_crate_water.png");
 
 	if (!this->tile || !this->tile_cliff_south_1 || !this->tile_cliff_south_2 ||
 	  !this->tile_cliff_southwest_1 || !this->tile_cliff_southwest_2 || !this->tile_cliff_southeast_1 ||
@@ -126,7 +127,7 @@ bool c_map::set_environment(t_environment new_environment)
 	  !this->tile_cliff_north || !this->tile_cliff_northwest || !this->tile_cliff_northeast || 
 	  !this->tile_edge || !this->tile_water[0] || !this->tile_water[1] || !this->tile_water[2] || 
 	  !this->tile_water[3] || !this->tile_water[4] || !this->tile_ice || !this->tile_collapse ||
-	  !this->tile_hole)
+	  !this->tile_hole || !this->bitmap_crate_water)
 	  return false;
 
 	return true;
@@ -606,8 +607,17 @@ void c_map::draw(int x, int y)
 			  if (this->squares[i][j].map_objects[k] != NULL)
                 if (this->squares[i][j].map_objects[k]->get_type() == OBJECT_CRATE) // draw crates one on another
 				  {
-				    this->squares[i][j].map_objects[k]->draw(x + i * 64, y + j * 50 - this->squares[i][j].height * 27 - number_of_crates * 27);
-				    number_of_crates++;
+					if (this->get_square_type(i,j) == SQUARE_WATER) // if the crate is in the water, draw it differently
+					  {
+					    if (number_of_crates == 0) 
+					      al_draw_bitmap(this->bitmap_crate_water,x + i * 64, y + j * 50 - this->squares[i][j].height * 27,0); 
+					    else
+						  this->squares[i][j].map_objects[k]->draw(x + i * 64, y + j * 50 - (this->squares[i][j].height - 1) * 27 - number_of_crates * 27);
+					  }
+					else
+					  this->squares[i][j].map_objects[k]->draw(x + i * 64, y + j * 50 - this->squares[i][j].height * 27 - number_of_crates * 27);
+				    
+					number_of_crates++;
 				  }
 				else
 				  this->squares[i][j].map_objects[k]->draw(x + i * 64, y + j * 50 - this->squares[i][j].height * 27);
@@ -640,6 +650,9 @@ int c_map::get_elevation_for_character(c_character *character)
 	fraction_y = character->get_fraction_y();
 
 	height = this->get_height(x,y) * 27;
+
+	if (this->get_square_type(x,y) == SQUARE_WATER)
+	  height -= 27;
 
 	if (this->square_has_object(x,y,OBJECT_STAIRS_NORTH) && fraction_y < 0.5)
 	  height += (int) ((0.5 - fraction_y) * 35);
@@ -701,6 +714,15 @@ bool c_map::character_can_move_to_square(c_character *character, t_direction dir
 
 	height_difference = this->get_height(square_position[0],square_position[1]) -  // check height differences
 	  this->get_height(square_position_next[0],square_position_next[1]);
+
+	if (this->get_square_type(square_position_next[0],square_position_next[1]) == SQUARE_WATER)
+	  if (this->square_has_object(square_position_next[0],square_position_next[1],OBJECT_CRATE))
+	    height_difference++;
+	  else
+		return false;
+
+	if (this->get_square_type(square_position[0],square_position[1]) == SQUARE_WATER)
+	  height_difference--;
 
 	switch (height_difference)
 	  {
