@@ -44,6 +44,16 @@ c_map_object::c_map_object(t_object_type object_type, int link_id, long int *glo
 		  this->input = true;
 		  break;
 
+		case OBJECT_ELEVATOR:
+          this->bitmaps[0] = al_load_bitmap("resources/object_elevator_1.png");
+		  this->bitmaps[1] = al_load_bitmap("resources/object_elevator_2.png");
+          this->bitmaps[2] = al_load_bitmap("resources/object_elevator_3.png");
+		  this->bitmaps[3] = al_load_bitmap("resources/object_elevator_4.png");
+		  this->stepable = true;
+		  number_of_bitmaps = 4;
+
+		  break;
+
 	    case OBJECT_CRATE:
 		  this->bitmaps[0] = al_load_bitmap("resources/object_crate.png");
 		  this->stepable = true;
@@ -171,10 +181,15 @@ void c_map_object::switch_state()
 	  {
 	    case OBJECT_DOOR_HORIZONTAL:
 		case OBJECT_DOOR_VERTICAL:
+		case OBJECT_ELEVATOR:
 		  if (this->object_state == OBJECT_STATE_OFF)
-			this->play_animation(ANIMATION_SWITCH_ON);
+		    {
+			  this->play_animation(ANIMATION_SWITCH_ON);
+		    }
 		  else
-            this->play_animation(ANIMATION_SWITCH_OFF); 
+			{
+              this->play_animation(ANIMATION_SWITCH_OFF);
+		    }
 			
 		  break;
 	  }
@@ -201,6 +216,10 @@ void c_map_object::update_animation_period()
 		case OBJECT_DOOR_VERTICAL:
 		  this->animation_period = 4;
 		  break;
+
+		case OBJECT_ELEVATOR:
+		  this->animation_period = 4;
+	      break;
 	  }
   }
 
@@ -265,18 +284,19 @@ void c_map_object::draw(int x, int y)
 
 		case OBJECT_DOOR_HORIZONTAL:
 		case OBJECT_DOOR_VERTICAL:
+		case OBJECT_ELEVATOR:
 		  switch (this->playing_animation)
 		    {
 		      case ANIMATION_NONE:
 				if (this->object_state == OBJECT_STATE_OFF)
 			      bitmap_to_draw = this->bitmaps[0];
-			    else
-			      bitmap_to_draw = this->bitmaps[3];
+				else
+			      bitmap_to_draw = this->bitmaps[this->animation_period - 1];
 			    break;
 		     
 			  case ANIMATION_SWITCH_ON: 
-				if (this->animation_frame < 4)
-				  bitmap_to_draw = this->bitmaps[3 - (this->animation_frame % 4)];
+				if (this->animation_frame < this->animation_period)
+				  bitmap_to_draw = this->bitmaps[this->animation_period - 1 - (this->animation_frame % this->animation_period)];
 				else if (!this->looping_animation)
 				  {
 					bitmap_to_draw = this->bitmaps[0];
@@ -286,11 +306,11 @@ void c_map_object::draw(int x, int y)
 				break;
 
 			  case ANIMATION_SWITCH_OFF:
-				if (this->animation_frame < 4)
-				  bitmap_to_draw = this->bitmaps[this->animation_frame % 4];
+				if (this->animation_frame < this->animation_period)
+				  bitmap_to_draw = this->bitmaps[this->animation_frame % this->animation_period];
 				else if (!this->looping_animation)
 				  {
-					bitmap_to_draw = this->bitmaps[3];
+					bitmap_to_draw = this->bitmaps[this->animation_period - 1];
 				    this->stop_animation();
 				  }
 				break;

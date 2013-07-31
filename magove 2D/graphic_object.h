@@ -99,6 +99,16 @@ class c_graphic_object
 		  @return true if the map is loaded
 		    succesfully, false otherwise
 		*/
+
+	  int get_animation_frame();
+
+	    /**
+		  Returns the number of animation
+		  frame being currently displayed.
+
+		  @return number of the animation
+		    frame being displayed
+		*/
   };
 
 #endif

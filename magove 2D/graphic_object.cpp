@@ -15,6 +15,13 @@ void c_graphic_object::draw(int x, int y)
 
 //-----------------------------------------------
 
+int c_graphic_object::get_animation_frame()
+  {
+	return this->animation_frame;
+  }
+
+//-----------------------------------------------
+
 void c_graphic_object::play_animation(t_animation_type animation)
   {
 	this->playing_animation = animation;

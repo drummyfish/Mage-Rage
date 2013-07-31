@@ -41,6 +41,7 @@ void c_map::next_square(int x, int y, t_direction direction, int *next_x, int *n
 int c_map::get_height(int x, int y)
   {
 	int i, number_of_crates;
+	bool plus_elevator;          // if there is an elevator and is on, this will rise the height by 1
 
 	if (x > this->width || x < 0 ||
 	  y > this->height || y < 0)
@@ -54,7 +55,19 @@ int c_map::get_height(int x, int y)
 	  else if (this->squares[x][y].map_objects[i]->get_type() == OBJECT_CRATE)
 		number_of_crates++;
 
-	return this->squares[x][y].height + number_of_crates;
+	plus_elevator = 0;
+
+	for (i = 0; i < MAX_OBJECTS_PER_SQUARE; i++)
+	  if (this->squares[x][y].map_objects[i] != NULL)
+	    {
+		  if (this->squares[x][y].map_objects[i]->get_type() == OBJECT_ELEVATOR &&
+			this->squares[x][y].map_objects[i]->get_state() == OBJECT_STATE_ON)
+		    plus_elevator = 1;
+	    }
+	  else
+	    break;
+
+	return this->squares[x][y].height + number_of_crates + plus_elevator;
   }
 
 //-----------------------------------------------
@@ -255,8 +268,9 @@ bool c_map::load_from_file(string filename)
 	help_objects[8] = new c_map_object(OBJECT_TREE_WINTER,0,this->global_time);
 	help_objects[9] = new c_map_object(OBJECT_ROCK,0,this->global_time);
 	help_objects[10] = new c_map_object(OBJECT_CRATE,0,this->global_time);
+	help_objects[11] = new c_map_object(OBJECT_ELEVATOR,0,this->global_time);
 
-	for (i = 0; i < 11; i++)
+	for (i = 0; i < 12; i++)
 	  if (!help_objects[i]->is_succesfully_loaded())
 		cerr << "ERROR: the object isn't successfully loaded." << endl;
 
@@ -267,11 +281,11 @@ bool c_map::load_from_file(string filename)
 	this->add_map_object(help_objects[5],9,9);
 	this->add_map_object(help_objects[3],4,8);
 	this->add_map_object(help_objects[6],8,2);
-
 	this->add_map_object(help_objects[7],2,9);
 	this->add_map_object(help_objects[8],4,9);
 	this->add_map_object(help_objects[9],5,9);
 	this->add_map_object(help_objects[10],3,6);
+	this->add_map_object(help_objects[11],2,2);
 
 	this->link_objects();
 
@@ -669,7 +683,7 @@ void c_map::draw(int x, int y)
 
 int c_map::get_elevation_for_character(c_character *character)
   {
-	int height, x, y;
+	int height, x, y, i;
 	double fraction_x, fraction_y;
 
 	x = character->get_square_x();
@@ -690,6 +704,33 @@ int c_map::get_elevation_for_character(c_character *character)
 	  height += (int) ((fraction_y - 0.5) * 35);
 	else if (this->square_has_object(x,y,OBJECT_STAIRS_WEST) && fraction_x < 0.5)
 	  height += (int) ((0.5 - fraction_x) * 35);
+
+	for (i = 0; i < MAX_OBJECTS_PER_SQUARE; i++)             // check elevator animation
+	  if (this->squares[x][y].map_objects[i] != NULL)
+	    {
+		  if (this->squares[x][y].map_objects[i]->get_type() == OBJECT_ELEVATOR)
+		    {
+			  if (this->squares[x][y].map_objects[i]->is_animating())
+			    {
+			      if (this->squares[x][y].map_objects[i]->get_state() == OBJECT_STATE_ON)
+				    {
+			  	      height -= 27;
+					  height += this->squares[x][y].map_objects[i]->get_animation_frame() * 7;
+				    }
+				  else
+				    {
+					  height += 27;
+					  height -= this->squares[x][y].map_objects[i]->get_animation_frame() * 7;
+				    }
+			    }
+			  else
+				break;
+		    }
+		  else
+		    break;
+	    }
+	  else
+		break;
 
 	return height;
   }
