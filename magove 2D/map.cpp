@@ -285,7 +285,7 @@ bool c_map::load_from_file(string filename)
 	this->add_map_object(help_objects[8],4,9);
 	this->add_map_object(help_objects[9],5,9);
 	this->add_map_object(help_objects[10],3,6);
-	this->add_map_object(help_objects[11],2,2);
+	this->add_map_object(help_objects[11],4,5);
 
 	this->link_objects();
 
@@ -549,7 +549,7 @@ void c_map::draw_borders(int x, int y, int plus_x, int plus_y)
 
 void c_map::draw(int x, int y)
   {
-	int i, j, k, help_height, elevation, number_of_crates;
+	int i, j, k, help_height, elevation, number_of_crates, elevator_height;
 	al_clear_to_color(al_map_rgb(0,0,0));      // clear the screen
 	this->animation_frame = *this->global_time / 16;
 	
@@ -644,6 +644,7 @@ void c_map::draw(int x, int y)
 		for (i = 0; i < this->width; i++)      // draw the same line of objects
 	      {
 			number_of_crates = 0;
+			elevator_height = 0;
 
 			for (k = 0; k < MAX_OBJECTS_PER_SQUARE; k++)
 			  if (this->squares[i][j].map_objects[k] != NULL)
@@ -657,13 +658,19 @@ void c_map::draw(int x, int y)
 						  this->squares[i][j].map_objects[k]->draw(x + i * 64, y + j * 50 - (this->squares[i][j].height - 1) * 27 - number_of_crates * 27);
 					  }
 					else
-					  this->squares[i][j].map_objects[k]->draw(x + i * 64, y + j * 50 - this->squares[i][j].height * 27 - number_of_crates * 27);
+					  this->squares[i][j].map_objects[k]->draw(x + i * 64, y + j * 50 - this->squares[i][j].height * 27 - number_of_crates * 27 - elevator_height);
 				    
 					number_of_crates++;
 				  }
 				else
-				  this->squares[i][j].map_objects[k]->draw(x + i * 64, y + j * 50 - this->squares[i][j].height * 27);
-			  
+				  {
+					if (this->squares[i][j].map_objects[k]->get_type() == OBJECT_ELEVATOR)
+					  if (this->squares[i][j].map_objects[k]->get_state() == OBJECT_STATE_ON)
+						elevator_height = 27;
+
+				    this->squares[i][j].map_objects[k]->draw(x + i * 64, y + j * 50 - this->squares[i][j].height * 27);
+				  }
+
 			  else
 				break;
 	      }
