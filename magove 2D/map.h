@@ -12,6 +12,7 @@
 #include "graphic_object.h"
 #include "player_character.h"
 #include "map_object.h"
+#include "animation.h"
 
 typedef enum
   {
@@ -31,6 +32,7 @@ typedef struct
 	int height;                                         /** square height, min is 0, max is 2 */
 	t_square_type type;                                 /** square type, like normal, water, ice and so on. */
 	c_map_object *map_objects[MAX_OBJECTS_PER_SQUARE];  /** objects on this square (NULL means no object) */
+    c_animation *animation;                             /** animation being played on this square */
   } t_map_square;
 
 class c_map: public c_graphic_object
@@ -54,6 +56,8 @@ class c_map: public c_graphic_object
 	  t_input_state *input_state;                                      /** pointer to information about keyboard and mouse */
 	  double time_before;                                              /** to compute time difference between frames (for movement etc.) */
 	  double time_difference;                                          /** stores time between two frames to calculate step length etc. */
+
+	  c_animation *animation_water_splash;                             /** animation for water splash */
 
 	  ALLEGRO_BITMAP *portrait_selection;                              /** bitmap - GUI selection behind the portrait */ 
 	  ALLEGRO_BITMAP *portrait_mia;                                    /** bitmap - GUI portrait of Mia */
@@ -354,6 +358,17 @@ class c_map: public c_graphic_object
 		  @return true if there is at least
 		    one character on the square,
 			otherwise false
+		*/
+
+	  void display_animation(t_display_animation animation, int x, int y);
+
+	    /**
+	      Displays animation on the map square.
+
+		  @param animation the animation to be
+		    displayed
+		  @param x x coordination of the square
+		  @param y y coordination of the square
 		*/
 
     public:

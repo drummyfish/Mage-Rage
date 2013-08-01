@@ -17,12 +17,15 @@
 #include <allegro5/allegro_audio.h>
 #include <allegro5/allegro_acodec.h>
 
-#define MAP_MAX_WIDTH 30                /// maximum map width in squares
-#define MAP_MAX_HEIGHT 30               /// maximum map height in squares
-#define CLIFF_DISTANCE_SOUTH 0.4        /// character collision distance with south cliff (in fraction of one square)
-#define CLIFF_DISTANCE_NORTH 0.1        /// character collision distance with north cliff (in fraction of one square)
-#define CLIFF_DISTANCE_EAST_WEST 0.25   /// character collision distance with east and west cliff (in fraction of one square) 
-#define MAX_OBJECTS_PER_SQUARE 5        /// maximum number of objects on one square
+#define MAP_MAX_WIDTH 30                //* maximum map width in squares */
+#define MAP_MAX_HEIGHT 30               //* maximum map height in squares */
+#define CLIFF_DISTANCE_SOUTH 0.4        //* character collision distance with south cliff (in fraction of one square) */
+#define CLIFF_DISTANCE_NORTH 0.1        //* character collision distance with north cliff (in fraction of one square) */
+#define CLIFF_DISTANCE_EAST_WEST 0.25   //* character collision distance with east and west cliff (in fraction of one square) */
+#define MAX_OBJECTS_PER_SQUARE 5        //* maximum number of objects on one square */
+#define MAX_ANIMATION_FRAMES 10         //* maximum number of frames for the c_animation object */
+
+using namespace std;
 
 typedef enum
   {
@@ -89,6 +92,11 @@ typedef struct
 
 typedef enum
   {
+	/**
+	  Possible animation types for objects that
+	  can play multiple types of animations.
+	*/
+
 	ANIMATION_NONE,
 	ANIMATION_IDLE,
 	ANIMATION_RUN,
@@ -101,6 +109,15 @@ typedef enum
 	ANIMATION_SWITCH_ON,
 	ANIMATION_SWITCH_OFF
   } t_animation_type;
+
+typedef enum  
+  {
+	/**
+	  Possible displayable animations.
+	*/
+
+	DISPLAY_ANIMATION_WATER_SPLASH
+  } t_display_animation;
 
 typedef enum
   {

@@ -149,7 +149,7 @@ bool c_map::set_environment(t_environment new_environment)
 //-----------------------------------------------
 
 c_map::c_map(string filename, t_input_state *input_state, long int *global_time)
-  {  
+  {
     this->current_player = 0;
 	this->animation_frame = 0;
 	this->time_before = 0.0;
@@ -200,6 +200,7 @@ bool c_map::load_from_file(string filename)
 		  this->squares[i][j].height = 0;
 		  this->squares[i][j].type = SQUARE_NORMAL;
 		  this->squares[i][j].height = NULL;
+		  this->squares[i][j].animation = NULL;
 
 		  for (k = 0; k < MAX_OBJECTS_PER_SQUARE; k++)
 		    this->squares[i][j].map_objects[k] = NULL;
@@ -309,7 +310,25 @@ bool c_map::load_from_file(string filename)
 		this->button_positions_y[i] = button_positions[i][1];
 	  }
 	
+	this->animation_water_splash = new c_animation(this->global_time,"resources/animation_water_splash",5,-5,-5,2);
+
+	if (!this->animation_water_splash->is_succesfully_loaded())
+	  return false;
+
 	return true;
+  }
+
+//-----------------------------------------------
+
+void c_map::display_animation(t_display_animation animation, int x, int y)
+  {
+	switch (animation)
+	  {
+	    case DISPLAY_ANIMATION_WATER_SPLASH:
+		  this->squares[x][y].animation = this->animation_water_splash;
+		  this->animation_water_splash->play_animation(ANIMATION_IDLE);
+		  break;
+	  }
   }
 
 //-----------------------------------------------
@@ -393,6 +412,9 @@ bool c_map::crate_can_be_shifted(int x, int y, int height, t_direction direction
   {
 	int next_square[2];
 
+	if (this->get_square_type(x,y) == SQUARE_WATER)
+	  return false;
+
 	this->next_square(x,y,direction,&next_square[0],&next_square[1]);
 
 	if (this->get_height(x,y) - 1 != height)
@@ -450,6 +472,11 @@ void c_map::shift_crate(int x, int y, t_direction direction)
 			  this->next_square(x,y,direction,&next_square[0],&next_square[1]);
 			  this->add_map_object(this->squares[x][y].map_objects[i],next_square[0],next_square[1]);
 			  this->remove_object(x,y,i);
+			  
+			  if (this->get_square_type(next_square[0],next_square[1]) == SQUARE_WATER)
+			    this->display_animation(DISPLAY_ANIMATION_WATER_SPLASH,next_square[0],next_square[1]);
+
+			  break;
 		    }
 	    }
 	  else
@@ -641,7 +668,7 @@ void c_map::draw(int x, int y)
 			  }
 	      }
 
-		for (i = 0; i < this->width; i++)      // draw the same line of objects
+		for (i = 0; i < this->width; i++)      // draw the same line of objects (and animations)
 	      {
 			number_of_crates = 0;
 			elevator_height = 0;
@@ -670,9 +697,14 @@ void c_map::draw(int x, int y)
 
 				    this->squares[i][j].map_objects[k]->draw(x + i * 64, y + j * 50 - this->squares[i][j].height * 27);
 				  }
-
 			  else
 				break;
+
+			if (this->squares[i][j].animation != NULL)
+			  if (this->squares[i][j].animation->get_playing_animation() != NULL)
+                this->squares[i][j].animation->draw(x + i * 64, y + j * 50 - this->squares[i][j].height * 27);
+			  else
+			    this->squares[i][j].animation = NULL;
 	      }
 	
 		for (i = 0; i < 3; i++)                // draw players

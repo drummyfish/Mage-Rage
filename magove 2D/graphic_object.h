@@ -32,7 +32,7 @@ class c_graphic_object
 
     public:
 
-      virtual void c_graphic_object::draw(int x, int y);
+      virtual void draw(int x, int y);
 
 	    /**
 	      Tells the object to draw itself at given
