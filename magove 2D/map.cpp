@@ -41,13 +41,19 @@ void c_map::next_square(int x, int y, t_direction direction, int *next_x, int *n
 int c_map::get_height(int x, int y)
   {
 	int i, number_of_crates;
-	bool plus_elevator;          // if there is an elevator and is on, this will rise the height by 1
+	int plus_elevator;          // if there is an elevator and is on, this will rise the height by 1
+	int plus_water;
 
 	if (x > this->width || x < 0 ||
 	  y > this->height || y < 0)
 	  return 0;
 
 	number_of_crates = 0;
+
+	plus_water = 0;
+
+	if (this->get_square_type(x,y) == SQUARE_WATER)
+	  plus_water = -1;
 
 	for (i = 0; i < MAX_OBJECTS_PER_SQUARE; i++)
 	  if (this->squares[x][y].map_objects[i] == NULL)
@@ -67,7 +73,7 @@ int c_map::get_height(int x, int y)
 	  else
 	    break;
 
-	return this->squares[x][y].height + number_of_crates + plus_elevator;
+	return this->squares[x][y].height + number_of_crates + plus_elevator + plus_water;
   }
 
 //-----------------------------------------------
@@ -412,12 +418,9 @@ bool c_map::crate_can_be_shifted(int x, int y, int height, t_direction direction
   {
 	int next_square[2];
 
-	if (this->get_square_type(x,y) == SQUARE_WATER)
-	  return false;
-
 	this->next_square(x,y,direction,&next_square[0],&next_square[1]);
 
-	if (this->get_height(x,y) - 1 != height)
+	if (this->get_height(x,y) - 1 != height)      // check if shifting from right height 
 	  return false;
 
 	if (this->square_has_character(next_square[0],next_square[1]))
@@ -732,9 +735,6 @@ int c_map::get_elevation_for_character(c_character *character)
 
 	height = this->get_height(x,y) * 27;
 
-	if (this->get_square_type(x,y) == SQUARE_WATER)
-	  height -= 27;
-
 	if (this->square_has_object(x,y,OBJECT_STAIRS_NORTH) && fraction_y < 0.5)
 	  height += (int) ((0.5 - fraction_y) * 35);
 	else if (this->square_has_object(x,y,OBJECT_STAIRS_EAST) && fraction_x > 0.5)
@@ -825,15 +825,6 @@ bool c_map::character_can_move_to_square(c_character *character, t_direction dir
 
 	height_difference = this->get_height(square_position[0],square_position[1]) -  // check height differences
 	  this->get_height(square_position_next[0],square_position_next[1]);
-
-	if (this->get_square_type(square_position_next[0],square_position_next[1]) == SQUARE_WATER)  // check water (and possible crates)
-	  if (this->square_has_object(square_position_next[0],square_position_next[1],OBJECT_CRATE))
-	    height_difference++;
-	  else
-		return false;
-
-	if (this->get_square_type(square_position[0],square_position[1]) == SQUARE_WATER)
-	  height_difference--;
 
 	switch (height_difference)
 	  {
