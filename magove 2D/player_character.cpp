@@ -14,9 +14,11 @@ c_player_character::c_player_character(t_player_type player_type, long int *glob
 	string help_string;
 
 	this->global_time = global_time;
+	this->playing_sound = false;
 	this->set_position(0,0);
 	this->player_type = player_type;
 	this->direction = DIRECTION_SOUTH;
+	this->sound = NULL;
 
 	this->playing_animation = ANIMATION_NONE;
 
@@ -204,6 +206,7 @@ void c_player_character::draw(int x, int y)
 
 void c_player_character::play_animation(t_animation_type animation)
   {
+	this->stop_animation();
 	this->playing_animation = animation;
 	this->animation_frame = 0;
 	this->looping_animation = false;
@@ -215,6 +218,7 @@ void c_player_character::play_animation(t_animation_type animation)
 
 void c_player_character::loop_animation(t_animation_type animation)
   {
+	this->stop_animation();
 	this->playing_animation = animation;
 	this->animation_frame = 0;
 	this->looping_animation = true;
@@ -225,18 +229,9 @@ void c_player_character::loop_animation(t_animation_type animation)
 	  {
 	    case ANIMATION_RUN:
 		  al_play_sample(this->sound_footsteps,2.0,0.0,1.0,ALLEGRO_PLAYMODE_LOOP,&this->playing_sound_id);
+		  this->playing_sound = true;
 		  break;
 	  }
-  }
-
-//-----------------------------------------------
-
-void c_player_character::stop_animation()
-  {
-	al_stop_sample(&this->playing_sound_id);
-
-    this->playing_animation = ANIMATION_NONE;
-	this->animation_frame = 0;
   }
 
 //-----------------------------------------------

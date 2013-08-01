@@ -9,10 +9,23 @@
 
 //----------------------------------------------
 
-c_animation::c_animation(long int *global_time, string file_prefix, int number_of_frames, int offset_x, int offset_y, int speed)
+c_animation::c_animation(long int *global_time, string file_prefix, int number_of_frames, int offset_x, int offset_y, int speed,
+  bool has_sound, string sound_path, double sound_gain)
   {
 	int i;
 
+	if (has_sound)
+	  {
+	    this->sound = al_load_sample(sound_path.c_str());
+
+	    if (!this->sound)
+          this->succesfully_loaded = false;
+	  }
+	else
+	  this->sound = NULL;
+
+	this->sound_gain = sound_gain;
+	this->playing_sound = false;
 	this->animation_period = number_of_frames;
 	this->offset_x = offset_x;
 	this->offset_y = offset_y;

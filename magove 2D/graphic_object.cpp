@@ -24,11 +24,18 @@ int c_graphic_object::get_animation_frame()
 
 void c_graphic_object::play_animation(t_animation_type animation)
   {
+	this->stop_animation();
 	this->playing_animation = animation;
 	this->animation_frame = 0;
 	this->looping_animation = false;
 	this->started_playing = *this->global_time;
 	this->update_animation_period();
+
+	if (this->sound != NULL)
+	  {
+	    al_play_sample(this->sound,this->sound_gain,0.0,1.0,ALLEGRO_PLAYMODE_ONCE,&this->playing_sound_id);
+		this->playing_sound = true;
+	  }
   }
 
 //-----------------------------------------------
@@ -55,11 +62,18 @@ void c_graphic_object::update_animation_period()
 
 void c_graphic_object::loop_animation(t_animation_type animation)
   {
+	this->stop_animation();
 	this->playing_animation = animation;
 	this->animation_frame = 0;
 	this->looping_animation = true;
 	this->started_playing = *this->global_time;
 	this->update_animation_period();
+
+	if (this->sound != NULL)
+	  {
+	    al_play_sample(this->sound,this->sound_gain,0.0,1.0,ALLEGRO_PLAYMODE_LOOP,&this->playing_sound_id);
+  		this->playing_sound = true;
+	  }
   }
 
 //-----------------------------------------------
@@ -73,6 +87,12 @@ bool c_graphic_object::is_animating()
 
 void c_graphic_object::stop_animation()
   {
+	if (this->looping_animation && this->playing_sound)
+	  {
+		al_stop_sample(&this->playing_sound_id);
+	    this->playing_sound = false;
+	  }
+
     this->playing_animation = ANIMATION_NONE;
 	this->animation_frame = 0;
   }

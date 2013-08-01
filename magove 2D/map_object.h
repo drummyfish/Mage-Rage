@@ -27,9 +27,6 @@ class c_map_object: public c_graphic_object
 	  bool stepable;                       /** true if this object can be stepped over */
 	  c_map_object **controlling;          /** array of pointers to objects which are affected by this object */
 	  int number_of_controlled;            /** length of controlled array */
-	  double sound_gain;                   /** volume of the sound for animation */
-
-	  ALLEGRO_SAMPLE *sound_for_animation; /** sound - depends on the object's type */
 
     public:
 	  c_map_object(t_object_type object_type, int link_id, long int *global_time);
@@ -50,6 +47,7 @@ class c_map_object: public c_graphic_object
 	    */
 
 	  void update_controlled_objects();
+
 	    /**
 		  Updated states of objects that are
 		  controlled by this object.
@@ -150,29 +148,6 @@ class c_map_object: public c_graphic_object
 	    /**
 		  Depending on current animation sets
 		  the animation period attribute.
-		*/
-
-	  virtual void play_animation(t_animation_type animation);
-
-	    /**
-		  Plays given animation.
-
-		  @param animation animation to be played
-		*/
-
-	  virtual void loop_animation(t_animation_type animation);
-
-	    /**
-		  Loops the given animation untill it's
-		  stopped by stop_animation().
-
-		  @param animation animation to be looped
-		*/
-
-	  virtual void stop_animation();
-	    
-	    /**
-		  Stops playing the current animation.
 		*/
   };
 

@@ -26,11 +26,13 @@ class c_animation: public c_graphic_object
 	  int speed;                                    /** animation speed, 1 is normal, 2 is twice as slow and so on */
 	  int offset_x;                                 /** x offset for drawing in pixels */
 	  int offset_y;                                 /** y offset for drawing in pixels */	  
+
 	  ALLEGRO_BITMAP *frames[MAX_ANIMATION_FRAMES]; /** bitmaps- animation frames */
 
     public:
 
-	  c_animation(long int *global_time, string file_prefix, int number_of_frames, int offset_x, int offset_y, int speed);
+	  c_animation(long int *global_time, string file_prefix, int number_of_frames, int offset_x, int offset_y, int speed,
+        bool has_sound, string sound_path, double sound_gain);
 
 	    /**
 		  Class constructor, initialises a new
@@ -56,6 +58,14 @@ class c_animation: public c_graphic_object
 		  @param speed speed of the animation,
 		    1 is normal, 2 is twice as slow
 			and so on
+		  @param has_sound set this to true
+		    if sound should be loaded for this
+			animation, otherwise false
+		  @param sound_path if the previous
+		    parameter is true, this specifies
+			the path to the sound file
+		  @param sound_gain sound gain
+		    (volume), 1.0 is normal
 		*/
 
       virtual void draw(int x, int y);

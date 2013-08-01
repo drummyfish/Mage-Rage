@@ -98,12 +98,6 @@ class c_player_character: public c_character
 
 		  @param animation animation to be looped
 		*/
-
-	  virtual void stop_animation();
-	    
-	    /**
-		  Stops playing the current animation.
-		*/
   };
 
 #endif

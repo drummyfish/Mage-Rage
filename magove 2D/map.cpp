@@ -310,7 +310,7 @@ bool c_map::load_from_file(string filename)
 		this->button_positions_y[i] = button_positions[i][1];
 	  }
 	
-	this->animation_water_splash = new c_animation(this->global_time,"resources/animation_water_splash",5,-5,-5,2);
+	this->animation_water_splash = new c_animation(this->global_time,"resources/animation_water_splash",5,-5,-5,2,true,"resources/water.wav",1.0);
 
 	if (!this->animation_water_splash->is_succesfully_loaded())
 	  return false;

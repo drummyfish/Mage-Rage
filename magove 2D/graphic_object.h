@@ -28,7 +28,10 @@ class c_graphic_object
 	  bool looping_animation;              /** true if the animation is looping, false otherwise */
 	  int animation_period;                /** number of frames of the current animation */
 	  bool succesfully_loaded;             /** stores information about errors */
+	  bool playing_sound;                  /** whether a sound is playing for this object */
+	  double sound_gain;                   /** sound gain */
 	  ALLEGRO_SAMPLE_ID playing_sound_id;  /** an ID of the sound being played */
+	  ALLEGRO_SAMPLE *sound;               /** sound played during animation */
 
     public:
 
