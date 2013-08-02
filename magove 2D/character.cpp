@@ -55,7 +55,7 @@ int c_character::get_square_x()
 
 int c_character::get_square_y()
   {
-	return floor(this->position_y + 0.3) + 1;
+	return this->position_y > 0.0 ? floor(this->position_y + 0.3) + 1 : 0;
   }
 
 //-----------------------------------------------
@@ -73,7 +73,7 @@ double c_character::get_fraction_y()
   {
 	double helper;
 
-	return modf(this->position_y + 0.3,&helper);
+	return this->position_y > 0 ? modf(this->position_y + 0.3,&helper) : 1.0 + this->position_y;
   }
 
 //-----------------------------------------------

@@ -194,8 +194,8 @@ bool c_map::load_from_file(string filename)
 	int i, j, k;
 	int button_positions[512][2];        // buffer to hold button positions
 
-	this->width = 10;
-	this->height = 10;
+	this->width = 15;
+	this->height = 15;
 
 	if (!this->set_environment(ENVIRONMENT_GRASS))
 	  return false;
@@ -212,40 +212,51 @@ bool c_map::load_from_file(string filename)
 		    this->squares[i][j].map_objects[k] = NULL;
 	    }
 
-	this->squares[0][0].height = 0;
-	this->squares[1][0].height = 1;
+	this->squares[0][0].height = 2;
+	this->squares[1][0].height = 2;
 	this->squares[2][0].height = 2;
-	this->squares[2][1].height = 1;
-	this->squares[3][0].height = 1;
-	this->squares[6][2].height = 2;
-	this->squares[5][2].height = 2;
-	this->squares[4][2].height = 2;
-	this->squares[5][3].height = 1;
-	this->squares[5][4].height = 1;
-	this->squares[5][5].height = 1;
-	this->squares[4][3].height = 1;
-	this->squares[0][5].height = 2;
-	this->squares[0][6].height = 2;
-	this->squares[1][6].height = 2;
-	this->squares[7][7].type = SQUARE_WATER;
-	this->squares[6][7].type = SQUARE_WATER;
-	this->squares[7][6].type = SQUARE_WATER;
+	this->squares[3][0].height = 2;
+	this->squares[4][0].height = 2;
+	this->squares[5][0].height = 2;
+	this->squares[6][0].height = 2;
+	this->squares[0][1].height = 2;
+	this->squares[1][1].height = 2;
+	this->squares[2][1].height = 2;
+	this->squares[3][1].height = 2;
+	this->squares[4][1].height = 2;
+	this->squares[5][1].height = 2;
+	this->squares[6][1].height = 2;
+	this->squares[2][6].height = 2;
+	this->squares[3][6].height = 2;
+	this->squares[2][0].height = 2;
+	this->squares[2][1].height = 2;
+	this->squares[2][2].height = 2;
+	this->squares[3][0].height = 2;
+	this->squares[3][1].height = 2;
+	this->squares[3][2].height = 2;
+	this->squares[0][8].height = 2;
 
-	this->squares[9][0].type = SQUARE_ICE;
-	this->squares[9][1].type = SQUARE_ICE;
-	this->squares[8][1].type = SQUARE_ICE;
+	this->squares[0][2].height = 1;
+	this->squares[1][2].height = 1;
+	this->squares[2][2].height = 1;
+	this->squares[0][3].height = 1;
+	this->squares[1][3].height = 1;
+	this->squares[2][3].height = 1;
+	this->squares[8][0].height = 1; 
 
-	this->squares[9][4].type = SQUARE_COLLAPSE;
-	this->squares[9][5].type = SQUARE_COLLAPSE;
-	this->squares[8][5].type = SQUARE_COLLAPSE;
+	this->squares[0][1].type = SQUARE_WATER;
+	this->squares[4][2].type = SQUARE_WATER;
+	this->squares[5][2].type = SQUARE_WATER;
 
-	this->squares[8][6].type = SQUARE_HOLE;
-	this->squares[8][7].type = SQUARE_HOLE;
-
-	this->squares[7][7].height = 2;
-	this->squares[7][6].height = 2;
-
-	this->squares[2][5].height = 1;
+	this->squares[1][6].type = SQUARE_WATER;
+	this->squares[2][6].type = SQUARE_WATER;
+	this->squares[3][6].type = SQUARE_WATER;
+	this->squares[1][7].type = SQUARE_WATER;
+	this->squares[2][7].type = SQUARE_WATER;
+	this->squares[3][7].type = SQUARE_WATER;
+	this->squares[1][8].type = SQUARE_WATER;
+	this->squares[2][8].type = SQUARE_WATER;
+	this->squares[3][8].type = SQUARE_WATER;
 
 	this->player_characters[0] = new c_player_character(PLAYER_STAROVOUS,this->global_time);
 	this->player_characters[1] = new c_player_character(PLAYER_MIA,this->global_time);
@@ -262,37 +273,20 @@ bool c_map::load_from_file(string filename)
 	this->player_characters[1]->set_position(6.0,8.0);
 	this->player_characters[2]->set_position(4.0,8.0);
 
-	c_map_object *help_objects[100];
 
-	help_objects[0] = new c_map_object(OBJECT_CRATE,0,this->global_time);
-	help_objects[1] = new c_map_object(OBJECT_STAIRS_EAST,0,this->global_time);
-	help_objects[2] = new c_map_object(OBJECT_DOOR_HORIZONTAL,0,this->global_time);
-	help_objects[3] = new c_map_object(OBJECT_DOOR_VERTICAL,0,this->global_time);
-	help_objects[4] = new c_map_object(OBJECT_LEVER,0,this->global_time);
-	help_objects[5] = new c_map_object(OBJECT_BUTTON,0,this->global_time);
-	help_objects[6] = new c_map_object(OBJECT_FOUNTAIN,0,&this->animation_frame);
-	help_objects[7] = new c_map_object(OBJECT_TREE,0,this->global_time);
-	help_objects[8] = new c_map_object(OBJECT_TREE_WINTER,0,this->global_time);
-	help_objects[9] = new c_map_object(OBJECT_ROCK,0,this->global_time);
-	help_objects[10] = new c_map_object(OBJECT_CRATE,0,this->global_time);
-	help_objects[11] = new c_map_object(OBJECT_ELEVATOR,0,this->global_time);
+	this->add_map_object(new c_map_object(OBJECT_CRATE,0,this->global_time),5,0);
+	this->add_map_object(new c_map_object(OBJECT_CRATE,0,this->global_time),4,1);
+	this->add_map_object(new c_map_object(OBJECT_CRATE,0,this->global_time),5,6);
+	this->add_map_object(new c_map_object(OBJECT_CRATE,0,this->global_time),5,7);
+	this->add_map_object(new c_map_object(OBJECT_CRATE,0,this->global_time),5,8);
+	this->add_map_object(new c_map_object(OBJECT_CRATE,0,this->global_time),7,6);
+	this->add_map_object(new c_map_object(OBJECT_CRATE,0,this->global_time),7,7);
+	this->add_map_object(new c_map_object(OBJECT_CRATE,0,this->global_time),7,8);
 
-	for (i = 0; i < 12; i++)
-	  if (!help_objects[i]->is_succesfully_loaded())
-		cerr << "ERROR: the object isn't successfully loaded." << endl;
-
-	this->add_map_object(help_objects[0],5,5);
-	this->add_map_object(help_objects[1],3,3);
-	this->add_map_object(help_objects[2],3,7);
-	this->add_map_object(help_objects[4],2,7);
-	this->add_map_object(help_objects[5],9,9);
-	this->add_map_object(help_objects[3],4,8);
-	this->add_map_object(help_objects[6],8,2);
-	this->add_map_object(help_objects[7],2,9);
-	this->add_map_object(help_objects[8],4,9);
-	this->add_map_object(help_objects[9],5,9);
-	this->add_map_object(help_objects[10],3,6);
-	this->add_map_object(help_objects[11],4,5);
+	this->add_map_object(new c_map_object(OBJECT_STAIRS_NORTH,0,this->global_time),1,2);
+	this->add_map_object(new c_map_object(OBJECT_STAIRS_NORTH,0,this->global_time),1,4);
+	this->add_map_object(new c_map_object(OBJECT_STAIRS_NORTH,0,this->global_time),3,2);
+	this->add_map_object(new c_map_object(OBJECT_STAIRS_WEST,0,this->global_time),7,0);
 
 	this->link_objects();
 
@@ -498,7 +492,7 @@ void c_map::shift_crate(int x, int y, t_direction direction)
 				    break;
 
 				  case DIRECTION_SOUTH:
-					this->squares[x][y].map_objects[i]->play_animation(ANIMATION_SHIFT_NORTH);
+					this->squares[x][y].map_objects[i]->play_animation(ANIMATION_SHIFT_SOUTH);
 				    break;
 			    }
 
@@ -812,7 +806,7 @@ bool c_map::character_can_move_to_square(c_character *character, t_direction dir
 	t_object_type help_object_type2;       // to checks stairs
 	int height_difference;                 // height difference between start and destination squares
 	bool returned_value;
-
+	
 	square_position[0] = character->get_square_x();
 	square_position[1] = character->get_square_y();
 
@@ -967,7 +961,7 @@ void c_map::move_character(c_character *character, t_direction direction)
 
 	    case DIRECTION_SOUTH:
 		  if (character_can_move_to_square(character,direction)
-			|| character->get_fraction_y() < 1 - CLIFF_DISTANCE_NORTH) 
+	    	|| character->get_fraction_y() < 1 - CLIFF_DISTANCE_NORTH) 
 			character->move_by(0.0,step_length);
 		  break;
 	  }
@@ -1005,7 +999,7 @@ void c_map::move_character(c_character *character, t_direction direction)
 void c_map::update()
   { 
 	this->time_difference = al_current_time() - this->time_before;
-	
+
 	this->draw(50,75);
 	
 	if (this->input_state->key_left)
