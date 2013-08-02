@@ -318,6 +318,7 @@ bool c_map::load_from_file(string filename)
 	
 	this->animation_water_splash = new c_animation(this->global_time,"resources/animation_water_splash",5,-5,-5,2,true,"resources/water.wav",1.0);
 	this->animation_refresh = new c_animation(this->global_time,"resources/animation_refresh",6,0,0,2,true,"resources/water.wav",1.0);
+	this->animation_crate_shift_north = new c_animation(this->global_time,"resources/animation_crate_shift_north",3,0,-79,1,false,"",1.0);
 
 	if (!this->animation_water_splash->is_succesfully_loaded())
 	  return false;
@@ -334,6 +335,11 @@ void c_map::display_animation(t_display_animation animation, int x, int y)
 	    case DISPLAY_ANIMATION_WATER_SPLASH:
 		  this->squares[x][y].animation = this->animation_water_splash;
 		  this->animation_water_splash->play_animation(ANIMATION_IDLE);
+		  break;
+
+		case DISPLAY_ANIMATION_CRATE_SHIFT_NORTH:
+		  this->squares[x][y].animation = this->animation_crate_shift_north;
+		  this->animation_crate_shift_north->play_animation(ANIMATION_IDLE);
 		  break;
 	  }
   }
@@ -475,11 +481,32 @@ void c_map::shift_crate(int x, int y, t_direction direction)
 		    {
 			  this->next_square(x,y,direction,&next_square[0],&next_square[1]);
 			  this->add_map_object(this->squares[x][y].map_objects[i],next_square[0],next_square[1]);
+
+			  switch(direction)
+			    {
+			      case DIRECTION_EAST:
+					this->squares[x][y].map_objects[i]->play_animation(ANIMATION_SHIFT_EAST);
+				    break;
+
+			      case DIRECTION_WEST:
+					this->squares[x][y].map_objects[i]->play_animation(ANIMATION_SHIFT_WEST);
+				    break;
+
+			      case DIRECTION_NORTH:
+					this->squares[x][y].map_objects[i]->play_animation(ANIMATION_SHIFT_NORTH);
+					this->display_animation(DISPLAY_ANIMATION_CRATE_SHIFT_NORTH,x,y);
+				    break;
+
+				  case DIRECTION_SOUTH:
+					this->squares[x][y].map_objects[i]->play_animation(ANIMATION_SHIFT_NORTH);
+				    break;
+			    }
+
 			  this->remove_object(x,y,i);
 			  
 			  if (this->get_square_type(next_square[0],next_square[1]) == SQUARE_WATER)
 			    this->display_animation(DISPLAY_ANIMATION_WATER_SPLASH,next_square[0],next_square[1]);
-
+				
 			  break;
 		    }
 	    }
@@ -784,6 +811,7 @@ bool c_map::character_can_move_to_square(c_character *character, t_direction dir
 	t_object_type help_object_type;        // to checks stairs
 	t_object_type help_object_type2;       // to checks stairs
 	int height_difference;                 // height difference between start and destination squares
+	bool returned_value;
 
 	square_position[0] = character->get_square_x();
 	square_position[1] = character->get_square_y();
@@ -824,29 +852,33 @@ bool c_map::character_can_move_to_square(c_character *character, t_direction dir
 	if(!this->square_is_stepable(square_position_next[0],square_position_next[1])) // check stepable objects
 	  return false;
 
-	height_difference = this->get_height(square_position[0],square_position[1]) -  // check height differences
+	height_difference = this->get_height(square_position[0],square_position[1]) -  // check height difference
 	  this->get_height(square_position_next[0],square_position_next[1]);
+
+	returned_value = true;
 
 	switch (height_difference)
 	  {
 	    case 0:        // no difference -> OK
-		  return true;
+		  if (this->get_height(square_position[0],square_position[1]) <                  // this prevents entering to water through cliff
+	        this->get_terrain_height(square_position_next[0],square_position_next[1]))
+	        returned_value = false;
 		  break;
 
 		case 1:        // source square is higher
-		  return this->square_has_object(square_position_next[0],square_position_next[1],help_object_type2);
+		  returned_value = this->square_has_object(square_position_next[0],square_position_next[1],help_object_type2);
 		  break;
 
 		case -1:       // source square is lower  
-			return this->square_has_object(square_position[0],square_position[1],help_object_type); 
+		  returned_value = this->square_has_object(square_position[0],square_position[1],help_object_type); 
 		  break;
 		   
 		default:       // can't be accesed even by stairs
-		  return false;
+		  returned_value = false;
 		  break;
 	  }		  
 
-	return true; 
+	return returned_value; 
   }
 
 //-----------------------------------------------

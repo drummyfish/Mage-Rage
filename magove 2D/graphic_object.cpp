@@ -35,7 +35,7 @@ void c_graphic_object::play_animation(t_animation_type animation)
 	  {
 	    al_play_sample(this->sound,this->sound_gain,0.0,1.0,ALLEGRO_PLAYMODE_ONCE,&this->playing_sound_id);
 		this->playing_sound = true;
-	  }
+	  } 
   }
 
 //-----------------------------------------------

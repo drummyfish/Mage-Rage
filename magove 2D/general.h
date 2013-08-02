@@ -116,7 +116,8 @@ typedef enum
 	  Possible displayable animations.
 	*/
 
-	DISPLAY_ANIMATION_WATER_SPLASH
+	DISPLAY_ANIMATION_WATER_SPLASH,
+	DISPLAY_ANIMATION_CRATE_SHIFT_NORTH
   } t_display_animation;
 
 typedef enum

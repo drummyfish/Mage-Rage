@@ -222,6 +222,9 @@ void c_map_object::update_animation_period()
 		case OBJECT_ELEVATOR:
 		  this->animation_period = 4;
 	      break;
+
+		default:
+		  this->animation_period = 1;
 	  }
   }
 
@@ -229,11 +232,8 @@ void c_map_object::update_animation_period()
 
 void c_map_object::draw(int x, int y)
   {
-	int help_x, help_y;
+	int offset_x, offset_y;
 	ALLEGRO_BITMAP *bitmap_to_draw;
-
-	help_x = 0;
-	help_y = 0;
 
 	if (this->is_animating())
 	  {
@@ -246,8 +246,52 @@ void c_map_object::draw(int x, int y)
 		  this->animation_frame = 0;
 	  }
 
+	offset_x = 0;
+	offset_y = 0;
+
 	switch (this->type)
 	  {
+	    case OBJECT_CRATE:
+		  bitmap_to_draw = this->bitmaps[0];
+
+		  switch (this->playing_animation)
+		    {
+		      case ANIMATION_NONE:
+			    break;
+
+			  case ANIMATION_SHIFT_EAST:
+				if (this->animation_frame < 3)
+				  offset_x = (2 - this->animation_frame) * -21;
+				else
+				  this->stop_animation();			
+				break;
+
+			  case ANIMATION_SHIFT_WEST:
+				if (this->animation_frame < 3)
+				  offset_x = (2 - this->animation_frame) * 21;
+				else
+				  this->stop_animation();
+				break;
+
+			  case ANIMATION_SHIFT_NORTH:
+				if (this->animation_frame < 2)
+				  return;
+				else
+				  this->stop_animation();
+				break;
+
+			  case ANIMATION_SHIFT_SOUTH:
+				if (this->animation_frame < 2)
+				  offset_y = (2 - this->animation_frame) * -13;
+				else
+				  {
+				    this->stop_animation();
+				  }
+				break;
+		    }
+
+		  break;  
+
 	    case OBJECT_LEVER:
 
 		  switch (this->playing_animation)
@@ -351,7 +395,7 @@ void c_map_object::draw(int x, int y)
 		  break;
 	  }
 
-	al_draw_bitmap(bitmap_to_draw,x,y - 27,0);
+	al_draw_bitmap(bitmap_to_draw,offset_x + x,offset_y + y - 27,0);
   }
 
 //-----------------------------------------------

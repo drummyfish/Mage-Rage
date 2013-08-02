@@ -59,6 +59,7 @@ class c_map: public c_graphic_object
 
 	  c_animation *animation_water_splash;                             /** animation for water splash */
 	  c_animation *animation_refresh;                                  /** animation for refresh */
+	  c_animation *animation_crate_shift_north;                        /** animation of crate shifting north (other directions are done animating the crate itself) */
 
 	  ALLEGRO_BITMAP *portrait_selection;                              /** bitmap - GUI selection behind the portrait */ 
 	  ALLEGRO_BITMAP *portrait_mia;                                    /** bitmap - GUI portrait of Mia */
