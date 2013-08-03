@@ -95,6 +95,7 @@ void c_player_character::update_animation_period()
 		  this->animation_period = 2;
 		  break;
 
+		case ANIMATION_USE:
 		case ANIMATION_CAST:
 		  this->animation_period = 2;
 		  break;
@@ -175,7 +176,7 @@ void c_player_character::draw(int x, int y)
 				   break;
 			   }
 		   }
-		 else if (this->playing_animation == ANIMATION_CAST)
+		 else if (this->playing_animation == ANIMATION_CAST || this->playing_animation == ANIMATION_USE)
 		   { 
 			 switch (this->direction)
 			   {
@@ -212,6 +213,12 @@ void c_player_character::play_animation(t_animation_type animation)
 	this->looping_animation = false;
 	this->started_playing = *this->global_time;
 	this->update_animation_period();
+
+	if (animation == ANIMATION_CAST)
+	  {
+	 //   al_play_sample(this->sound_footsteps,2.0,0.0,1.0,ALLEGRO_PLAYMODE_LOOP,&this->playing_sound_id);
+	//	this->playing_sound = true;
+	  }
   }
 
 //-----------------------------------------------

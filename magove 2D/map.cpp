@@ -322,6 +322,13 @@ bool c_map::load_from_file(string filename)
 	this->animation_refresh = new c_animation(this->global_time,"resources/animation_refresh",6,0,0,2,true,"resources/water.wav",1.0);
 	this->animation_crate_shift_north = new c_animation(this->global_time,"resources/animation_crate_shift_north",3,0,-79,1,false,"",1.0);
 
+    this->spell_sounds_mia[0] = al_load_sample("resources/mia_cast.wav");
+    this->spell_sounds_mia[1] = al_load_sample("resources/mia_cast2.wav");
+	this->spell_sounds_metodej[0] = al_load_sample("resources/metodej_cast.wav");
+    this->spell_sounds_metodej[1] = al_load_sample("resources/metodej_cast2.wav");
+	this->spell_sounds_starovous[0] = al_load_sample("resources/starovous_cast.wav");
+    this->spell_sounds_starovous[1] = al_load_sample("resources/starovous_cast2.wav"); 
+
 	if (!this->animation_water_splash->is_succesfully_loaded())
 	  return false;
 
@@ -1034,7 +1041,8 @@ void c_map::update()
 	  this->move_character(this->player_characters[this->current_player],DIRECTION_SOUTH);
 	else if (this->input_state->key_up)
 	  this->move_character(this->player_characters[this->current_player],DIRECTION_NORTH);
-	else if (this->player_characters[this->current_player]->get_playing_animation() != ANIMATION_CAST)
+	else if (this->player_characters[this->current_player]->get_playing_animation() != ANIMATION_USE
+	  && this->player_characters[this->current_player]->get_playing_animation() != ANIMATION_CAST)
 	  {
 		this->player_characters[this->current_player]->stop_animation();
 	  }
@@ -1060,7 +1068,49 @@ void c_map::update()
 		this->use_key_press();
 	  }
 	  
+	if (this->input_state->key_cast_1)
+	  {
+		this->cast_key_press(0);
+	  }
+	else if (this->input_state->key_cast_2)
+	  {
+		this->cast_key_press(1);
+	  }
+	else if (this->input_state->key_cast_3)
+	  {
+		this->cast_key_press(2);
+	  }
+
 	this->time_before = al_current_time();
+  }
+
+//-----------------------------------------------
+
+void c_map::cast_key_press(int spell_number)
+  {
+	ALLEGRO_SAMPLE_ID sample_id;
+
+	if (this->player_characters[this->current_player]->get_playing_animation() == ANIMATION_CAST ||
+	  this->player_characters[this->current_player]->get_playing_animation() == ANIMATION_USE)
+	  return;
+
+	if (spell_number == 0 || spell_number == 1)
+	  switch(this->player_characters[this->current_player]->get_player_type()) // play the cast sound
+	    {
+	      case PLAYER_MIA:
+		    al_play_sample(this->spell_sounds_mia[spell_number],0.5,0.0,1.0,ALLEGRO_PLAYMODE_ONCE,&sample_id);
+		    break;
+
+		  case PLAYER_METODEJ:
+			al_play_sample(this->spell_sounds_metodej[spell_number],0.5,0.0,1.0,ALLEGRO_PLAYMODE_ONCE,&sample_id);
+		    break;
+
+		  case PLAYER_STAROVOUS:
+			al_play_sample(this->spell_sounds_starovous[spell_number],0.5,0.0,1.0,ALLEGRO_PLAYMODE_ONCE,&sample_id);
+		    break;
+	    }
+
+	this->player_characters[this->current_player]->play_animation(ANIMATION_CAST);
   }
 
 //-----------------------------------------------
@@ -1095,7 +1145,7 @@ void c_map::use_key_press()
 		      }
 		    else if (help_object->get_type() == OBJECT_LEVER && !help_object->is_animating())
 		      {
-			    this->player_characters[this->current_player]->play_animation(ANIMATION_CAST);
+			    this->player_characters[this->current_player]->play_animation(ANIMATION_USE);
 			    help_object->use();
 		      }
 	      }

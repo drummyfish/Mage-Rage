@@ -84,6 +84,9 @@ typedef struct
 	bool key_2;         /** key switch to player 2 */
 	bool key_3;         /** key switch to player 3 */
 	bool key_use;       /** key used to manipulate map objects */
+	bool key_cast_1;    /** key used to cast spell 1 */
+	bool key_cast_2;    /** key used to cast spell 2 */
+	bool key_cast_3;    /** key used to cast spell 3 */
 
 	int mouse_x;        /** mouse x position */
 	int mouse_y;        /** mouse y position */

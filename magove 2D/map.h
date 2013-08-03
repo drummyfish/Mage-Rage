@@ -84,6 +84,10 @@ class c_map: public c_graphic_object
 	  ALLEGRO_BITMAP *tile_hole;                                       /** bitmap - hole square */
 	  ALLEGRO_BITMAP *bitmap_crate_water;                              /** bitmap - crate in water */
 
+	  ALLEGRO_SAMPLE *spell_sounds_mia[2];                             /** Mia's cast sounds */
+	  ALLEGRO_SAMPLE *spell_sounds_metodej[2];                         /** Metodej's cast sounds */
+	  ALLEGRO_SAMPLE *spell_sounds_starovous[2];                      /** Starovous' cast sounds */
+
 	  void static next_square(int x, int y, t_direction direction, int *next_x, int *next_y);
 
 	    /**
@@ -130,6 +134,15 @@ class c_map: public c_graphic_object
 
 	    /**
 		  Handles use key press.
+		*/
+
+	  void cast_key_press(int spell_number);
+
+	    /**
+	      Handles cast keys press.
+
+		  @param spell_number number of spell
+		    cast (0, 1 or 2)
 		*/
 
 	  bool load_from_file(string filename);
