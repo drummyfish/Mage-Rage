@@ -454,6 +454,9 @@ bool c_map::crate_can_be_shifted(int x, int y, int height, t_direction direction
 	  next_square[1] < 0 || next_square[1] >= this->height)
 	  return false;
 
+	if (!this->square_is_stepable(next_square[0],next_square[1]))
+	  return false;
+
 	if (this->get_height(x,y) - 1 != height)      // check if shifting from right height 
 	  return false;
 
