@@ -195,8 +195,8 @@ bool c_map::load_from_file(string filename)
 	int i, j, k;
 	int button_positions[512][2];        // buffer to hold button positions
 
-	this->width = 15;
-	this->height = 15;
+	this->width = 30;
+	this->height = 30;
 
 	if (!this->set_environment(ENVIRONMENT_GRASS))
 	  return false;
@@ -244,6 +244,10 @@ bool c_map::load_from_file(string filename)
 	this->squares[1][3].height = 1;
 	this->squares[2][3].height = 1;
 	this->squares[8][0].height = 1; 
+
+	this->squares[29][29].height = 2;
+	this->squares[28][29].height = 2;
+	this->squares[27][29].height = 1;
 
 	this->squares[0][1].type = SQUARE_WATER;
 	this->squares[4][2].type = SQUARE_WATER;
@@ -648,7 +652,7 @@ void c_map::draw(int x, int y)
 	al_clear_to_color(al_map_rgb(0,0,0));      // clear the screen
 	this->animation_frame = *this->global_time / 16;
 	
-	for (j = this->screen_square_position[1]; j < this->screen_square_end[1]; j++)                         // go through lines
+	for (j = this->screen_square_position[1] - 1; j < this->screen_square_end[1] + 1; j++)                         // go through lines
 	  { 
 		if (j < 0 || j >= this->height)
 	      continue;
@@ -658,7 +662,7 @@ void c_map::draw(int x, int y)
 
 			elevation = help_height * 27;
 	
-			for (i = this->screen_square_position[0]; i < this->screen_square_end[0]; i++)                 // go through columns
+			for (i = this->screen_square_position[0] - 1; i < this->screen_square_end[0] + 1; i++)                 // go through columns
 			  { 
 				if (i < 0 || i >= this->width)
 	              continue;
@@ -983,15 +987,23 @@ void c_map::update_screen_position()
 	for (i = 0; i < 2; i++)
 	  if (player_position[i] < this->screen_square_position[i] + 2)
 	    {
-	      this->screen_square_position[i] = player_position[i] - 2;
+	      this->screen_square_position[i] = player_position[i] - 1;
 		  this->screen_square_end[i] = this->screen_square_position[i] + this->screen_square_resolution[i];
-		  this->screen_pixel_position[i] = this->screen_square_position[i] * 64;
+
+		   if (i == 0)
+			this->screen_pixel_position[i] = ((this->screen_square_position[i] - 1) * 64) + this->player_characters[this->current_player]->get_fraction_x() * 64;
+		  else
+			this->screen_pixel_position[i] = ((this->screen_square_position[i] - 1) * 50) + this->player_characters[this->current_player]->get_fraction_y() * 50;
 	    }
 	  else if (player_position[i] >= this->screen_square_end[i] - 3)
 	    {
 	      this->screen_square_position[i] += player_position[i] - (this->screen_square_end[i] - 3);
 		  this->screen_square_end[i] = this->screen_square_position[i] + this->screen_square_resolution[i];
-	      this->screen_pixel_position[i] = this->screen_square_position[i] * 64;
+
+		  if (i == 0)
+			this->screen_pixel_position[i] = (this->screen_square_position[i] + this->player_characters[this->current_player]->get_fraction_x()) * 64;
+		  else
+			this->screen_pixel_position[i] = (this->screen_square_position[i] + this->player_characters[this->current_player]->get_fraction_y()) * 50;
 	    }
   }
 
