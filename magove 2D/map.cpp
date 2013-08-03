@@ -274,19 +274,27 @@ bool c_map::load_from_file(string filename)
 	this->player_characters[2]->set_position(4.0,8.0);
 
 
-	this->add_map_object(new c_map_object(OBJECT_CRATE,0,this->global_time),5,0);
-	this->add_map_object(new c_map_object(OBJECT_CRATE,0,this->global_time),4,1);
-	this->add_map_object(new c_map_object(OBJECT_CRATE,0,this->global_time),5,6);
-	this->add_map_object(new c_map_object(OBJECT_CRATE,0,this->global_time),5,7);
-	this->add_map_object(new c_map_object(OBJECT_CRATE,0,this->global_time),5,8);
-	this->add_map_object(new c_map_object(OBJECT_CRATE,0,this->global_time),7,6);
-	this->add_map_object(new c_map_object(OBJECT_CRATE,0,this->global_time),7,7);
-	this->add_map_object(new c_map_object(OBJECT_CRATE,0,this->global_time),7,8);
+	this->add_map_object(new c_map_object(OBJECT_CRATE,0,0,this->global_time),5,0);
+	this->add_map_object(new c_map_object(OBJECT_CRATE,0,0,this->global_time),4,1);
+	this->add_map_object(new c_map_object(OBJECT_CRATE,0,0,this->global_time),5,6);
+	this->add_map_object(new c_map_object(OBJECT_CRATE,0,0,this->global_time),5,7);
+	this->add_map_object(new c_map_object(OBJECT_CRATE,0,0,this->global_time),5,8);
+	this->add_map_object(new c_map_object(OBJECT_CRATE,0,0,this->global_time),7,6);
+	this->add_map_object(new c_map_object(OBJECT_CRATE,0,0,this->global_time),7,7);
+	this->add_map_object(new c_map_object(OBJECT_CRATE,0,0,this->global_time),7,8);
 
-	this->add_map_object(new c_map_object(OBJECT_STAIRS_NORTH,0,this->global_time),1,2);
-	this->add_map_object(new c_map_object(OBJECT_STAIRS_NORTH,0,this->global_time),1,4);
-	this->add_map_object(new c_map_object(OBJECT_STAIRS_NORTH,0,this->global_time),3,2);
-	this->add_map_object(new c_map_object(OBJECT_STAIRS_WEST,0,this->global_time),7,0);
+	this->add_map_object(new c_map_object(OBJECT_STAIRS_NORTH,0,0,this->global_time),1,2);
+	this->add_map_object(new c_map_object(OBJECT_STAIRS_NORTH,0,0,this->global_time),1,4);
+	this->add_map_object(new c_map_object(OBJECT_STAIRS_NORTH,0,0,this->global_time),3,2);
+	this->add_map_object(new c_map_object(OBJECT_STAIRS_WEST,0,0,this->global_time),7,0);
+
+	this->add_map_object(new c_map_object(OBJECT_LEVER,1,-1,this->global_time),8,7);
+	this->add_map_object(new c_map_object(OBJECT_LEVER,1,2,this->global_time),8,8);
+	this->add_map_object(new c_map_object(OBJECT_LEVER,2,-1,this->global_time),8,9);
+
+	this->add_map_object(new c_map_object(OBJECT_DOOR_HORIZONTAL,1,-1,this->global_time),6,7);
+	this->add_map_object(new c_map_object(OBJECT_DOOR_HORIZONTAL,2,-1,this->global_time),6,8);
+	this->add_map_object(new c_map_object(OBJECT_DOOR_HORIZONTAL,1,2,this->global_time),6,9);
 
 	this->link_objects();
 
@@ -474,7 +482,6 @@ void c_map::shift_crate(int x, int y, t_direction direction)
 		  if (this->squares[x][y].map_objects[i]->get_type() == OBJECT_CRATE)
 		    {
 			  this->next_square(x,y,direction,&next_square[0],&next_square[1]);
-			  this->add_map_object(this->squares[x][y].map_objects[i],next_square[0],next_square[1]);
 
 			  switch(direction)
 			    {
@@ -496,11 +503,13 @@ void c_map::shift_crate(int x, int y, t_direction direction)
 				    break;
 			    }
 
-			  this->remove_object(x,y,i);
-			  
-			  if (this->get_square_type(next_square[0],next_square[1]) == SQUARE_WATER)
+			  if (this->get_square_type(next_square[0],next_square[1]) == SQUARE_WATER &&
+				!this->square_has_object(next_square[0],next_square[1],OBJECT_CRATE))
 			    this->display_animation(DISPLAY_ANIMATION_WATER_SPLASH,next_square[0],next_square[1]);
-				
+	
+			  this->add_map_object(this->squares[x][y].map_objects[i],next_square[0],next_square[1]);
+			  this->remove_object(x,y,i);  
+
 			  break;
 		    }
 	    }
@@ -512,7 +521,8 @@ void c_map::shift_crate(int x, int y, t_direction direction)
 
 void c_map::link_objects()
   {
-	int i, j, k, l, m, n;
+	int i, j, k, l, m, n, o;
+	bool is_in_array;
 	c_map_object *help_object, *help_object2;
 	c_map_object *object_array[256];            // buffer to temporarily hold object
 	int array_length;
@@ -536,10 +546,22 @@ void c_map::link_objects()
 						if (help_object2 != NULL)
 						  {
 							if (!help_object2->is_input() &&
-						      help_object->get_link_id() == help_object2->get_link_id())
+								help_object->compare_link_ids(help_object2))
 							  {
-								object_array[array_length] = help_object2;
-								array_length++;
+								is_in_array = false;      // we have to check, if the object is already in the array
+
+								for (o = 0; o < array_length; o++)
+								  if (object_array[o] == help_object2)
+								    {
+									  is_in_array = true;
+									  break;
+								    }
+
+								if (!is_in_array)
+								  {
+								    object_array[array_length] = help_object2;
+								    array_length++;
+								  }
 							  }
 						  }
 						else
@@ -860,11 +882,13 @@ bool c_map::character_can_move_to_square(c_character *character, t_direction dir
 		  break;
 
 		case 1:        // source square is higher
-		  returned_value = this->square_has_object(square_position_next[0],square_position_next[1],help_object_type2);
+		  returned_value = this->square_has_object(square_position_next[0],square_position_next[1],help_object_type2)
+			&& this->get_height(square_position_next[0],square_position_next[1]) == this->get_terrain_height(square_position_next[0],square_position_next[1]);
 		  break;
 
-		case -1:       // source square is lower  
-		  returned_value = this->square_has_object(square_position[0],square_position[1],help_object_type); 
+		case -1:       // source square is lower
+		  returned_value = this->square_has_object(square_position[0],square_position[1],help_object_type)
+		    && this->get_height(square_position_next[0],square_position_next[1]) == this->get_terrain_height(square_position_next[0],square_position_next[1]); 
 		  break;
 		   
 		default:       // can't be accesed even by stairs
@@ -942,25 +966,25 @@ void c_map::move_character(c_character *character, t_direction direction)
 	switch (direction)
 	  {
 	    case DIRECTION_NORTH:
-		  if (character_can_move_to_square(character,direction)
+		  if (this->character_can_move_to_square(character,direction)
 			|| character->get_fraction_y() > CLIFF_DISTANCE_SOUTH) 
 			character->move_by(0.0,-1 * step_length);
 		  break;
 
 	    case DIRECTION_EAST:
-		  if (character_can_move_to_square(character,direction)
+		  if (this->character_can_move_to_square(character,direction)
 			|| character->get_fraction_x() < 1 - CLIFF_DISTANCE_EAST_WEST) 
 			character->move_by(step_length,0.0);
 		  break;
 
 	    case DIRECTION_WEST:
-		  if (character_can_move_to_square(character,direction)
+		  if (this->character_can_move_to_square(character,direction)
 			|| character->get_fraction_x() > CLIFF_DISTANCE_EAST_WEST) 
 			character->move_by(-1 *step_length,0.0);
 		  break;
 
 	    case DIRECTION_SOUTH:
-		  if (character_can_move_to_square(character,direction)
+		  if (this->character_can_move_to_square(character,direction)
 	    	|| character->get_fraction_y() < 1 - CLIFF_DISTANCE_NORTH) 
 			character->move_by(0.0,step_length);
 		  break;
@@ -997,7 +1021,7 @@ void c_map::move_character(c_character *character, t_direction direction)
 //-----------------------------------------------
 
 void c_map::update()
-  { 
+{
 	this->time_difference = al_current_time() - this->time_before;
 
 	this->draw(50,75);

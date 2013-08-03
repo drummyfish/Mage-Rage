@@ -9,11 +9,12 @@
 
 //-----------------------------------------------
 
-c_map_object::c_map_object(t_object_type object_type, int link_id, long int *global_time)
+c_map_object::c_map_object(t_object_type object_type, int link_id,  int link_id2, long int *global_time)
   {
 	int i, number_of_bitmaps;
 
 	this->link_id = link_id;
+	this->link_id2 = link_id2;
 	this->playing_sound = false;
 	this->sound = NULL;
 	this->global_time = global_time;
@@ -168,6 +169,13 @@ t_object_state c_map_object::get_state()
 int c_map_object::get_link_id()
   {
 	return this->link_id;
+  }
+
+//-----------------------------------------------
+
+int c_map_object::get_link_id2()
+  {
+	return this->link_id2;
   }
 
 //-----------------------------------------------
@@ -464,4 +472,26 @@ void c_map_object::update_controlled_objects()
 	  this->controlling[i]->switch_state();
   }
 
-//--------------------------------------------------
+//-----------------------------------------------
+
+bool c_map_object::compare_link_ids(c_map_object *another_object)
+  {
+	if (this->link_id == another_object->get_link_id())
+	  return true;
+
+	if (this->link_id2 >= 0 &&
+	  this->link_id2 == another_object->get_link_id())
+	  return true;
+
+	if (another_object->get_link_id2() >= 0 &&
+	  this->link_id == another_object->get_link_id2())
+	  return true;
+
+	if (this->link_id2 >= 0 && another_object->get_link_id2() >=0
+	  && this->link_id2 == another_object->get_link_id2())
+	  return true;
+
+	return false;
+  }
+
+//-----------------------------------------------

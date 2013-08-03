@@ -21,6 +21,7 @@ class c_map_object: public c_graphic_object
     protected:
       t_object_type type;                  /** type of the object */
 	  int link_id;                         /** identifies link between objects so they affect each other */
+	  int link_id2;                        /** another link, negative number means it's not used */
 	  bool input;                          /** true if this object is input (ie. lever, button, etc.) */
 	  t_object_state object_state;         /** identifies object state (on/off, open/closed etc.) */
 	  ALLEGRO_BITMAP *bitmaps[5];          /** bitmaps used to draw this object */
@@ -29,7 +30,7 @@ class c_map_object: public c_graphic_object
 	  int number_of_controlled;            /** length of controlled array */
 
     public:
-	  c_map_object(t_object_type object_type, int link_id, long int *global_time);
+	  c_map_object(t_object_type object_type, int link_id, int link_id2, long int *global_time);
 
 	    /**
 	      Class constructor, initialises new
@@ -41,6 +42,9 @@ class c_map_object: public c_graphic_object
 		    the connection between objects,
 			objects with same link id will
 			affect each other
+		  @param link_id2 another link id,
+		    negative number means this will not
+			be used
 		  @param global_time reference to a 
 		    global time counter variable which
 			is needed for animations
@@ -79,6 +83,15 @@ class c_map_object: public c_graphic_object
 		  Returns the object's link id.
 
 		  @return object link id
+		*/
+
+	  int get_link_id2();
+
+	    /**
+		  Returns the object's secondary
+		    link id.
+
+		  @return object secondary link id
 		*/
 
 	  t_object_state get_state();
@@ -148,6 +161,21 @@ class c_map_object: public c_graphic_object
 	    /**
 		  Depending on current animation sets
 		  the animation period attribute.
+		*/
+
+	  bool compare_link_ids(c_map_object *another_object);
+
+	    /**
+		  Checks if this map object and another
+		  map object are linked via their link
+		  ids.
+
+		  @param another_object object to be
+		    compared to this object by link
+			ids
+		  @return true if this object is linked
+		    with another_object, otherwise
+			false
 		*/
   };
 
