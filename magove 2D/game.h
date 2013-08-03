@@ -19,12 +19,12 @@ class c_game
 	*/
 
     protected:
-	  c_map *map;                           /** handles the map */
-	  ALLEGRO_DISPLAY *display;             /** the game screen */
-	  ALLEGRO_EVENT_QUEUE *event_queue;     /** event queue */
-	  ALLEGRO_TIMER *global_timer;          /** global clock */
-	  long int global_time;                 /** global time counter */
-	  t_input_state input_state;            /** keyboard and mouse state */
+	  c_map *map;                               /** handles the map */
+	  ALLEGRO_DISPLAY *display;                 /** the game screen */
+	  ALLEGRO_EVENT_QUEUE *event_queue;         /** event queue */
+	  ALLEGRO_TIMER *global_timer;              /** global clock */
+	  long int global_time;                     /** global time counter */
+	  t_input_output_state input_output_state;  /** keyboard and mouse state */
 
     public:
 	  c_game();

@@ -74,6 +74,7 @@ typedef struct
 	/**
 	  Holds information about input state, such as
 	  keys being pressed, mouse position and so on.
+	  Also stores information about the screen.
 	*/
 
 	bool key_up;        /** key up */
@@ -91,7 +92,9 @@ typedef struct
 	int mouse_x;        /** mouse x position */
 	int mouse_y;        /** mouse y position */
 
-  } t_input_state;
+	int screen_x;       /** screen resolution x */
+	int screen_y;       /** screen resolution y */
+  } t_input_output_state;
 
 typedef enum
   {

@@ -53,9 +53,14 @@ class c_map: public c_graphic_object
 	  t_environment environment;                                       /** map environment */
 	  t_map_square squares[MAP_MAX_WIDTH][MAP_MAX_HEIGHT];             /** map squares */
 	  c_player_character *player_characters[3];                        /** player characters, NULL means no character */            
-	  t_input_state *input_state;                                      /** pointer to information about keyboard and mouse */
+	  t_input_output_state *input_output_state;                        /** pointer to information about keyboard and mouse */
 	  double time_before;                                              /** to compute time difference between frames (for movement etc.) */
 	  double time_difference;                                          /** stores time between two frames to calculate step length etc. */
+	  
+	  int screen_square_resolution[2];                                 /** depending on screen resolution, this will contain screen resolution in game squares */
+	  int screen_square_position[2];                                   /** position of the upper left screen corner aat the game map */
+	  int screen_pixel_position[2];                                    /** screen square position converted to pixels */
+	  int screen_square_end[2];                                        /** position of the lower right corner of the screen in game squares */
 
 	  c_animation *animation_water_splash;                             /** animation for water splash */
 	  c_animation *animation_refresh;                                  /** animation for refresh */
@@ -386,18 +391,27 @@ class c_map: public c_graphic_object
 		  @param y y coordination of the square
 		*/
 
+	  void update_screen_position();
+
+	    /**
+		  Updates the screen position depending
+		  on current player's position on
+		  the map and the screen resolution.
+		*/
+
     public:
 
-      c_map(string filename, t_input_state *input_state, long int *global_time);
+      c_map(string filename, t_input_output_state *input_output_state, long int *global_time);
 
 	    /** 
 	      Class constructor, loads new map from
 		  given file.
 
 		  @param filename path to the map file
-		  @param input_state pointer to structure,
-		    which will be used to pass information
-			about keyboard and mouse to this object.
+		  @param input_output_state pointer to
+		    structure, which will be used to pass
+			information about keyboard and mouse
+			to this object.
 		  @param global_time reference to a
 		    global time counter variable which is
 			needed for animations
