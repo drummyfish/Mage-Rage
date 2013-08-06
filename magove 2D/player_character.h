@@ -19,6 +19,8 @@ class c_player_character: public c_character
     private:
 	  t_player_type player_type;
 
+	  int magic_energy;                              /** current amount of magic energy */
+
 	  ALLEGRO_BITMAP *shadow;                        /** shadow bitmap */
 	  ALLEGRO_BITMAP *sprite_north;                  /** player facing north */
 	  ALLEGRO_BITMAP *sprite_north_casting;          /** player casting north */
@@ -97,6 +99,29 @@ class c_player_character: public c_character
 		  stopped by stop_animation().
 
 		  @param animation animation to be looped
+		*/
+
+	  void change_magic_energy(int amount);
+
+	    /**
+		  Takes or gives an amount of magic
+		  energy from or to the player.
+
+		  @param amount amount of energy to
+		    be added, this can be also a
+			negative number - if the player
+			already has full amount of energy
+			or zero energy, no overflow will
+			occur
+		*/
+
+	  int get_magic_energy();
+
+	    /**
+		  Returns amount of the player's
+		  magic energy.
+
+		  @return player's magic energy
 		*/
   };
 

@@ -31,15 +31,20 @@ c_game::c_game()
         cerr << "ERROR: failed to initialize audio." << endl;
       }
  
-	if (!al_reserve_samples(10))
+	if (!al_reserve_samples(10))                   // reserve audio samples
 	  {
         cerr << "ERROR: failed to reserve samples." << endl;
       }
 
-    if (!al_init_acodec_addon())
+    if (!al_init_acodec_addon())                   // initialise audio codec addon
 	  {
         cerr << "ERROR: failed to initialize audio codecs." << endl;
       }
+
+    if (!al_init_primitives_addon())               // initialise primitives addon
+	  {
+		cerr << "ERROR: failed to initialize primitives addon." << endl;
+	  }
 
 	this->input_output_state.screen_x = 800;
 	this->input_output_state.screen_y = 600;

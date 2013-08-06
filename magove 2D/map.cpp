@@ -171,6 +171,11 @@ c_map::c_map(string filename, t_input_output_state *input_output_state, long int
 	this->screen_square_end[0] = this->screen_square_resolution[0];
 	this->screen_square_end[1] = this->screen_square_resolution[1];
 
+	portrait_x_positions[0] = 20;
+	portrait_x_positions[1] = 170;
+	portrait_x_positions[2] = 320;
+	portrait_y_position = this->input_output_state->screen_y - 75;
+
 	this->succesfully_loaded = this->load_from_file(filename);
   }
 
@@ -336,6 +341,8 @@ bool c_map::load_from_file(string filename)
 	this->animation_water_splash = new c_animation(this->global_time,"resources/animation_water_splash",5,-5,-5,2,true,"resources/water.wav",1.0);
 	this->animation_refresh = new c_animation(this->global_time,"resources/animation_refresh",6,0,0,2,true,"resources/water.wav",1.0);
 	this->animation_crate_shift_north = new c_animation(this->global_time,"resources/animation_crate_shift_north",3,0,-79,1,false,"",1.0);
+	this->animation_collapse = new c_animation(this->global_time,"resources/animation_collapse",5,0,0,2,true,"resources/crack.wav",0.3);
+	this->animation_melt = new c_animation(this->global_time,"resources/animation_melt",4,0,-27,5,false,"",0.0);
 
     this->spell_sounds_mia[0] = al_load_sample("resources/mia_cast.wav");
     this->spell_sounds_mia[1] = al_load_sample("resources/mia_cast2.wav");
@@ -398,6 +405,16 @@ void c_map::display_animation(t_display_animation animation, int x, int y)
 		  this->squares[x][y].animation = this->animation_crate_shift_north;
 		  this->animation_crate_shift_north->play_animation(ANIMATION_IDLE);
 		  break;
+
+		case DISPLAY_ANIMATION_COLLAPSE:
+		  this->squares[x][y].animation = this->animation_collapse;
+		  this->animation_collapse->play_animation(ANIMATION_IDLE);
+		  break;
+
+		case DISPLAY_ANIMATION_MELT:
+		  this->squares[x][y].animation = this->animation_melt;
+		  this->animation_melt->play_animation(ANIMATION_IDLE);
+		  break;		  
 	  }
   }
 
@@ -838,6 +855,32 @@ void c_map::draw(int x, int y)
 			  al_draw_bitmap(this->missiles[i].bitmap,x + (int) (this->missiles[i].position_x * 64) - this->screen_pixel_position[0], y + (int) (this->missiles[i].position_y * 50) - elevation - this->screen_pixel_position[1],0); 
 		    }
 	  }
+
+	for (i = 0; i < 3; i++)                            // draw portraits
+	  if (this->player_characters[i] == NULL)
+	    {
+		  break;
+	    }
+	  else
+	    {
+		  // draw the energy bar:
+		  al_draw_filled_rectangle(x + 38 + this->portrait_x_positions[i],y + this->portrait_y_position + 20,x + this->portrait_x_positions[i] + 38 + this->player_characters[i]->get_magic_energy() * 18,y + this->portrait_y_position + 47,al_map_rgb(197,248,252));
+
+		  switch (this->player_characters[i]->get_player_type())
+		    {
+		      case PLAYER_MIA:
+				al_draw_bitmap(this->portrait_mia,x + this->portrait_x_positions[i],y + this->portrait_y_position,0);
+				break;
+			  
+			  case PLAYER_METODEJ:
+				al_draw_bitmap(this->portrait_metodej,x + this->portrait_x_positions[i],y + this->portrait_y_position,0);
+			    break;
+
+			  case PLAYER_STAROVOUS:
+				al_draw_bitmap(this->portrait_starovous,x + this->portrait_x_positions[i],y + this->portrait_y_position,0);
+		        break; 
+		    }
+	    }
   }
 
 //-----------------------------------------------
@@ -1028,7 +1071,7 @@ void c_map::update_screen_position()
 	player_position[0] = this->player_characters[this->current_player]->get_square_x();
 	player_position[1] = this->player_characters[this->current_player]->get_square_y();
 
-	for (i = 0; i < 2; i++)
+	for (i = 0; i < 2; i++)    // check x and y
 	  if (player_position[i] < this->screen_square_position[i] + 2)
 	    {
 	      this->screen_square_position[i] = player_position[i] - 1;
@@ -1118,11 +1161,21 @@ void c_map::move_character(c_character *character, t_direction direction)
 	  && character->get_fraction_x() < CLIFF_DISTANCE_EAST_WEST)
 	  character->move_by(0.02,0.0); 
 	
-	// the movement's done, now handle interaction with objects
+	// the movement's done here, now do other things
 
 	this->update_screen_position();
-
 	this->check_buttons();
+
+	if (this->get_square_type(square_position[0],square_position[1]) == SQUARE_COLLAPSE)
+	  {
+		if (character->get_square_x() != square_position[0] ||
+		  character->get_square_y() != square_position[1])
+		  if (!this->square_has_character(square_position[0],square_position[1]))
+		    {
+			  this->set_square_type(square_position[0],square_position[1],SQUARE_HOLE);
+		      this->display_animation(DISPLAY_ANIMATION_COLLAPSE,square_position[0],square_position[1]);
+		    }
+	  }
   }
 
 //-----------------------------------------------
@@ -1148,8 +1201,8 @@ void c_map::update_missiles()
 		died = false;
 
 		// position computing is the same as in player get_square_y() - could be done better :/ (make a static method in c_character!!!)
-		this->missiles[i].square_y = this->missiles[i].square_y > -0.3 ? floor(this->missiles[i].position_y + 0.3) + 1 : 0;
-		this->missiles[i].square_x = floor(this->missiles[i].position_x + 0.3);
+		this->missiles[i].square_y = c_character::position_to_square(this->missiles[i].position_y,false); //  this->missiles[i].square_y > -0.3 ? floor(this->missiles[i].position_y + 0.3) + 1 : 0;
+		this->missiles[i].square_x = c_character::position_to_square(this->missiles[i].position_x,true); //floor(this->missiles[i].position_x + 0.3);
 
 		switch (this->missiles[i].direction)
 		  {
@@ -1199,6 +1252,7 @@ void c_map::update_missiles()
 					if (this->squares[this->missiles[i].square_x][this->missiles[i].square_y].map_objects[j]->get_type() == OBJECT_ICE)
 					  {
 					    this->remove_object(this->missiles[i].square_x,this->missiles[i].square_y,j);
+						this->display_animation(DISPLAY_ANIMATION_MELT,this->missiles[i].square_x,this->missiles[i].square_y);
 
 						break;
 					  }
@@ -1351,6 +1405,9 @@ void c_map::cast_key_press(int spell_number)
   {
 	ALLEGRO_SAMPLE_ID sample_id;
 
+	if (this->player_characters[this->current_player]->get_magic_energy() == 0)
+	  return;                  // no magic energy
+
 	if (this->player_characters[this->current_player]->get_playing_animation() == ANIMATION_CAST ||
 	  this->player_characters[this->current_player]->get_playing_animation() == ANIMATION_USE)
 	  return;
@@ -1374,6 +1431,7 @@ void c_map::cast_key_press(int spell_number)
 			break;
 	    }
 
+	this->player_characters[this->current_player]->change_magic_energy(-1);
 	this->player_characters[this->current_player]->play_animation(ANIMATION_CAST);
   }
 

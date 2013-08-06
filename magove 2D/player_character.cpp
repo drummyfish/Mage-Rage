@@ -14,6 +14,7 @@ c_player_character::c_player_character(t_player_type player_type, long int *glob
 	string help_string;
 
 	this->global_time = global_time;
+	this->magic_energy = MAX_MAGIC_ENERGY;
 	this->playing_sound = false;
 	this->set_position(0,0);
 	this->player_type = player_type;
@@ -239,6 +240,25 @@ void c_player_character::loop_animation(t_animation_type animation)
 		  this->playing_sound = true;
 		  break;
 	  }
+  }
+
+//-----------------------------------------------
+
+void c_player_character::change_magic_energy(int amount)
+  {
+	this->magic_energy += amount;
+	  
+	if (this->magic_energy > MAX_MAGIC_ENERGY)
+	  this->magic_energy = MAX_MAGIC_ENERGY;
+	else if (this->magic_energy < 0)
+	  this->magic_energy = 0;
+  }
+
+//-----------------------------------------------
+
+int c_player_character::get_magic_energy()
+  {
+	return this->magic_energy;
   }
 
 //-----------------------------------------------

@@ -13,6 +13,7 @@
 #include <math.h>
 #include "allegro5/allegro.h"
 #include "allegro5/allegro_image.h"
+#include "allegro5/allegro_primitives.h"
 #include "allegro5/allegro_native_dialog.h"
 #include <allegro5/allegro_audio.h>
 #include <allegro5/allegro_acodec.h>
@@ -25,6 +26,7 @@
 #define MAX_OBJECTS_PER_SQUARE 5        /** maximum number of objects on one square */
 #define MAX_ANIMATION_FRAMES 10         /** maximum number of frames for the c_animation object */
 #define MAX_MISSILES_ON_MAP 32          /** maximum number of missiles on the map at given time */
+#define MAX_MAGIC_ENERGY 5              /** maximum amount of magic energy for a player */
 
 using namespace std;
 
@@ -124,7 +126,9 @@ typedef enum
 	*/
 
 	DISPLAY_ANIMATION_WATER_SPLASH,
-	DISPLAY_ANIMATION_CRATE_SHIFT_NORTH
+	DISPLAY_ANIMATION_CRATE_SHIFT_NORTH,
+	DISPLAY_ANIMATION_COLLAPSE,
+	DISPLAY_ANIMATION_MELT
   } t_display_animation;
 
 typedef enum

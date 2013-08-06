@@ -26,6 +26,19 @@ class c_character: public c_graphic_object
 
     public:
 
+	  static int position_to_square(double position, bool take_x);
+
+	    /**
+	      Converts either x or y double position
+		  to integer position in map squares.
+
+		  @param position position to be converted
+		  @param take_x if true, the position is
+		    considered as x position, otherwise
+			y position
+		  @return position in map squares
+		*/
+
 	  void set_position(double x, double y);
 
 	    /**

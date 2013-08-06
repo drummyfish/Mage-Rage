@@ -12,6 +12,7 @@
 #include "graphic_object.h"
 #include "player_character.h"
 #include "map_object.h"
+#include "character.h"
 #include "animation.h"
 
 typedef enum
@@ -72,7 +73,9 @@ class c_map: public c_graphic_object
 	  t_input_output_state *input_output_state;                        /** pointer to information about keyboard and mouse */
 	  double time_before;                                              /** to compute time difference between frames (for movement etc.) */
 	  double time_difference;                                          /** stores time between two frames to calculate step length etc. */
-	  
+	  int portrait_x_positions[3];                                     /** a helper array containing portrait x positions so they don't have to be counted each frame */
+	  int portrait_y_position;                                         /** y position of portraits in pixels */
+
 	  t_missile missiles[MAX_MISSILES_ON_MAP];                         /** array of missiles that are currently at the map */
 	  int number_of_missiles;                                          /** length of the missiles array */
 
@@ -84,6 +87,8 @@ class c_map: public c_graphic_object
 	  c_animation *animation_water_splash;                             /** animation for water splash */
 	  c_animation *animation_refresh;                                  /** animation for refresh */
 	  c_animation *animation_crate_shift_north;                        /** animation of crate shifting north (other directions are done animating the crate itself) */
+	  c_animation *animation_collapse;                                 /** animation for collapsing square */
+	  c_animation *animation_melt;                                     /** animation of melting ice */
 
 	  ALLEGRO_BITMAP *portrait_selection;                              /** bitmap - GUI selection behind the portrait */ 
 	  ALLEGRO_BITMAP *portrait_mia;                                    /** bitmap - GUI portrait of Mia */

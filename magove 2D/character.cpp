@@ -46,16 +46,28 @@ double c_character::get_position_y()
 
 //-----------------------------------------------
 
+int c_character::position_to_square(double position, bool take_x)
+  {
+	if (take_x)
+	  return floor(position + 0.3);
+	else
+	  return position > -0.3 ? floor(position + 0.3) + 1 : 0;
+  }
+
+//-----------------------------------------------
+
 int c_character::get_square_x()
   {
-	return floor(this->position_x + 0.3);  // 0.3 is a centering constant
+	return this->position_to_square(this->position_x,true);
+	// return floor(this->position_x + 0.3);  // 0.3 is a centering constant
   }
 
 //-----------------------------------------------
 
 int c_character::get_square_y()
   {
-	return this->position_y > -0.3 ? floor(this->position_y + 0.3) + 1 : 0;
+	return this->position_to_square(this->position_y,false);
+	//return this->position_y > -0.3 ? floor(this->position_y + 0.3) + 1 : 0;
   }
 
 //-----------------------------------------------
