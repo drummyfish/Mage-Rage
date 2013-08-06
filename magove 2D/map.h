@@ -328,6 +328,18 @@ class c_map: public c_graphic_object
 		  @return square type at given position
 		*/
 
+	  void set_square_type(int x, int y, t_square_type type);
+	    
+	    /**
+		  Sets the square type. If the
+		  coordinations are outside the map,
+		  nothing happens.
+
+		  @param x x position
+		  @param y y position
+		  @param type square typ to be set
+		*/
+
 	  void update_map_object_states();
 	    
 	    /**

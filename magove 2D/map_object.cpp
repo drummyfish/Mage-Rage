@@ -57,6 +57,11 @@ c_map_object::c_map_object(t_object_type object_type, int link_id,  int link_id2
 
 		  break;
 
+		case OBJECT_ICE:
+		  this->bitmaps[0] = al_load_bitmap("resources/object_ice.png");
+
+		  break;
+
 	    case OBJECT_CRATE:
 		  this->bitmaps[0] = al_load_bitmap("resources/object_crate.png");
 		  this->sound = al_load_sample("resources/crate_shift.wav");

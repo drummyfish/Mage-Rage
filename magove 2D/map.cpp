@@ -44,8 +44,8 @@ int c_map::get_height(int x, int y)
 	int plus_elevator;          // if there is an elevator and is on, this will rise the height by 1
 	int plus_water;
 
-	if (x > this->width || x < 0 ||
-	  y > this->height || y < 0)
+	if (x >= this->width || x < 0 ||
+	  y >= this->height || y < 0)
 	  return 0;
 
 	number_of_crates = 0;
@@ -80,8 +80,8 @@ int c_map::get_height(int x, int y)
 
 int c_map::get_terrain_height(int x, int y)
   {
-    if (x > this->width || x < 0 ||
-	  y > this->height || y < 0)
+    if (x >= this->width || x < 0 ||
+	  y >= this->height || y < 0)
 	  return 0;
 
 	return this->squares[x][y].height;
@@ -264,6 +264,13 @@ bool c_map::load_from_file(string filename)
 	this->squares[2][8].type = SQUARE_WATER;
 	this->squares[3][8].type = SQUARE_WATER;
 
+	this->squares[10][10].type = SQUARE_HOLE;
+	this->squares[10][11].type = SQUARE_HOLE;
+	this->squares[10][12].type = SQUARE_HOLE;
+	this->squares[9][10].type = SQUARE_HOLE;
+	this->squares[9][11].type = SQUARE_COLLAPSE;
+	this->squares[9][12].type = SQUARE_HOLE;
+
 	this->player_characters[0] = new c_player_character(PLAYER_STAROVOUS,this->global_time);
 	this->player_characters[1] = new c_player_character(PLAYER_MIA,this->global_time);
 	this->player_characters[2] = new c_player_character(PLAYER_METODEJ,this->global_time);
@@ -301,6 +308,8 @@ bool c_map::load_from_file(string filename)
 	this->add_map_object(new c_map_object(OBJECT_DOOR_HORIZONTAL,1,-1,this->global_time),6,7);
 	this->add_map_object(new c_map_object(OBJECT_DOOR_HORIZONTAL,2,-1,this->global_time),6,8);
 	this->add_map_object(new c_map_object(OBJECT_DOOR_HORIZONTAL,1,2,this->global_time),6,9);
+
+	this->add_map_object(new c_map_object(OBJECT_ICE,-1,-1,this->global_time),5,12);
 
 	this->link_objects();
 
@@ -1118,6 +1127,17 @@ void c_map::move_character(c_character *character, t_direction direction)
 
 //-----------------------------------------------
 
+void c_map::set_square_type(int x, int y, t_square_type type)
+  {
+	if (x < 0 || x >= this->width ||
+	  y < 0 || y >= this->height)
+	  return;
+
+	this->squares[x][y].type = type;
+  }
+
+//-----------------------------------------------
+
 void c_map::update_missiles()
   {
 	int i, j;
@@ -1127,7 +1147,7 @@ void c_map::update_missiles()
 	  {
 		died = false;
 
-		// position computing is the same as in player get_square_y() - could be done better :/
+		// position computing is the same as in player get_square_y() - could be done better :/ (make a static method in c_character!!!)
 		this->missiles[i].square_y = this->missiles[i].square_y > -0.3 ? floor(this->missiles[i].position_y + 0.3) + 1 : 0;
 		this->missiles[i].square_x = floor(this->missiles[i].position_x + 0.3);
 
@@ -1149,19 +1169,44 @@ void c_map::update_missiles()
 			  missiles[i].position_x -= 0.1;
 			  break;
 		  }
-
+		
+		if (this->get_height(this->missiles[i].square_x,this->missiles[i].square_y) > this->missiles[i].height ||
+		  this->get_terrain_height(this->missiles[i].square_x,this->missiles[i].square_y) > this->missiles[i].height)
+		  died = true;
+		  
 		switch (this->missiles[i].type)    // check the missile effect
 		  {
 		    case MISSILE_MIA_1:
-			  if (this->square_has_object(this->missiles[i].square_x,this->missiles[i].square_y,OBJECT_CRATE))
-			    {
-				  died = true;
+			  if (this->square_has_object(this->missiles[i].square_x,this->missiles[i].square_y,OBJECT_CRATE) &&
+			      this->crate_can_be_shifted(this->missiles[i].square_x,this->missiles[i].square_y,this->missiles[i].height,this->missiles[i].direction))
+				this->shift_crate(this->missiles[i].square_x,this->missiles[i].square_y,this->missiles[i].direction);
+			    
+			  break;
 
-				  if (this->crate_can_be_shifted(this->missiles[i].square_x,this->missiles[i].square_y,this->missiles[i].height,this->missiles[i].direction))
-				    this->shift_crate(this->missiles[i].square_x,this->missiles[i].square_y,this->missiles[i].direction);
+            case MISSILE_MIA_2:
+			  if (this->get_square_type(this->missiles[i].square_x,this->missiles[i].square_y) == SQUARE_HOLE)
+			    {
+				  this->set_square_type(this->missiles[i].square_x,this->missiles[i].square_y,SQUARE_COLLAPSE);
+			      died = true;
 			    }
 
-			break;
+			  break;
+
+			case MISSILE_METODEJ_1:
+				if (this->square_has_object(this->missiles[i].square_x,this->missiles[i].square_y,OBJECT_ICE))
+			    {
+				  for (j = 0; j < MAX_OBJECTS_PER_SQUARE; j++)
+					if (this->squares[this->missiles[i].square_x][this->missiles[i].square_y].map_objects[j]->get_type() == OBJECT_ICE)
+					  {
+					    this->remove_object(this->missiles[i].square_x,this->missiles[i].square_y,j);
+
+						break;
+					  }
+
+			      died = true;
+			    }
+
+			  break;
 		  }
 
 		if (this->missiles[i].position_x < 0 ||
