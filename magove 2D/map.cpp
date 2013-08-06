@@ -863,6 +863,9 @@ void c_map::draw(int x, int y)
 	    }
 	  else
 	    {
+		  if (i == this->current_player)
+			al_draw_bitmap(this->portrait_selection,x + this->portrait_x_positions[i] - 2,y + this->portrait_y_position - 3,0);
+
 		  // draw the energy bar:
 		  al_draw_filled_rectangle(x + 38 + this->portrait_x_positions[i],y + this->portrait_y_position + 20,x + this->portrait_x_positions[i] + 38 + this->player_characters[i]->get_magic_energy() * 18,y + this->portrait_y_position + 47,al_map_rgb(197,248,252));
 
