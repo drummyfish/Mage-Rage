@@ -17,13 +17,14 @@
 #include <allegro5/allegro_audio.h>
 #include <allegro5/allegro_acodec.h>
 
-#define MAP_MAX_WIDTH 30                //* maximum map width in squares */
-#define MAP_MAX_HEIGHT 30               //* maximum map height in squares */
-#define CLIFF_DISTANCE_SOUTH 0.4        //* character collision distance with south cliff (in fraction of one square) */
-#define CLIFF_DISTANCE_NORTH 0.1        //* character collision distance with north cliff (in fraction of one square) */
-#define CLIFF_DISTANCE_EAST_WEST 0.25   //* character collision distance with east and west cliff (in fraction of one square) */
-#define MAX_OBJECTS_PER_SQUARE 5        //* maximum number of objects on one square */
-#define MAX_ANIMATION_FRAMES 10         //* maximum number of frames for the c_animation object */
+#define MAP_MAX_WIDTH 30                /** maximum map width in squares */
+#define MAP_MAX_HEIGHT 30               /** maximum map height in squares */
+#define CLIFF_DISTANCE_SOUTH 0.4        /** character collision distance with south cliff (in fraction of one square) */
+#define CLIFF_DISTANCE_NORTH 0.1        /** character collision distance with north cliff (in fraction of one square) */
+#define CLIFF_DISTANCE_EAST_WEST 0.25   /** character collision distance with east and west cliff (in fraction of one square) */
+#define MAX_OBJECTS_PER_SQUARE 5        /** maximum number of objects on one square */
+#define MAX_ANIMATION_FRAMES 10         /** maximum number of frames for the c_animation object */
+#define MAX_MISSILES_ON_MAP 32          /** maximum number of missiles on the map at given time */
 
 using namespace std;
 
@@ -150,4 +151,18 @@ typedef enum
 	OBJECT_ICE,                /** ice - blocks way but can be melted */
 	OBJECT_GATE                /** gate - a gate player must reach in the level */
   } t_object_type;
+
+typedef enum
+  {
+	/**
+	  Possible spell missiles.
+	*/
+
+	MISSILE_MIA_1,
+	MISSILE_MIA_2,
+	MISSILE_METODEJ_1,
+	MISSILE_STAROVOUS_1,
+	MISSILE_STAROVOUS_2
+  } t_missile_type; 
+
 #endif

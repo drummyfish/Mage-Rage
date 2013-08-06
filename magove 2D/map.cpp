@@ -161,7 +161,7 @@ c_map::c_map(string filename, t_input_output_state *input_output_state, long int
 	this->time_before = 0.0;
 	this->global_time = global_time;
     this->input_output_state = input_output_state;
-
+	this->number_of_missiles = 0;
 	this->screen_square_resolution[0] = this->input_output_state->screen_x / 64 + 1;
 	this->screen_square_resolution[1] = this->input_output_state->screen_y / 50 + 1;
 	this->screen_square_position[0] = 0;
@@ -194,6 +194,7 @@ bool c_map::load_from_file(string filename)
   { // TEMPORARY CODE!!!!!!!!!!!!!
 	int i, j, k;
 	int button_positions[512][2];        // buffer to hold button positions
+	string help_string;
 
 	this->width = 30;
 	this->height = 30;
@@ -337,13 +338,37 @@ bool c_map::load_from_file(string filename)
 	if (!this->animation_water_splash->is_succesfully_loaded())
 	  return false;
 
-	this->portrait_mia = al_load_bitmap("resources/portrait_mia.png");
+	this->portrait_mia = al_load_bitmap("resources/portrait_mia.png");               // load portrait bitmaps
 	this->portrait_metodej = al_load_bitmap("resources/portrait_metodej.png");
 	this->portrait_starovous = al_load_bitmap("resources/portrait_starovous.png");
 	this->portrait_selection = al_load_bitmap("resources/selection.png");
 
+	this->spell_mia_1[0] = al_load_bitmap("resources/spell_1_mia_1.png");            // load spell bitmaps
+	this->spell_mia_1[1] = al_load_bitmap("resources/spell_1_mia_2.png");
+	this->spell_mia_1[2] = al_load_bitmap("resources/spell_1_mia_3.png");
+	this->spell_mia_2[0] = al_load_bitmap("resources/spell_2_mia_1.png");
+	this->spell_mia_2[1] = al_load_bitmap("resources/spell_2_mia_2.png");
+	this->spell_mia_2[2] = al_load_bitmap("resources/spell_2_mia_3.png");
+	this->spell_metodej_1[0] = al_load_bitmap("resources/spell_1_metodej_1.png");
+	this->spell_metodej_1[1] = al_load_bitmap("resources/spell_1_metodej_2.png");
+	this->spell_metodej_1[2] = al_load_bitmap("resources/spell_1_metodej_3.png");
+	this->spell_starovous_1[0] = al_load_bitmap("resources/spell_1_starovous_1.png");
+	this->spell_starovous_1[1] = al_load_bitmap("resources/spell_1_starovous_2.png");
+	this->spell_starovous_1[2] = al_load_bitmap("resources/spell_1_starovous_3.png");
+	this->spell_starovous_2[0] = al_load_bitmap("resources/spell_2_starovous_1.png");
+	this->spell_starovous_2[1] = al_load_bitmap("resources/spell_2_starovous_2.png");
+	this->spell_starovous_2[2] = al_load_bitmap("resources/spell_2_starovous_3.png");                            
+
 	if (!this->portrait_mia || !this->portrait_metodej ||
-		!this->portrait_starovous || !this->portrait_selection)
+		!this->portrait_starovous || !this->portrait_selection ||
+		!this->spell_mia_1[0] || !this->spell_mia_1[1] ||
+	    !this->spell_mia_1[2] || !this->spell_mia_2[0] ||
+	    !this->spell_mia_2[1] || !this->spell_mia_2[2] ||
+	    !this->spell_metodej_1[0] || !this->spell_metodej_1[1] ||
+	    !this->spell_metodej_1[2] || !this->spell_starovous_1[0] ||
+	    !this->spell_starovous_1[1] || !this->spell_starovous_1[2] ||
+	    !this->spell_starovous_2[0] || !this->spell_starovous_2[1] ||
+	    !this->spell_starovous_2[2])
 	  return false;
 
 	return true;
@@ -654,7 +679,7 @@ void c_map::draw(int x, int y)
 	int i, j, k, help_height, elevation, number_of_crates, elevator_height;
 	al_clear_to_color(al_map_rgb(0,0,0));      // clear the screen
 	this->animation_frame = *this->global_time / 16;
-	
+
 	for (j = this->screen_square_position[1] - 1; j < this->screen_square_end[1] + 1; j++)                         // go through lines
 	  { 
 		if (j < 0 || j >= this->height)
@@ -795,6 +820,13 @@ void c_map::draw(int x, int y)
 
 			  this->player_characters[i]->draw((int) (x + this->player_characters[i]->get_position_x() * 64 - this->screen_pixel_position[0]),
 			  (int) (y + this->player_characters[i]->get_position_y() * 50 - this->screen_pixel_position[1]) - elevation);
+		    }
+
+		for (i = 0; i < this->number_of_missiles; i++) // draw missiles
+		  if (this->missiles[i].square_y == j)
+		    {
+			  elevation = this->missiles[i].height * 27;
+			  al_draw_bitmap(this->missiles[i].bitmap,x + (int) (this->missiles[i].position_x * 64) - this->screen_pixel_position[0], y + (int) (this->missiles[i].position_y * 50) - elevation - this->screen_pixel_position[1],0); 
 		    }
 	  }
   }
@@ -1086,9 +1118,75 @@ void c_map::move_character(c_character *character, t_direction direction)
 
 //-----------------------------------------------
 
+void c_map::update_missiles()
+  {
+	int i, j;
+	bool died;
+
+	for (i = 0; i < this->number_of_missiles; i++)
+	  {
+		died = false;
+
+		// position computing is the same as in player get_square_y() - could be done better :/
+		this->missiles[i].square_y = this->missiles[i].square_y > -0.3 ? floor(this->missiles[i].position_y + 0.3) + 1 : 0;
+		this->missiles[i].square_x = floor(this->missiles[i].position_x + 0.3);
+
+		switch (this->missiles[i].direction)
+		  {
+		    case DIRECTION_NORTH:
+			  missiles[i].position_y -= 0.1;
+			  break;
+
+			case DIRECTION_EAST:
+			  missiles[i].position_x += 0.1;
+			  break;
+
+			case DIRECTION_SOUTH:
+			  missiles[i].position_y += 0.1;
+			  break;
+
+			case DIRECTION_WEST:
+			  missiles[i].position_x -= 0.1;
+			  break;
+		  }
+
+		switch (this->missiles[i].type)    // check the missile effect
+		  {
+		    case MISSILE_MIA_1:
+			  if (this->square_has_object(this->missiles[i].square_x,this->missiles[i].square_y,OBJECT_CRATE))
+			    {
+				  died = true;
+
+				  if (this->crate_can_be_shifted(this->missiles[i].square_x,this->missiles[i].square_y,this->missiles[i].height,this->missiles[i].direction))
+				    this->shift_crate(this->missiles[i].square_x,this->missiles[i].square_y,this->missiles[i].direction);
+			    }
+
+			break;
+		  }
+
+		if (this->missiles[i].position_x < 0 ||
+		  this->missiles[i].position_x > this->width ||
+		  this->missiles[i].square_y < 0 ||
+		  this->missiles[i].square_y > this->height)
+		  died = true;
+
+		if (died)    // remove the missile
+		  {
+			for (j = i + 1; j < this->number_of_missiles; j++)
+			  this->missiles[j - 1] = this->missiles[j];
+
+			this->number_of_missiles--;
+		  }
+	  }
+  }
+
+//-----------------------------------------------
+
 void c_map::update()
-{
+  {
 	this->time_difference = al_current_time() - this->time_before;
+
+	this->update_missiles();
 
 	this->draw(0,0);
 	
@@ -1148,6 +1246,62 @@ void c_map::update()
 
 //-----------------------------------------------
 
+void c_map::fire_missile(int spell_number)
+  {
+	c_player_character *help_character;
+
+	if (this->number_of_missiles >= MAX_MISSILES_ON_MAP)
+	  return;
+
+	help_character = this->player_characters[this->current_player];
+
+	switch(help_character->get_player_type())
+	  {
+	    case PLAYER_MIA:
+		  if (spell_number == 0)
+		    {
+			  this->missiles[this->number_of_missiles].type = MISSILE_MIA_1;
+			  this->missiles[this->number_of_missiles].bitmap = this->spell_mia_1[0];
+		    }
+		  else
+		    {
+              this->missiles[this->number_of_missiles].type = MISSILE_MIA_2;
+		      this->missiles[this->number_of_missiles].bitmap = this->spell_mia_2[0];
+		    }
+
+		  break;
+
+		case PLAYER_METODEJ:
+		  this->missiles[this->number_of_missiles].type = MISSILE_METODEJ_1;
+		  this->missiles[this->number_of_missiles].bitmap = this->spell_metodej_1[0];
+		  break;
+
+	    case PLAYER_STAROVOUS:
+		  if (spell_number == 0)
+		    {
+			  this->missiles[this->number_of_missiles].type = MISSILE_STAROVOUS_1;
+		      this->missiles[this->number_of_missiles].bitmap = this->spell_starovous_1[0];
+		    }
+		  else
+		    {
+              this->missiles[this->number_of_missiles].type = MISSILE_STAROVOUS_2;
+		      this->missiles[this->number_of_missiles].bitmap = this->spell_starovous_2[0];
+		    }
+		  break;
+	  }
+
+	this->missiles[this->number_of_missiles].direction = help_character->get_direction();
+	this->missiles[this->number_of_missiles].position_x = help_character->get_position_x();
+	this->missiles[this->number_of_missiles].position_y = help_character->get_position_y();
+	this->missiles[this->number_of_missiles].square_y = help_character->get_square_y();
+	this->missiles[this->number_of_missiles].square_x = help_character->get_square_x();
+	this->missiles[this->number_of_missiles].height = this->get_height(help_character->get_square_x(),help_character->get_square_y());
+  
+	this->number_of_missiles++;
+  }
+
+//-----------------------------------------------
+
 void c_map::cast_key_press(int spell_number)
   {
 	ALLEGRO_SAMPLE_ID sample_id;
@@ -1160,16 +1314,19 @@ void c_map::cast_key_press(int spell_number)
 	  switch(this->player_characters[this->current_player]->get_player_type()) // play the cast sound
 	    {
 	      case PLAYER_MIA:
-		    al_play_sample(this->spell_sounds_mia[spell_number],0.5,0.0,1.0,ALLEGRO_PLAYMODE_ONCE,&sample_id);
-		    break;
+		    al_play_sample(this->spell_sounds_mia[spell_number],0.5,0.0,1.0,ALLEGRO_PLAYMODE_ONCE,&sample_id);			
+			this->fire_missile(spell_number);
+			break;
 
 		  case PLAYER_METODEJ:
 			al_play_sample(this->spell_sounds_metodej[spell_number],0.5,0.0,1.0,ALLEGRO_PLAYMODE_ONCE,&sample_id);
-		    break;
+		    this->fire_missile(spell_number);
+			break;
 
 		  case PLAYER_STAROVOUS:
 			al_play_sample(this->spell_sounds_starovous[spell_number],0.5,0.0,1.0,ALLEGRO_PLAYMODE_ONCE,&sample_id);
-		    break;
+		    this->fire_missile(spell_number);
+			break;
 	    }
 
 	this->player_characters[this->current_player]->play_animation(ANIMATION_CAST);

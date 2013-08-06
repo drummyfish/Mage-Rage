@@ -35,6 +35,22 @@ typedef struct
     c_animation *animation;                             /** animation being played on this square */
   } t_map_square;
 
+typedef struct
+  {
+	/**
+	  Represents a magical missile.
+	*/
+
+	t_missile_type type;                                /** missile type */
+	t_direction direction;                              /** direction in which the missile is going */
+	double position_x;                                  /** current x position */
+	double position_y;                                  /** current y position */
+	int square_y;                                       /** y square position */
+	int square_x;                                       /** x square position */
+	int height;                                         /** height level */
+	ALLEGRO_BITMAP *bitmap;                             /** pointer to missile's bitmap */
+  } t_missile;
+
 class c_map: public c_graphic_object
   {
 	/**
@@ -57,6 +73,9 @@ class c_map: public c_graphic_object
 	  double time_before;                                              /** to compute time difference between frames (for movement etc.) */
 	  double time_difference;                                          /** stores time between two frames to calculate step length etc. */
 	  
+	  t_missile missiles[MAX_MISSILES_ON_MAP];                         /** array of missiles that are currently at the map */
+	  int number_of_missiles;                                          /** length of the missiles array */
+
 	  int screen_square_resolution[2];                                 /** depending on screen resolution, this will contain screen resolution in game squares */
 	  int screen_square_position[2];                                   /** position of the upper left screen corner aat the game map */
 	  int screen_pixel_position[2];                                    /** screen square position converted to pixels */
@@ -88,10 +107,15 @@ class c_map: public c_graphic_object
 	  ALLEGRO_BITMAP *tile_collapse;                                   /** bitmap - collapse square */
 	  ALLEGRO_BITMAP *tile_hole;                                       /** bitmap - hole square */
 	  ALLEGRO_BITMAP *bitmap_crate_water;                              /** bitmap - crate in water */
+	  ALLEGRO_BITMAP *spell_mia_1[3];                                  /** bitmap - Mia's first spell missile */
+	  ALLEGRO_BITMAP *spell_mia_2[3];                                  /** bitmap - Mia's second spell missile */
+	  ALLEGRO_BITMAP *spell_metodej_1[3];                              /** bitmap - Metodej's first spell missile */
+	  ALLEGRO_BITMAP *spell_starovous_1[3];                            /** bitmap - Starovous' first spell missile */
+	  ALLEGRO_BITMAP *spell_starovous_2[3];                            /** bitmap - Starovous' second spell missile */
 
 	  ALLEGRO_SAMPLE *spell_sounds_mia[2];                             /** Mia's cast sounds */
 	  ALLEGRO_SAMPLE *spell_sounds_metodej[2];                         /** Metodej's cast sounds */
-	  ALLEGRO_SAMPLE *spell_sounds_starovous[2];                      /** Starovous' cast sounds */
+	  ALLEGRO_SAMPLE *spell_sounds_starovous[2];                       /** Starovous' cast sounds */
 
 	  void static next_square(int x, int y, t_direction direction, int *next_x, int *next_y);
 
@@ -397,6 +421,25 @@ class c_map: public c_graphic_object
 		  Updates the screen position depending
 		  on current player's position on
 		  the map and the screen resolution.
+		*/
+
+	  void fire_missile(int spell_number);
+
+	    /**
+		  Creates a spell missile depending on
+		  player type selected and given
+		  spell number.
+
+		  @param spell_number number of spell
+		    cast (0 or 1)
+		*/
+
+	  void update_missiles();
+	   
+	    /**
+		  This should be called every update
+		  frame to update missile movement and
+		  events associated with them.
 		*/
 
     public:
