@@ -43,7 +43,6 @@ c_map_object::c_map_object(t_object_type object_type, int link_id,  int link_id2
 		  this->sound = al_load_sample("resources/switch.wav");
 		  this->sound_gain = 0.5;
 		  number_of_bitmaps = 5;
-
 		  this->input = true;
 		  break;
 
@@ -54,12 +53,19 @@ c_map_object::c_map_object(t_object_type object_type, int link_id,  int link_id2
 		  this->bitmaps[3] = al_load_bitmap("resources/object_elevator_4.png");
 		  this->stepable = true;
 		  number_of_bitmaps = 4;
+		  break;
 
+		case OBJECT_FLAMES:
+          this->bitmaps[0] = al_load_bitmap("resources/object_flames_1.png");
+		  this->bitmaps[1] = al_load_bitmap("resources/object_flames_2.png");
+          this->bitmaps[2] = al_load_bitmap("resources/object_flames_3.png");
+		  this->bitmaps[3] = al_load_bitmap("resources/object_flames_4.png");
+		  this->stepable = true;
+		  number_of_bitmaps = 4;
 		  break;
 
 		case OBJECT_ICE:
 		  this->bitmaps[0] = al_load_bitmap("resources/object_ice.png");
-
 		  break;
 
 	    case OBJECT_CRATE:
@@ -193,7 +199,7 @@ void c_map_object::switch_state()
 	  this->object_state = OBJECT_STATE_ON;
 	else
       this->object_state = OBJECT_STATE_OFF;
-	
+
 	switch (this->type)
 	  {
 	    case OBJECT_DOOR_HORIZONTAL:
@@ -238,6 +244,10 @@ void c_map_object::update_animation_period()
 		  this->animation_period = 4;
 	      break;
 
+		case OBJECT_FLAMES:
+		  this->animation_period = 3;
+		  break;
+
 		default:
 		  this->animation_period = 1;
 	  }
@@ -266,6 +276,14 @@ void c_map_object::draw(int x, int y)
 
 	switch (this->type)
 	  {
+		case OBJECT_FLAMES:
+		  if (this->is_animating())
+		    bitmap_to_draw = this->bitmaps[1 + this->animation_frame];
+		  else
+			bitmap_to_draw = this->bitmaps[0];
+		  
+		  break;
+
 	    case OBJECT_CRATE:
 		  bitmap_to_draw = this->bitmaps[0];
 

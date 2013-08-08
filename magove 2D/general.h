@@ -91,6 +91,7 @@ typedef struct
 	bool key_cast_1;    /** key used to cast spell 1 */
 	bool key_cast_2;    /** key used to cast spell 2 */
 	bool key_cast_3;    /** key used to cast spell 3 */
+	bool mouse_1;       /** mouse button 1 */
 
 	int mouse_x;        /** mouse x position */
 	int mouse_y;        /** mouse y position */
@@ -128,7 +129,8 @@ typedef enum
 	DISPLAY_ANIMATION_WATER_SPLASH,
 	DISPLAY_ANIMATION_CRATE_SHIFT_NORTH,
 	DISPLAY_ANIMATION_COLLAPSE,
-	DISPLAY_ANIMATION_MELT
+	DISPLAY_ANIMATION_MELT,
+	DISPLAY_ANIMATION_REFRESH
   } t_display_animation;
 
 typedef enum

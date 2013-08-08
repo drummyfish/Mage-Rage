@@ -25,6 +25,8 @@ class c_game
 	  ALLEGRO_TIMER *global_timer;              /** global clock */
 	  long int global_time;                     /** global time counter */
 	  t_input_output_state input_output_state;  /** keyboard and mouse state */
+	  ALLEGRO_BITMAP *cursor_bitmap;            /** mouse cursor bitmap */
+	  ALLEGRO_MOUSE_CURSOR *cursor;             /** mouse cursor */
 
     public:
 	  c_game();

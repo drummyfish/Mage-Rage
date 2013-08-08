@@ -75,6 +75,13 @@ class c_map: public c_graphic_object
 	  double time_difference;                                          /** stores time between two frames to calculate step length etc. */
 	  int portrait_x_positions[3];                                     /** a helper array containing portrait x positions so they don't have to be counted each frame */
 	  int portrait_y_position;                                         /** y position of portraits in pixels */
+	  bool pressed_1;                                                  /** to handle events only once per keypressed, not each frame */
+	  bool pressed_2;
+	  bool pressed_3;
+	  bool mouse_pressed;
+
+	  bool flames_on;                                                  /** turns on or off bursting flames of flame objects switched on */
+	  int frame_count;                                                 /** counts frames */
 
 	  t_missile missiles[MAX_MISSILES_ON_MAP];                         /** array of missiles that are currently at the map */
 	  int number_of_missiles;                                          /** length of the missiles array */
@@ -117,10 +124,12 @@ class c_map: public c_graphic_object
 	  ALLEGRO_BITMAP *spell_metodej_1[3];                              /** bitmap - Metodej's first spell missile */
 	  ALLEGRO_BITMAP *spell_starovous_1[3];                            /** bitmap - Starovous' first spell missile */
 	  ALLEGRO_BITMAP *spell_starovous_2[3];                            /** bitmap - Starovous' second spell missile */
+	  ALLEGRO_BITMAP *spell_icons[7];                                  /** bitmaps - spell icons */
 
 	  ALLEGRO_SAMPLE *spell_sounds_mia[2];                             /** Mia's cast sounds */
 	  ALLEGRO_SAMPLE *spell_sounds_metodej[2];                         /** Metodej's cast sounds */
 	  ALLEGRO_SAMPLE *spell_sounds_starovous[2];                       /** Starovous' cast sounds */
+	  ALLEGRO_SAMPLE *change_player_sound;                             /** sound played when player is changed */
 
 	  void static next_square(int x, int y, t_direction direction, int *next_x, int *next_y);
 
@@ -457,6 +466,26 @@ class c_map: public c_graphic_object
 		  This should be called every update
 		  frame to update missile movement and
 		  events associated with them.
+		*/
+
+	  void switch_player(int player_number);
+
+	    /**
+		  Sqitches active player.
+
+		  @param player_number number of
+		    player to be made active, if the
+			player is not available on the map,
+			nothing happens
+		*/
+
+	  void update_flames();
+
+		/**
+		  Switches all flames that are set on to
+		  opposite state (i.e. bursting flames or
+		  not). Flames set to off are not affected
+		  by this.
 		*/
 
     public:

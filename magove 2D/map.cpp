@@ -157,9 +157,15 @@ bool c_map::set_environment(t_environment new_environment)
 c_map::c_map(string filename, t_input_output_state *input_output_state, long int *global_time)
   {
     this->current_player = 0;
+	this->pressed_1 = false;
+	this->pressed_2 = false;
+	this->pressed_3 = false;
+	this->mouse_pressed = false;
+	this->frame_count = 0;
 	this->animation_frame = 0;
 	this->time_before = 0.0;
 	this->global_time = global_time;
+	this->flames_on = false;
     this->input_output_state = input_output_state;
 	this->number_of_missiles = 0;
 	this->screen_square_resolution[0] = this->input_output_state->screen_x / 64 + 1;
@@ -300,6 +306,10 @@ bool c_map::load_from_file(string filename)
 	this->add_map_object(new c_map_object(OBJECT_CRATE,0,0,this->global_time),7,6);
 	this->add_map_object(new c_map_object(OBJECT_CRATE,0,0,this->global_time),7,7);
 	this->add_map_object(new c_map_object(OBJECT_CRATE,0,0,this->global_time),7,8);
+	this->add_map_object(new c_map_object(OBJECT_FLAMES,1,0,this->global_time),9,2);
+	this->add_map_object(new c_map_object(OBJECT_FLAMES,0,0,this->global_time),9,4);
+
+	this->add_map_object(new c_map_object(OBJECT_FOUNTAIN,0,0,&this->animation_frame),10,8);
 
 	this->add_map_object(new c_map_object(OBJECT_STAIRS_NORTH,0,0,this->global_time),1,2);
 	this->add_map_object(new c_map_object(OBJECT_STAIRS_NORTH,0,0,this->global_time),1,4);
@@ -339,7 +349,7 @@ bool c_map::load_from_file(string filename)
 	  }
 	
 	this->animation_water_splash = new c_animation(this->global_time,"resources/animation_water_splash",5,-5,-5,2,true,"resources/water.wav",1.0);
-	this->animation_refresh = new c_animation(this->global_time,"resources/animation_refresh",6,0,0,2,true,"resources/water.wav",1.0);
+	this->animation_refresh = new c_animation(this->global_time,"resources/animation_refresh",6,0,0,2,true,"resources/refresh.wav",0.5);
 	this->animation_crate_shift_north = new c_animation(this->global_time,"resources/animation_crate_shift_north",3,0,-79,1,false,"",1.0);
 	this->animation_collapse = new c_animation(this->global_time,"resources/animation_collapse",5,0,0,2,true,"resources/crack.wav",0.3);
 	this->animation_melt = new c_animation(this->global_time,"resources/animation_melt",4,0,-27,5,false,"",0.0);
@@ -350,6 +360,7 @@ bool c_map::load_from_file(string filename)
     this->spell_sounds_metodej[1] = al_load_sample("resources/metodej_cast2.wav");
 	this->spell_sounds_starovous[0] = al_load_sample("resources/starovous_cast.wav");
     this->spell_sounds_starovous[1] = al_load_sample("resources/starovous_cast2.wav"); 
+	this->change_player_sound = al_load_sample("resources/change.wav");
 
 	if (!this->animation_water_splash->is_succesfully_loaded())
 	  return false;
@@ -374,6 +385,13 @@ bool c_map::load_from_file(string filename)
 	this->spell_starovous_2[0] = al_load_bitmap("resources/spell_2_starovous_1.png");
 	this->spell_starovous_2[1] = al_load_bitmap("resources/spell_2_starovous_2.png");
 	this->spell_starovous_2[2] = al_load_bitmap("resources/spell_2_starovous_3.png");                            
+	this->spell_icons[0] = al_load_bitmap("resources/icon_telekinesis.png");
+	this->spell_icons[1] = al_load_bitmap("resources/icon_create_path.png");
+	this->spell_icons[2] = al_load_bitmap("resources/icon_fireball.png");
+	this->spell_icons[3] = al_load_bitmap("resources/icon_fire_cloak.png");
+	this->spell_icons[4] = al_load_bitmap("resources/icon_light.png");
+	this->spell_icons[5] = al_load_bitmap("resources/icon_heal.png");
+	this->spell_icons[6] = al_load_bitmap("resources/icon_teleport.png");
 
 	if (!this->portrait_mia || !this->portrait_metodej ||
 		!this->portrait_starovous || !this->portrait_selection ||
@@ -384,8 +402,12 @@ bool c_map::load_from_file(string filename)
 	    !this->spell_metodej_1[2] || !this->spell_starovous_1[0] ||
 	    !this->spell_starovous_1[1] || !this->spell_starovous_1[2] ||
 	    !this->spell_starovous_2[0] || !this->spell_starovous_2[1] ||
-	    !this->spell_starovous_2[2])
+	    !this->spell_starovous_2[2] || !this->change_player_sound)
 	  return false;
+
+	for (i = 0; i < 7; i++)
+	  if (this->spell_icons[i] == NULL)
+		return false;
 
 	return true;
   }
@@ -414,7 +436,12 @@ void c_map::display_animation(t_display_animation animation, int x, int y)
 		case DISPLAY_ANIMATION_MELT:
 		  this->squares[x][y].animation = this->animation_melt;
 		  this->animation_melt->play_animation(ANIMATION_IDLE);
-		  break;		  
+		  break;	
+
+		case DISPLAY_ANIMATION_REFRESH:
+		  this->squares[x][y].animation = this->animation_refresh;
+		  this->animation_refresh->play_animation(ANIMATION_IDLE);
+		  break;
 	  }
   }
 
@@ -884,6 +911,26 @@ void c_map::draw(int x, int y)
 		        break; 
 		    }
 	    }
+
+	switch (this->player_characters[this->current_player]->get_player_type())  // draw spell icons
+	  {
+		case PLAYER_MIA:
+		  al_draw_bitmap(this->spell_icons[0],x + 490,y + this->portrait_y_position + 10,0);
+		  al_draw_bitmap(this->spell_icons[1],x + 550,y + this->portrait_y_position + 10,0);
+		  break;
+			  
+		case PLAYER_METODEJ:
+		  al_draw_bitmap(this->spell_icons[2],x + 490,y + this->portrait_y_position + 10,0);
+		  al_draw_bitmap(this->spell_icons[3],x + 550,y + this->portrait_y_position + 10,0);
+		  break;
+
+		case PLAYER_STAROVOUS:
+		  al_draw_bitmap(this->spell_icons[4],x + 490,y + this->portrait_y_position + 10,0);
+		  al_draw_bitmap(this->spell_icons[5],x + 550,y + this->portrait_y_position + 10,0);
+		  break; 				
+	  }
+
+	al_draw_bitmap(this->spell_icons[6],x + 610,y + this->portrait_y_position + 10,0);
   }
 
 //-----------------------------------------------
@@ -1249,7 +1296,7 @@ void c_map::update_missiles()
 			  break;
 
 			case MISSILE_METODEJ_1:
-				if (this->square_has_object(this->missiles[i].square_x,this->missiles[i].square_y,OBJECT_ICE))
+			  if (this->square_has_object(this->missiles[i].square_x,this->missiles[i].square_y,OBJECT_ICE))
 			    {
 				  for (j = 0; j < MAX_OBJECTS_PER_SQUARE; j++)
 					if (this->squares[this->missiles[i].square_x][this->missiles[i].square_y].map_objects[j]->get_type() == OBJECT_ICE)
@@ -1257,11 +1304,28 @@ void c_map::update_missiles()
 					    this->remove_object(this->missiles[i].square_x,this->missiles[i].square_y,j);
 						this->display_animation(DISPLAY_ANIMATION_MELT,this->missiles[i].square_x,this->missiles[i].square_y);
 
+
 						break;
 					  }
 
 			      died = true;
 			    }
+
+			  break;
+
+			case MISSILE_STAROVOUS_2:
+			  for (j = 0; j < 3; j++)
+				if (this->player_characters[j] != NULL &&
+				  this->player_characters[j]->get_square_x() == this->missiles[i].square_x &&
+				  this->player_characters[j]->get_square_y() == this->missiles[i].square_y &&
+				  (this->player_characters[j]->get_player_type() == PLAYER_MIA ||
+				  this->player_characters[j]->get_player_type() == PLAYER_METODEJ))
+				  {
+					this->player_characters[j]->change_magic_energy(1);
+					died = true;
+					this->display_animation(DISPLAY_ANIMATION_REFRESH,this->missiles[i].square_x,this->missiles[i].square_y);
+					break;
+				  }
 
 			  break;
 		  }
@@ -1284,6 +1348,21 @@ void c_map::update_missiles()
 
 //-----------------------------------------------
 
+void c_map::switch_player(int player_number)
+  {
+	ALLEGRO_SAMPLE_ID sample_id;
+
+	if (this->player_characters[player_number] == NULL)
+	  return;
+
+	this->player_characters[this->current_player]->stop_animation();
+    this->current_player = player_number;
+	this->update_screen_position();
+	al_play_sample(this->change_player_sound,1.0,0.0,1.0,ALLEGRO_PLAYMODE_ONCE,&sample_id);
+  }
+
+//-----------------------------------------------
+
 void c_map::update()
   {
 	this->time_difference = al_current_time() - this->time_before;
@@ -1292,7 +1371,39 @@ void c_map::update()
 
 	this->draw(0,0);
 	
-	if (this->input_output_state->key_left)
+	this->frame_count++;
+
+	if (this->frame_count % 128 == 0)
+	  {
+		this->flames_on = !this->flames_on;
+		this->update_flames();
+	  }
+
+	if (this->input_output_state->mouse_1)  // switching players with mouse
+	  {
+		if (!this->mouse_pressed)
+		  {
+			if (this->input_output_state->mouse_y > this->portrait_y_position &&
+			  this->input_output_state->mouse_y < this->portrait_y_position + 50)
+			  {
+			    if (this->input_output_state->mouse_x > this->portrait_x_positions[0] &&
+				  this->input_output_state->mouse_x < this->portrait_x_positions[0] + 150)
+				  this->switch_player(0);
+				else if (this->input_output_state->mouse_x > this->portrait_x_positions[1] &&
+				  this->input_output_state->mouse_x < this->portrait_x_positions[1] + 150)
+				  this->switch_player(1);
+				else if (this->input_output_state->mouse_x > this->portrait_x_positions[2] &&
+				  this->input_output_state->mouse_x < this->portrait_x_positions[2] + 150)
+				  this->switch_player(2);
+			  }
+		  }
+
+		this->mouse_pressed = true;
+	  }
+	else
+	  this->mouse_pressed = false;
+
+	if (this->input_output_state->key_left)  // moving player
 	  this->move_character(this->player_characters[this->current_player],DIRECTION_WEST);
 	else if (this->input_output_state->key_right)
 	  this->move_character(this->player_characters[this->current_player],DIRECTION_EAST);
@@ -1306,24 +1417,41 @@ void c_map::update()
 		this->player_characters[this->current_player]->stop_animation();
 	  }
 
-	if (this->input_output_state->key_1)        // switching players
-	  {
-		this->player_characters[this->current_player]->stop_animation();
-	    this->current_player = 0;
-		this->update_screen_position();
-	  }
-	else if (this->input_output_state->key_2)
-	  {
-		this->player_characters[this->current_player]->stop_animation();
-	    this->current_player = 1;
-		this->update_screen_position();
-	  }
-	else if (this->input_output_state->key_3)
-	  {
-		this->player_characters[this->current_player]->stop_animation();
-		this->current_player = 2;
-		this->update_screen_position();
-	  }
+	  if (this->input_output_state->key_1)     // switching players with keyboard
+	    {
+		  if (!this->pressed_1)
+		    this->switch_player(0);
+
+		  this->pressed_1 = true;
+	    }
+	  else
+	    {
+	  	  this->pressed_1 = false;
+	    }
+	  
+	  if (this->input_output_state->key_2)
+	    {
+		  if (!this->pressed_2)
+		    this->switch_player(1);
+
+		  this->pressed_2 = true;
+	    }
+	  else
+	    {
+	  	  this->pressed_2 = false;
+	    }
+	  
+	  if (this->input_output_state->key_3)
+	    {
+		  if (!this->pressed_3)
+		    this->switch_player(2);  
+		  
+		  this->pressed_3 = true;
+	    }
+	  else
+	    {
+	  	  this->pressed_3 = false;
+	    }
 
 	if (this->input_output_state->key_use)
 	  {
@@ -1440,6 +1568,37 @@ void c_map::cast_key_press(int spell_number)
 
 //-----------------------------------------------
 
+void c_map::update_flames()
+  {
+	int i, j, k;
+
+	for (j = 0; j < this->height; j++)
+      for (i = 0; i < this->width; i++)
+		for (k = 0; k < MAX_OBJECTS_PER_SQUARE; k++)
+		  if (this->squares[i][j].map_objects[k] == NULL)
+		    {
+			  break;
+		    }
+		  else
+		    { 
+			  if (this->squares[i][j].map_objects[k]->get_type() == OBJECT_FLAMES &&
+				(this->squares[i][j].map_objects[k]->get_state() == OBJECT_STATE_ON ||
+				this->squares[i][j].map_objects[k]->get_state() == OBJECT_STATE_ON_ACTIVE))
+				if (this->flames_on)
+				  {
+				    this->squares[i][j].map_objects[k]->set_state(OBJECT_STATE_ON_ACTIVE);
+					this->squares[i][j].map_objects[k]->loop_animation(ANIMATION_IDLE);
+				  }
+				else
+				  {
+					this->squares[i][j].map_objects[k]->set_state(OBJECT_STATE_ON);
+					this->squares[i][j].map_objects[k]->stop_animation();
+				  }
+		    }
+  }
+
+//-----------------------------------------------
+
 void c_map::use_key_press()
   {
 	int i;
@@ -1473,6 +1632,11 @@ void c_map::use_key_press()
 			    this->player_characters[this->current_player]->play_animation(ANIMATION_USE);
 			    help_object->use();
 		      }
+			else if (help_object->get_type() == OBJECT_FOUNTAIN)
+			  {
+				this->player_characters[this->current_player]->change_magic_energy(1);
+				this->display_animation(DISPLAY_ANIMATION_REFRESH,coordinations[0],coordinations[1]);
+			  }
 	      }
 		else
 	      break;
