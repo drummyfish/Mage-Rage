@@ -50,7 +50,7 @@ c_game::c_game()
 	  {
         cerr << "ERROR: failed to initialize mouse." << endl;
       }
-
+	
 	this->input_output_state.screen_x = 800;
 	this->input_output_state.screen_y = 600;
 
@@ -80,11 +80,11 @@ c_game::c_game()
 	al_register_event_source(this->event_queue,al_get_keyboard_event_source());
 	al_register_event_source(this->event_queue,al_get_mouse_event_source());
 	this->global_time = 0;
-
+	
 	this->cursor_bitmap = al_load_bitmap("resources/cursor.png");
 	this->cursor = al_create_mouse_cursor(this->cursor_bitmap,1,1);
 	al_set_mouse_cursor(display,this->cursor);
-
+	
 	this->input_output_state.key_down = false;            // set keyboard/mouse state
 	this->input_output_state.key_up = false;
 	this->input_output_state.key_left = false;
@@ -98,7 +98,7 @@ c_game::c_game()
 	this->input_output_state.key_cast_1 = false;
 	this->input_output_state.key_cast_2 = false;
 	this->input_output_state.key_cast_3 = false;
-	this->input_output_state.mouse_1 = false;
+	this->input_output_state.mouse_1 = false; 
   }
 
 //-----------------------------------------------

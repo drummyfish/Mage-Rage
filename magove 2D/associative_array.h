@@ -10,6 +10,7 @@
 
 #include <string>
 using namespace std;
+#define ALLOC_BY 64;
 
 class c_associative_array
   {
@@ -18,6 +19,10 @@ class c_associative_array
 	* associative array, which can be loaded and
 	* saved to a file.
 	*/
+
+  protected: string *keys_array;
+			 string *values_array;
+			 int length;
 
     public:
       c_associative_array();

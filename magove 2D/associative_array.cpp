@@ -11,7 +11,9 @@
 
   c_associative_array::c_associative_array()
     {
-	  
+	  this->length = 0;
+	  this->keys_array = NULL;
+	  this->values_array = NULL;
     }
 
 //--------------------------------------------------
