@@ -488,6 +488,32 @@ class c_map: public c_graphic_object
 		  by this.
 		*/
 
+	  bool object_can_be_used(c_map_object *what);
+
+	    /**
+	      Checks if given object can be used
+		  (i.e. nothing prevents using it, like
+		  player standing in a door etc.)
+
+		  @param what object to be tested
+		  @return true if the object can be used,
+		    false otherwise
+		*/
+
+	  void get_object_position(c_map_object *what, int *x, int *y);
+
+	    /**
+		  Returns object's position on the
+		  map.
+
+		  @param what object of which the
+		    position will be found out
+		  @param x in this variable the
+		    x coordination will be returned
+		  @param y in this variable the
+		    y coordination will be returned
+		*/
+
     public:
 
       c_map(string filename, t_input_output_state *input_output_state, long int *global_time);

@@ -177,6 +177,20 @@ class c_map_object: public c_graphic_object
 		    with another_object, otherwise
 			false
 		*/
+
+	  c_map_object *get_controlled_object(int index);
+
+	    /**
+		  Returns one of objects controlled
+		  by this object.
+
+		  @param index index of the controlled
+		    objects to be returned
+          @return pointer to controlled object
+		    at given index, if the index
+			exceeds length of object list,
+			NULL is returned
+		*/
   };
 
 #endif

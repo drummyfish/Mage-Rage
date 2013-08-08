@@ -520,3 +520,13 @@ bool c_map_object::compare_link_ids(c_map_object *another_object)
   }
 
 //-----------------------------------------------
+
+c_map_object *c_map_object::get_controlled_object(int index)
+  {
+	if (index < 0 || index >= this->number_of_controlled)
+	  return NULL;
+
+	return this->controlling[index];
+  }
+
+//-----------------------------------------------

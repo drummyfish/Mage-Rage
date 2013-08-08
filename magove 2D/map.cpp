@@ -297,7 +297,6 @@ bool c_map::load_from_file(string filename)
 	this->player_characters[1]->set_position(6.0,8.0);
 	this->player_characters[2]->set_position(4.0,8.0);
 
-
 	this->add_map_object(new c_map_object(OBJECT_CRATE,0,0,this->global_time),5,0);
 	this->add_map_object(new c_map_object(OBJECT_CRATE,0,0,this->global_time),4,1);
 	this->add_map_object(new c_map_object(OBJECT_CRATE,0,0,this->global_time),5,6);
@@ -320,9 +319,12 @@ bool c_map::load_from_file(string filename)
 	this->add_map_object(new c_map_object(OBJECT_LEVER,1,2,this->global_time),8,8);
 	this->add_map_object(new c_map_object(OBJECT_LEVER,2,-1,this->global_time),8,9);
 
+	this->add_map_object(new c_map_object(OBJECT_BUTTON,1,-1,this->global_time),8,13);
+
 	this->add_map_object(new c_map_object(OBJECT_DOOR_HORIZONTAL,1,-1,this->global_time),6,7);
 	this->add_map_object(new c_map_object(OBJECT_DOOR_HORIZONTAL,2,-1,this->global_time),6,8);
 	this->add_map_object(new c_map_object(OBJECT_DOOR_HORIZONTAL,1,2,this->global_time),6,9);
+	this->add_map_object(new c_map_object(OBJECT_DOOR_VERTICAL,1,2,this->global_time),6,2);
 
 	this->add_map_object(new c_map_object(OBJECT_ICE,-1,-1,this->global_time),5,12);
 
@@ -414,6 +416,58 @@ bool c_map::load_from_file(string filename)
 
 //-----------------------------------------------
 
+void c_map::get_object_position(c_map_object *what, int *x, int *y)
+  {
+	int i, j, k;
+
+	for (j = 0; j < this->height; j++)
+	  for (i = 0; i < this->width; i++)
+		for (k = 0; k < MAX_OBJECTS_PER_SQUARE; k++)
+		  if (this->squares[i][j].map_objects[k] == NULL)
+			break;
+		  else if (this->squares[i][j].map_objects[k] == what)
+		    {
+			  *x = i;
+			  *y = j;
+			  return;
+		    }
+
+	*x = -1;
+	*y = -1;
+  }
+
+//-----------------------------------------------
+
+bool c_map::object_can_be_used(c_map_object *what)
+  {
+	int i, x, y;
+	c_map_object *help_object;
+
+	i = 0;
+
+	while (true)
+	  {
+		help_object = what->get_controlled_object(i);
+	    
+		if (help_object == NULL)
+		  break;
+
+		if (help_object->get_type() == OBJECT_DOOR_HORIZONTAL ||
+		  help_object->get_type() == OBJECT_DOOR_VERTICAL)
+		  {
+		    this->get_object_position(help_object,&x,&y);
+
+		    if (this->square_has_character(x,y) || this->square_has_object(x,y,OBJECT_CRATE))
+			  return false;
+		  }
+		i++;
+	  }
+
+	return true;
+  }
+
+//-----------------------------------------------
+
 void c_map::display_animation(t_display_animation animation, int x, int y)
   {
 	switch (animation)
@@ -497,9 +551,9 @@ void c_map::check_buttons()
 		  {
 			help_object = this->squares[this->button_positions_x[i]][this->button_positions_y[i]].map_objects[j];
 		  
-		    if (help_object != NULL && help_object->get_type() == OBJECT_BUTTON)
+			if (help_object != NULL && help_object->get_type() == OBJECT_BUTTON && this->object_can_be_used(help_object))
 			  {
-                if (is_pressed)
+				if (is_pressed)
 				  {
 					if (help_object->get_state() == OBJECT_STATE_OFF)
 					  {
@@ -525,6 +579,7 @@ void c_map::check_buttons()
 bool c_map::crate_can_be_shifted(int x, int y, int height, t_direction direction)
   {
 	int next_square[2];
+	int i;
 
 	this->next_square(x,y,direction,&next_square[0],&next_square[1]);
 
@@ -543,6 +598,50 @@ bool c_map::crate_can_be_shifted(int x, int y, int height, t_direction direction
 
 	if (this->get_height(next_square[0],next_square[1]) > height)
 	  return false;
+
+	if (this->get_height(x,y) - 1 == this->get_height(next_square[0],next_square[1])) // check door (at the same height level)
+	  {
+        for (i = 0; i < MAX_OBJECTS_PER_SQUARE; i++)
+		  if (this->squares[next_square[0]][next_square[1]].map_objects[i] != NULL)
+		    {
+		      if (this->squares[next_square[0]][next_square[1]].map_objects[i]->get_type() == OBJECT_DOOR_HORIZONTAL)
+		        {
+			      if (direction == DIRECTION_EAST || direction == DIRECTION_WEST ||
+				    this->squares[next_square[0]][next_square[1]].map_objects[i]->get_state() == OBJECT_STATE_OFF)
+				    return false;
+		        }
+		      else if (this->squares[next_square[0]][next_square[1]].map_objects[i]->get_type() == OBJECT_DOOR_VERTICAL)
+		        {
+			     if (direction == DIRECTION_NORTH || direction == DIRECTION_SOUTH ||
+				    this->squares[next_square[0]][next_square[1]].map_objects[i]->get_state() == OBJECT_STATE_OFF)
+				    return false;
+		        }
+		    }
+		  else if (this->squares[x][y].map_objects[i] != NULL)   // check doors at the crate's square
+		    {
+			  if (this->squares[x][y].map_objects[i]->get_type() == OBJECT_DOOR_HORIZONTAL)
+		        {
+			      if (direction == DIRECTION_EAST || direction == DIRECTION_WEST)
+				    return false;
+		        }
+		      else if (this->squares[x][y].map_objects[i]->get_type() == OBJECT_DOOR_VERTICAL)
+		        {
+			     if (direction == DIRECTION_NORTH || direction == DIRECTION_SOUTH)
+				   return false;
+		        }
+		    }
+		  else
+			break;
+	  }
+	else    // checks door that are on lower height level
+	  {
+		for (i = 0; i < MAX_OBJECTS_PER_SQUARE; i++)
+		  if (this->squares[next_square[0]][next_square[1]].map_objects[i] != NULL &&
+			(this->squares[next_square[0]][next_square[1]].map_objects[i]->get_type() == OBJECT_DOOR_HORIZONTAL ||
+			this->squares[next_square[0]][next_square[1]].map_objects[i]->get_type() == OBJECT_DOOR_VERTICAL) &&
+			this->squares[next_square[0]][next_square[1]].map_objects[i]->get_state() == OBJECT_STATE_OFF)
+		    return false;
+	  }
 
 	return true;
   }
@@ -991,6 +1090,7 @@ int c_map::get_elevation_for_character(c_character *character)
 bool c_map::character_can_move_to_square(c_character *character, t_direction direction)
   {
 	int square_position[2];                // player position in map squares
+	int i;
 	int square_position_next[2];           // next square coordinations in player's direction
 	t_object_type help_object_type;        // to checks stairs
 	t_object_type help_object_type2;       // to checks stairs
@@ -1034,6 +1134,34 @@ bool c_map::character_can_move_to_square(c_character *character, t_direction dir
 	  return false;
 
 	if(!this->square_is_stepable(square_position_next[0],square_position_next[1])) // check stepable objects
+	  return false;
+
+	for (i = 0; i < MAX_OBJECTS_PER_SQUARE; i++)                                   // check doors
+      if (this->squares[square_position_next[0]][square_position_next[1]].map_objects[i] == NULL)
+		break;
+	  else
+		if (this->squares[square_position_next[0]][square_position_next[1]].map_objects[i]->get_type() == OBJECT_DOOR_HORIZONTAL)
+		  {
+			if (this->squares[square_position_next[0]][square_position_next[1]].map_objects[i]->get_state() == OBJECT_STATE_OFF ||
+			  direction == DIRECTION_EAST || direction == DIRECTION_WEST)
+			  return false;
+			else
+			  break;
+		  }
+		else if (this->squares[square_position_next[0]][square_position_next[1]].map_objects[i]->get_type() == OBJECT_DOOR_VERTICAL)
+		  {
+		    if (this->squares[square_position_next[0]][square_position_next[1]].map_objects[i]->get_state() == OBJECT_STATE_OFF ||
+			  direction == DIRECTION_NORTH || direction == DIRECTION_SOUTH)
+			  return false;
+			else
+			  break;
+		  }
+
+	if (this->square_has_object(square_position[0],square_position[1],OBJECT_DOOR_HORIZONTAL) &&   // check door at player's square
+	  (direction == DIRECTION_EAST || direction == DIRECTION_WEST))
+	  return false;
+	else if (this->square_has_object(square_position[0],square_position[1],OBJECT_DOOR_VERTICAL) && 
+	  (direction == DIRECTION_NORTH || direction == DIRECTION_SOUTH))
 	  return false;
 
 	height_difference = this->get_height(square_position[0],square_position[1]) -  // check height difference
@@ -1630,7 +1758,9 @@ void c_map::use_key_press()
 		    else if (help_object->get_type() == OBJECT_LEVER && !help_object->is_animating())
 		      {
 			    this->player_characters[this->current_player]->play_animation(ANIMATION_USE);
-			    help_object->use();
+
+				if (this->object_can_be_used(help_object))
+			      help_object->use();
 		      }
 			else if (help_object->get_type() == OBJECT_FOUNTAIN)
 			  {
