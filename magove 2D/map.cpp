@@ -311,6 +311,9 @@ bool c_map::load_from_file(string filename)
 	this->add_map_object(new c_map_object(OBJECT_FLAMES,1,0,this->global_time),9,2);
 	this->add_map_object(new c_map_object(OBJECT_FLAMES,0,0,this->global_time),9,4);
 
+	this->add_map_object(new c_map_object(OBJECT_TELEPORT_INPUT,10,-1,this->global_time),2,10);
+	this->add_map_object(new c_map_object(OBJECT_TELEPORT_OUTPUT,10,-1,this->global_time),3,12);
+
 	c_map_object *sign;
 
 	sign = new c_map_object(OBJECT_SIGN,0,0,this->global_time);
@@ -1846,6 +1849,45 @@ void c_map::use_key_press()
 		else
 	      break;
 	  }
+
+	if (this->square_has_object(coordinations[0],coordinations[1],OBJECT_TELEPORT_INPUT)) // check teleport
+	  this->check_teleport();
   }
 
+//-----------------------------------------------
+
+void c_map::check_teleport()
+  {
+	int i, j, x, y;
+	int position[2];
+	c_map_object *help_object;
+
+	position[0] = this->player_characters[this->current_player]->get_square_x();
+	position[1] = this->player_characters[this->current_player]->get_square_y();
+
+	for (i = 0; i < MAX_OBJECTS_PER_SQUARE; i++)
+	  if (this->squares[position[0]][position[1]].map_objects[i] == NULL)
+		break;
+	  else if (this->squares[position[0]][position[1]].map_objects[i]->get_type() == OBJECT_TELEPORT_INPUT)
+	    {
+		  help_object = this->squares[position[0]][position[1]].map_objects[i]->get_controlled_object(0);
+
+		  if (help_object == NULL)
+			break;
+
+		  for (y = 0; y < this->height; y++)  // find the output teleport
+		    for (x = 0; x < this->width; x++)
+			  for (j = 0; j < MAX_OBJECTS_PER_SQUARE; j++)
+			    if (this->squares[x][y].map_objects[j] == NULL)
+				  break;
+				else if (this->squares[x][y].map_objects[j] == help_object)
+				  {
+					this->player_characters[this->current_player]->set_position(x + 0.1,y - 0.5);
+					this->update_screen_position();
+				    break;
+				  }
+
+		  break;
+	    }
+  }
 //-----------------------------------------------

@@ -47,6 +47,17 @@ c_map_object::c_map_object(t_object_type object_type, int link_id,  int link_id2
 		  this->input = true;
 		  break;
 
+		case OBJECT_TELEPORT_INPUT:
+		  this->bitmaps[0] = al_load_bitmap("resources/object_teleport_input.png");
+		  this->input = true;
+		  this->stepable = true;
+		  break;
+
+		case OBJECT_TELEPORT_OUTPUT:
+		  this->bitmaps[0] = al_load_bitmap("resources/object_teleport_output.png");
+		  this->stepable = true;
+		  break;
+
 		case OBJECT_GATE:
 		  this->bitmaps[0] = al_load_bitmap("resources/object_gate_1.png");
 		  this->bitmaps[1] = al_load_bitmap("resources/object_gate_2.png");

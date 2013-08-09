@@ -162,7 +162,9 @@ typedef enum
 	OBJECT_ELEVATOR,           /** elevator - elevator controlled by other objects */
 	OBJECT_ICE,                /** ice - blocks way but can be melted */
 	OBJECT_GATE,               /** gate - a gate player must reach in the level */
-    OBJECT_SIGN                /** sign - can display a text */
+    OBJECT_SIGN,               /** sign - can display a text */
+    OBJECT_TELEPORT_INPUT,     /** teleport which can be stepped into */
+	OBJECT_TELEPORT_OUTPUT     /** teleport in which the player appears rntering the input teleport */
   } t_object_type;
 
 typedef enum

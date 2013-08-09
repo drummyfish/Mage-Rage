@@ -534,6 +534,15 @@ class c_map: public c_graphic_object
 		  @param duration duration in seconds
 		*/
 
+	  void check_teleport();
+
+	    /**
+		  Checks if the current player is
+		  standing on a teleport and if so,
+		  teleports him in matching output
+		  teleport.
+		*/
+
     public:
 
       c_map(string filename, t_input_output_state *input_output_state, long int *global_time);
