@@ -18,6 +18,8 @@
 #include "allegro5/allegro_native_dialog.h"
 #include <allegro5/allegro_audio.h>
 #include <allegro5/allegro_acodec.h>
+#include <allegro5/allegro_font.h>
+#include <allegro5/allegro_ttf.h>
 
 #define MAP_MAX_WIDTH 30                /** maximum map width in squares */
 #define MAP_MAX_HEIGHT 30               /** maximum map height in squares */
@@ -28,6 +30,9 @@
 #define MAX_ANIMATION_FRAMES 10         /** maximum number of frames for the c_animation object */
 #define MAX_MISSILES_ON_MAP 32          /** maximum number of missiles on the map at given time */
 #define MAX_MAGIC_ENERGY 5              /** maximum amount of magic energy for a player */
+#define MAX_TEXT_CHARACTERS_PER_LINE 32 /** maximum characters in a displayed text line */
+#define MAX_TEXT_LINES 16               /** maximum number of text lines */
+
 
 using namespace std;
 
@@ -156,7 +161,8 @@ typedef enum
 	OBJECT_FLAMES,             /** flames - bursts flames when on */
 	OBJECT_ELEVATOR,           /** elevator - elevator controlled by other objects */
 	OBJECT_ICE,                /** ice - blocks way but can be melted */
-	OBJECT_GATE                /** gate - a gate player must reach in the level */
+	OBJECT_GATE,               /** gate - a gate player must reach in the level */
+    OBJECT_SIGN                /** sign - can display a text */
   } t_object_type;
 
 typedef enum

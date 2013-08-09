@@ -67,6 +67,8 @@ class c_map: public c_graphic_object
 	  int *button_positions_y;                                         /** an array containing y coordinations of all buttons */
 	  int number_of_buttons;                                           /** number of buttons on the map */
 	  int current_player;                                              /** current player number */
+	  int screen_center_x;                                             /** center point of the screen (x) */
+	  int screen_center_y;                                             /** center point of the screen (y) */
 	  t_environment environment;                                       /** map environment */
 	  t_map_square squares[MAP_MAX_WIDTH][MAP_MAX_HEIGHT];             /** map squares */
 	  c_player_character *player_characters[3];                        /** player characters, NULL means no character */            
@@ -79,6 +81,10 @@ class c_map: public c_graphic_object
 	  bool pressed_2;
 	  bool pressed_3;
 	  bool mouse_pressed;
+
+	  char text_lines[MAX_TEXT_LINES][MAX_TEXT_CHARACTERS_PER_LINE];   /** lines of text being displayed on screen */
+	  bool text_is_displayed;                                          /** whether the text is to be displayed */
+	  double text_end_time;                                            /** time when the text will stop being displayed */
 
 	  bool flames_on;                                                  /** turns on or off bursting flames of flame objects switched on */
 	  int frame_count;                                                 /** counts frames */
@@ -130,6 +136,8 @@ class c_map: public c_graphic_object
 	  ALLEGRO_SAMPLE *spell_sounds_metodej[2];                         /** Metodej's cast sounds */
 	  ALLEGRO_SAMPLE *spell_sounds_starovous[2];                       /** Starovous' cast sounds */
 	  ALLEGRO_SAMPLE *change_player_sound;                             /** sound played when player is changed */
+
+	  ALLEGRO_FONT *text_font;                                         /** font for displaying texts */
 
 	  void static next_square(int x, int y, t_direction direction, int *next_x, int *next_y);
 
@@ -191,7 +199,9 @@ class c_map: public c_graphic_object
 	  bool load_from_file(string filename);
 
 	    /**
-	      Loads the map from given file.
+	      Loads the map from given file. Also
+		  loads all other things from files
+		  like fonts, sounds etc.
 
 		  @param filename path to the file
 		  @return true if the map was loaded
@@ -512,6 +522,16 @@ class c_map: public c_graphic_object
 		    x coordination will be returned
 		  @param y in this variable the
 		    y coordination will be returned
+		*/
+
+	  void display_text(string text, double duration);
+
+	    /**
+		  Displays given text on the screen
+		  for given time.
+
+		  @param text text to be displayed
+		  @param duration duration in seconds
 		*/
 
     public:

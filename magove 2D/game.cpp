@@ -46,6 +46,9 @@ c_game::c_game()
 		cerr << "ERROR: failed to initialize primitives addon." << endl;
 	  }
 
+	al_init_font_addon();                          // initialise the font addon
+    al_init_ttf_addon();                           // initialise the ttf addon
+
 	if(!al_install_mouse())
 	  {
         cerr << "ERROR: failed to initialize mouse." << endl;

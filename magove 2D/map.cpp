@@ -91,7 +91,7 @@ int c_map::get_terrain_height(int x, int y)
 
 t_square_type c_map::get_square_type(int x, int y)
   {
-	if (x > this->width || x < 0 || y > this->height || y < 0)
+	if (x >= this->width || x < 0 || y >= this->height || y < 0)
 	  return SQUARE_NORMAL;
 
 	return this->squares[x][y].type;
@@ -159,11 +159,12 @@ c_map::c_map(string filename, t_input_output_state *input_output_state, long int
     this->current_player = 0;
 	this->pressed_1 = false;
 	this->pressed_2 = false;
-	this->pressed_3 = false;
+	this->pressed_3 = false;  
 	this->mouse_pressed = false;
 	this->frame_count = 0;
 	this->animation_frame = 0;
-	this->time_before = 0.0;
+	this->text_is_displayed = false;
+	this->time_before = 0.0; 
 	this->global_time = global_time;
 	this->flames_on = false;
     this->input_output_state = input_output_state;
@@ -176,6 +177,8 @@ c_map::c_map(string filename, t_input_output_state *input_output_state, long int
 	this->screen_pixel_position[0] = 0;
 	this->screen_square_end[0] = this->screen_square_resolution[0];
 	this->screen_square_end[1] = this->screen_square_resolution[1];
+	this->screen_center_x = this->input_output_state->screen_x / 2; 
+    this->screen_center_y = this->input_output_state->screen_y / 2;
 
 	portrait_x_positions[0] = 20;
 	portrait_x_positions[1] = 170;
@@ -308,7 +311,16 @@ bool c_map::load_from_file(string filename)
 	this->add_map_object(new c_map_object(OBJECT_FLAMES,1,0,this->global_time),9,2);
 	this->add_map_object(new c_map_object(OBJECT_FLAMES,0,0,this->global_time),9,4);
 
+	c_map_object *sign;
+
+	sign = new c_map_object(OBJECT_SIGN,0,0,this->global_time);
+
+	sign->set_sign_text("TEXT NA ZNACCE! Zde muze byt vase reklama. Volejte 0123456789.");
+
+	this->add_map_object(sign,2,12);
+
 	this->add_map_object(new c_map_object(OBJECT_FOUNTAIN,0,0,&this->animation_frame),10,8);
+	this->add_map_object(new c_map_object(OBJECT_GATE,0,0,&this->animation_frame),12,8);
 
 	this->add_map_object(new c_map_object(OBJECT_STAIRS_NORTH,0,0,this->global_time),1,2);
 	this->add_map_object(new c_map_object(OBJECT_STAIRS_NORTH,0,0,this->global_time),1,4);
@@ -410,6 +422,11 @@ bool c_map::load_from_file(string filename)
 	for (i = 0; i < 7; i++)
 	  if (this->spell_icons[i] == NULL)
 		return false;
+
+	this->text_font = al_load_ttf_font("resources/architects_daughter.ttf",20,0);  // load the font
+
+	if (!this->text_font)
+	  return false;
 
 	return true;
   }
@@ -580,6 +597,9 @@ bool c_map::crate_can_be_shifted(int x, int y, int height, t_direction direction
   {
 	int next_square[2];
 	int i;
+
+	if (x < 0 || x >= this->width || y < 0 || y >= this->height)
+	  return false;
 
 	this->next_square(x,y,direction,&next_square[0],&next_square[1]);
 
@@ -1030,6 +1050,15 @@ void c_map::draw(int x, int y)
 	  }
 
 	al_draw_bitmap(this->spell_icons[6],x + 610,y + this->portrait_y_position + 10,0);
+
+	if (this->text_is_displayed)    // draw text
+	  {
+		for (i = 0; i < MAX_TEXT_LINES; i++)
+		  {
+			al_draw_text(this->text_font,al_map_rgb(0,0,0),this->screen_center_x + 1,this->screen_center_y - 200 + 30 * i + 1,ALLEGRO_ALIGN_CENTRE,this->text_lines[i]); // text shadow
+			al_draw_text(this->text_font,al_map_rgb(255,220,220),this->screen_center_x,this->screen_center_y - 200 + 30 * i,ALLEGRO_ALIGN_CENTRE,this->text_lines[i]);
+		  }
+	  }
   }
 
 //-----------------------------------------------
@@ -1201,8 +1230,8 @@ bool c_map::square_has_object(int x, int y, t_object_type object_type)
   { 
 	int i;
 
-    if (x > this->width || x < 0 || y > this->height ||
-	  this->height < 0)
+    if (x >= this->width || x < 0 || y >= this->height ||
+	  y < 0)
 	  return false;
 
 	for (i = 0; i < MAX_OBJECTS_PER_SQUARE; i++)
@@ -1369,6 +1398,43 @@ void c_map::set_square_type(int x, int y, t_square_type type)
 
 //-----------------------------------------------
 
+void c_map::display_text(string text, double duration)
+  {
+	int i, j, position;
+
+	position = 0;     // position in the text
+
+	for (j = 0; j < MAX_TEXT_LINES; j++) // split the string into lines
+	  {
+	    for (i = 0; i < MAX_TEXT_CHARACTERS_PER_LINE - 1; i++)
+		  {
+			if (position >= (int) (text.length() - 1))
+			  {
+			    this->text_lines[j][i] = 0;
+			    break;
+			  }
+
+			if (i >= MAX_TEXT_CHARACTERS_PER_LINE - 10 && text[position] == ' ')
+			  {
+				position++;
+			    break;
+			  }
+			else
+			  {
+			    this->text_lines[j][i] = text[position];
+			    position++;
+			  }
+		  }
+
+		this->text_lines[j][i + 1] = 0;  // terminate the string
+	  }
+
+    this->text_is_displayed = true;
+	this->text_end_time = al_current_time() + duration;
+  }
+
+//-----------------------------------------------
+
 void c_map::update_missiles()
   {
 	int i, j;
@@ -1380,7 +1446,7 @@ void c_map::update_missiles()
 
 		// position computing is the same as in player get_square_y() - could be done better :/ (make a static method in c_character!!!)
 		this->missiles[i].square_y = c_character::position_to_square(this->missiles[i].position_y,false); //  this->missiles[i].square_y > -0.3 ? floor(this->missiles[i].position_y + 0.3) + 1 : 0;
-		this->missiles[i].square_x = c_character::position_to_square(this->missiles[i].position_x,true); //floor(this->missiles[i].position_x + 0.3);
+		this->missiles[i].square_x = c_character::position_to_square(this->missiles[i].position_x,true);  //floor(this->missiles[i].position_x + 0.3);
 
 		switch (this->missiles[i].direction)
 		  {
@@ -1400,18 +1466,18 @@ void c_map::update_missiles()
 			  missiles[i].position_x -= 0.1;
 			  break;
 		  }
-		
+
 		if (this->get_height(this->missiles[i].square_x,this->missiles[i].square_y) > this->missiles[i].height ||
 		  this->get_terrain_height(this->missiles[i].square_x,this->missiles[i].square_y) > this->missiles[i].height)
 		  died = true;
-		  
+
 		switch (this->missiles[i].type)    // check the missile effect
 		  {
 		    case MISSILE_MIA_1:
 			  if (this->square_has_object(this->missiles[i].square_x,this->missiles[i].square_y,OBJECT_CRATE) &&
 			      this->crate_can_be_shifted(this->missiles[i].square_x,this->missiles[i].square_y,this->missiles[i].height,this->missiles[i].direction))
 				this->shift_crate(this->missiles[i].square_x,this->missiles[i].square_y,this->missiles[i].direction);
-			    
+
 			  break;
 
             case MISSILE_MIA_2:
@@ -1494,6 +1560,11 @@ void c_map::switch_player(int player_number)
 void c_map::update()
   {
 	this->time_difference = al_current_time() - this->time_before;
+	
+	if (this->text_is_displayed && this->text_end_time <= al_current_time()) // erase the text displayed
+	  {
+		this->text_is_displayed = false;
+	  }
 
 	this->update_missiles();
 
@@ -1766,6 +1837,10 @@ void c_map::use_key_press()
 			  {
 				this->player_characters[this->current_player]->change_magic_energy(1);
 				this->display_animation(DISPLAY_ANIMATION_REFRESH,coordinations[0],coordinations[1]);
+			  }
+			else if (help_object->get_type() == OBJECT_SIGN)
+			  {
+				this->display_text(help_object->get_sign_text(),10);
 			  }
 	      }
 		else

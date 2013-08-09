@@ -28,6 +28,7 @@ class c_map_object: public c_graphic_object
 	  bool stepable;                       /** true if this object can be stepped over */
 	  c_map_object **controlling;          /** array of pointers to objects which are affected by this object */
 	  int number_of_controlled;            /** length of controlled array */
+	  string sign_text;                    /** text - only for sign objects */
 
     public:
 	  c_map_object(t_object_type object_type, int link_id, int link_id2, long int *global_time);
@@ -190,6 +191,23 @@ class c_map_object: public c_graphic_object
 		    at given index, if the index
 			exceeds length of object list,
 			NULL is returned
+		*/
+
+	  void set_sign_text(string text);
+
+	    /**
+		  Sets the text for sign map object.
+
+		  @param text text to be set
+		*/
+
+	  string get_sign_text();
+
+	    /**
+		  Returns text associated with sign
+		  map object.
+
+		  @return sign text
 		*/
   };
 

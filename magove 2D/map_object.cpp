@@ -26,6 +26,7 @@ c_map_object::c_map_object(t_object_type object_type, int link_id,  int link_id2
 	this->playing_animation = ANIMATION_NONE;
 	this->sound = NULL;
 	this->sound_gain = 1.0;
+	this->sign_text = "";
 	 
 	for (i = 0; i < 5; i++)
       this->bitmaps[i] = NULL;
@@ -44,6 +45,19 @@ c_map_object::c_map_object(t_object_type object_type, int link_id,  int link_id2
 		  this->sound_gain = 0.5;
 		  number_of_bitmaps = 5;
 		  this->input = true;
+		  break;
+
+		case OBJECT_GATE:
+		  this->bitmaps[0] = al_load_bitmap("resources/object_gate_1.png");
+		  this->bitmaps[1] = al_load_bitmap("resources/object_gate_2.png");
+          this->bitmaps[2] = al_load_bitmap("resources/object_gate_3.png");
+		  number_of_bitmaps = 3;
+		  this->stepable = true;
+		  this->loop_animation(ANIMATION_IDLE);
+		  break;
+
+		case OBJECT_SIGN:
+		  this->bitmaps[0] = al_load_bitmap("resources/object_sign.png");
 		  break;
 
 		case OBJECT_ELEVATOR:
@@ -232,6 +246,10 @@ void c_map_object::update_animation_period()
 		  break;
 
 		case OBJECT_FOUNTAIN:
+		  this->animation_period = 3;
+		  break;
+
+		case OBJECT_GATE:
 		  this->animation_period = 3;
 		  break;
 
@@ -527,6 +545,20 @@ c_map_object *c_map_object::get_controlled_object(int index)
 	  return NULL;
 
 	return this->controlling[index];
+  }
+
+//-----------------------------------------------
+
+void c_map_object::set_sign_text(string text)
+  {
+	this->sign_text = text;
+  }
+
+//-----------------------------------------------
+
+string c_map_object::get_sign_text()
+  {
+	return this->sign_text;
   }
 
 //-----------------------------------------------
