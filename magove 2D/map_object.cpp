@@ -35,6 +35,48 @@ c_map_object::c_map_object(t_object_type object_type, int link_id,  int link_id2
 
 	switch (this->type)
 	  {
+	    case OBJECT_KEY_RED:
+          this->bitmaps[0] = al_load_bitmap("resources/object_key_red.png");
+		  break;
+
+		case OBJECT_KEY_GREEN:
+          this->bitmaps[0] = al_load_bitmap("resources/object_key_green.png");
+		  break;
+
+		case OBJECT_KEY_BLUE:
+          this->bitmaps[0] = al_load_bitmap("resources/object_key_blue.png");
+		  break;
+
+	    case OBJECT_FLOWERS:
+		  this->bitmaps[0] = al_load_bitmap("resources/object_flowers.png");
+		  this->stepable = true;
+		  break;
+
+		case OBJECT_FLOWERS2:
+		  this->bitmaps[0] = al_load_bitmap("resources/object_flowers2.png");
+		  this->stepable = true;
+		  break;
+
+	    case OBJECT_BONES:
+		  this->bitmaps[0] = al_load_bitmap("resources/object_bones.png");
+		  this->stepable = true;
+		  break;
+
+	    case OBJECT_CARPET:
+		  this->bitmaps[0] = al_load_bitmap("resources/object_carpet.png");
+		  this->stepable = true;
+		  break;
+		  
+	    case OBJECT_CARPET2:
+		  this->bitmaps[0] = al_load_bitmap("resources/object_carpet2.png");
+		  this->stepable = true;
+		  break;
+
+		case OBJECT_WATER_LILY:
+		  this->bitmaps[0] = al_load_bitmap("resources/object_water_lily.png");
+		  this->stepable = true;
+		  break;
+
 	    case OBJECT_LEVER:
           this->bitmaps[0] = al_load_bitmap("resources/object_lever_1.png");
 		  this->bitmaps[1] = al_load_bitmap("resources/object_lever_2.png");

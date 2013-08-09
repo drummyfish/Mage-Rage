@@ -311,8 +311,20 @@ bool c_map::load_from_file(string filename)
 	this->add_map_object(new c_map_object(OBJECT_FLAMES,1,0,this->global_time),9,2);
 	this->add_map_object(new c_map_object(OBJECT_FLAMES,0,0,this->global_time),9,4);
 
+	this->add_map_object(new c_map_object(OBJECT_WATER_LILY,0,0,this->global_time),3,7);
+
+	this->add_map_object(new c_map_object(OBJECT_FLOWERS,0,0,this->global_time),5,10);
+	this->add_map_object(new c_map_object(OBJECT_BONES,0,0,this->global_time),6,11);
+	this->add_map_object(new c_map_object(OBJECT_CARPET,0,0,this->global_time),8,11);
+	this->add_map_object(new c_map_object(OBJECT_FLOWERS2,0,0,this->global_time),11,11);
+	this->add_map_object(new c_map_object(OBJECT_CARPET2,0,0,this->global_time),12,11);
+
 	this->add_map_object(new c_map_object(OBJECT_TELEPORT_INPUT,10,-1,this->global_time),2,10);
 	this->add_map_object(new c_map_object(OBJECT_TELEPORT_OUTPUT,10,-1,this->global_time),3,12);
+
+	this->add_map_object(new c_map_object(OBJECT_KEY_RED,-1,-1,this->global_time),6,13);
+	this->add_map_object(new c_map_object(OBJECT_KEY_GREEN,-1,-1,this->global_time),7,13);
+	this->add_map_object(new c_map_object(OBJECT_KEY_BLUE,-1,-1,this->global_time),5,13);
 
 	c_map_object *sign;
 
@@ -370,6 +382,7 @@ bool c_map::load_from_file(string filename)
 	this->animation_crate_shift_north = new c_animation(this->global_time,"resources/animation_crate_shift_north",3,0,-79,1,false,"",1.0);
 	this->animation_collapse = new c_animation(this->global_time,"resources/animation_collapse",5,0,0,2,true,"resources/crack.wav",0.3);
 	this->animation_melt = new c_animation(this->global_time,"resources/animation_melt",4,0,-27,5,false,"",0.0);
+	this->animation_teleport = new c_animation(this->global_time,"resources/animation_teleport",5,0,-27,5,true,"resources/teleport.wav",0.4);
 
     this->spell_sounds_mia[0] = al_load_sample("resources/mia_cast.wav");
     this->spell_sounds_mia[1] = al_load_sample("resources/mia_cast2.wav");
@@ -516,6 +529,11 @@ void c_map::display_animation(t_display_animation animation, int x, int y)
 		  this->squares[x][y].animation = this->animation_refresh;
 		  this->animation_refresh->play_animation(ANIMATION_IDLE);
 		  break;
+
+		case DISPLAY_ANIMATION_TELEPORT:
+		  this->squares[x][y].animation = this->animation_teleport;
+		  this->animation_teleport->play_animation(ANIMATION_IDLE);
+		  break;
 	  }
   }
 
@@ -614,6 +632,10 @@ bool c_map::crate_can_be_shifted(int x, int y, int height, t_direction direction
 	  return false;
 
 	if (this->get_height(x,y) - 1 != height)      // check if shifting from right height 
+	  return false;
+
+	if (this->square_has_object(next_square[0],next_square[1],OBJECT_TELEPORT_INPUT) ||  // check teleports
+	  this->square_has_object(next_square[0],next_square[1],OBJECT_TELEPORT_OUTPUT))
 	  return false;
 
 	if (this->square_has_character(next_square[0],next_square[1]))
@@ -1737,6 +1759,8 @@ void c_map::fire_missile(int spell_number)
 void c_map::cast_key_press(int spell_number)
   {
 	ALLEGRO_SAMPLE_ID sample_id;
+	int i, x, y;
+	c_player_character *helping_player, *target_player;
 
 	if (this->player_characters[this->current_player]->get_magic_energy() == 0)
 	  return;                  // no magic energy
@@ -1746,25 +1770,54 @@ void c_map::cast_key_press(int spell_number)
 	  return;
 
 	if (spell_number == 0 || spell_number == 1)
-	  switch(this->player_characters[this->current_player]->get_player_type()) // play the cast sound
-	    {
-	      case PLAYER_MIA:
-		    al_play_sample(this->spell_sounds_mia[spell_number],0.5,0.0,1.0,ALLEGRO_PLAYMODE_ONCE,&sample_id);			
-			this->fire_missile(spell_number);
-			break;
+	  {
+	    this->player_characters[this->current_player]->change_magic_energy(-1);
 
-		  case PLAYER_METODEJ:
-			al_play_sample(this->spell_sounds_metodej[spell_number],0.5,0.0,1.0,ALLEGRO_PLAYMODE_ONCE,&sample_id);
-		    this->fire_missile(spell_number);
-			break;
+	    switch(this->player_characters[this->current_player]->get_player_type()) // play the cast sound
+	      {
+	        case PLAYER_MIA:
+		      al_play_sample(this->spell_sounds_mia[spell_number],0.5,0.0,1.0,ALLEGRO_PLAYMODE_ONCE,&sample_id);			
+		  	  this->fire_missile(spell_number);
+			  break;
 
-		  case PLAYER_STAROVOUS:
-			al_play_sample(this->spell_sounds_starovous[spell_number],0.5,0.0,1.0,ALLEGRO_PLAYMODE_ONCE,&sample_id);
-		    this->fire_missile(spell_number);
-			break;
-	    }
+		    case PLAYER_METODEJ:
+			  al_play_sample(this->spell_sounds_metodej[spell_number],0.5,0.0,1.0,ALLEGRO_PLAYMODE_ONCE,&sample_id);
+		      this->fire_missile(spell_number);
+			  break;
 
-	this->player_characters[this->current_player]->change_magic_energy(-1);
+		    case PLAYER_STAROVOUS:
+			  al_play_sample(this->spell_sounds_starovous[spell_number],0.5,0.0,1.0,ALLEGRO_PLAYMODE_ONCE,&sample_id);
+		      this->fire_missile(spell_number);
+			  break;
+	      }
+	  }
+	else if (spell_number == 2) // teleport spell
+	  {
+		helping_player = NULL;  // player that helps summon the other player
+		target_player = NULL;   // player being summoned
+
+		x = this->player_characters[this->current_player]->get_square_x();
+		y = this->player_characters[this->current_player]->get_square_y();
+
+		for (i = 0; i < 3; i++)
+		  if (i != this->current_player && this->player_characters[i] != NULL)
+		    {
+			  if (this->player_characters[i]->get_square_x() == x && this->player_characters[i]->get_square_y() == y)
+				helping_player = this->player_characters[i];
+			  else
+				target_player = this->player_characters[i];
+		    }
+
+		  if (helping_player != NULL && target_player != NULL)
+		    {
+			  helping_player->change_magic_energy(-1);
+			  helping_player->play_animation(ANIMATION_CAST);
+			  this->player_characters[this->current_player]->change_magic_energy(-1);
+			  target_player->set_position(x + 0.1,y - 0.8);
+			  this->display_animation(DISPLAY_ANIMATION_TELEPORT,x,y);
+		    }
+	  }
+
 	this->player_characters[this->current_player]->play_animation(ANIMATION_CAST);
   }
 
@@ -1845,6 +1898,10 @@ void c_map::use_key_press()
 			  {
 				this->display_text(help_object->get_sign_text(),10);
 			  }
+			else if (help_object->get_type() == OBJECT_KEY_RED || help_object->get_type() == OBJECT_KEY_GREEN || help_object->get_type() == OBJECT_KEY_BLUE)
+			  {
+				this->remove_object(facing_square[0],facing_square[1],i);
+			  }
 	      }
 		else
 	      break;
@@ -1883,6 +1940,8 @@ void c_map::check_teleport()
 				else if (this->squares[x][y].map_objects[j] == help_object)
 				  {
 					this->player_characters[this->current_player]->set_position(x + 0.1,y - 0.5);
+					this->display_animation(DISPLAY_ANIMATION_TELEPORT,x,y);
+					this->display_animation(DISPLAY_ANIMATION_TELEPORT,position[0],position[1]);
 					this->update_screen_position();
 				    break;
 				  }

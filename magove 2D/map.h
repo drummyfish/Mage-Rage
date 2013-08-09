@@ -102,6 +102,7 @@ class c_map: public c_graphic_object
 	  c_animation *animation_crate_shift_north;                        /** animation of crate shifting north (other directions are done animating the crate itself) */
 	  c_animation *animation_collapse;                                 /** animation for collapsing square */
 	  c_animation *animation_melt;                                     /** animation of melting ice */
+	  c_animation *animation_teleport;                                 /** teleport animation */
 
 	  ALLEGRO_BITMAP *portrait_selection;                              /** bitmap - GUI selection behind the portrait */ 
 	  ALLEGRO_BITMAP *portrait_mia;                                    /** bitmap - GUI portrait of Mia */

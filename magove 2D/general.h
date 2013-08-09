@@ -136,7 +136,8 @@ typedef enum
 	DISPLAY_ANIMATION_CRATE_SHIFT_NORTH,
 	DISPLAY_ANIMATION_COLLAPSE,
 	DISPLAY_ANIMATION_MELT,
-	DISPLAY_ANIMATION_REFRESH
+	DISPLAY_ANIMATION_REFRESH,
+	DISPLAY_ANIMATION_TELEPORT
   } t_display_animation;
 
 typedef enum
@@ -164,7 +165,16 @@ typedef enum
 	OBJECT_GATE,               /** gate - a gate player must reach in the level */
     OBJECT_SIGN,               /** sign - can display a text */
     OBJECT_TELEPORT_INPUT,     /** teleport which can be stepped into */
-	OBJECT_TELEPORT_OUTPUT     /** teleport in which the player appears rntering the input teleport */
+	OBJECT_TELEPORT_OUTPUT,    /** teleport in which the player appears rntering the input teleport */
+	OBJECT_FLOWERS,            /** flowers (only decoration) */
+	OBJECT_FLOWERS2,           /** another flowers (only decoration) */
+	OBJECT_BONES,              /** bones (only decoration) */
+	OBJECT_CARPET,             /** carpet (only decoration) */
+	OBJECT_CARPET2,            /** another carpet (only decoration) */
+	OBJECT_WATER_LILY,         /** water lily (water decoration) */
+	OBJECT_KEY_RED,            /** red key (part of storyline) */ 
+	OBJECT_KEY_GREEN,          /** green key (part of storyline) */
+	OBJECT_KEY_BLUE            /** blue key (part of storyline) */
   } t_object_type;
 
 typedef enum
