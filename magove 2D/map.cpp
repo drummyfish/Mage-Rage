@@ -1930,6 +1930,8 @@ void c_map::use_key_press()
 	  this->player_characters[this->current_player]->get_direction(),
 	  &facing_square[0],&facing_square[1]);
 
+	if (facing_square[0] >= 0 && facing_square[0] < this->width &&
+      facing_square[1] >= 0 && facing_square[1] < this->height)
 	for (i = 0; i < MAX_OBJECTS_PER_SQUARE; i++)
 	  {
 		help_object = this->squares[facing_square[0]][facing_square[1]].map_objects[i];
