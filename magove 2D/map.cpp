@@ -384,6 +384,7 @@ bool c_map::load_from_file(string filename)
 	this->animation_collapse = new c_animation(this->global_time,"resources/animation_collapse",5,0,0,2,true,"resources/crack.wav",0.3);
 	this->animation_melt = new c_animation(this->global_time,"resources/animation_melt",4,0,-27,5,false,"",0.0);
 	this->animation_teleport = new c_animation(this->global_time,"resources/animation_teleport",5,0,-27,5,true,"resources/teleport.wav",0.4);
+	this->animation_explosion = new c_animation(this->global_time,"resources/animation_explosion",7,0,-27,5,true,"resources/explosion.wav",0.3);
 
     this->spell_sounds_mia[0] = al_load_sample("resources/mia_cast.wav");
     this->spell_sounds_mia[1] = al_load_sample("resources/mia_cast2.wav");
@@ -504,6 +505,9 @@ bool c_map::object_can_be_used(c_map_object *what)
 
 void c_map::display_animation(t_display_animation animation, int x, int y)
   {
+	if (x < 0 || x >= this->width || y < 0 || y >= this->height)
+	  return;
+
 	switch (animation)
 	  {
 	    case DISPLAY_ANIMATION_WATER_SPLASH:
@@ -534,6 +538,11 @@ void c_map::display_animation(t_display_animation animation, int x, int y)
 		case DISPLAY_ANIMATION_TELEPORT:
 		  this->squares[x][y].animation = this->animation_teleport;
 		  this->animation_teleport->play_animation(ANIMATION_IDLE);
+		  break;
+
+		case DISPLAY_ANIMATION_EXPLOSION:
+		  this->squares[x][y].animation = this->animation_explosion;
+		  this->animation_explosion->play_animation(ANIMATION_IDLE);
 		  break;
 	  }
   }
@@ -1464,15 +1473,15 @@ void c_map::display_text(string text, double duration)
 void c_map::update_missiles()
   {
 	int i, j;
+	int help_position[2];
 	bool died;
 
 	for (i = 0; i < this->number_of_missiles; i++)
 	  {
 		died = false;
 
-		// position computing is the same as in player get_square_y() - could be done better :/ (make a static method in c_character!!!)
-		this->missiles[i].square_y = c_character::position_to_square(this->missiles[i].position_y,false); //  this->missiles[i].square_y > -0.3 ? floor(this->missiles[i].position_y + 0.3) + 1 : 0;
-		this->missiles[i].square_x = c_character::position_to_square(this->missiles[i].position_x,true);  //floor(this->missiles[i].position_x + 0.3);
+		this->missiles[i].square_y = c_character::position_to_square(this->missiles[i].position_y,false);
+		this->missiles[i].square_x = c_character::position_to_square(this->missiles[i].position_x,true);
 
 		switch (this->missiles[i].direction)
 		  {
@@ -1495,6 +1504,8 @@ void c_map::update_missiles()
 
 		if (this->get_height(this->missiles[i].square_x,this->missiles[i].square_y) > this->missiles[i].height ||
 		  this->get_terrain_height(this->missiles[i].square_x,this->missiles[i].square_y) > this->missiles[i].height)
+		  died = true;
+		else if (!this->square_is_stepable(this->missiles[i].square_x,this->missiles[i].square_y))
 		  died = true;
 
 		switch (this->missiles[i].type)    // check the missile effect
@@ -1558,6 +1569,34 @@ void c_map::update_missiles()
 
 		if (died)    // remove the missile
 		  {
+			if (this->missiles[i].type == MISSILE_METODEJ_1) // display explosion
+			  {
+				switch (this->missiles[i].direction) // find the square that the missile was before
+				  {
+				    case DIRECTION_NORTH:
+					  help_position[0] = this->missiles[i].square_x;
+					  help_position[1] = this->missiles[i].square_y + 1;
+					  break;
+
+					case DIRECTION_SOUTH:
+					  help_position[0] = this->missiles[i].square_x;
+					  help_position[1] = this->missiles[i].square_y - 1;
+					  break;
+
+					case DIRECTION_EAST:
+					  help_position[0] = this->missiles[i].square_x - 1;
+					  help_position[1] = this->missiles[i].square_y;
+					  break;
+
+					case DIRECTION_WEST:
+					  help_position[0] = this->missiles[i].square_x + 1;
+					  help_position[1] = this->missiles[i].square_y;
+					  break;
+				  }
+
+				this->display_animation(DISPLAY_ANIMATION_EXPLOSION,help_position[0],help_position[1]);
+			  }
+
 			for (j = i + 1; j < this->number_of_missiles; j++)
 			  this->missiles[j - 1] = this->missiles[j];
 
