@@ -4,7 +4,7 @@
 /**
  * Graphic object class header file.
  *
- * authors: Miloslav Číž, Martin Gabriel
+ * authors: Miloslav Číž
  * year: 2013
  */
 

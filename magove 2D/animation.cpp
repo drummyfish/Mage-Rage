@@ -1,7 +1,7 @@
 ﻿/**
  * Animation object class implementation.
  *
- * authors: Miloslav Číž, Martin Gabriel
+ * authors: Miloslav Číž
  * year: 2013
  */
 

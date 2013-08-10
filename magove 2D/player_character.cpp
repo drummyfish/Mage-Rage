@@ -1,7 +1,7 @@
 ﻿/**
  * Player character class implementation file.
  *
- * authors: Miloslav Číž, Martin Gabriel
+ * authors: Miloslav Číž
  * year: 2013
  */
 
@@ -20,6 +20,11 @@ c_player_character::c_player_character(t_player_type player_type, long int *glob
 	this->player_type = player_type;
 	this->direction = DIRECTION_SOUTH;
 	this->sound = NULL;
+	this->fire_cloak_1 = NULL;
+	this->fire_cloak_2 = NULL;
+	this->fire_cloak_3 = NULL;
+	this->sound_firecloak = NULL;
+	this->fire_cloak_on = false;
 
 	this->playing_animation = ANIMATION_NONE;
 
@@ -50,7 +55,7 @@ c_player_character::c_player_character(t_player_type player_type, long int *glob
 	this->sprite_west_casting = al_load_bitmap(("resources/character_" + help_string + "_west_casting.png").c_str());
 	this->sprite_west_running_1 = al_load_bitmap(("resources/character_" + help_string + "_west_running_1.png").c_str());
 	this->sprite_west_running_2 = al_load_bitmap(("resources/character_" + help_string + "_west_running_2.png").c_str());
-  
+
 	this->sound_footsteps = al_load_sample("resources/footsteps.wav");
 
 	this->succesfully_loaded =
@@ -61,6 +66,17 @@ c_player_character::c_player_character(t_player_type player_type, long int *glob
 		this->sprite_south_running_1 && this->sprite_south_running_2 && this->sprite_west &&
 		this->sprite_west_casting && this->sprite_west_running_1 && this->sprite_west_running_2
 		&& this->sound_footsteps);
+
+	if (this->player_type == PLAYER_METODEJ)
+	  {
+		this->fire_cloak_1 = al_load_bitmap("resources/spell_2_metodej_1.png");
+		this->fire_cloak_2 = al_load_bitmap("resources/spell_2_metodej_2.png");
+		this->fire_cloak_3 = al_load_bitmap("resources/spell_2_metodej_3.png");
+		this->sound_firecloak = al_load_sample("resources/metodej_cast2.wav");
+
+		if (!this->fire_cloak_1 || !this->fire_cloak_2 || !this->fire_cloak_3 || !this->sound_firecloak)
+		  this->succesfully_loaded = false;
+	  }
   }
 
 //-----------------------------------------------
@@ -202,6 +218,24 @@ void c_player_character::draw(int x, int y)
 		 if (this->animation_frame >= this->animation_period)
 		   this->stop_animation();
 	  }
+
+	if (this->fire_cloak_on && this->player_type == PLAYER_METODEJ) // draw fire cloak
+	  {
+		switch ((*this->global_time / 8) % 3)
+		  {
+		    case 0:
+			  al_draw_bitmap(this->fire_cloak_1,x - 12,y - 15,0);
+			  break;
+
+		    case 1:
+			  al_draw_bitmap(this->fire_cloak_2,x - 12,y - 15,0);
+			  break;
+
+		    case 2:
+			  al_draw_bitmap(this->fire_cloak_3,x - 12,y - 15,0);
+			  break;
+		  }
+	  }
   }
 
 //-----------------------------------------------
@@ -214,12 +248,6 @@ void c_player_character::play_animation(t_animation_type animation)
 	this->looping_animation = false;
 	this->started_playing = *this->global_time;
 	this->update_animation_period();
-
-	if (animation == ANIMATION_CAST)
-	  {
-	 //   al_play_sample(this->sound_footsteps,2.0,0.0,1.0,ALLEGRO_PLAYMODE_LOOP,&this->playing_sound_id);
-	//	this->playing_sound = true;
-	  }
   }
 
 //-----------------------------------------------
@@ -259,6 +287,33 @@ void c_player_character::change_magic_energy(int amount)
 int c_player_character::get_magic_energy()
   {
 	return this->magic_energy;
+  }
+
+//-----------------------------------------------
+
+void c_player_character::set_fire_cloak(bool state)
+
+  {
+	if (this->player_type != PLAYER_METODEJ)
+	  return;
+
+	this->fire_cloak_on = state;
+
+	if (state)
+	  {
+		if (this->fire_cloak_on)
+	      al_play_sample(this->sound_firecloak,0.5,0.0,1.0,ALLEGRO_PLAYMODE_LOOP,&this->sound_firecloak_id);
+	  }
+	else
+	  al_stop_sample(&this->sound_firecloak_id);
+  }
+
+//-----------------------------------------------
+
+bool c_player_character::fire_cloak_is_on()
+
+  {
+	return this->fire_cloak_on;
   }
 
 //-----------------------------------------------

@@ -4,7 +4,7 @@
 /**
  * Map class header file.
  *
- * authors: Miloslav Číž, Martin Gabriel
+ * authors: Miloslav Číž
  * year: 2013
  */
 
@@ -81,6 +81,9 @@ class c_map: public c_graphic_object
 	  bool pressed_2;
 	  bool pressed_3;
 	  bool mouse_pressed;
+	  bool check_firecloak;                                            /** says if fire cloak spell time should be being checked */
+	  double fire_cloak_end_time;                                      /** stores the end time for the fire cloak spell */
+
 
 	  char text_lines[MAX_TEXT_LINES][MAX_TEXT_CHARACTERS_PER_LINE];   /** lines of text being displayed on screen */
 	  bool text_is_displayed;                                          /** whether the text is to be displayed */

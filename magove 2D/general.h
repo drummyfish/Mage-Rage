@@ -32,7 +32,7 @@
 #define MAX_MAGIC_ENERGY 5              /** maximum amount of magic energy for a player */
 #define MAX_TEXT_CHARACTERS_PER_LINE 32 /** maximum characters in a displayed text line */
 #define MAX_TEXT_LINES 16               /** maximum number of text lines */
-
+#define FIRE_CLOAK_DURATION 10.0        /** duration of fire cloak spell in seconds */
 
 using namespace std;
 

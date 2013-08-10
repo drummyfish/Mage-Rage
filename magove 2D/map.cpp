@@ -1,7 +1,7 @@
 ﻿/**
  * Map class implementation.
  *
- * authors: Miloslav Číž, Martin Gabriel
+ * authors: Miloslav Číž
  * year: 2013
  */
 
@@ -160,6 +160,7 @@ c_map::c_map(string filename, t_input_output_state *input_output_state, long int
 	this->pressed_1 = false;
 	this->pressed_2 = false;
 	this->pressed_3 = false;  
+	this->check_firecloak = false;
 	this->mouse_pressed = false;
 	this->frame_count = 0;
 	this->animation_frame = 0;
@@ -1584,11 +1585,22 @@ void c_map::switch_player(int player_number)
 
 void c_map::update()
   {
+	int i;
+
 	this->time_difference = al_current_time() - this->time_before;
 	
 	if (this->text_is_displayed && this->text_end_time <= al_current_time()) // erase the text displayed
 	  {
 		this->text_is_displayed = false;
+	  }
+
+	if (this->check_firecloak && al_current_time() >= this->fire_cloak_end_time)   // check fire cloak time and turn it off after it's duration's over
+	  {
+		for (i = 0; i < 3; i++)
+		  if (this->player_characters[i] != NULL && this->player_characters[i]->get_player_type() == PLAYER_METODEJ)
+			this->player_characters[i]->set_fire_cloak(false);
+
+		this->check_firecloak = false;
 	  }
 
 	this->update_missiles();
@@ -1781,8 +1793,19 @@ void c_map::cast_key_press(int spell_number)
 			  break;
 
 		    case PLAYER_METODEJ:
-			  al_play_sample(this->spell_sounds_metodej[spell_number],0.5,0.0,1.0,ALLEGRO_PLAYMODE_ONCE,&sample_id);
-		      this->fire_missile(spell_number);
+			  if (spell_number == 0)
+			    {
+			      al_play_sample(this->spell_sounds_metodej[spell_number],0.5,0.0,1.0,ALLEGRO_PLAYMODE_ONCE,&sample_id);
+		          this->fire_missile(spell_number);
+			    }
+			  else
+			    {
+				  this->player_characters[this->current_player]->set_fire_cloak(false);
+				  this->player_characters[this->current_player]->set_fire_cloak(true);
+				  this->fire_cloak_end_time = al_current_time() + FIRE_CLOAK_DURATION;
+				  this->check_firecloak = true;
+			    }
+
 			  break;
 
 		    case PLAYER_STAROVOUS:

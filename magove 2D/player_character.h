@@ -4,7 +4,7 @@
 /**
  * Player character class header file.
  *
- * authors: Miloslav Číž, Martin Gabriel
+ * authors: Miloslav Číž
  * year: 2013
  */
 
@@ -20,6 +20,7 @@ class c_player_character: public c_character
 	  t_player_type player_type;
 
 	  int magic_energy;                              /** current amount of magic energy */
+	  bool fire_cloak_on;                            /** whether the fire cloak spell is on for this player */
 
 	  ALLEGRO_BITMAP *shadow;                        /** shadow bitmap */
 	  ALLEGRO_BITMAP *sprite_north;                  /** player facing north */
@@ -39,7 +40,13 @@ class c_player_character: public c_character
 	  ALLEGRO_BITMAP *sprite_west_running_1;         /** player running west, frame 1 */
 	  ALLEGRO_BITMAP *sprite_west_running_2;         /** player running west, frame 2 */
 
+	  ALLEGRO_BITMAP *fire_cloak_1;                  /** bitmap for fire cloak spell, frame 1 */
+	  ALLEGRO_BITMAP *fire_cloak_2;                  /** bitmap for fire cloak spell, frame 2 */
+	  ALLEGRO_BITMAP *fire_cloak_3;                  /** bitmap for fire cloak spell, frame 3 */
+
 	  ALLEGRO_SAMPLE *sound_footsteps;               /** sound - footsteps */
+	  ALLEGRO_SAMPLE *sound_firecloak;               /** sound - firecloak spell */
+	  ALLEGRO_SAMPLE_ID sound_firecloak_id;          /** id to stop looping sound */
 
     public:
 	  c_player_character(t_player_type player_type, long int *global_time);
@@ -122,6 +129,27 @@ class c_player_character: public c_character
 		  magic energy.
 
 		  @return player's magic energy
+		*/
+
+	  void set_fire_cloak(bool state);
+
+	    /**
+		  Sets the fire cloak on or off for this
+		  player. Only works for Metodej.
+
+		  @param state if true, the fire cload
+		    will be set on, otherwise it will
+			be set off
+		*/
+
+	  bool fire_cloak_is_on();
+
+	    /**
+		  Checks if the fire cloak spell is on
+		  for this player.
+
+		  @return true if the fire cloak spell
+		  is on, false otherwise
 		*/
   };
 
