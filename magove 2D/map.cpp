@@ -297,8 +297,8 @@ bool c_map::load_from_file(string filename)
 		cerr << "ERROR: the player character wasn't succesfully loaded." << endl;
 	  }
 	
-	this->player_characters[0]->set_position(8.0,8.0);
-	this->player_characters[1]->set_position(6.0,8.0);
+	this->player_characters[0]->set_position(8.0,10.0);
+	this->player_characters[1]->set_position(7.0,8.0);
 	this->player_characters[2]->set_position(4.0,8.0);
 
 	this->add_map_object(new c_map_object(OBJECT_CRATE,0,0,this->global_time),5,0);
@@ -654,41 +654,14 @@ bool c_map::crate_can_be_shifted(int x, int y, int height, t_direction direction
 	if (this->get_height(next_square[0],next_square[1]) > height)
 	  return false;
 
-	if (this->get_height(x,y) - 1 == this->get_height(next_square[0],next_square[1])) // check door (at the same height level)
+	if (!this->door_can_be_passed(x,y,direction))               // door at the crate's square
+	  return false;
+
+	if (this->get_height(x,y) - 1 == this->get_height(next_square[0],next_square[1])) // door at the next square and the same height level
 	  {
-        for (i = 0; i < MAX_OBJECTS_PER_SQUARE; i++)
-		  if (this->squares[next_square[0]][next_square[1]].map_objects[i] != NULL)
-		    {
-		      if (this->squares[next_square[0]][next_square[1]].map_objects[i]->get_type() == OBJECT_DOOR_HORIZONTAL)
-		        {
-			      if (direction == DIRECTION_EAST || direction == DIRECTION_WEST ||
-				    this->squares[next_square[0]][next_square[1]].map_objects[i]->get_state() == OBJECT_STATE_OFF)
-				    return false;
-		        }
-		      else if (this->squares[next_square[0]][next_square[1]].map_objects[i]->get_type() == OBJECT_DOOR_VERTICAL)
-		        {
-			     if (direction == DIRECTION_NORTH || direction == DIRECTION_SOUTH ||
-				    this->squares[next_square[0]][next_square[1]].map_objects[i]->get_state() == OBJECT_STATE_OFF)
-				    return false;
-		        }
-		    }
-		  else if (this->squares[x][y].map_objects[i] != NULL)   // check doors at the crate's square
-		    {
-			  if (this->squares[x][y].map_objects[i]->get_type() == OBJECT_DOOR_HORIZONTAL)
-		        {
-			      if (direction == DIRECTION_EAST || direction == DIRECTION_WEST)
-				    return false;
-		        }
-		      else if (this->squares[x][y].map_objects[i]->get_type() == OBJECT_DOOR_VERTICAL)
-		        {
-			     if (direction == DIRECTION_NORTH || direction == DIRECTION_SOUTH)
-				   return false;
-		        }
-		    }
-		  else
-			break;
+		return (this->door_can_be_passed(next_square[0],next_square[1],direction));
 	  }
-	else    // checks door that are on lower height level
+	else    // door that are on lower height level
 	  {
 		for (i = 0; i < MAX_OBJECTS_PER_SQUARE; i++)
 		  if (this->squares[next_square[0]][next_square[1]].map_objects[i] != NULL &&
@@ -1200,32 +1173,10 @@ bool c_map::character_can_move_to_square(c_character *character, t_direction dir
 	if(!this->square_is_stepable(square_position_next[0],square_position_next[1])) // check stepable objects
 	  return false;
 
-	for (i = 0; i < MAX_OBJECTS_PER_SQUARE; i++)                                   // check doors
-      if (this->squares[square_position_next[0]][square_position_next[1]].map_objects[i] == NULL)
-		break;
-	  else
-		if (this->squares[square_position_next[0]][square_position_next[1]].map_objects[i]->get_type() == OBJECT_DOOR_HORIZONTAL)
-		  {
-			if (this->squares[square_position_next[0]][square_position_next[1]].map_objects[i]->get_state() == OBJECT_STATE_OFF ||
-			  direction == DIRECTION_EAST || direction == DIRECTION_WEST)
-			  return false;
-			else
-			  break;
-		  }
-		else if (this->squares[square_position_next[0]][square_position_next[1]].map_objects[i]->get_type() == OBJECT_DOOR_VERTICAL)
-		  {
-		    if (this->squares[square_position_next[0]][square_position_next[1]].map_objects[i]->get_state() == OBJECT_STATE_OFF ||
-			  direction == DIRECTION_NORTH || direction == DIRECTION_SOUTH)
-			  return false;
-			else
-			  break;
-		  }
-
-	if (this->square_has_object(square_position[0],square_position[1],OBJECT_DOOR_HORIZONTAL) &&   // check door at player's square
-	  (direction == DIRECTION_EAST || direction == DIRECTION_WEST))
+	if (!this->door_can_be_passed(square_position_next[0],square_position_next[1],direction)) // checks doors at the next square
 	  return false;
-	else if (this->square_has_object(square_position[0],square_position[1],OBJECT_DOOR_VERTICAL) && 
-	  (direction == DIRECTION_NORTH || direction == DIRECTION_SOUTH))
+
+	if (!this->door_can_be_passed(square_position[0],square_position[1],direction))  // check doors at given position
 	  return false;
 
 	height_difference = this->get_height(square_position[0],square_position[1]) -  // check height difference
@@ -1506,6 +1457,8 @@ void c_map::update_missiles()
 		  this->get_terrain_height(this->missiles[i].square_x,this->missiles[i].square_y) > this->missiles[i].height)
 		  died = true;
 		else if (!this->square_is_stepable(this->missiles[i].square_x,this->missiles[i].square_y))
+		  died = true;
+		else if (!this->door_can_be_passed(this->missiles[i].square_x,this->missiles[i].square_y,this->missiles[i].direction))
 		  died = true;
 
 		switch (this->missiles[i].type)    // check the missile effect
@@ -1838,7 +1791,7 @@ void c_map::cast_key_press(int spell_number)
 		          this->fire_missile(spell_number);
 			    }
 			  else
-			    {
+			    { 
 				  this->player_characters[this->current_player]->set_fire_cloak(false);
 				  this->player_characters[this->current_player]->set_fire_cloak(true);
 				  this->fire_cloak_end_time = al_current_time() + FIRE_CLOAK_DURATION;
@@ -2013,4 +1966,30 @@ void c_map::check_teleport()
 		  break;
 	    }
   }
+//-----------------------------------------------
+
+ bool c_map::door_can_be_passed(int x, int y, t_direction direction)
+   {
+	  int i;
+
+	  if (x < 0 || x >= this->width || y < 0 || y > this->height)
+		return true;
+
+	  for (i = 0; i < MAX_OBJECTS_PER_SQUARE; i++)
+		if (this->squares[x][y].map_objects[i] == NULL)
+		  return true;
+		else if (this->squares[x][y].map_objects[i]->get_type() == OBJECT_DOOR_HORIZONTAL)
+		  {
+			return (this->squares[x][y].map_objects[i]->get_state() != OBJECT_STATE_OFF &&
+			  direction != DIRECTION_EAST && direction != DIRECTION_WEST);
+		  }
+	    else if (this->squares[x][y].map_objects[i]->get_type() == OBJECT_DOOR_VERTICAL)
+		  {
+			return (this->squares[x][y].map_objects[i]->get_state() != OBJECT_STATE_OFF &&
+			  direction != DIRECTION_NORTH && direction != DIRECTION_SOUTH);
+		  }
+
+	  return true;
+   }
+
 //-----------------------------------------------

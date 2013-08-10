@@ -548,6 +548,23 @@ class c_map: public c_graphic_object
 		  teleport.
 		*/
 
+	  bool door_can_be_passed(int x, int y, t_direction direction);
+
+	    /**
+	      Checks if a door at given position
+		  can be passed in given direction.
+		  If there is no door at the square,
+		  true is returned.
+
+		  @param x x coordination of the square
+		  @param y y coordination of the square
+		  @param direction direction to be
+		    tested
+		  @return true if the door at given
+		    square can be passed in given
+			direction
+		*/
+
     public:
 
       c_map(string filename, t_input_output_state *input_output_state, long int *global_time);
