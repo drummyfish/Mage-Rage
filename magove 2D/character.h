@@ -24,6 +24,20 @@ class c_character: public c_graphic_object
 	  double position_y;     /** y position on the map */
 	  t_direction direction; /** direction, in which the character is facing */
 
+	  ALLEGRO_BITMAP *shadow;                        /** shadow bitmap */
+	  ALLEGRO_BITMAP *sprite_north;                  /** character facing north */
+	  ALLEGRO_BITMAP *sprite_north_running_1;        /** character running north, frame 1 */
+	  ALLEGRO_BITMAP *sprite_north_running_2;        /** character running north, frame 2 */
+	  ALLEGRO_BITMAP *sprite_east;                   /** character facing east */
+	  ALLEGRO_BITMAP *sprite_east_running_1;         /** character running east, frame 1 */
+	  ALLEGRO_BITMAP *sprite_east_running_2;         /** character running east, frame 2 */
+	  ALLEGRO_BITMAP *sprite_south;                  /** character facing south */
+	  ALLEGRO_BITMAP *sprite_south_running_1;        /** character running south. frame 1 */
+	  ALLEGRO_BITMAP *sprite_south_running_2;        /** character running south, frame 2 */
+	  ALLEGRO_BITMAP *sprite_west;                   /** character facing west */
+	  ALLEGRO_BITMAP *sprite_west_running_1;         /** character running west, frame 1 */
+	  ALLEGRO_BITMAP *sprite_west_running_2;         /** character running west, frame 2 */
+
     public:
 
 	  static int position_to_square(double position, bool take_x);

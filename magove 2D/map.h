@@ -11,6 +11,7 @@
 #include "general.h"
 #include "graphic_object.h"
 #include "player_character.h"
+#include "monster_character.h"
 #include "map_object.h"
 #include "character.h"
 #include "animation.h"
@@ -72,6 +73,8 @@ class c_map: public c_graphic_object
 	  t_environment environment;                                       /** map environment */
 	  t_map_square squares[MAP_MAX_WIDTH][MAP_MAX_HEIGHT];             /** map squares */
 	  c_player_character *player_characters[3];                        /** player characters, NULL means no character */            
+	  c_monster_character *monster_characters[MAX_MONSTERS_ON_MAP];    /** monster characters, NULL means no character */
+	  int number_of_monsters;                                          /** number of monsters on the map */
 	  t_input_output_state *input_output_state;                        /** pointer to information about keyboard and mouse */
 	  double time_before;                                              /** to compute time difference between frames (for movement etc.) */
 	  double time_difference;                                          /** stores time between two frames to calculate step length etc. */
@@ -563,6 +566,13 @@ class c_map: public c_graphic_object
 		  @return true if the door at given
 		    square can be passed in given
 			direction
+		*/
+
+	  void update_monsters();
+
+	    /**
+		  Updates all monsters on the map (their
+		  positions etc.)
 		*/
 
     public:

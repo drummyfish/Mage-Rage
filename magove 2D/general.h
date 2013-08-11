@@ -33,6 +33,8 @@
 #define MAX_TEXT_CHARACTERS_PER_LINE 32 /** maximum characters in a displayed text line */
 #define MAX_TEXT_LINES 16               /** maximum number of text lines */
 #define FIRE_CLOAK_DURATION 10.0        /** duration of fire cloak spell in seconds */
+#define MAX_MONSTER_PATH_LENGTH 32      /** maximum length of monster path in "instructions" (array length) */
+#define MAX_MONSTERS_ON_MAP 32          /** maximum number of monsters on the map */
 
 using namespace std;
 
@@ -45,7 +47,8 @@ typedef enum
     DIRECTION_NORTH,
 	DIRECTION_EAST,
 	DIRECTION_SOUTH,
-	DIRECTION_WEST
+	DIRECTION_WEST,
+	DIRECTION_NONE
   } t_direction;
 
 typedef enum
@@ -190,5 +193,15 @@ typedef enum
 	MISSILE_STAROVOUS_1,
 	MISSILE_STAROVOUS_2
   } t_missile_type; 
+
+typedef enum
+  {
+	/**
+	  Possible monster types.
+	*/
+
+	MONSTER_GHOST,          /** can be killed with white magic */
+	MONSTER_TROLL           /** can't be killed */
+  } t_monster_type;
 
 #endif

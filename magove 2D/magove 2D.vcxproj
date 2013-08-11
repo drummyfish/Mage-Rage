@@ -79,6 +79,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="map.cpp" />
     <ClCompile Include="map_object.cpp" />
+    <ClCompile Include="monster_character.cpp" />
     <ClCompile Include="player_character.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -90,6 +91,7 @@
     <ClInclude Include="associative_array.h" />
     <ClInclude Include="map.h" />
     <ClInclude Include="map_object.h" />
+    <ClInclude Include="monster_character.h" />
     <ClInclude Include="player_character.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

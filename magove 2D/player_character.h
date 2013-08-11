@@ -22,23 +22,10 @@ class c_player_character: public c_character
 	  int magic_energy;                              /** current amount of magic energy */
 	  bool fire_cloak_on;                            /** whether the fire cloak spell is on for this player */
 
-	  ALLEGRO_BITMAP *shadow;                        /** shadow bitmap */
-	  ALLEGRO_BITMAP *sprite_north;                  /** player facing north */
 	  ALLEGRO_BITMAP *sprite_north_casting;          /** player casting north */
-	  ALLEGRO_BITMAP *sprite_north_running_1;        /** player running north, frame 1 */
-	  ALLEGRO_BITMAP *sprite_north_running_2;        /** player running north, frame 2 */
-	  ALLEGRO_BITMAP *sprite_east;                   /** player facing east */
 	  ALLEGRO_BITMAP *sprite_east_casting;           /** player casting east */
-	  ALLEGRO_BITMAP *sprite_east_running_1;         /** player running east, frame 1 */
-	  ALLEGRO_BITMAP *sprite_east_running_2;         /** player running east, frame 2 */
-	  ALLEGRO_BITMAP *sprite_south;                  /** player facing south */
 	  ALLEGRO_BITMAP *sprite_south_casting;          /** player casting south */
-	  ALLEGRO_BITMAP *sprite_south_running_1;        /** player running south. frame 1 */
-	  ALLEGRO_BITMAP *sprite_south_running_2;        /** player running south, frame 2 */
-	  ALLEGRO_BITMAP *sprite_west;                   /** player facing west */
 	  ALLEGRO_BITMAP *sprite_west_casting;           /** player casting west */
-	  ALLEGRO_BITMAP *sprite_west_running_1;         /** player running west, frame 1 */
-	  ALLEGRO_BITMAP *sprite_west_running_2;         /** player running west, frame 2 */
 
 	  ALLEGRO_BITMAP *fire_cloak_1;                  /** bitmap for fire cloak spell, frame 1 */
 	  ALLEGRO_BITMAP *fire_cloak_2;                  /** bitmap for fire cloak spell, frame 2 */
@@ -74,7 +61,7 @@ class c_player_character: public c_character
 		  the animation period attribute.
 		*/
 
-	  virtual void c_player_character::draw(int x, int y);
+	  virtual void draw(int x, int y);
 
 	    /**
 	      Draws player character at given position.

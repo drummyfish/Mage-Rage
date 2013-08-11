@@ -161,6 +161,7 @@ c_map::c_map(string filename, t_input_output_state *input_output_state, long int
 	this->pressed_2 = false;
 	this->pressed_3 = false;  
 	this->check_firecloak = false;
+	this->current_player = 0;
 	this->mouse_pressed = false;
 	this->frame_count = 0;
 	this->animation_frame = 0;
@@ -290,6 +291,16 @@ bool c_map::load_from_file(string filename)
 	this->player_characters[1] = new c_player_character(PLAYER_MIA,this->global_time);
 	this->player_characters[2] = new c_player_character(PLAYER_METODEJ,this->global_time);
 
+	this->number_of_monsters = 1;
+	this->monster_characters[0] = new c_monster_character(MONSTER_TROLL,this->global_time);
+	this->monster_characters[0]->set_position(21,20);
+	this->monster_characters[0]->add_path_instruction(DIRECTION_WEST,13);
+	this->monster_characters[0]->add_path_instruction(DIRECTION_NORTH,10);
+	this->monster_characters[0]->add_path_instruction(DIRECTION_EAST,2);
+	this->monster_characters[0]->add_path_instruction(DIRECTION_SOUTH,2);
+	this->monster_characters[0]->add_path_instruction(DIRECTION_NONE,2); 
+	this->monster_characters[0]->start_moving(); 
+
 	if (!this->player_characters[0]->is_succesfully_loaded() ||
 		!this->player_characters[1]->is_succesfully_loaded() ||
 		!this->player_characters[2]->is_succesfully_loaded())
@@ -297,7 +308,7 @@ bool c_map::load_from_file(string filename)
 		cerr << "ERROR: the player character wasn't succesfully loaded." << endl;
 	  }
 	
-	this->player_characters[0]->set_position(8.0,10.0);
+	this->player_characters[0]->set_position(20.0,20.0);
 	this->player_characters[1]->set_position(7.0,8.0);
 	this->player_characters[2]->set_position(4.0,8.0);
 
@@ -451,6 +462,32 @@ bool c_map::load_from_file(string filename)
 
 //-----------------------------------------------
 
+void c_map::update_monsters()
+  {
+	int i;
+	bool must_check_buttons;
+	t_direction direction;
+
+	must_check_buttons = false;
+
+	for (i = 0; i < this->number_of_monsters; i++)
+      if (this->monster_characters[i] != NULL)
+	    {
+		  direction = this->monster_characters[i]->get_next_move();
+
+		  if (this->character_can_move_to_square(this->monster_characters[i],direction))
+		    {
+			  this->move_character(this->monster_characters[i],direction);
+		      must_check_buttons = true;
+		    }  
+	    }
+
+	if (must_check_buttons)
+      this->check_buttons();
+  }
+
+//-----------------------------------------------
+
 void c_map::get_object_position(c_map_object *what, int *x, int *y)
   {
 	int i, j, k;
@@ -565,11 +602,20 @@ void c_map::check_buttons()
 	for (i = 0; i < this->number_of_buttons; i++)
 	  {
 		is_pressed = false;
-	
+
 		for (j = 0; j < 3; j++)  // check if any player is standing on the square
 		  if (this->player_characters[j] != NULL)
 			if (this->player_characters[j]->get_square_x() == this->button_positions_x[i] &&
 			    this->player_characters[j]->get_square_y() == this->button_positions_y[i])
+			  {
+				is_pressed = true;
+				break;
+			  }
+	
+        for (j = 0; j < number_of_monsters; j++)  // check if any monster is standing on the square
+		  if (this->monster_characters[j] != NULL)
+			if (this->monster_characters[j]->get_square_x() == this->button_positions_x[i] &&
+			    this->monster_characters[j]->get_square_y() == this->button_positions_y[i])
 			  {
 				is_pressed = true;
 				break;
@@ -684,7 +730,13 @@ bool c_map::square_has_character(int x, int y)
 	  if (this->player_characters[i] != NULL &&
 	    this->player_characters[i]->get_square_x() == x &&
 		this->player_characters[i]->get_square_y() == y)
-		  return true;
+		return true;
+
+	for (i = 0; i < this->number_of_monsters; i++)
+	  if (this->monster_characters[i] != NULL &&
+		this->monster_characters[i]->get_square_x() == x &&
+		this->monster_characters[i]->get_square_y() == y)
+	    return true;
 
 	return false;
   }
@@ -1002,6 +1054,15 @@ void c_map::draw(int x, int y)
 			  (int) (y + this->player_characters[i]->get_position_y() * 50 - this->screen_pixel_position[1]) - elevation);
 		    }
 
+		for (i = 0; i < this->number_of_monsters; i++)
+		  if (this->monster_characters[i] != NULL)
+		    {
+			  elevation = this->get_elevation_for_character(this->monster_characters[i]);
+
+			  this->monster_characters[i]->draw((int) (x + this->monster_characters[i]->get_position_x() * 64 - this->screen_pixel_position[0]),
+			    (int) (y + this->monster_characters[i]->get_position_y() * 50 - this->screen_pixel_position[1]) - elevation);
+		    }
+
 		for (i = 0; i < this->number_of_missiles; i++) // draw missiles
 		  if (this->missiles[i].square_y == j)
 		    {
@@ -1127,13 +1188,15 @@ int c_map::get_elevation_for_character(c_character *character)
 bool c_map::character_can_move_to_square(c_character *character, t_direction direction)
   {
 	int square_position[2];                // player position in map squares
-	int i;
 	int square_position_next[2];           // next square coordinations in player's direction
 	t_object_type help_object_type;        // to checks stairs
 	t_object_type help_object_type2;       // to checks stairs
 	int height_difference;                 // height difference between start and destination squares
 	bool returned_value;
 	
+	if (direction == DIRECTION_NONE)
+	  return true;
+
 	square_position[0] = character->get_square_x();
 	square_position[1] = character->get_square_y();
 
@@ -1596,6 +1659,7 @@ void c_map::update()
 	  }
 
 	this->update_missiles();
+	this->update_monsters();
 
 	this->draw(0,0);
 	
@@ -1870,7 +1934,7 @@ void c_map::update_flames()
 //-----------------------------------------------
 
 void c_map::use_key_press()
-  {
+{ 
 	int i;
 	int facing_square[2];  // coordinations of the square the player is facing
 	int coordinations[2];
