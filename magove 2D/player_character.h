@@ -31,7 +31,6 @@ class c_player_character: public c_character
 	  ALLEGRO_BITMAP *fire_cloak_2;                  /** bitmap for fire cloak spell, frame 2 */
 	  ALLEGRO_BITMAP *fire_cloak_3;                  /** bitmap for fire cloak spell, frame 3 */
 
-	  ALLEGRO_SAMPLE *sound_footsteps;               /** sound - footsteps */
 	  ALLEGRO_SAMPLE *sound_firecloak;               /** sound - firecloak spell */
 	  ALLEGRO_SAMPLE_ID sound_firecloak_id;          /** id to stop looping sound */
 
@@ -84,15 +83,6 @@ class c_player_character: public c_character
 		  Plays given animation.
 
 		  @param animation animation to be played
-		*/
-
-	  virtual void loop_animation(t_animation_type animation);
-
-	    /**
-		  Loops the given animation untill it's
-		  stopped by stop_animation().
-
-		  @param animation animation to be looped
 		*/
 
 	  void change_magic_energy(int amount);

@@ -292,10 +292,10 @@ bool c_map::load_from_file(string filename)
 	this->player_characters[2] = new c_player_character(PLAYER_METODEJ,this->global_time);
 
 	this->number_of_monsters = 1;
-	this->monster_characters[0] = new c_monster_character(MONSTER_TROLL,this->global_time);
-	this->monster_characters[0]->set_position(21,20);
-	this->monster_characters[0]->add_path_instruction(DIRECTION_WEST,13);
-	this->monster_characters[0]->add_path_instruction(DIRECTION_NORTH,10);
+	this->monster_characters[0] = new c_monster_character(MONSTER_TROLL,20,2,this->global_time);
+
+	this->monster_characters[0]->add_path_instruction(DIRECTION_WEST,2);
+	this->monster_characters[0]->add_path_instruction(DIRECTION_NORTH,2);
 	this->monster_characters[0]->add_path_instruction(DIRECTION_EAST,2);
 	this->monster_characters[0]->add_path_instruction(DIRECTION_SOUTH,2);
 	this->monster_characters[0]->add_path_instruction(DIRECTION_NONE,2); 
@@ -308,10 +308,11 @@ bool c_map::load_from_file(string filename)
 		cerr << "ERROR: the player character wasn't succesfully loaded." << endl;
 	  }
 	
-	this->player_characters[0]->set_position(20.0,20.0);
+	this->player_characters[0]->set_position(20.0,1.0);
 	this->player_characters[1]->set_position(7.0,8.0);
 	this->player_characters[2]->set_position(4.0,8.0);
 
+	this->add_map_object(new c_map_object(OBJECT_CARPET2,0,0,this->global_time),20,2);
 	this->add_map_object(new c_map_object(OBJECT_CRATE,0,0,this->global_time),5,0);
 	this->add_map_object(new c_map_object(OBJECT_CRATE,0,0,this->global_time),4,1);
 	this->add_map_object(new c_map_object(OBJECT_CRATE,0,0,this->global_time),5,6);
@@ -456,14 +457,14 @@ bool c_map::load_from_file(string filename)
 
 	if (!this->text_font)
 	  return false;
-
+	
 	return true;
   }
 
 //-----------------------------------------------
 
 void c_map::update_monsters()
-  {
+  { 
 	int i;
 	bool must_check_buttons;
 	t_direction direction;
@@ -474,14 +475,18 @@ void c_map::update_monsters()
       if (this->monster_characters[i] != NULL)
 	    {
 		  direction = this->monster_characters[i]->get_next_move();
-
-		  if (this->character_can_move_to_square(this->monster_characters[i],direction))
+		  
+		  if (direction != DIRECTION_NONE && this->character_can_move_to_square(this->monster_characters[i],direction))
 		    {
 			  this->move_character(this->monster_characters[i],direction);
 		      must_check_buttons = true;
-		    }  
+		    }
+		  else
+		    {
+			  this->monster_characters[i]->stop_animation();
+		    }
 	    }
-
+	  
 	if (must_check_buttons)
       this->check_buttons();
   }
@@ -907,7 +912,7 @@ void c_map::draw_borders(int x, int y, int plus_x, int plus_y)
 //-----------------------------------------------
 
 void c_map::draw(int x, int y)
-  {
+  { 
 	int i, j, k, help_height, elevation, number_of_crates, elevator_height;
 	al_clear_to_color(al_map_rgb(0,0,0));      // clear the screen
 	this->animation_frame = *this->global_time / 16;
@@ -1054,15 +1059,15 @@ void c_map::draw(int x, int y)
 			  (int) (y + this->player_characters[i]->get_position_y() * 50 - this->screen_pixel_position[1]) - elevation);
 		    }
 
-		for (i = 0; i < this->number_of_monsters; i++)
-		  if (this->monster_characters[i] != NULL)
-		    {
+		for (i = 0; i < this->number_of_monsters; i++) // draw monsters
+		  if (this->monster_characters[i] != NULL && this->monster_characters[i]->get_square_y() == j)
+		    { 
 			  elevation = this->get_elevation_for_character(this->monster_characters[i]);
-
+			  
 			  this->monster_characters[i]->draw((int) (x + this->monster_characters[i]->get_position_x() * 64 - this->screen_pixel_position[0]),
 			    (int) (y + this->monster_characters[i]->get_position_y() * 50 - this->screen_pixel_position[1]) - elevation);
 		    }
-
+		
 		for (i = 0; i < this->number_of_missiles; i++) // draw missiles
 		  if (this->missiles[i].square_y == j)
 		    {
@@ -1357,6 +1362,9 @@ void c_map::move_character(c_character *character, t_direction direction)
 	int square_position[2];                // player position in map squares
 	double step_length;
 
+	if (direction == DIRECTION_NONE)
+	  return;
+	
 	step_length = 0.026;
 
 	square_position[0] = character->get_square_x();
@@ -1369,7 +1377,7 @@ void c_map::move_character(c_character *character, t_direction direction)
 		character->stop_animation();
 		character->loop_animation(ANIMATION_RUN);
 	  }
-
+	
 	switch (direction)
 	  {
 	    case DIRECTION_NORTH:
@@ -1639,8 +1647,8 @@ void c_map::switch_player(int player_number)
 //-----------------------------------------------
 
 void c_map::update()
-  {
-	int i;
+  {  
+	int i; 
 
 	this->time_difference = al_current_time() - this->time_before;
 	

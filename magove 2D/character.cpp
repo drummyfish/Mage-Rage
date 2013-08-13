@@ -56,6 +56,16 @@ int c_character::position_to_square(double position, bool take_x)
 
 //-----------------------------------------------
 
+double c_character::square_to_position(int square_position, bool take_x)
+  {
+	if (take_x)
+	  return square_position + 0.25;
+	else
+	  return square_position > 0.0 ? square_position - 0.5 : -0.31;
+  }
+
+//-----------------------------------------------
+
 int c_character::get_square_x()
   {
 	return this->position_to_square(this->position_x,true);
@@ -93,6 +103,26 @@ double c_character::get_fraction_y()
 t_direction c_character::get_direction()
   {
 	return this->direction;
+  }
+
+//-----------------------------------------------
+
+void c_character::loop_animation(t_animation_type animation)
+  { 
+	this->stop_animation();
+	this->playing_animation = animation;
+	this->animation_frame = 0;
+	this->looping_animation = true;
+	this->started_playing = *this->global_time;
+	this->update_animation_period();
+
+	switch (animation)
+	  {
+	    case ANIMATION_RUN:
+		  al_play_sample(this->sound_footsteps,2.0,0.0,1.0,ALLEGRO_PLAYMODE_LOOP,&this->playing_sound_id);
+		  this->playing_sound = true;
+		  break;
+	  }
   }
 
 //-----------------------------------------------

@@ -19,7 +19,7 @@ class c_monster_character: public c_character
 
 	  int path_length;                                       /** length of path directions and path steps arrays */
       int current_path_instruction;                          /** current position in path arrays */
-	  int goes_to;                                           /** x or y coordination (depending on direction) to which the character is headed by the current path instruction */
+	  double goes_to;                                        /** x or y coordination (depending on direction) to which the character is headed by the current path instruction */
 	  t_direction path_directions[MAX_MONSTER_PATH_LENGTH];  /** contains sequence of directions in which steps are made */
 	  int path_steps[MAX_MONSTER_PATH_LENGTH];               /** contains sequence of number of steps that will be made in given directions */
 	  bool is_dead;                                          /** whether the monster is dead */
@@ -34,12 +34,14 @@ class c_monster_character: public c_character
 
     public:
 
-	  c_monster_character(t_monster_type type, long *global_time);
+	  c_monster_character(t_monster_type type, int square_x, int square_y, long *global_time);
 
 	    /**
 		  Class constructor, creates a new object.
 
 		  @param type monster type to be set
+		  @param square_x initial x position
+		  @param square_y initial y position
 		  @param global_time pointer to global
 		    time counter
 		*/

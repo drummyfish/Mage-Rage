@@ -252,26 +252,6 @@ void c_player_character::play_animation(t_animation_type animation)
 
 //-----------------------------------------------
 
-void c_player_character::loop_animation(t_animation_type animation)
-  {
-	this->stop_animation();
-	this->playing_animation = animation;
-	this->animation_frame = 0;
-	this->looping_animation = true;
-	this->started_playing = *this->global_time;
-	this->update_animation_period();
-
-	switch (animation)
-	  {
-	    case ANIMATION_RUN:
-		  al_play_sample(this->sound_footsteps,2.0,0.0,1.0,ALLEGRO_PLAYMODE_LOOP,&this->playing_sound_id);
-		  this->playing_sound = true;
-		  break;
-	  }
-  }
-
-//-----------------------------------------------
-
 void c_player_character::change_magic_energy(int amount)
   {
 	this->magic_energy += amount;

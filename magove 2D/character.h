@@ -37,6 +37,7 @@ class c_character: public c_graphic_object
 	  ALLEGRO_BITMAP *sprite_west;                   /** character facing west */
 	  ALLEGRO_BITMAP *sprite_west_running_1;         /** character running west, frame 1 */
 	  ALLEGRO_BITMAP *sprite_west_running_2;         /** character running west, frame 2 */
+	  ALLEGRO_SAMPLE *sound_footsteps;               /** sound - footsteps */
 
     public:
 
@@ -51,6 +52,20 @@ class c_character: public c_graphic_object
 		    considered as x position, otherwise
 			y position
 		  @return position in map squares
+		*/
+
+	  static double square_to_position(int square_position, bool take_x);
+
+	    /**
+	      Converts position in map squares to
+		  double position.
+
+		  @param square_position position in map
+		    squares to be converted
+		  @param take_x if true, the position is
+		    considered as x position, otherwise
+			y position
+		  @return double position
 		*/
 
 	  void set_position(double x, double y);
@@ -135,6 +150,15 @@ class c_character: public c_graphic_object
 	  	  @return y position within current
 		    square (value in range <0;1>)
 	    */
+
+	  virtual void loop_animation(t_animation_type animation);
+
+	    /**
+		  Loops the given animation untill it's
+		  stopped by stop_animation().
+
+		  @param animation animation to be looped
+		*/
 
 	  t_direction get_direction();
 

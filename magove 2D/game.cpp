@@ -81,7 +81,7 @@ c_game::c_game()
 	al_register_event_source(this->event_queue,al_get_display_event_source(display));
 	al_register_event_source(this->event_queue,al_get_timer_event_source(this->global_timer));
 	al_register_event_source(this->event_queue,al_get_keyboard_event_source());
-	al_register_event_source(this->event_queue,al_get_mouse_event_source());
+//	al_register_event_source(this->event_queue,al_get_mouse_event_source());
 	this->global_time = 0;
 	
 	this->cursor_bitmap = al_load_bitmap("resources/cursor.png");

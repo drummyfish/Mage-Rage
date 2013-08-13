@@ -9,7 +9,7 @@
 
 //-----------------------------------------------
 
-c_monster_character::c_monster_character(t_monster_type type, long *global_time)
+c_monster_character::c_monster_character(t_monster_type type, int square_x, int square_y, long *global_time)
   {
 	this->is_dead = false;
 	this->path_length = 0;
@@ -18,8 +18,15 @@ c_monster_character::c_monster_character(t_monster_type type, long *global_time)
 	this->current_path_instruction = 0;
 	this->waiting = false;
 	this->global_time = global_time;
+	this->sound_footsteps = al_load_sample("resources/footsteps.wav");
+	this->playing_animation = ANIMATION_NONE;
+	this->playing_sound = false;
+
 
 	this->shadow = al_load_bitmap("resources/shadow.png");
+
+	this->position_x = c_character::square_to_position(square_x,true);
+	this->position_y = c_character::square_to_position(square_y,false);
 
 	switch (type)
 	  {
@@ -57,8 +64,8 @@ c_monster_character::c_monster_character(t_monster_type type, long *global_time)
 	this->succesfully_loaded = (!this->shadow || !this->sprite_north || !this->sprite_north_running_1 || 
 	  !this->sprite_north_running_2 || !this->sprite_east || !this->sprite_east_running_1 || 
 	  !this->sprite_east_running_2 || !this->sprite_south || !this->sprite_south_running_1 || 
-	  !this->sprite_south_running_2 || !this->sprite_west || !this->sprite_west_running_1 || 
-	  !this->sprite_west_running_2); 
+	  !this->sprite_south_running_2 || !this->sprite_west || !this->sprite_west_running_1 ||
+	  !this->sprite_west_running_2 || !this->sound_footsteps); 
   }
 
 //-----------------------------------------------
@@ -129,8 +136,8 @@ void c_monster_character::draw(int x, int y)
 		  break;
 	  }
 
-	al_draw_bitmap(this->shadow,x - 32,y - 20,0);
-	al_draw_bitmap(bitmap_to_draw,x - 32,y - 20,0);
+	al_draw_bitmap(this->shadow,x,y,0);
+	al_draw_bitmap(bitmap_to_draw,x,y,0);
   }
 
 //-----------------------------------------------
@@ -138,32 +145,42 @@ void c_monster_character::draw(int x, int y)
 void c_monster_character::next_instruction()
   {
     this->current_path_instruction = (this->current_path_instruction + 1) % this->path_length;
-
+	
 	switch(this->path_directions[this->current_path_instruction])
 	  {
 	    case DIRECTION_NORTH:
-	      this->goes_to = this->get_square_y() - this->path_steps[this->current_path_instruction];
+	      this->goes_to = c_character::square_to_position(this->get_square_y() - this->path_steps[this->current_path_instruction],false);
 		  break;
 
 		case DIRECTION_EAST:
-		  this->goes_to = this->get_square_x() + this->path_steps[this->current_path_instruction];
+		  this->goes_to = c_character::square_to_position(this->get_square_x() + this->path_steps[this->current_path_instruction],true);
 		  break;
 
-		case DIRECTION_SOUTH:
-		  this->goes_to = this->get_square_y() + this->path_steps[this->current_path_instruction];
+		case DIRECTION_SOUTH: 
+		  this->goes_to = c_character::square_to_position(this->get_square_y() + this->path_steps[this->current_path_instruction],false);
 		  break;
 
 	    case DIRECTION_WEST:
-		  this->goes_to = this->get_square_x() - this->path_steps[this->current_path_instruction];
+		  this->goes_to = c_character::square_to_position(this->get_square_x() - this->path_steps[this->current_path_instruction],true);
 		  break;
-      }
+
+        case DIRECTION_NONE:
+		  this->waiting = true;
+		  this->waiting_end = al_current_time() + 1.0 * this->path_steps[this->current_path_instruction];
+		  break;
+	  }
+
+	
   }
 
 //-----------------------------------------------
 
 t_direction c_monster_character::get_next_move()
-  {
+  { 
 	bool next_instruction;
+
+	if (this->path_length == 0)
+	  return DIRECTION_NONE;
 
     if (this->waiting)                             // do nothing if waiting
 	  {
@@ -181,32 +198,32 @@ t_direction c_monster_character::get_next_move()
 	switch(this->path_directions[this->current_path_instruction])
 	  {
 	    case DIRECTION_NORTH:
-		  if (this->get_square_y() <= this->goes_to)
+		  if (this->position_y <= this->goes_to)
 		    next_instruction = true;
 
 		  break;
 
 		case DIRECTION_EAST:
-		  if (this->get_square_x() >= this->goes_to)
+		  if (this->position_x >= this->goes_to)
 		    next_instruction = true;
 
 		  break;
 
 		case DIRECTION_SOUTH:
-		  if (this->get_square_y() >= this->goes_to)
+		  if (this->position_y >= this->goes_to)
 		    next_instruction = true;
 
 		  break;
 
 	    case DIRECTION_WEST:
-		  if (this->get_square_x() <= this->goes_to)
+		  if (this->position_x <= this->goes_to)
 		    next_instruction = true;
 
 		  break;
 
 		case DIRECTION_NONE:
 		  this->waiting = true;
-		  this->goes_to = this->get_square_x();
+		  this->goes_to = this->position_x;
 		  this->waiting_end = al_current_time() + this->path_steps[this->current_path_instruction] * 1.0; // set waiting time, 1 sec. for each step
 		  
 		  break;
@@ -216,7 +233,7 @@ t_direction c_monster_character::get_next_move()
 	  {
 		this->next_instruction();
 	  }
-
+	
 	return this->path_directions[this->current_path_instruction];
   }
 
