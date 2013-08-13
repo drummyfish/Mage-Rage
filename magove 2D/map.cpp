@@ -1146,6 +1146,21 @@ void c_map::draw(int x, int y)
 			al_draw_text(this->text_font,al_map_rgb(255,220,220),this->screen_center_x,this->screen_center_y - 200 + 30 * i,ALLEGRO_ALIGN_CENTRE,this->text_lines[i]);
 		  }
 	  }
+
+	if (this->input_output_state->key_cast_1) // highlight pressed spells
+	  {
+		al_draw_filled_rectangle(x + 493,y + this->portrait_y_position + 13,x + 525,y + this->portrait_y_position + 45,al_map_rgba(150,100,100,75));
+	  }
+
+	if (this->input_output_state->key_cast_2)
+	  {
+		al_draw_filled_rectangle(x + 553,y + this->portrait_y_position + 13,x + 585,y + this->portrait_y_position + 45,al_map_rgba(150,100,100,75));
+	  }
+
+	if (this->input_output_state->key_cast_3)
+	  {
+		al_draw_filled_rectangle(x + 613,y + this->portrait_y_position + 13,x + 645,y + this->portrait_y_position + 45,al_map_rgba(150,100,100,75));
+	  }
   }
 
 //-----------------------------------------------

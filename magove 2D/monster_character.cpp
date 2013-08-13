@@ -18,7 +18,7 @@ c_monster_character::c_monster_character(t_monster_type type, int square_x, int 
 	this->current_path_instruction = 0;
 	this->waiting = false;
 	this->global_time = global_time;
-	this->footsteps_gain = 0.3;
+	this->footsteps_gain = 0.2;
 	this->playing_animation = ANIMATION_NONE;
 	this->playing_sound = false;
 

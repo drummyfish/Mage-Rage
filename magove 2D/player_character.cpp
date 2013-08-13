@@ -281,7 +281,7 @@ void c_player_character::set_fire_cloak(bool state)
 	if (state)
 	  {
 		if (!this->fire_cloak_on)
-	      al_play_sample(this->sound_firecloak,0.5,0.0,1.0,ALLEGRO_PLAYMODE_LOOP,&this->sound_firecloak_id);
+	      al_play_sample(this->sound_firecloak,0.2,0.0,1.0,ALLEGRO_PLAYMODE_LOOP,&this->sound_firecloak_id);
 	  }
 	else
 	  { 
