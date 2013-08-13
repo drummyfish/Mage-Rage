@@ -51,6 +51,12 @@ class c_monster_character: public c_character
 	    /**
 		  Class destructor, frees it's memory.
 		*/
+
+	  t_monster_type get_monster_type();
+
+	    /**
+		  Returns the monster's type.
+		*/
 	  
 	  void add_path_instruction(t_direction direction, int number_of_steps);
 

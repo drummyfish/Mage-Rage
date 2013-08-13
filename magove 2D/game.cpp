@@ -102,6 +102,7 @@ c_game::c_game()
 	this->input_output_state.key_cast_2 = false;
 	this->input_output_state.key_cast_3 = false;
 	this->input_output_state.mouse_1 = false; 
+	this->input_output_state.key_map_explore = false;
   }
 
 //-----------------------------------------------
@@ -206,6 +207,10 @@ void c_game::run()
 					case ALLEGRO_KEY_Q:
 					  this->input_output_state.key_use = true;
 					  break;
+
+					case ALLEGRO_KEY_W:
+					  this->input_output_state.key_map_explore = true;
+					  break;
 				  }
 				break;
 
@@ -251,6 +256,14 @@ void c_game::run()
 					case ALLEGRO_KEY_0:
 					   this->input_output_state.key_cast_3 = false;
 					   break;
+
+					case ALLEGRO_KEY_Q:
+					  this->input_output_state.key_use = false;
+					  break;
+
+					case ALLEGRO_KEY_W:
+					  this->input_output_state.key_map_explore = false;
+					  break;
 				  }
 			  break;
 

@@ -89,24 +89,25 @@ typedef struct
 	  Also stores information about the screen.
 	*/
 
-	bool key_up;        /** key up */
-	bool key_right;     /** key right */
-	bool key_down;      /** key down */
-	bool key_left;      /** key left */
-	bool key_1;         /** key switch to player 1 */
-	bool key_2;         /** key switch to player 2 */
-	bool key_3;         /** key switch to player 3 */
-	bool key_use;       /** key used to manipulate map objects */
-	bool key_cast_1;    /** key used to cast spell 1 */
-	bool key_cast_2;    /** key used to cast spell 2 */
-	bool key_cast_3;    /** key used to cast spell 3 */
-	bool mouse_1;       /** mouse button 1 */
+	bool key_up;          /** key up */
+	bool key_right;       /** key right */
+	bool key_down;        /** key down */
+	bool key_left;        /** key left */
+	bool key_1;           /** key switch to player 1 */
+	bool key_2;           /** key switch to player 2 */
+	bool key_3;           /** key switch to player 3 */
+	bool key_use;         /** key used to manipulate map objects */
+	bool key_cast_1;      /** key used to cast spell 1 */
+	bool key_cast_2;      /** key used to cast spell 2 */
+	bool key_cast_3;      /** key used to cast spell 3 */
+	bool key_map_explore; /** key used to move camera freely to explore the map */
+	bool mouse_1;         /** mouse button 1 */
 
-	int mouse_x;        /** mouse x position */
-	int mouse_y;        /** mouse y position */
+	int mouse_x;          /** mouse x position */
+	int mouse_y;          /** mouse y position */
 
-	int screen_x;       /** screen resolution x */
-	int screen_y;       /** screen resolution y */
+	int screen_x;         /** screen resolution x */
+	int screen_y;         /** screen resolution y */
   } t_input_output_state;
 
 typedef enum
@@ -141,7 +142,8 @@ typedef enum
 	DISPLAY_ANIMATION_MELT,
 	DISPLAY_ANIMATION_REFRESH,
 	DISPLAY_ANIMATION_TELEPORT,
-	DISPLAY_ANIMATION_EXPLOSION
+	DISPLAY_ANIMATION_EXPLOSION,
+	DISPLAY_ANIMATION_SHADOW_EXPLOSION
   } t_display_animation;
 
 typedef enum

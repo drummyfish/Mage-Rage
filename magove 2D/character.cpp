@@ -119,8 +119,12 @@ void c_character::loop_animation(t_animation_type animation)
 	switch (animation)
 	  {
 	    case ANIMATION_RUN:
-		  al_play_sample(this->sound_footsteps,2.0,0.0,1.0,ALLEGRO_PLAYMODE_LOOP,&this->playing_sound_id);
-		  this->playing_sound = true;
+		  if (this->sound_footsteps != NULL)
+		    {
+			  al_play_sample(this->sound_footsteps,this->footsteps_gain,0.0,1.0,ALLEGRO_PLAYMODE_LOOP,&this->playing_sound_id);
+		      this->playing_sound = true;
+		    }
+
 		  break;
 	  }
   }

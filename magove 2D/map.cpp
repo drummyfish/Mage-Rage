@@ -291,8 +291,15 @@ bool c_map::load_from_file(string filename)
 	this->player_characters[1] = new c_player_character(PLAYER_MIA,this->global_time);
 	this->player_characters[2] = new c_player_character(PLAYER_METODEJ,this->global_time);
 
-	this->number_of_monsters = 1;
+	this->number_of_monsters = 2;
 	this->monster_characters[0] = new c_monster_character(MONSTER_TROLL,20,2,this->global_time);
+	this->monster_characters[1] = new c_monster_character(MONSTER_GHOST,20,4,this->global_time);
+
+	this->monster_characters[1]->add_path_instruction(DIRECTION_NONE,3);
+	this->monster_characters[1]->add_path_instruction(DIRECTION_SOUTH,4);
+	this->monster_characters[1]->add_path_instruction(DIRECTION_WEST,2);
+	this->monster_characters[1]->add_path_instruction(DIRECTION_NORTH,4);
+	this->monster_characters[1]->add_path_instruction(DIRECTION_EAST,2); 
 
 	this->monster_characters[0]->add_path_instruction(DIRECTION_WEST,2);
 	this->monster_characters[0]->add_path_instruction(DIRECTION_NORTH,2);
@@ -397,6 +404,7 @@ bool c_map::load_from_file(string filename)
 	this->animation_melt = new c_animation(this->global_time,"resources/animation_melt",4,0,-27,5,false,"",0.0);
 	this->animation_teleport = new c_animation(this->global_time,"resources/animation_teleport",5,0,-27,5,true,"resources/teleport.wav",0.4);
 	this->animation_explosion = new c_animation(this->global_time,"resources/animation_explosion",7,0,-27,5,true,"resources/explosion.wav",0.3);
+	this->animation_shadow_explosion = new c_animation(this->global_time,"resources/animation_shadow_explosion",6,0,-27,5,true,"resources/shadow_explosion.wav",0.4);
 
     this->spell_sounds_mia[0] = al_load_sample("resources/mia_cast.wav");
     this->spell_sounds_mia[1] = al_load_sample("resources/mia_cast2.wav");
@@ -585,6 +593,11 @@ void c_map::display_animation(t_display_animation animation, int x, int y)
 		case DISPLAY_ANIMATION_EXPLOSION:
 		  this->squares[x][y].animation = this->animation_explosion;
 		  this->animation_explosion->play_animation(ANIMATION_IDLE);
+		  break;
+
+	    case DISPLAY_ANIMATION_SHADOW_EXPLOSION:
+		  this->squares[x][y].animation = this->animation_shadow_explosion;
+		  this->animation_shadow_explosion->play_animation(ANIMATION_IDLE);
 		  break;
 	  }
   }
@@ -1357,6 +1370,29 @@ void c_map::update_screen_position()
 
 //-----------------------------------------------
 
+void c_map::shift_screen(int x, int y)
+  {
+	if (x > 0 && this->screen_square_position[0] > this->width - 8) // check map borders
+	  return;
+	else if (x < 0 && this->screen_pixel_position[0] < -200)
+	  return;
+	else if (y > 0 && this->screen_square_position[1] > this->height - 8)
+	  return;
+	else if (y < 0 && this->screen_pixel_position[1] < -200)
+	  return;
+
+	this->screen_pixel_position[0] += x;
+	this->screen_pixel_position[1] += y;
+
+	this->screen_square_position[0] = this->screen_pixel_position[0] / 64;
+	this->screen_square_position[1] = this->screen_pixel_position[1] / 50;
+
+	this->screen_square_end[0] = this->screen_square_position[0] + this->screen_square_resolution[0];
+	this->screen_square_end[1] = this->screen_square_position[1] + this->screen_square_resolution[1];
+  }
+
+//-----------------------------------------------
+
 void c_map::move_character(c_character *character, t_direction direction)
   {
 	int square_position[2];                // player position in map squares
@@ -1427,7 +1463,6 @@ void c_map::move_character(c_character *character, t_direction direction)
 	
 	// the movement's done here, now do other things
 
-	this->update_screen_position();
 	this->check_buttons();
 
 	if (this->get_square_type(square_position[0],square_position[1]) == SQUARE_COLLAPSE)
@@ -1568,6 +1603,22 @@ void c_map::update_missiles()
 
 			  break;
 
+			case MISSILE_STAROVOUS_1:
+			  for (j = 0; j < this->number_of_monsters; j++)
+			    {
+				  if (this->monster_characters[j] != NULL
+					&& this->monster_characters[j]->get_monster_type() == MONSTER_GHOST
+					&& this->monster_characters[j]->get_square_x() == this->missiles[i].square_x
+					&& this->monster_characters[j]->get_square_y() == this->missiles[i].square_y)
+				    {
+				  	  this->monster_characters[j] = NULL;
+					  this->display_animation(DISPLAY_ANIMATION_SHADOW_EXPLOSION,this->missiles[i].square_x,this->missiles[i].square_y);
+				      died = true;
+				    }
+			    }
+
+			  break;
+
 			case MISSILE_STAROVOUS_2:
 			  for (j = 0; j < 3; j++)
 				if (this->player_characters[j] != NULL &&
@@ -1703,18 +1754,46 @@ void c_map::update()
 	else
 	  this->mouse_pressed = false;
 
-	if (this->input_output_state->key_left)  // moving player
-	  this->move_character(this->player_characters[this->current_player],DIRECTION_WEST);
-	else if (this->input_output_state->key_right)
-	  this->move_character(this->player_characters[this->current_player],DIRECTION_EAST);
-	else if (this->input_output_state->key_down)
-	  this->move_character(this->player_characters[this->current_player],DIRECTION_SOUTH);
-	else if (this->input_output_state->key_up)
-	  this->move_character(this->player_characters[this->current_player],DIRECTION_NORTH);
-	else if (this->player_characters[this->current_player]->get_playing_animation() != ANIMATION_USE
-	  && this->player_characters[this->current_player]->get_playing_animation() != ANIMATION_CAST)
+	if (this->input_output_state->key_map_explore) // moving camera
 	  {
 		this->player_characters[this->current_player]->stop_animation();
+
+		if (this->input_output_state->key_left)
+		  this->shift_screen(-5,0);
+		else if (this->input_output_state->key_right)
+		  this->shift_screen(5,0);
+		else if (this->input_output_state->key_up)
+		  this->shift_screen(0,-5);
+		else if (this->input_output_state->key_down)
+		  this->shift_screen(0,5);
+	  }
+	else                                        // moving player
+	  {
+		if (this->input_output_state->key_left)  
+		  {
+		    this->move_character(this->player_characters[this->current_player],DIRECTION_WEST);
+		    this->update_screen_position();
+		  }
+		else if (this->input_output_state->key_right)
+		  {
+		    this->move_character(this->player_characters[this->current_player],DIRECTION_EAST);
+		    this->update_screen_position();
+		  }
+		else if (this->input_output_state->key_down)
+		  {
+		    this->move_character(this->player_characters[this->current_player],DIRECTION_SOUTH);
+		    this->update_screen_position();
+		  }
+		else if (this->input_output_state->key_up)
+		  {
+		    this->move_character(this->player_characters[this->current_player],DIRECTION_NORTH);
+		    this->update_screen_position();
+		  }
+		else if (this->player_characters[this->current_player]->get_playing_animation() != ANIMATION_USE
+		  && this->player_characters[this->current_player]->get_playing_animation() != ANIMATION_CAST)
+		  {
+			this->player_characters[this->current_player]->stop_animation();
+		  }
 	  }
 
 	  if (this->input_output_state->key_1)     // switching players with keyboard

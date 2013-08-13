@@ -18,7 +18,7 @@ c_monster_character::c_monster_character(t_monster_type type, int square_x, int 
 	this->current_path_instruction = 0;
 	this->waiting = false;
 	this->global_time = global_time;
-	this->sound_footsteps = al_load_sample("resources/footsteps.wav");
+	this->footsteps_gain = 0.3;
 	this->playing_animation = ANIMATION_NONE;
 	this->playing_sound = false;
 
@@ -43,9 +43,11 @@ c_monster_character::c_monster_character(t_monster_type type, int square_x, int 
 		  this->sprite_west = al_load_bitmap("resources/character_ghost_west.png");
 		  this->sprite_west_running_1 = this->sprite_west;
 		  this->sprite_west_running_2 = this->sprite_west;
+		  this->sound_footsteps = NULL;
 		  break;
 
 		case MONSTER_TROLL:
+		  this->sound_footsteps = al_load_sample("resources/footsteps2.wav");
 		  this->sprite_north = al_load_bitmap("resources/character_troll_north.png");
 		  this->sprite_north_running_1 = al_load_bitmap("resources/character_troll_north_running_1.png");
 		  this->sprite_north_running_2 = al_load_bitmap("resources/character_troll_north_running_2.png");
@@ -65,7 +67,14 @@ c_monster_character::c_monster_character(t_monster_type type, int square_x, int 
 	  !this->sprite_north_running_2 || !this->sprite_east || !this->sprite_east_running_1 || 
 	  !this->sprite_east_running_2 || !this->sprite_south || !this->sprite_south_running_1 || 
 	  !this->sprite_south_running_2 || !this->sprite_west || !this->sprite_west_running_1 ||
-	  !this->sprite_west_running_2 || !this->sound_footsteps); 
+	  !this->sprite_west_running_2 || (this->type != MONSTER_GHOST && !this->sound_footsteps)); 
+  }
+
+//-----------------------------------------------
+
+t_monster_type c_monster_character::get_monster_type()
+  {
+	return this->type;
   }
 
 //-----------------------------------------------

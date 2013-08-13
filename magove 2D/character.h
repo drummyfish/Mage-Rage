@@ -23,6 +23,7 @@ class c_character: public c_graphic_object
 	  double position_x;     /** x position on the map */
 	  double position_y;     /** y position on the map */
 	  t_direction direction; /** direction, in which the character is facing */
+	  double footsteps_gain; /** footstep sound gain */
 
 	  ALLEGRO_BITMAP *shadow;                        /** shadow bitmap */
 	  ALLEGRO_BITMAP *sprite_north;                  /** character facing north */

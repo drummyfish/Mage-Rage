@@ -110,6 +110,7 @@ class c_map: public c_graphic_object
 	  c_animation *animation_melt;                                     /** animation of melting ice */
 	  c_animation *animation_teleport;                                 /** teleport animation */
 	  c_animation *animation_explosion;                                /** explosion animation */
+	  c_animation *animation_shadow_explosion;                         /** shadow explosion animation */
 
 	  ALLEGRO_BITMAP *portrait_selection;                              /** bitmap - GUI selection behind the portrait */ 
 	  ALLEGRO_BITMAP *portrait_mia;                                    /** bitmap - GUI portrait of Mia */
@@ -573,6 +574,19 @@ class c_map: public c_graphic_object
 	    /**
 		  Updates all monsters on the map (their
 		  positions etc.)
+		*/
+
+	  void shift_screen(int x, int y);
+
+	    /**
+		  Shifts the screen by given values.
+		  Checks borders and doesn't allow the
+		  screen to be shifted too far.
+
+		  @param x possibly negative x
+		    offset in pixels
+		  @param y possibly negative y
+		    offset in pixels
 		*/
 
     public:
