@@ -154,7 +154,7 @@ void c_player_character::draw(int x, int y)
 	          break;  
 	      }
 	  }
-	else                                                // playing animation
+	else   // playing animation
 	  {
 		 this->animation_frame = (*this->global_time - this->started_playing) / 4;
 
@@ -212,6 +212,27 @@ void c_player_character::draw(int x, int y)
 
 				 case DIRECTION_WEST:
 				   al_draw_bitmap(this->sprite_west_casting,x,y,0);
+				   break;
+			   }
+		   }
+		 else if (this->playing_animation == ANIMATION_SKATE)
+		   {
+			 switch (this->direction)
+			   {
+			     case DIRECTION_NORTH:
+				   al_draw_bitmap(this->sprite_north_running_1,x,y,0);
+				   break;
+
+                 case DIRECTION_EAST:
+				   al_draw_bitmap(this->sprite_east_running_1,x,y,0);
+				   break;
+
+				 case DIRECTION_SOUTH:
+				   al_draw_bitmap(this->sprite_south_running_1,x,y,0);
+				   break;
+
+				 case DIRECTION_WEST:
+				   al_draw_bitmap(this->sprite_west_running_1,x,y,0);
 				   break;
 			   }
 		   }

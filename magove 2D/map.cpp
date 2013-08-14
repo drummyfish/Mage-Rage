@@ -215,7 +215,7 @@ bool c_map::load_from_file(string filename)
 	this->width = 30;
 	this->height = 30;
 
-	if (!this->set_environment(ENVIRONMENT_GRASS))
+	if (!this->set_environment(ENVIRONMENT_SNOW))
 	  return false;
 
 	for (j = 0; j < this->height; j++)
@@ -287,11 +287,21 @@ bool c_map::load_from_file(string filename)
 	this->squares[9][11].type = SQUARE_COLLAPSE;
 	this->squares[9][12].type = SQUARE_HOLE;
 
+	this->squares[20][5].type = SQUARE_ICE;
+	this->squares[21][5].type = SQUARE_ICE;
+	this->squares[22][5].type = SQUARE_ICE;
+	this->squares[20][6].type = SQUARE_ICE;
+	this->squares[21][6].type = SQUARE_ICE;
+	this->squares[22][6].type = SQUARE_ICE;
+	this->squares[20][7].type = SQUARE_ICE;
+	this->squares[21][7].type = SQUARE_ICE;
+	this->squares[22][7].type = SQUARE_ICE;
+
 	this->player_characters[0] = new c_player_character(PLAYER_STAROVOUS,this->global_time);
 	this->player_characters[1] = new c_player_character(PLAYER_MIA,this->global_time);
 	this->player_characters[2] = new c_player_character(PLAYER_METODEJ,this->global_time);
 
-	this->number_of_monsters = 2;
+	this->number_of_monsters = 0;
 	this->monster_characters[0] = new c_monster_character(MONSTER_TROLL,20,2,this->global_time);
 	this->monster_characters[1] = new c_monster_character(MONSTER_GHOST,20,4,this->global_time);
 
@@ -330,6 +340,8 @@ bool c_map::load_from_file(string filename)
 	this->add_map_object(new c_map_object(OBJECT_CRATE,0,0,this->global_time),7,8);
 	this->add_map_object(new c_map_object(OBJECT_FLAMES,1,0,this->global_time),9,2);
 	this->add_map_object(new c_map_object(OBJECT_FLAMES,0,0,this->global_time),9,4);
+
+	this->add_map_object(new c_map_object(OBJECT_ROCK,-1,-1,this->global_time),21,6);
 
 	this->add_map_object(new c_map_object(OBJECT_WATER_LILY,0,0,this->global_time),3,7);
 
@@ -1412,11 +1424,13 @@ void c_map::move_character(c_character *character, t_direction direction)
   {
 	int square_position[2];                // player position in map squares
 	double step_length;
+	bool moved;
 
 	if (direction == DIRECTION_NONE)
 	  return;
 	
 	step_length = 0.026;
+	moved = false;
 
 	square_position[0] = character->get_square_x();
 	square_position[1] = character->get_square_y();
@@ -1433,27 +1447,45 @@ void c_map::move_character(c_character *character, t_direction direction)
 	  {
 	    case DIRECTION_NORTH:
 		  if (this->character_can_move_to_square(character,direction)
-			|| character->get_fraction_y() > CLIFF_DISTANCE_SOUTH) 
-			character->move_by(0.0,-1 * step_length);
+			|| character->get_fraction_y() > CLIFF_DISTANCE_SOUTH)
+		    {
+			  character->move_by(0.0,-1 * step_length);
+		      moved = true;
+		    }
 		  break;
 
 	    case DIRECTION_EAST:
 		  if (this->character_can_move_to_square(character,direction)
 			|| character->get_fraction_x() < 1 - CLIFF_DISTANCE_EAST_WEST) 
-			character->move_by(step_length,0.0);
+		    {
+			  character->move_by(step_length,0.0);
+		      moved = true;
+		    }
+		  
 		  break;
 
 	    case DIRECTION_WEST:
 		  if (this->character_can_move_to_square(character,direction)
 			|| character->get_fraction_x() > CLIFF_DISTANCE_EAST_WEST) 
-			character->move_by(-1 *step_length,0.0);
+		    {
+			  character->move_by(-1 *step_length,0.0);
+		      moved = true;
+		    }
 		  break;
 
 	    case DIRECTION_SOUTH:
 		  if (this->character_can_move_to_square(character,direction)
-	    	|| character->get_fraction_y() < 1 - CLIFF_DISTANCE_NORTH) 
-			character->move_by(0.0,step_length);
+	    	|| character->get_fraction_y() < 1 - CLIFF_DISTANCE_NORTH)
+		    { 
+			  character->move_by(0.0,step_length);
+		      moved = true;
+		    }
 		  break;
+	  }
+	
+	if (character->get_playing_animation() == ANIMATION_SKATE && (!moved || this->get_square_type(character->get_square_x(),character->get_square_y()) != SQUARE_ICE))
+	  {
+		character->stop_animation();
 	  }
 
 	// adjust the position (so the character keeps a little distance from cliffs):
@@ -1712,6 +1744,30 @@ void c_map::switch_player(int player_number)
 
 //-----------------------------------------------
 
+void c_map::check_ice()
+  {
+	int i;
+	
+	for (i = 0; i < 3; i++)
+	  if (this->player_characters[i] != NULL)
+	    {
+		  if (this->player_characters[i]->get_playing_animation() == ANIMATION_RUN && // first step on ice
+		    this->get_square_type(this->player_characters[i]->get_square_x(),this->player_characters[i]->get_square_y()) == SQUARE_ICE)
+		    { 
+			  this->player_characters[i]->stop_animation();
+			  this->player_characters[i]->loop_animation(ANIMATION_SKATE);
+			  this->move_character(this->player_characters[i],this->player_characters[i]->get_direction());
+		    }
+		  else if (this->player_characters[i]->get_playing_animation() == ANIMATION_SKATE) // already skating
+			{
+			  this->move_character(this->player_characters[i],this->player_characters[i]->get_direction());
+		      this->update_screen_position();
+		    }
+		}
+  }
+
+//-----------------------------------------------
+
 void c_map::update()
   {  
 	int i; 
@@ -1732,6 +1788,7 @@ void c_map::update()
 		this->check_firecloak = false;
 	  }
 
+	this->check_ice();
 	this->update_missiles();
 	this->update_monsters();
 
@@ -1782,7 +1839,7 @@ void c_map::update()
 		else if (this->input_output_state->key_down)
 		  this->shift_screen(0,5);
 	  }
-	else                                        // moving player
+	else if (this->player_characters[this->current_player]->get_playing_animation() != ANIMATION_SKATE) // moving player
 	  {
 		if (this->input_output_state->key_left)  
 		  {
@@ -1934,6 +1991,9 @@ void c_map::cast_key_press(int spell_number)
 
 	if (this->player_characters[this->current_player]->get_magic_energy() == 0)
 	  return;                  // no magic energy
+
+	if (this->player_characters[this->current_player]->get_playing_animation() == ANIMATION_SKATE) // can't cast while skating
+	  return;
 
 	if (this->player_characters[this->current_player]->get_playing_animation() == ANIMATION_CAST ||
 	  this->player_characters[this->current_player]->get_playing_animation() == ANIMATION_USE)

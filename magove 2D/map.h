@@ -589,6 +589,14 @@ class c_map: public c_graphic_object
 		    offset in pixels
 		*/
 
+	  void check_ice();
+
+	    /**
+		  Checks all player characters if they
+		  are on ice and moving and keeps them
+		  in movement.
+		*/
+
     public:
 
       c_map(string filename, t_input_output_state *input_output_state, long int *global_time);
