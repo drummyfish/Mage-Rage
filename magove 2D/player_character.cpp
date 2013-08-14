@@ -26,6 +26,7 @@ c_player_character::c_player_character(t_player_type player_type, long int *glob
 	this->fire_cloak_3 = NULL;
 	this->sound_firecloak = NULL;
 	this->fire_cloak_on = false;
+	this->skate_gain = 0.1;
 
 	this->playing_animation = ANIMATION_NONE;
 
@@ -58,6 +59,7 @@ c_player_character::c_player_character(t_player_type player_type, long int *glob
 	this->sprite_west_running_2 = al_load_bitmap(("resources/character_" + help_string + "_west_running_2.png").c_str());
 
 	this->sound_footsteps = al_load_sample("resources/footsteps.wav");
+	this->sound_skate = al_load_sample("resources/skate.wav");
 
 	this->succesfully_loaded =
 	   (this->shadow && this->sprite_north && this->sprite_north_casting &&
@@ -66,7 +68,7 @@ c_player_character::c_player_character(t_player_type player_type, long int *glob
 		this->sprite_east_running_2 && this->sprite_south && this->sprite_south_casting &&
 		this->sprite_south_running_1 && this->sprite_south_running_2 && this->sprite_west &&
 		this->sprite_west_casting && this->sprite_west_running_1 && this->sprite_west_running_2
-		&& this->sound_footsteps);
+		&& this->sound_footsteps && this->sound_skate);
 
 	if (this->player_type == PLAYER_METODEJ)
 	  {

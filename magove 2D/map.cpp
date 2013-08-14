@@ -338,8 +338,11 @@ bool c_map::load_from_file(string filename)
 	this->add_map_object(new c_map_object(OBJECT_CRATE,0,0,this->global_time),7,6);
 	this->add_map_object(new c_map_object(OBJECT_CRATE,0,0,this->global_time),7,7);
 	this->add_map_object(new c_map_object(OBJECT_CRATE,0,0,this->global_time),7,8);
-	this->add_map_object(new c_map_object(OBJECT_FLAMES,1,0,this->global_time),9,2);
-	this->add_map_object(new c_map_object(OBJECT_FLAMES,0,0,this->global_time),9,4);
+
+	this->add_map_object(new c_map_object(OBJECT_FLAMES,20,-1,this->global_time),9,2);
+	this->add_map_object(new c_map_object(OBJECT_BUTTON,20,-1,this->global_time),10,2);
+	
+	this->add_map_object(new c_map_object(OBJECT_FLAMES,-1,-1,this->global_time),9,4);
 
 	this->add_map_object(new c_map_object(OBJECT_ROCK,-1,-1,this->global_time),21,6);
 
@@ -683,6 +686,7 @@ void c_map::check_buttons()
 					  {
 					    help_object->switch_state();
 					    help_object->play_animation(ANIMATION_SWITCH_OFF);
+						this->update_flames();
 					  }
 				  }
 				else
@@ -691,6 +695,7 @@ void c_map::check_buttons()
 					  {
 						help_object->switch_state();
 					    help_object->play_animation(ANIMATION_SWITCH_ON);
+					    this->update_flames();
 					  }
 				  }
 			  }
@@ -2077,19 +2082,27 @@ void c_map::update_flames()
 		    }
 		  else
 		    { 
-			  if (this->squares[i][j].map_objects[k]->get_type() == OBJECT_FLAMES &&
-				(this->squares[i][j].map_objects[k]->get_state() == OBJECT_STATE_ON ||
-				this->squares[i][j].map_objects[k]->get_state() == OBJECT_STATE_ON_ACTIVE))
-				if (this->flames_on)
-				  {
-				    this->squares[i][j].map_objects[k]->set_state(OBJECT_STATE_ON_ACTIVE);
-					this->squares[i][j].map_objects[k]->loop_animation(ANIMATION_IDLE);
-				  }
-				else
-				  {
-					this->squares[i][j].map_objects[k]->set_state(OBJECT_STATE_ON);
-					this->squares[i][j].map_objects[k]->stop_animation();
-				  }
+			  if (this->squares[i][j].map_objects[k]->get_type() == OBJECT_FLAMES)
+			    {
+				  if (this->squares[i][j].map_objects[k]->get_state() == OBJECT_STATE_ON ||
+				    this->squares[i][j].map_objects[k]->get_state() == OBJECT_STATE_ON_ACTIVE)
+			        {
+				      if (this->flames_on)
+				        {
+				          this->squares[i][j].map_objects[k]->set_state(OBJECT_STATE_ON_ACTIVE);
+					      this->squares[i][j].map_objects[k]->loop_animation(ANIMATION_IDLE);
+				        }
+				      else
+				        {
+					      this->squares[i][j].map_objects[k]->set_state(OBJECT_STATE_ON);
+					      this->squares[i][j].map_objects[k]->stop_animation();
+				        }
+				    }
+				  else
+				    {
+					  this->squares[i][j].map_objects[k]->stop_animation();
+				    }
+			    }
 		    }
   }
 

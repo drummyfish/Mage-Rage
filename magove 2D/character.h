@@ -24,6 +24,7 @@ class c_character: public c_graphic_object
 	  double position_y;     /** y position on the map */
 	  t_direction direction; /** direction, in which the character is facing */
 	  double footsteps_gain; /** footstep sound gain */
+	  double skate_gain;     /** skate sound gain */
 
 	  ALLEGRO_BITMAP *shadow;                        /** shadow bitmap */
 	  ALLEGRO_BITMAP *sprite_north;                  /** character facing north */
@@ -39,6 +40,7 @@ class c_character: public c_graphic_object
 	  ALLEGRO_BITMAP *sprite_west_running_1;         /** character running west, frame 1 */
 	  ALLEGRO_BITMAP *sprite_west_running_2;         /** character running west, frame 2 */
 	  ALLEGRO_SAMPLE *sound_footsteps;               /** sound - footsteps */
+	  ALLEGRO_SAMPLE *sound_skate;                   /** sound - skate */
 
     public:
 

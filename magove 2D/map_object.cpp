@@ -127,6 +127,8 @@ c_map_object::c_map_object(t_object_type object_type, int link_id,  int link_id2
 		  this->bitmaps[1] = al_load_bitmap("resources/object_flames_2.png");
           this->bitmaps[2] = al_load_bitmap("resources/object_flames_3.png");
 		  this->bitmaps[3] = al_load_bitmap("resources/object_flames_4.png");
+		  this->sound = al_load_sample("resources/metodej_cast2.wav");
+		  this->sound_gain = 0.1;
 		  this->stepable = true;
 		  number_of_bitmaps = 4;
 		  break;
@@ -265,7 +267,7 @@ void c_map_object::switch_state()
 	if (this->object_state == OBJECT_STATE_OFF)
 	  this->object_state = OBJECT_STATE_ON;
 	else
-      this->object_state = OBJECT_STATE_OFF;
+	  this->object_state = OBJECT_STATE_OFF; 
 
 	switch (this->type)
 	  {
@@ -283,7 +285,7 @@ void c_map_object::switch_state()
 			
 		  break;
 	  }
-
+	
 	if (this->is_input())
       this->update_controlled_objects();
   }

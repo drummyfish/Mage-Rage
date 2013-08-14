@@ -21,8 +21,8 @@ c_monster_character::c_monster_character(t_monster_type type, int square_x, int 
 	this->footsteps_gain = 0.2;
 	this->playing_animation = ANIMATION_NONE;
 	this->playing_sound = false;
-
-
+	this->sound_skate = NULL;
+	this->skate_gain = 0.3;
 	this->shadow = al_load_bitmap("resources/shadow.png");
 
 	this->position_x = c_character::square_to_position(square_x,true);

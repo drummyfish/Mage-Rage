@@ -126,6 +126,15 @@ void c_character::loop_animation(t_animation_type animation)
 		    }
 
 		  break;
+
+		case ANIMATION_SKATE:
+		  if (this->sound_skate != NULL)
+		    {
+			  al_play_sample(this->sound_skate,this->skate_gain,0.0,1.0,ALLEGRO_PLAYMODE_LOOP,&this->playing_sound_id);
+		      this->playing_sound = true;
+		    }
+
+		  break;
 	  }
   }
 
