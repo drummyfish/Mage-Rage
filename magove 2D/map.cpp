@@ -301,7 +301,7 @@ bool c_map::load_from_file(string filename)
 	this->player_characters[1] = new c_player_character(PLAYER_MIA,this->global_time);
 	this->player_characters[2] = new c_player_character(PLAYER_METODEJ,this->global_time);
 
-	this->number_of_monsters = 0;
+	this->number_of_monsters = 2;
 	this->monster_characters[0] = new c_monster_character(MONSTER_TROLL,20,2,this->global_time);
 	this->monster_characters[1] = new c_monster_character(MONSTER_GHOST,20,4,this->global_time);
 

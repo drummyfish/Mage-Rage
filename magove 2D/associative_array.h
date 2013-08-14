@@ -10,34 +10,34 @@
 
 #include "general.h"
 #include <string>
-using namespace std;
-#define ALLOC_BY 64
+#include <vector>
+#include <algorithm>
+#include <fstream>
+#include <sstream>
 
 class c_associative_array
   {
-    /**
-	* This class provides an interface for an
-	* associative array, which can be loaded and
-	* saved to a file.
-	*/
 
-  protected: string *keys_array;
-			 string *values_array;
-			 int length;
+    protected:
+	  vector<string> *keys;      /** list of keys */
+	  vector<string> *values;    /** list of values */
 
     public:
       c_associative_array();
+
 	    /**
 	      Class constructor, initialises a new
 		  object.
 	    */
 
 	  ~c_associative_array();
+
 	    /**
 		  Class destructor, frees all it's memory.
 		*/
 
 	  bool load_from_file(string file_name);
+
 	    /**
 	      Loads the array from given file. The
 		  file contains texts separated by
@@ -50,6 +50,7 @@ class c_associative_array
 	    */
 
 	  bool save_to_file(string file_name);
+
 	  	/**
 	      Saves the array to given file.
 
@@ -59,14 +60,15 @@ class c_associative_array
 	    */
 
 	  string get_text(string identifier);
+
 	    /**
           Returns text with given identifier.		  
 		
 		  @param identifier identifier of the
 		    text to be returned
 		  @return text with given identifier,
-			or (if text was not found) return
-			empty string
+			or (if the text was not found)
+			returns an empty string
 		*/
 
 	  void set_text(string identifier, string value);
@@ -83,7 +85,7 @@ class c_associative_array
 		  @param value value for the identifier
 		*/
 
-	  void delete_item(string identifier);
+	  void delete_text(string identifier);
 	    
 	    /**
 		  Deletes given item. If the item

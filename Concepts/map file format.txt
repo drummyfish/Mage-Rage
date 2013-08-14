@@ -1,0 +1,21 @@
+
+
+--------------------------
+
+
+
+
+width:                    
+height:
+environment:{grass,snow,dirt,castle}
+heightmap:012012012
+objects:obj1,obj2
+monsters:monster1,monster2
+
+--------------------------
+obj = (type,id1,id2,x,y)
+type = {crate,flames,...}
+
+monster = (type,x,y,path)
+path = (direction1,steps1,direction2,steps2,...)
+

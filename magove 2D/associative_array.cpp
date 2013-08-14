@@ -9,58 +9,94 @@
 
 //--------------------------------------------------
 
-  c_associative_array::c_associative_array()
-    {
-	  this->length = 0;
-	  this->keys_array = NULL;
-	  this->values_array = NULL;
-	  this->keys_array = (string*) malloc (ALLOC_BY * sizeof(string));
-	  this->values_array = (string*) malloc (ALLOC_BY * sizeof(string));
-    }
+c_associative_array::c_associative_array()
+  {
+	this->keys = new vector<string>();
+	this->values = new vector<string>();
+  }
   
  //--------------------------------------------------
   
-   void c_associative_array::set_text(string identifier, string value)
-   {
-	  int i;
+void c_associative_array::set_text(string identifier, string value)
+  { 
+	int i;
 
-	  for(i=0; i<this->length; i++)
-	  {
-		  if(this->keys_array[i].compare(identifier) == 0)
-		  {
-			  values_array[i] = value;
-			  return;
-		  }
-	  }
+	this->delete_text(identifier); // delete the item if it already exists
 
-	  if(length % ALLOC_BY == 0)
-	  {
-		  keys_array = (string*) realloc (keys_array, (length + ALLOC_BY) * sizeof(string));
-		  values_array = (string*) realloc (values_array, (length + ALLOC_BY) * sizeof(string));
-	  }
-
-	  keys_array[length] = identifier;
-	  values_array[length] = value;
-	  length++;
-
-   }
+	this->keys->push_back(identifier);
+	this->values->push_back(value);
+  }
 
  //--------------------------------------------------
 
-  string c_associative_array::get_text(string identifier)
-	  {
-
-		  int i;
+string c_associative_array::get_text(string identifier)
+  {
+	int i;
 		  
-		  for(i=0; i<this->length; i++)
+	for(i = 0; (unsigned int) i < this->keys->size(); i++)
+	  {
+		if(this->keys->at(i).compare(identifier) == 0)
 		  {
-			 if(this->keys_array[i].compare(identifier) == 0)
-			 {
-				return values_array[i];
-			 }
+		    return this->values->at(i);
 		  }
-
-		  return "";
 	  }
+
+	return "";
+  }
+
+//--------------------------------------------------
+
+void c_associative_array::delete_text(string identifier)
+  {
+	int i;
+
+	for(i = 0; (unsigned int) i < this->keys->size(); i++)
+	  {
+		if(this->keys->at(i).compare(identifier) == 0)
+		  {
+  		    this->values->erase(this->values->begin() + i,this->values->begin() + i + 1);
+			this->keys->erase(this->values->begin() + i,this->values->begin() + i + 1);
+		  }
+	  }
+  }
+
+//--------------------------------------------------
+
+bool c_associative_array::load_from_file(string file_name)
+  {
+	 ifstream file(file_name);
+	 string line, key, value;
+	 int i, separator_position;
+
+	 if (!file.is_open())
+	   return false;
+
+	 while (getline(file, line))
+       {
+		 separator_position = 0;
+
+		 for (i = 0; i < line.length(); i++)
+		   if (line[i] == ':')
+		     {
+				separator_position = i;
+				break;
+		     }
+
+		 key = line.substr(0,i);
+		 value = line.substr(i,line.length() - key.length());
+
+		 this->set_text(key,value);
+       }
+
+	 file.close();
+
+	 return true;
+  }
+
+//--------------------------------------------------
+
+bool c_associative_array::save_to_file(string file_name)
+  {
+  }
 
 //--------------------------------------------------

@@ -14,17 +14,19 @@
  
 int main(int argc, char **argv)
   {
-    /*c_game *game;
+    c_game *game;
 	game = new c_game();
-	game->run();
+//	game->run();
 	delete game;
-	al_rest(5);*/
 
-	  c_associative_array* pole;
-	  pole = new c_associative_array();
+	c_associative_array* pole;
+	pole = new c_associative_array();
 
-	  pole->set_text("ahoj", "vole");
-	  pole->set_text("necum", "sem");
+	int i;
 
-	  cout<< pole->get_text("ahoj")<< " " << pole->get_text("necum") << " " << pole->get_text("hehe") << endl;
+	pole->load_from_file("test.txt");
+
+	cout << pole->get_text("a50") << " " << pole->get_text("a70") << " " << pole->get_text("hehe") << endl;
+  
+	al_rest(2);
   }
