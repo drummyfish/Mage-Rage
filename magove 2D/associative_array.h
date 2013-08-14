@@ -8,9 +8,10 @@
  * year: 2013
  */
 
+#include "general.h"
 #include <string>
 using namespace std;
-#define ALLOC_BY 64;
+#define ALLOC_BY 64
 
 class c_associative_array
   {
@@ -63,7 +64,9 @@ class c_associative_array
 		
 		  @param identifier identifier of the
 		    text to be returned
-		  @return text with given identifier
+		  @return text with given identifier,
+			or (if text was not found) return
+			empty string
 		*/
 
 	  void set_text(string identifier, string value);
@@ -71,7 +74,7 @@ class c_associative_array
 	    /**
           Sets the value for given identifier.
 		  If the identifier already exists,
-		  it's current walue will be
+		  it's current value will be
 		  overwritten, otherwise a new key is
 		  created with this value.
 		
