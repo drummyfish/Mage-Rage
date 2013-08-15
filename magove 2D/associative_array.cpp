@@ -7,7 +7,7 @@
 
 #include "associative_array.h"
 
-//--------------------------------------------------
+//-----------------------------------------------
 
 c_associative_array::c_associative_array()
   {
@@ -15,19 +15,25 @@ c_associative_array::c_associative_array()
 	this->values = new vector<string>();
   }
   
- //--------------------------------------------------
+//-----------------------------------------------
+
+c_associative_array::~c_associative_array()
+  {
+	delete this->keys;
+	delete this->values;
+  }
+
+//-----------------------------------------------
   
 void c_associative_array::set_text(string identifier, string value)
-  { 
-	int i;
-
+  {
 	this->delete_text(identifier); // delete the item if it already exists
 
 	this->keys->push_back(identifier);
 	this->values->push_back(value);
   }
 
- //--------------------------------------------------
+ //----------------------------------------------
 
 string c_associative_array::get_text(string identifier)
   {
@@ -44,7 +50,7 @@ string c_associative_array::get_text(string identifier)
 	return "";
   }
 
-//--------------------------------------------------
+//-----------------------------------------------
 
 void c_associative_array::delete_text(string identifier)
   {
@@ -60,7 +66,7 @@ void c_associative_array::delete_text(string identifier)
 	  }
   }
 
-//--------------------------------------------------
+//-----------------------------------------------
 
 bool c_associative_array::load_from_file(string file_name)
   {
@@ -75,7 +81,7 @@ bool c_associative_array::load_from_file(string file_name)
        {
 		 separator_position = 0;
 
-		 for (i = 0; i < line.length(); i++)
+		 for (i = 0; (unsigned int) i < line.length(); i++)
 		   if (line[i] == ':')
 		     {
 				separator_position = i;
@@ -83,7 +89,7 @@ bool c_associative_array::load_from_file(string file_name)
 		     }
 
 		 key = line.substr(0,i);
-		 value = line.substr(i,line.length() - key.length());
+		 value = line.substr(i + 1,line.length() - key.length());
 
 		 this->set_text(key,value);
        }
@@ -93,7 +99,7 @@ bool c_associative_array::load_from_file(string file_name)
 	 return true;
   }
 
-//--------------------------------------------------
+//-----------------------------------------------
 
 bool c_associative_array::save_to_file(string file_name)
   {
@@ -103,7 +109,7 @@ bool c_associative_array::save_to_file(string file_name)
 	if (!file.is_open())
 	  return false;
 
-	for (i = 0; i < this->keys->size(); i++)
+	for (i = 0; (unsigned int) i < this->keys->size(); i++)
 	  {
 		file << this->keys->at(i) << ":" << this->values->at(i) << endl;
 	  }
@@ -113,4 +119,4 @@ bool c_associative_array::save_to_file(string file_name)
 	return true;
   }
 
-//--------------------------------------------------
+//-----------------------------------------------

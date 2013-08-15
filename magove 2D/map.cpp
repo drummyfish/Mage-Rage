@@ -206,9 +206,288 @@ void c_map::add_map_object(c_map_object *map_object, int x, int y)
 
 //-----------------------------------------------
 
+void c_map::set_map_objects(string object_string)
+  {
+	int position, i, j;
+	int numbers[5];
+	string object_type, sign_string, help_string;
+	c_map_object *help_object;
+
+	for (position = 0; (unsigned int) position < object_string.size(); position++)
+	  {
+		if (object_string[position] == '(')   // object opening bracket
+		  { 
+			object_type = object_string.substr(position + 1,2);
+
+			position += 3;
+
+			for (i = 0; i < 5; i++) // load following numbers in the array
+			  {
+				position++;
+
+				if ((unsigned int) position >= object_string.size() || object_string[position] == ')')
+				  break;
+
+				help_string = "";
+
+				if (object_string[position] != '"')  // a number
+				  {
+					while (object_string[position] != ',' && object_string[position] != ')')
+					  {
+                        help_string += object_string[position];
+						position++;
+					  }
+
+					numbers[i] = atoi(help_string.c_str());
+				  }
+				else  // loading sign text
+				  {
+					position++;
+
+                    while (object_string[position] != '"' && object_string[position] != ')')
+					  {
+                        help_string += object_string[position];
+						position++;
+					  }
+
+					position++;
+
+					sign_string = help_string;
+				  }
+
+				if (object_string[position] == ')')
+				  break;
+			  }
+
+			if (object_type.compare("ro") == 0)
+			  this->add_map_object(new c_map_object(OBJECT_ROCK,-1,-1,this->global_time),numbers[0],numbers[1]);
+			else if (object_type.compare("cr") == 0)
+			  this->add_map_object(new c_map_object(OBJECT_CRATE,-1,-1,this->global_time),numbers[0],numbers[1]);
+			else if (object_type.compare("ic") == 0)
+			  this->add_map_object(new c_map_object(OBJECT_ICE,-1,-1,this->global_time),numbers[0],numbers[1]);
+			else if (object_type.compare("tr") == 0)
+			  this->add_map_object(new c_map_object(OBJECT_TREE,-1,-1,this->global_time),numbers[0],numbers[1]);
+		    else if (object_type.compare("bu") == 0)
+			  this->add_map_object(new c_map_object(OBJECT_BUTTON,numbers[2],numbers[3],this->global_time),numbers[0],numbers[1]);
+			else if (object_type.compare("si") == 0)
+			  {
+				help_object = new c_map_object(OBJECT_SIGN,-1,-1,this->global_time);
+				help_object->set_sign_text(sign_string);
+			    this->add_map_object(help_object,numbers[0],numbers[1]);
+			  }
+		    else if (object_type.compare("dh") == 0)
+			  this->add_map_object(new c_map_object(OBJECT_DOOR_HORIZONTAL,numbers[2],numbers[3],this->global_time),numbers[0],numbers[1]);
+			else if (object_type.compare("dv") == 0)
+			  this->add_map_object(new c_map_object(OBJECT_DOOR_VERTICAL,numbers[2],numbers[3],this->global_time),numbers[0],numbers[1]);
+			else if (object_type.compare("fo") == 0)
+			  this->add_map_object(new c_map_object(OBJECT_FOUNTAIN,-1,-1,&this->animation_frame),numbers[0],numbers[1]);
+		    else if (object_type.compare("le") == 0)
+			  this->add_map_object(new c_map_object(OBJECT_LEVER,numbers[2],numbers[3],this->global_time),numbers[0],numbers[1]);
+			else if (object_type.compare("sn") == 0)
+			  this->add_map_object(new c_map_object(OBJECT_STAIRS_NORTH,-1,-1,this->global_time),numbers[0],numbers[1]);
+			else if (object_type.compare("se") == 0)
+			  this->add_map_object(new c_map_object(OBJECT_STAIRS_EAST,-1,-1,this->global_time),numbers[0],numbers[1]);
+		    else if (object_type.compare("ss") == 0)
+			  this->add_map_object(new c_map_object(OBJECT_STAIRS_SOUTH,-1,-1,this->global_time),numbers[0],numbers[1]);
+			else if (object_type.compare("sw") == 0)
+			  this->add_map_object(new c_map_object(OBJECT_STAIRS_WEST,-1,-1,this->global_time),numbers[0],numbers[1]);
+	        else if (object_type.compare("fl") == 0)
+			  this->add_map_object(new c_map_object(OBJECT_STAIRS_NORTH,numbers[2],numbers[3],this->global_time),numbers[0],numbers[1]);
+		    else if (object_type.compare("f1") == 0)
+			  this->add_map_object(new c_map_object(OBJECT_FLOWERS,-1,-1,this->global_time),numbers[0],numbers[1]);
+			else if (object_type.compare("f2") == 0)
+			  this->add_map_object(new c_map_object(OBJECT_FLOWERS2,-1,-1,this->global_time),numbers[0],numbers[1]);
+		    else if (object_type.compare("c1") == 0)
+			  this->add_map_object(new c_map_object(OBJECT_CARPET,-1,-1,this->global_time),numbers[0],numbers[1]);
+		    else if (object_type.compare("c2") == 0)
+			  this->add_map_object(new c_map_object(OBJECT_CARPET2,-1,-1,this->global_time),numbers[0],numbers[1]);  
+		    else if (object_type.compare("bo") == 0)
+			  this->add_map_object(new c_map_object(OBJECT_BONES,-1,-1,this->global_time),numbers[0],numbers[1]);
+		    else if (object_type.compare("wl") == 0)
+			  this->add_map_object(new c_map_object(OBJECT_WATER_LILY,-1,-1,this->global_time),numbers[0],numbers[1]);
+		    else if (object_type.compare("ga") == 0)
+			  this->add_map_object(new c_map_object(OBJECT_GATE,-1,-1,&this->animation_frame),numbers[0],numbers[1]);
+		  }
+	  }
+
+	this->link_objects();
+	this->record_buttons();
+  }
+
+//-----------------------------------------------
+
 bool c_map::load_from_file(string filename)
-  { // TEMPORARY CODE!!!!!!!!!!!!!
+  {
+	c_associative_array *associative_array;
 	int i, j, k;
+	bool all_ok;
+
+	all_ok = true;
+
+	associative_array = new c_associative_array();
+	all_ok = associative_array->load_from_file(filename);
+
+	this->width = atoi(associative_array->get_text("width").c_str());       // set width and height
+	this->height = atoi(associative_array->get_text("height").c_str());
+
+	if (associative_array->get_text("environment").compare("grass") == 0)   // set environment
+	  all_ok = this->set_environment(ENVIRONMENT_GRASS);
+	else if (associative_array->get_text("environment").compare("dirt") == 0)
+	  all_ok = this->set_environment(ENVIRONMENT_DIRT);
+    else if (associative_array->get_text("environment").compare("snow") == 0)
+	  all_ok = this->set_environment(ENVIRONMENT_SNOW);
+    else
+      all_ok = this->set_environment(ENVIRONMENT_CASTLE); 
+
+	for (j = 0; j < this->height; j++)       // set terrain
+	  for (i = 0; i < this->width; i++)
+	    {
+		  switch (associative_array->get_text("heightmap")[j * this->width + i])
+		    {
+		      case '0':
+				this->squares[i][j].height = 0;
+			    break;
+			  
+			  case '1':
+				this->squares[i][j].height = 1;
+				break;
+
+			  case '2':
+				this->squares[i][j].height = 2;
+				break;
+		    }
+
+		  switch (associative_array->get_text("typemap")[j * this->width + i])
+		    {
+		      case 'n':
+				this->squares[i][j].type = SQUARE_NORMAL;
+			    break;
+			  
+			  case 'w':
+				this->squares[i][j].type = SQUARE_WATER;
+				break;
+
+			  case 'i':
+				this->squares[i][j].type = SQUARE_ICE;
+				break;
+
+			  case 'c':
+				this->squares[i][j].type = SQUARE_COLLAPSE;
+				break;
+
+			  case 'h':
+				this->squares[i][j].type = SQUARE_HOLE;
+				break;
+		    }
+
+		  this->squares[i][j].animation = NULL;
+
+		  for (k = 0; k < MAX_OBJECTS_PER_SQUARE; k++)
+		    this->squares[i][j].map_objects[k] = NULL;
+	    }
+
+	if (associative_array->get_text("mia_x").compare("") == 0) // set players
+	  this->player_characters[0] = NULL;
+	else
+	  {
+	    this->player_characters[0] = new c_player_character(PLAYER_MIA,this->global_time); 
+		this->player_characters[0]->set_square_position(atoi(associative_array->get_text("mia_x").c_str()),atoi(associative_array->get_text("mia_y").c_str()));
+	  }
+
+	if (associative_array->get_text("merodej_x").compare("") == 0)
+	  this->player_characters[1] = NULL;
+	else
+	  {
+	    this->player_characters[1] = new c_player_character(PLAYER_MIA,this->global_time); 
+		this->player_characters[1]->set_square_position(atoi(associative_array->get_text("metodej_x").c_str()),atoi(associative_array->get_text("metodej_y").c_str()));
+	  }
+
+	if (associative_array->get_text("starovous_x").compare("") == 0)
+	  this->player_characters[2] = NULL;
+	else
+	  {
+	    this->player_characters[2] = new c_player_character(PLAYER_MIA,this->global_time); 
+		this->player_characters[2]->set_square_position(atoi(associative_array->get_text("starovous_x").c_str()),atoi(associative_array->get_text("starovous_y").c_str()));
+	  }
+
+	this->set_map_objects(associative_array->get_text("objects")); // set objects
+
+	delete associative_array;
+
+	// the map's loaded, now load resources
+
+    this->animation_water_splash = new c_animation(this->global_time,"resources/animation_water_splash",5,-5,-5,2,true,"resources/water.wav",1.0);
+	this->animation_refresh = new c_animation(this->global_time,"resources/animation_refresh",6,0,0,2,true,"resources/refresh.wav",0.5);
+	this->animation_crate_shift_north = new c_animation(this->global_time,"resources/animation_crate_shift_north",3,0,-79,1,false,"",1.0);
+	this->animation_collapse = new c_animation(this->global_time,"resources/animation_collapse",5,0,0,2,true,"resources/crack.wav",0.3);
+	this->animation_melt = new c_animation(this->global_time,"resources/animation_melt",4,0,-27,5,false,"",0.0);
+	this->animation_teleport = new c_animation(this->global_time,"resources/animation_teleport",5,0,-27,5,true,"resources/teleport.wav",0.4);
+	this->animation_explosion = new c_animation(this->global_time,"resources/animation_explosion",7,0,-27,5,true,"resources/explosion.wav",0.3);
+	this->animation_shadow_explosion = new c_animation(this->global_time,"resources/animation_shadow_explosion",6,0,-27,5,true,"resources/shadow_explosion.wav",0.4);
+
+    this->spell_sounds_mia[0] = al_load_sample("resources/mia_cast.wav");
+    this->spell_sounds_mia[1] = al_load_sample("resources/mia_cast2.wav");
+	this->spell_sounds_metodej[0] = al_load_sample("resources/metodej_cast.wav");
+    this->spell_sounds_metodej[1] = al_load_sample("resources/metodej_cast2.wav");
+	this->spell_sounds_starovous[0] = al_load_sample("resources/starovous_cast.wav");
+    this->spell_sounds_starovous[1] = al_load_sample("resources/starovous_cast2.wav"); 
+	this->change_player_sound = al_load_sample("resources/change.wav");
+
+	if (!this->animation_water_splash->is_succesfully_loaded())
+	  return false;
+
+	this->portrait_mia = al_load_bitmap("resources/portrait_mia.png");               // load portrait bitmaps
+	this->portrait_metodej = al_load_bitmap("resources/portrait_metodej.png");
+	this->portrait_starovous = al_load_bitmap("resources/portrait_starovous.png");
+	this->portrait_selection = al_load_bitmap("resources/selection.png");
+
+	this->spell_mia_1[0] = al_load_bitmap("resources/spell_1_mia_1.png");            // load spell bitmaps
+	this->spell_mia_1[1] = al_load_bitmap("resources/spell_1_mia_2.png");
+	this->spell_mia_1[2] = al_load_bitmap("resources/spell_1_mia_3.png");
+	this->spell_mia_2[0] = al_load_bitmap("resources/spell_2_mia_1.png");
+	this->spell_mia_2[1] = al_load_bitmap("resources/spell_2_mia_2.png");
+	this->spell_mia_2[2] = al_load_bitmap("resources/spell_2_mia_3.png");
+	this->spell_metodej_1[0] = al_load_bitmap("resources/spell_1_metodej_1.png");
+	this->spell_metodej_1[1] = al_load_bitmap("resources/spell_1_metodej_2.png");
+	this->spell_metodej_1[2] = al_load_bitmap("resources/spell_1_metodej_3.png");
+	this->spell_starovous_1[0] = al_load_bitmap("resources/spell_1_starovous_1.png");
+	this->spell_starovous_1[1] = al_load_bitmap("resources/spell_1_starovous_2.png");
+	this->spell_starovous_1[2] = al_load_bitmap("resources/spell_1_starovous_3.png");
+	this->spell_starovous_2[0] = al_load_bitmap("resources/spell_2_starovous_1.png");
+	this->spell_starovous_2[1] = al_load_bitmap("resources/spell_2_starovous_2.png");
+	this->spell_starovous_2[2] = al_load_bitmap("resources/spell_2_starovous_3.png");                            
+	this->spell_icons[0] = al_load_bitmap("resources/icon_telekinesis.png");
+	this->spell_icons[1] = al_load_bitmap("resources/icon_create_path.png");
+	this->spell_icons[2] = al_load_bitmap("resources/icon_fireball.png");
+	this->spell_icons[3] = al_load_bitmap("resources/icon_fire_cloak.png");
+	this->spell_icons[4] = al_load_bitmap("resources/icon_light.png");
+	this->spell_icons[5] = al_load_bitmap("resources/icon_heal.png");
+	this->spell_icons[6] = al_load_bitmap("resources/icon_teleport.png");
+
+	if (!this->portrait_mia || !this->portrait_metodej ||
+		!this->portrait_starovous || !this->portrait_selection ||
+		!this->spell_mia_1[0] || !this->spell_mia_1[1] ||
+	    !this->spell_mia_1[2] || !this->spell_mia_2[0] ||
+	    !this->spell_mia_2[1] || !this->spell_mia_2[2] ||
+	    !this->spell_metodej_1[0] || !this->spell_metodej_1[1] ||
+	    !this->spell_metodej_1[2] || !this->spell_starovous_1[0] ||
+	    !this->spell_starovous_1[1] || !this->spell_starovous_1[2] ||
+	    !this->spell_starovous_2[0] || !this->spell_starovous_2[1] ||
+	    !this->spell_starovous_2[2] || !this->change_player_sound)
+	  return false;
+
+	for (i = 0; i < 7; i++)
+	  if (this->spell_icons[i] == NULL)
+		return false;
+
+	this->text_font = al_load_ttf_font("resources/architects_daughter.ttf",20,0);  // load the font
+
+	if (!this->text_font)
+	  return false;
+
+	return true;
+/*
+	  int i, j, k;
 	int button_positions[512][2];        // buffer to hold button positions
 	string help_string;
 
@@ -481,7 +760,35 @@ bool c_map::load_from_file(string filename)
 	if (!this->text_font)
 	  return false;
 	
-	return true;
+	return true; */
+  }
+
+//-----------------------------------------------
+
+void c_map::record_buttons()
+  {
+	int button_positions[512][2];        // buffer to hold button positions
+	int i, j;
+
+	this->number_of_buttons = 0;
+
+	for (j = 0; j < this->height; j++)              // record all button positions
+	  for (i = 0; i < this->width; i++)
+		if (this->square_has_object(i,j,OBJECT_BUTTON))
+		  {
+			button_positions[this->number_of_buttons][0] = i;
+			button_positions[this->number_of_buttons][1] = j;
+			this->number_of_buttons++;
+		  }
+
+	this->button_positions_x = new int[this->number_of_buttons];
+	this->button_positions_y = new int[this->number_of_buttons];
+
+	for (i = 0; i < this->number_of_buttons; i++)
+	  {
+        this->button_positions_x[i] = button_positions[i][0];
+		this->button_positions_y[i] = button_positions[i][1];
+	  }
   }
 
 //-----------------------------------------------

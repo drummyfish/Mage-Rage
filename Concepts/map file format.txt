@@ -8,13 +8,44 @@
 width:                    
 height:
 environment:{grass,snow,dirt,castle}
-heightmap:012012012
+heightmap:012012012...                           // field heights by rows
+typemap:stype1stype2stype3...                    // type of fields by rows
 objects:obj1,obj2
 monsters:monster1,monster2
 
 --------------------------
-obj = (type,id1,id2,x,y)
-type = {crate,flames,...}
+
+stype = n // normal
+        w // water
+        i // ice
+        c // collapse
+        h // hole
+  
+map objects:
+  {
+    ro,  // rock             (ro,x,y)
+    cr,  // crate            (cr,x,y)
+    ic,  // ice              (ic,x,y)
+    tr,  // tree             (tr,x,y)
+    bu,  // button           (bu,x,y,id1,id2,state)      state = {1|0}
+    si,  // sign             (si,x,y,"cz czech sign text|en sign text")
+    dh,  // door horizontal  (dh,x,y,id1,id2,state)
+    dv,  // door vertical    (dv,x,y,id1,id2,state)
+    fo,  // fountain         (fo,x,y)
+    le,  // lever            (le,x,y,id1,id2,state)
+    sn,  // stairs north     (sn,x,y)
+    se,  // stairs east      (se,x,y)
+    ss,  // stairs south     (ss,x,y)
+    sw,  // stairs west      (sw,x,y)
+    fl,  // flames           (fl,x,y,id1,id2,state)
+    f1,  // flowers 1        (f1,x,y)
+    f2,  // flowers 2        (f2,x,y)
+    bo,  // bones            (bs,x,y)
+    c1,  // carpet 1         (c1,x,y)
+    c2,  // carpet 2         (c2,x,y)
+    wl,  // water lilly      (wl,x,y)
+    ga,  // gate             (ga,x,y)
+  }
 
 monster = (type,x,y,path)
 path = (direction1,steps1,direction2,steps2,...)

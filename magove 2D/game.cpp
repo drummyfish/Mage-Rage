@@ -122,7 +122,7 @@ void c_game::run()
 	c_map *map;
 	string help_str;
 
-	map = new c_map(help_str,&this->input_output_state,&this->global_time);
+	map = new c_map("resources/map1",&this->input_output_state,&this->global_time);
 
 	if (!map->is_succesfully_loaded())
 	  {

@@ -32,6 +32,14 @@ void c_character::set_position(double x, double y)
 
 //-----------------------------------------------
 
+void c_character::set_square_position(int x, int y)
+  {
+	this->position_x = c_character::square_to_position(x,true);
+	this->position_y = c_character::square_to_position(y,false);
+  }
+
+//-----------------------------------------------
+
 double c_character::get_position_x()
   {
 	return this->position_x;

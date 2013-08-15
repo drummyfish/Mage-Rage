@@ -80,6 +80,16 @@ class c_character: public c_graphic_object
 		  @param y new position y
 	    */
 
+	  void set_square_position(int x, int y);
+
+	    /**
+		  Sets the player's position given in
+		  map squares.
+
+		  @param x
+		  @param y
+		*/
+
 	  void set_direction(t_direction direction);
 
 	    /**

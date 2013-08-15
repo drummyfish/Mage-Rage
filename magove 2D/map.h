@@ -15,6 +15,7 @@
 #include "map_object.h"
 #include "character.h"
 #include "animation.h"
+#include "associative_array.h"
 
 typedef enum
   {
@@ -595,6 +596,29 @@ class c_map: public c_graphic_object
 		  Checks all player characters if they
 		  are on ice and moving and keeps them
 		  in movement.
+		*/
+
+	  void set_map_objects(string object_string);
+
+	    /**
+		  Accoording to given special object
+		  string sets the objects specified by
+		  it at the map.
+
+		  @param object_string string describing
+		    objects to be put on the map, for
+			the string format see the
+			documentation
+		*/
+
+	  void record_buttons();
+
+	    /**
+		  Records all buttons on the map into
+		  special data structure so that the
+		  checking of them will be faster. This
+		  must be called in order for buttons
+		  to work.
 		*/
 
     public:
