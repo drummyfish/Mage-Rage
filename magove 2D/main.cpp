@@ -24,9 +24,11 @@ int main(int argc, char **argv)
 
 	int i;
 
-	pole->load_from_file("test.txt");
+	pole->set_text("jedna","neco jedna");
+	pole->set_text("dvaa","  sasaASas123");
+	pole->set_text("trii","ssssssss");
 
-	cout << pole->get_text("a50") << " " << pole->get_text("a70") << " " << pole->get_text("hehe") << endl;
-  
+	pole->save_to_file("test.txt");
+
 	al_rest(2);
   }

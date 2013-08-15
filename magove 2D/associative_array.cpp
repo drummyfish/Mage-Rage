@@ -97,6 +97,20 @@ bool c_associative_array::load_from_file(string file_name)
 
 bool c_associative_array::save_to_file(string file_name)
   {
+	ofstream file(file_name);
+	int i;
+
+	if (!file.is_open())
+	  return false;
+
+	for (i = 0; i < this->keys->size(); i++)
+	  {
+		file << this->keys->at(i) << ":" << this->values->at(i) << endl;
+	  }
+
+	file.close();
+
+	return true;
   }
 
 //--------------------------------------------------
