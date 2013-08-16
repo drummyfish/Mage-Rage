@@ -208,7 +208,7 @@ void c_map::add_map_object(c_map_object *map_object, int x, int y)
 
 void c_map::set_map_objects(string object_string)
   {
-	int position, i, j;
+	int position, i;
 	int numbers[5];
 	string object_type, sign_string, help_string;
 	c_map_object *help_object;
@@ -316,6 +316,122 @@ void c_map::set_map_objects(string object_string)
 
 //-----------------------------------------------
 
+void c_map::set_monsters(string monster_string)
+  {
+	int position, x, y, i, steps;
+	string monster_type, help_string;
+	c_monster_character *help_monster;
+	char direction_char;
+	t_direction direction;
+
+	this->number_of_monsters = 0;
+
+	for (position = 0; (unsigned int) position < monster_string.size(); position++)
+	  if (monster_string[position] == '(')   // opening bracket
+	    {
+           monster_type = monster_string.substr(position + 1,2);
+
+		   position += 4;
+
+		   help_string = monster_string.substr(position,2); // load x
+		   
+		   position += 2; 
+
+		   if (help_string[1] == ',' || help_string[1] == ')')
+		     {
+			   help_string = help_string[0];
+		     }
+		   else
+			 position++;
+
+		   x = atoi(help_string.c_str());
+
+		   help_string = monster_string.substr(position,2); // load y
+
+		   position += 2;
+
+		   if (help_string[1] == ',' || help_string[1] == ')')
+		     {
+			   help_string = help_string[0];
+		     }
+		   else
+			 position++;
+
+		   y = atoi(help_string.c_str());
+
+		   if (monster_type.compare("gh") == 0)
+			 help_monster = new c_monster_character(MONSTER_GHOST,x,y,this->global_time);
+		   else
+			 help_monster = new c_monster_character(MONSTER_TROLL,x,y,this->global_time);
+
+		   this->monster_characters[this->number_of_monsters] = help_monster;
+		   this->number_of_monsters++;
+
+		   for (i = 0; i < MAX_MONSTER_PATH_LENGTH / 2; i++)    // load path
+		     {
+			   if ((unsigned int) position >= monster_string.length() || monster_string[position] == ',') // no path specified
+				 break;
+
+			   direction_char = monster_string[position];       // load direction
+
+			   position += 2;
+
+			   help_string = monster_string.substr(position,2); // load number of steps
+
+			   if (help_string[1] == ',' || help_string[1] == ')')
+		         {
+			       help_string = help_string[0];
+		         }
+		       else
+			     {
+			       position++;
+			     }
+
+			   steps = atoi(help_string.c_str());
+
+               position++;
+
+			   switch (direction_char)
+			     {
+			       case 'n':
+                     direction = DIRECTION_NORTH;
+					 break;
+
+				   case 'e':
+                     direction = DIRECTION_EAST;
+					 break;
+
+				   case 's':
+                     direction = DIRECTION_SOUTH;
+					 break;
+
+				   case 'w':
+                     direction = DIRECTION_WEST;
+					 break;
+
+				   case '-':
+                     direction = DIRECTION_NONE;
+					 break;
+
+			     }
+
+			   help_monster->add_path_instruction(direction,steps);
+
+			   if (monster_string[position] == ')') // closing bracket
+			     {
+				   position++;
+				   break;
+			     }
+
+			   position++;
+		     }
+
+		   help_monster->start_moving();
+	    }
+  }
+
+//-----------------------------------------------
+
 bool c_map::load_from_file(string filename)
   {
 	c_associative_array *associative_array;
@@ -394,11 +510,11 @@ bool c_map::load_from_file(string filename)
 		this->player_characters[0]->set_square_position(atoi(associative_array->get_text("mia_x").c_str()),atoi(associative_array->get_text("mia_y").c_str()));
 	  }
 
-	if (associative_array->get_text("merodej_x").compare("") == 0)
+	if (associative_array->get_text("metodej_x").compare("") == 0)
 	  this->player_characters[1] = NULL;
 	else
 	  {
-	    this->player_characters[1] = new c_player_character(PLAYER_MIA,this->global_time); 
+	    this->player_characters[1] = new c_player_character(PLAYER_METODEJ,this->global_time); 
 		this->player_characters[1]->set_square_position(atoi(associative_array->get_text("metodej_x").c_str()),atoi(associative_array->get_text("metodej_y").c_str()));
 	  }
 
@@ -406,11 +522,13 @@ bool c_map::load_from_file(string filename)
 	  this->player_characters[2] = NULL;
 	else
 	  {
-	    this->player_characters[2] = new c_player_character(PLAYER_MIA,this->global_time); 
+	    this->player_characters[2] = new c_player_character(PLAYER_STAROVOUS,this->global_time); 
 		this->player_characters[2]->set_square_position(atoi(associative_array->get_text("starovous_x").c_str()),atoi(associative_array->get_text("starovous_y").c_str()));
 	  }
 
 	this->set_map_objects(associative_array->get_text("objects")); // set objects
+
+	this->set_monsters(associative_array->get_text("monsters")); // set monsters
 
 	delete associative_array;
 
@@ -1679,7 +1797,7 @@ bool c_map::square_is_stepable(int x, int y)
 void c_map::update_screen_position()
   {
 	int player_position[2];
-	int i;
+	int i, player_height;
 
 	player_position[0] = this->player_characters[this->current_player]->get_square_x();
 	player_position[1] = this->player_characters[this->current_player]->get_square_y();
@@ -1693,7 +1811,13 @@ void c_map::update_screen_position()
 		   if (i == 0)
 			this->screen_pixel_position[i] = ((this->screen_square_position[i] - 1) * 64) + this->player_characters[this->current_player]->get_fraction_x() * 64;
 		  else
-			this->screen_pixel_position[i] = ((this->screen_square_position[i] - 1) * 50) + this->player_characters[this->current_player]->get_fraction_y() * 50;
+		    {
+			  this->screen_pixel_position[i] = ((this->screen_square_position[i] - 1) * 50) + this->player_characters[this->current_player]->get_fraction_y() * 50;
+		    
+			  player_height = this->get_height(player_position[0],player_position[1]); // check camera shift due to height
+
+			  this->screen_pixel_position[i] -= player_height * 27;
+		    }
 	    }
 	  else if (player_position[i] >= this->screen_square_end[i] - 3)
 	    {
@@ -2080,7 +2204,7 @@ void c_map::check_ice()
 
 //-----------------------------------------------
 
-void c_map::update()
+t_game_state c_map::update()
   {  
 	int i; 
 
@@ -2234,7 +2358,33 @@ void c_map::update()
 		this->cast_key_press(2);
 	  }
 
-	this->time_before = al_current_time();
+	return this->check_game_state();
+  }
+
+//-----------------------------------------------
+
+t_game_state c_map::check_game_state()
+  {
+	int i, j;
+	bool won;
+
+	won = true; // assume victory
+
+	for (i = 0; i < 3; i++)
+	  if (this->player_characters[i] != NULL)
+	    {
+		  if (won && !this->square_has_object(this->player_characters[i]->get_square_x(),this->player_characters[i]->get_square_y(),OBJECT_GATE))
+			won = false;
+
+		  // check monsters:
+		  for (j = 0; j < this->number_of_monsters; j++)
+			if (this->monster_characters[j] != NULL &&
+			  this->monster_characters[j]->get_square_x() == this->player_characters[i]->get_square_x() &&
+			  this->monster_characters[j]->get_square_y() == this->player_characters[i]->get_square_y())
+			  return GAME_STATE_LOSE;
+	    }
+
+	return won ? GAME_STATE_WIN : GAME_STATE_PLAYING;
   }
 
 //-----------------------------------------------

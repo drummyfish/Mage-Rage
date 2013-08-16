@@ -207,4 +207,16 @@ typedef enum
 	MONSTER_TROLL           /** can't be killed */
   } t_monster_type;
 
+typedef enum
+  {
+	/**
+	  Possible game states
+	*/
+
+	GAME_STATE_PLAYING,
+	GAME_STATE_WIN,
+	GAME_STATE_LOSE,
+	GAME_STATE_PAUSE
+  } t_game_state;
+
 #endif

@@ -611,6 +611,19 @@ class c_map: public c_graphic_object
 			documentation
 		*/
 
+	  void set_monsters(string monster_string);
+
+	    /**
+		  Accoording to given special monster
+		  string sets the monsters specified by
+		  it at the map.
+
+		  @param monster_string string describing
+		    monsters to be put on the map, for
+			the string format see the
+			documentation		  
+		*/
+
 	  void record_buttons();
 
 	    /**
@@ -619,6 +632,17 @@ class c_map: public c_graphic_object
 		  checking of them will be faster. This
 		  must be called in order for buttons
 		  to work.
+		*/
+
+	  t_game_state check_game_state();
+
+	    /**
+		  Checks the game state. That means
+		  if nothing happens or if the
+		  player lost because he's
+		  encountered a monster etc.
+
+		  @return current game state
 		*/
 
     public:
@@ -645,12 +669,15 @@ class c_map: public c_graphic_object
 		  Class destructor, frees all it's memory.
 		*/
 
-	  void update();
+	  t_game_state update();
 
 	    /**
 		  Updates the map, which means it handles
 		  it's another frame, including drawing
 		  it and handling events.
+
+		  @return current game state (i.e
+		    playing, lost, ...)
 		*/
 
 	  virtual void draw(int x, int y);

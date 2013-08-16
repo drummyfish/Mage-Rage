@@ -47,6 +47,22 @@ map objects:
     ga,  // gate             (ga,x,y)
   }
 
-monster = (type,x,y,path)
+monsters:
+  {
+    gh,  // ghost
+    tr   // troll
+  } 
+  
+(monster_type,x,y,direction1,step1,direction2,step2,...)
+
+direction =
+  {
+    n,   // north
+    s,   // south
+    w,   // west
+    e,   // east
+    -,   // none
+  }
+  
 path = (direction1,steps1,direction2,steps2,...)
 

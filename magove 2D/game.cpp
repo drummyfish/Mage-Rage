@@ -143,7 +143,24 @@ void c_game::run()
 	
 	while (true)                   // main loop
 	  { 
-		map->update(); 
+		switch (map->update())
+		  {
+		    case GAME_STATE_PLAYING:
+			  break;
+
+			case GAME_STATE_LOSE:
+			  cout << "lost" << endl;
+			  break;
+
+			case GAME_STATE_WIN:
+			  cout << "won" << endl;
+			  break;
+
+			case GAME_STATE_PAUSE:
+			  cout << "pause" << endl;
+			  break;
+		  }
+
 	    al_flip_display();
 		
 		this->input_output_state.key_use = false;             // we only want to detect one press
