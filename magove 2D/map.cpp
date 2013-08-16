@@ -2044,9 +2044,12 @@ void c_map::update_missiles()
 
 		if (this->get_height(this->missiles[i].square_x,this->missiles[i].square_y) > this->missiles[i].height ||
 		  this->get_terrain_height(this->missiles[i].square_x,this->missiles[i].square_y) > this->missiles[i].height)
-		  died = true;
-		else if (!this->square_is_stepable(this->missiles[i].square_x,this->missiles[i].square_y))
-		  died = true;
+		    died = true;
+		else if (!this->square_is_stepable(this->missiles[i].square_x,this->missiles[i].square_y) &&
+		  this->get_height(this->missiles[i].square_x,this->missiles[i].square_y) == this->missiles[i].height)
+		  {
+		    died = true;
+		  }
 		else if (!this->door_can_be_passed(this->missiles[i].square_x,this->missiles[i].square_y,this->missiles[i].direction))
 		  died = true;
 
@@ -2055,7 +2058,10 @@ void c_map::update_missiles()
 		    case MISSILE_MIA_1:
 			  if (this->square_has_object(this->missiles[i].square_x,this->missiles[i].square_y,OBJECT_CRATE) &&
 			      this->crate_can_be_shifted(this->missiles[i].square_x,this->missiles[i].square_y,this->missiles[i].height,this->missiles[i].direction))
-				this->shift_crate(this->missiles[i].square_x,this->missiles[i].square_y,this->missiles[i].direction);
+			    {
+				  this->shift_crate(this->missiles[i].square_x,this->missiles[i].square_y,this->missiles[i].direction);
+			      died = true;
+			    }
 
 			  break;
 
