@@ -154,8 +154,9 @@ bool c_map::set_environment(t_environment new_environment)
 
 //-----------------------------------------------
 
-c_map::c_map(string filename, t_input_output_state *input_output_state, long int *global_time)
+c_map::c_map(string filename, t_input_output_state *input_output_state, long int *global_time, int language)
   {
+	this->language = language;
     this->current_player = 0;
 	this->pressed_1 = false;
 	this->pressed_2 = false;
@@ -202,6 +203,34 @@ void c_map::add_map_object(c_map_object *map_object, int x, int y)
 		  this->squares[x][y].map_objects[i] = map_object;
 	      break;
 	    }
+  }
+
+//-----------------------------------------------
+
+string c_map::get_nth_substring(string from_what, int n)
+  {
+	int i;
+	int current_n;
+	string return_string;
+
+	current_n = 0;
+	return_string = "";
+
+	for (i = 0; (unsigned int) i < from_what.length(); i++)
+	  {
+		if (from_what[i] == '|')
+		  {
+		    current_n++;
+			continue;
+		  }
+
+        if (current_n == n)
+		  return_string += from_what[i];
+		else if (current_n > n)
+		  break;
+	  }
+
+	return return_string;
   }
 
 //-----------------------------------------------
@@ -272,27 +301,51 @@ void c_map::set_map_objects(string object_string)
 			else if (object_type.compare("si") == 0)
 			  {
 				help_object = new c_map_object(OBJECT_SIGN,-1,-1,this->global_time);
-				help_object->set_sign_text(sign_string);
+				help_object->set_sign_text(this->get_nth_substring(sign_string,this->language));
 			    this->add_map_object(help_object,numbers[0],numbers[1]);
 			  }
 		    else if (object_type.compare("dh") == 0)
-			  this->add_map_object(new c_map_object(OBJECT_DOOR_HORIZONTAL,numbers[2],numbers[3],this->global_time),numbers[0],numbers[1]);
+			  {
+				help_object = new c_map_object(OBJECT_DOOR_HORIZONTAL,numbers[2],numbers[3],this->global_time);
+			    this->add_map_object(help_object,numbers[0],numbers[1]);
+
+			    if (numbers[4])
+				  help_object->set_state(OBJECT_STATE_ON);
+			  }
 			else if (object_type.compare("dv") == 0)
-			  this->add_map_object(new c_map_object(OBJECT_DOOR_VERTICAL,numbers[2],numbers[3],this->global_time),numbers[0],numbers[1]);
+			  {
+				help_object = new c_map_object(OBJECT_DOOR_VERTICAL,numbers[2],numbers[3],this->global_time);
+			    this->add_map_object(help_object,numbers[0],numbers[1]);
+
+				if (numbers[4])
+				  help_object->set_state(OBJECT_STATE_ON);
+			  }
 			else if (object_type.compare("fo") == 0)
 			  this->add_map_object(new c_map_object(OBJECT_FOUNTAIN,-1,-1,&this->animation_frame),numbers[0],numbers[1]);
 		    else if (object_type.compare("le") == 0)
-			  this->add_map_object(new c_map_object(OBJECT_LEVER,numbers[2],numbers[3],this->global_time),numbers[0],numbers[1]);
+			  {
+				help_object = new c_map_object(OBJECT_LEVER,numbers[2],numbers[3],this->global_time);
+			    this->add_map_object(help_object,numbers[0],numbers[1]);
+			  
+			    if (numbers[4])
+				  help_object->set_state(OBJECT_STATE_ON);
+			  }
 			else if (object_type.compare("sn") == 0)
 			  this->add_map_object(new c_map_object(OBJECT_STAIRS_NORTH,-1,-1,this->global_time),numbers[0],numbers[1]);
+			else if (object_type.compare("fl") == 0)
+			  {
+                help_object = new c_map_object(OBJECT_FLAMES,numbers[2],numbers[3],this->global_time);
+				this->add_map_object(help_object,numbers[0],numbers[1]);
+
+				if (numbers[4])
+				  help_object->set_state(OBJECT_STATE_ON);
+			  }
 			else if (object_type.compare("se") == 0)
 			  this->add_map_object(new c_map_object(OBJECT_STAIRS_EAST,-1,-1,this->global_time),numbers[0],numbers[1]);
 		    else if (object_type.compare("ss") == 0)
 			  this->add_map_object(new c_map_object(OBJECT_STAIRS_SOUTH,-1,-1,this->global_time),numbers[0],numbers[1]);
 			else if (object_type.compare("sw") == 0)
 			  this->add_map_object(new c_map_object(OBJECT_STAIRS_WEST,-1,-1,this->global_time),numbers[0],numbers[1]);
-	        else if (object_type.compare("fl") == 0)
-			  this->add_map_object(new c_map_object(OBJECT_STAIRS_NORTH,numbers[2],numbers[3],this->global_time),numbers[0],numbers[1]);
 		    else if (object_type.compare("f1") == 0)
 			  this->add_map_object(new c_map_object(OBJECT_FLOWERS,-1,-1,this->global_time),numbers[0],numbers[1]);
 			else if (object_type.compare("f2") == 0)
@@ -307,7 +360,15 @@ void c_map::set_map_objects(string object_string)
 			  this->add_map_object(new c_map_object(OBJECT_WATER_LILY,-1,-1,this->global_time),numbers[0],numbers[1]);
 		    else if (object_type.compare("ga") == 0)
 			  this->add_map_object(new c_map_object(OBJECT_GATE,-1,-1,&this->animation_frame),numbers[0],numbers[1]);
-		  }
+			else if (object_type.compare("el") == 0)
+			  {
+			    help_object = new c_map_object(OBJECT_ELEVATOR,numbers[2],numbers[3],this->global_time);
+				this->add_map_object(help_object,numbers[0],numbers[1]);
+
+				if (numbers[4])
+				  help_object->set_state(OBJECT_STATE_ON);
+			  }
+         }
 	  }
 
 	this->link_objects();
@@ -457,7 +518,7 @@ bool c_map::load_from_file(string filename)
 
 	for (j = 0; j < this->height; j++)       // set terrain
 	  for (i = 0; i < this->width; i++)
-	    {
+	    { 
 		  switch (associative_array->get_text("heightmap")[j * this->width + i])
 		    {
 		      case '0':
@@ -499,8 +560,10 @@ bool c_map::load_from_file(string filename)
 		  this->squares[i][j].animation = NULL;
 
 		  for (k = 0; k < MAX_OBJECTS_PER_SQUARE; k++)
-		    this->squares[i][j].map_objects[k] = NULL;
-	    }
+		    {
+		      this->squares[i][j].map_objects[k] = NULL;
+		    }
+		}
 
 	if (associative_array->get_text("mia_x").compare("") == 0) // set players
 	  this->player_characters[0] = NULL;
@@ -599,286 +662,11 @@ bool c_map::load_from_file(string filename)
 		return false;
 
 	this->text_font = al_load_ttf_font("resources/architects_daughter.ttf",20,0);  // load the font
-
+	
 	if (!this->text_font)
 	  return false;
 
 	return true;
-/*
-	  int i, j, k;
-	int button_positions[512][2];        // buffer to hold button positions
-	string help_string;
-
-	this->width = 30;
-	this->height = 30;
-
-	if (!this->set_environment(ENVIRONMENT_SNOW))
-	  return false;
-
-	for (j = 0; j < this->height; j++)
-	  for (i = 0; i < this->width; i++)
-	    {
-		  this->squares[i][j].height = 0;
-		  this->squares[i][j].type = SQUARE_NORMAL;
-		  this->squares[i][j].height = NULL;
-		  this->squares[i][j].animation = NULL;
-
-		  for (k = 0; k < MAX_OBJECTS_PER_SQUARE; k++)
-		    this->squares[i][j].map_objects[k] = NULL;
-	    }
-
-	this->squares[0][0].height = 2;
-	this->squares[1][0].height = 2;
-	this->squares[2][0].height = 2;
-	this->squares[3][0].height = 2;
-	this->squares[4][0].height = 2;
-	this->squares[5][0].height = 2;
-	this->squares[6][0].height = 2;
-	this->squares[0][1].height = 2;
-	this->squares[1][1].height = 2;
-	this->squares[2][1].height = 2;
-	this->squares[3][1].height = 2;
-	this->squares[4][1].height = 2;
-	this->squares[5][1].height = 2;
-	this->squares[6][1].height = 2;
-	this->squares[2][6].height = 2;
-	this->squares[3][6].height = 2;
-	this->squares[2][0].height = 2;
-	this->squares[2][1].height = 2;
-	this->squares[2][2].height = 2;
-	this->squares[3][0].height = 2;
-	this->squares[3][1].height = 2;
-	this->squares[3][2].height = 2;
-	this->squares[0][8].height = 2;
-
-	this->squares[0][2].height = 1;
-	this->squares[1][2].height = 1;
-	this->squares[2][2].height = 1;
-	this->squares[0][3].height = 1;
-	this->squares[1][3].height = 1;
-	this->squares[2][3].height = 1;
-	this->squares[8][0].height = 1; 
-
-	this->squares[29][29].height = 2;
-	this->squares[28][29].height = 2;
-	this->squares[27][29].height = 1;
-
-	this->squares[0][1].type = SQUARE_WATER;
-	this->squares[4][2].type = SQUARE_WATER;
-	this->squares[5][2].type = SQUARE_WATER;
-
-	this->squares[1][6].type = SQUARE_WATER;
-	this->squares[2][6].type = SQUARE_WATER;
-	this->squares[3][6].type = SQUARE_WATER;
-	this->squares[1][7].type = SQUARE_WATER;
-	this->squares[2][7].type = SQUARE_WATER;
-	this->squares[3][7].type = SQUARE_WATER;
-	this->squares[1][8].type = SQUARE_WATER;
-	this->squares[2][8].type = SQUARE_WATER;
-	this->squares[3][8].type = SQUARE_WATER;
-
-	this->squares[10][10].type = SQUARE_HOLE;
-	this->squares[10][11].type = SQUARE_HOLE;
-	this->squares[10][12].type = SQUARE_HOLE;
-	this->squares[9][10].type = SQUARE_HOLE;
-	this->squares[9][11].type = SQUARE_COLLAPSE;
-	this->squares[9][12].type = SQUARE_HOLE;
-
-	this->squares[20][5].type = SQUARE_ICE;
-	this->squares[21][5].type = SQUARE_ICE;
-	this->squares[22][5].type = SQUARE_ICE;
-	this->squares[20][6].type = SQUARE_ICE;
-	this->squares[21][6].type = SQUARE_ICE;
-	this->squares[22][6].type = SQUARE_ICE;
-	this->squares[20][7].type = SQUARE_ICE;
-	this->squares[21][7].type = SQUARE_ICE;
-	this->squares[22][7].type = SQUARE_ICE;
-
-	this->player_characters[0] = new c_player_character(PLAYER_STAROVOUS,this->global_time);
-	this->player_characters[1] = new c_player_character(PLAYER_MIA,this->global_time);
-	this->player_characters[2] = new c_player_character(PLAYER_METODEJ,this->global_time);
-
-	this->number_of_monsters = 2;
-	this->monster_characters[0] = new c_monster_character(MONSTER_TROLL,20,2,this->global_time);
-	this->monster_characters[1] = new c_monster_character(MONSTER_GHOST,20,4,this->global_time);
-
-	this->monster_characters[1]->add_path_instruction(DIRECTION_NONE,3);
-	this->monster_characters[1]->add_path_instruction(DIRECTION_SOUTH,4);
-	this->monster_characters[1]->add_path_instruction(DIRECTION_WEST,2);
-	this->monster_characters[1]->add_path_instruction(DIRECTION_NORTH,4);
-	this->monster_characters[1]->add_path_instruction(DIRECTION_EAST,2); 
-
-	this->monster_characters[0]->add_path_instruction(DIRECTION_WEST,2);
-	this->monster_characters[0]->add_path_instruction(DIRECTION_NORTH,2);
-	this->monster_characters[0]->add_path_instruction(DIRECTION_EAST,2);
-	this->monster_characters[0]->add_path_instruction(DIRECTION_SOUTH,2);
-	this->monster_characters[0]->add_path_instruction(DIRECTION_NONE,2); 
-	this->monster_characters[0]->start_moving(); 
-
-	if (!this->player_characters[0]->is_succesfully_loaded() ||
-		!this->player_characters[1]->is_succesfully_loaded() ||
-		!this->player_characters[2]->is_succesfully_loaded())
-	  {
-		cerr << "ERROR: the player character wasn't succesfully loaded." << endl;
-	  }
-	
-	this->player_characters[0]->set_position(20.0,1.0);
-	this->player_characters[1]->set_position(7.0,8.0);
-	this->player_characters[2]->set_position(4.0,8.0);
-
-	this->add_map_object(new c_map_object(OBJECT_CARPET2,0,0,this->global_time),20,2);
-	this->add_map_object(new c_map_object(OBJECT_CRATE,0,0,this->global_time),5,0);
-	this->add_map_object(new c_map_object(OBJECT_CRATE,0,0,this->global_time),4,1);
-	this->add_map_object(new c_map_object(OBJECT_CRATE,0,0,this->global_time),5,6);
-	this->add_map_object(new c_map_object(OBJECT_CRATE,0,0,this->global_time),5,7);
-	this->add_map_object(new c_map_object(OBJECT_CRATE,0,0,this->global_time),5,8);
-	this->add_map_object(new c_map_object(OBJECT_CRATE,0,0,this->global_time),7,6);
-	this->add_map_object(new c_map_object(OBJECT_CRATE,0,0,this->global_time),7,7);
-	this->add_map_object(new c_map_object(OBJECT_CRATE,0,0,this->global_time),7,8);
-
-	this->add_map_object(new c_map_object(OBJECT_FLAMES,20,-1,this->global_time),9,2);
-	this->add_map_object(new c_map_object(OBJECT_BUTTON,20,-1,this->global_time),10,2);
-	
-	this->add_map_object(new c_map_object(OBJECT_FLAMES,-1,-1,this->global_time),9,4);
-
-	this->add_map_object(new c_map_object(OBJECT_ROCK,-1,-1,this->global_time),21,6);
-
-	this->add_map_object(new c_map_object(OBJECT_WATER_LILY,0,0,this->global_time),3,7);
-
-	this->add_map_object(new c_map_object(OBJECT_FLOWERS,0,0,this->global_time),5,10);
-	this->add_map_object(new c_map_object(OBJECT_BONES,0,0,this->global_time),6,11);
-	this->add_map_object(new c_map_object(OBJECT_CARPET,0,0,this->global_time),8,11);
-	this->add_map_object(new c_map_object(OBJECT_FLOWERS2,0,0,this->global_time),11,11);
-	this->add_map_object(new c_map_object(OBJECT_CARPET2,0,0,this->global_time),12,11);
-
-	this->add_map_object(new c_map_object(OBJECT_TELEPORT_INPUT,10,-1,this->global_time),2,10);
-	this->add_map_object(new c_map_object(OBJECT_TELEPORT_OUTPUT,10,-1,this->global_time),3,12);
-
-	this->add_map_object(new c_map_object(OBJECT_KEY_RED,-1,-1,this->global_time),6,13);
-	this->add_map_object(new c_map_object(OBJECT_KEY_GREEN,-1,-1,this->global_time),7,13);
-	this->add_map_object(new c_map_object(OBJECT_KEY_BLUE,-1,-1,this->global_time),5,13);
-
-	c_map_object *sign;
-
-	sign = new c_map_object(OBJECT_SIGN,0,0,this->global_time);
-
-	sign->set_sign_text("TEXT NA ZNACCE! Zde muze byt vase reklama. Volejte 0123456789.");
-
-	this->add_map_object(sign,2,12);
-
-	this->add_map_object(new c_map_object(OBJECT_FOUNTAIN,0,0,&this->animation_frame),10,8);
-	this->add_map_object(new c_map_object(OBJECT_GATE,0,0,&this->animation_frame),12,8);
-
-	this->add_map_object(new c_map_object(OBJECT_STAIRS_NORTH,0,0,this->global_time),1,2);
-	this->add_map_object(new c_map_object(OBJECT_STAIRS_NORTH,0,0,this->global_time),1,4);
-	this->add_map_object(new c_map_object(OBJECT_STAIRS_NORTH,0,0,this->global_time),3,2);
-	this->add_map_object(new c_map_object(OBJECT_STAIRS_WEST,0,0,this->global_time),7,0);
-
-	this->add_map_object(new c_map_object(OBJECT_LEVER,1,-1,this->global_time),8,7);
-	this->add_map_object(new c_map_object(OBJECT_LEVER,1,2,this->global_time),8,8);
-	this->add_map_object(new c_map_object(OBJECT_LEVER,2,-1,this->global_time),8,9);
-
-	this->add_map_object(new c_map_object(OBJECT_BUTTON,1,-1,this->global_time),8,13);
-
-	this->add_map_object(new c_map_object(OBJECT_DOOR_HORIZONTAL,1,-1,this->global_time),6,7);
-	this->add_map_object(new c_map_object(OBJECT_DOOR_HORIZONTAL,2,-1,this->global_time),6,8);
-	this->add_map_object(new c_map_object(OBJECT_DOOR_HORIZONTAL,1,2,this->global_time),6,9);
-	this->add_map_object(new c_map_object(OBJECT_DOOR_VERTICAL,1,2,this->global_time),6,2);
-
-	this->add_map_object(new c_map_object(OBJECT_ICE,-1,-1,this->global_time),5,12);
-
-	this->link_objects();
-
-	this->number_of_buttons = 0;
-
-	for (j = 0; j < this->height; j++)              // record all button positions
-	  for (i = 0; i < this->width; i++)
-		if (this->square_has_object(i,j,OBJECT_BUTTON))
-		  {
-			button_positions[this->number_of_buttons][0] = i;
-			button_positions[this->number_of_buttons][1] = j;
-			this->number_of_buttons++;
-		  }
-
-	this->button_positions_x = new int[this->number_of_buttons];
-	this->button_positions_y = new int[this->number_of_buttons];
-
-	for (i = 0; i < this->number_of_buttons; i++)
-	  {
-        this->button_positions_x[i] = button_positions[i][0];
-		this->button_positions_y[i] = button_positions[i][1];
-	  }
-	
-	this->animation_water_splash = new c_animation(this->global_time,"resources/animation_water_splash",5,-5,-5,2,true,"resources/water.wav",1.0);
-	this->animation_refresh = new c_animation(this->global_time,"resources/animation_refresh",6,0,0,2,true,"resources/refresh.wav",0.5);
-	this->animation_crate_shift_north = new c_animation(this->global_time,"resources/animation_crate_shift_north",3,0,-79,1,false,"",1.0);
-	this->animation_collapse = new c_animation(this->global_time,"resources/animation_collapse",5,0,0,2,true,"resources/crack.wav",0.3);
-	this->animation_melt = new c_animation(this->global_time,"resources/animation_melt",4,0,-27,5,false,"",0.0);
-	this->animation_teleport = new c_animation(this->global_time,"resources/animation_teleport",5,0,-27,5,true,"resources/teleport.wav",0.4);
-	this->animation_explosion = new c_animation(this->global_time,"resources/animation_explosion",7,0,-27,5,true,"resources/explosion.wav",0.3);
-	this->animation_shadow_explosion = new c_animation(this->global_time,"resources/animation_shadow_explosion",6,0,-27,5,true,"resources/shadow_explosion.wav",0.4);
-
-    this->spell_sounds_mia[0] = al_load_sample("resources/mia_cast.wav");
-    this->spell_sounds_mia[1] = al_load_sample("resources/mia_cast2.wav");
-	this->spell_sounds_metodej[0] = al_load_sample("resources/metodej_cast.wav");
-    this->spell_sounds_metodej[1] = al_load_sample("resources/metodej_cast2.wav");
-	this->spell_sounds_starovous[0] = al_load_sample("resources/starovous_cast.wav");
-    this->spell_sounds_starovous[1] = al_load_sample("resources/starovous_cast2.wav"); 
-	this->change_player_sound = al_load_sample("resources/change.wav");
-
-	if (!this->animation_water_splash->is_succesfully_loaded())
-	  return false;
-
-	this->portrait_mia = al_load_bitmap("resources/portrait_mia.png");               // load portrait bitmaps
-	this->portrait_metodej = al_load_bitmap("resources/portrait_metodej.png");
-	this->portrait_starovous = al_load_bitmap("resources/portrait_starovous.png");
-	this->portrait_selection = al_load_bitmap("resources/selection.png");
-
-	this->spell_mia_1[0] = al_load_bitmap("resources/spell_1_mia_1.png");            // load spell bitmaps
-	this->spell_mia_1[1] = al_load_bitmap("resources/spell_1_mia_2.png");
-	this->spell_mia_1[2] = al_load_bitmap("resources/spell_1_mia_3.png");
-	this->spell_mia_2[0] = al_load_bitmap("resources/spell_2_mia_1.png");
-	this->spell_mia_2[1] = al_load_bitmap("resources/spell_2_mia_2.png");
-	this->spell_mia_2[2] = al_load_bitmap("resources/spell_2_mia_3.png");
-	this->spell_metodej_1[0] = al_load_bitmap("resources/spell_1_metodej_1.png");
-	this->spell_metodej_1[1] = al_load_bitmap("resources/spell_1_metodej_2.png");
-	this->spell_metodej_1[2] = al_load_bitmap("resources/spell_1_metodej_3.png");
-	this->spell_starovous_1[0] = al_load_bitmap("resources/spell_1_starovous_1.png");
-	this->spell_starovous_1[1] = al_load_bitmap("resources/spell_1_starovous_2.png");
-	this->spell_starovous_1[2] = al_load_bitmap("resources/spell_1_starovous_3.png");
-	this->spell_starovous_2[0] = al_load_bitmap("resources/spell_2_starovous_1.png");
-	this->spell_starovous_2[1] = al_load_bitmap("resources/spell_2_starovous_2.png");
-	this->spell_starovous_2[2] = al_load_bitmap("resources/spell_2_starovous_3.png");                            
-	this->spell_icons[0] = al_load_bitmap("resources/icon_telekinesis.png");
-	this->spell_icons[1] = al_load_bitmap("resources/icon_create_path.png");
-	this->spell_icons[2] = al_load_bitmap("resources/icon_fireball.png");
-	this->spell_icons[3] = al_load_bitmap("resources/icon_fire_cloak.png");
-	this->spell_icons[4] = al_load_bitmap("resources/icon_light.png");
-	this->spell_icons[5] = al_load_bitmap("resources/icon_heal.png");
-	this->spell_icons[6] = al_load_bitmap("resources/icon_teleport.png");
-
-	if (!this->portrait_mia || !this->portrait_metodej ||
-		!this->portrait_starovous || !this->portrait_selection ||
-		!this->spell_mia_1[0] || !this->spell_mia_1[1] ||
-	    !this->spell_mia_1[2] || !this->spell_mia_2[0] ||
-	    !this->spell_mia_2[1] || !this->spell_mia_2[2] ||
-	    !this->spell_metodej_1[0] || !this->spell_metodej_1[1] ||
-	    !this->spell_metodej_1[2] || !this->spell_starovous_1[0] ||
-	    !this->spell_starovous_1[1] || !this->spell_starovous_1[2] ||
-	    !this->spell_starovous_2[0] || !this->spell_starovous_2[1] ||
-	    !this->spell_starovous_2[2] || !this->change_player_sound)
-	  return false;
-
-	for (i = 0; i < 7; i++)
-	  if (this->spell_icons[i] == NULL)
-		return false;
-
-	this->text_font = al_load_ttf_font("resources/architects_daughter.ttf",20,0);  // load the font
-
-	if (!this->text_font)
-	  return false;
-	
-	return true; */
   }
 
 //-----------------------------------------------
@@ -915,6 +703,7 @@ void c_map::update_monsters()
   { 
 	int i;
 	bool must_check_buttons;
+	bool can_move;
 	t_direction direction;
 
 	must_check_buttons = false;
@@ -924,7 +713,36 @@ void c_map::update_monsters()
 	    {
 		  direction = this->monster_characters[i]->get_next_move();
 		  
-		  if (direction != DIRECTION_NONE && this->character_can_move_to_square(this->monster_characters[i],direction))
+		  can_move = false;
+
+		  switch (direction)
+		    {
+		      case DIRECTION_EAST:
+				if (this->monster_characters[i]->get_fraction_x() < 1 - CLIFF_DISTANCE_EAST_WEST)
+			      can_move = true;
+					
+				break;
+
+			  case DIRECTION_NORTH:
+				if (this->monster_characters[i]->get_fraction_y() > CLIFF_DISTANCE_SOUTH)
+			      can_move = true;
+					
+				break;
+
+			  case DIRECTION_WEST:
+				if (this->monster_characters[i]->get_fraction_x() > CLIFF_DISTANCE_EAST_WEST)
+			      can_move = true;
+					
+				break;
+
+			  case DIRECTION_SOUTH:
+				if (this->monster_characters[i]->get_fraction_x() < 1 - CLIFF_DISTANCE_NORTH)
+			      can_move = true;
+					
+				break;
+		    }
+
+		  if (direction != DIRECTION_NONE && (can_move || this->character_can_move_to_square(this->monster_characters[i],direction)))
 		    {
 			  this->move_character(this->monster_characters[i],direction);
 		      must_check_buttons = true;
@@ -1043,9 +861,82 @@ void c_map::display_animation(t_display_animation animation, int x, int y)
   }
 
 //-----------------------------------------------
-
 c_map::~c_map()
   {
+	int i, j, k;
+
+	for (j = 0; j < this->height; j++)              // destroy map objects
+	  for (i = 0; i < this->width; i++)
+		for (k = 0; k < MAX_OBJECTS_PER_SQUARE; k++)
+		  {
+		    if (this->squares[i][j].map_objects[k] != NULL)
+		      delete this->squares[i][j].map_objects[k];
+		  }
+
+	for (i = 0; i < 3; i++)                         // destroy players
+	  if (this->player_characters[i] != NULL)
+		delete this->player_characters[i];
+
+	for (i = 0; i < this->number_of_monsters; i++)  // destroy monsters
+	  if (this->monster_characters[i] != NULL)
+	    delete this->monster_characters[i];
+
+	delete this->animation_water_splash;            // destroy animations                   
+	delete this->animation_refresh;                              
+	delete this->animation_crate_shift_north;                     
+	delete this->animation_collapse;                               
+	delete this->animation_melt;                                   
+	delete this->animation_teleport;                              
+	delete this->animation_explosion;                              
+	delete this->animation_shadow_explosion;   
+
+	al_destroy_bitmap(this->portrait_selection);    // destroy bitmaps
+	al_destroy_bitmap(this->portrait_mia);      
+	al_destroy_bitmap(this->portrait_metodej);   
+	al_destroy_bitmap(this->portrait_starovous);       
+	al_destroy_bitmap(this->tile);                     
+	al_destroy_bitmap(this->tile_cliff_south_1);       
+	al_destroy_bitmap(this->tile_cliff_south_2);        
+	al_destroy_bitmap(this->tile_cliff_southwest_1);     
+	al_destroy_bitmap(this->tile_cliff_southwest_2);     
+	al_destroy_bitmap(this->tile_cliff_southeast_1);         
+	al_destroy_bitmap(this->tile_cliff_southeast_2);          
+	al_destroy_bitmap(this->tile_cliff_west);                 
+	al_destroy_bitmap(this->tile_cliff_east);                  
+	al_destroy_bitmap(this->tile_cliff_north);             
+	al_destroy_bitmap(this->tile_cliff_northwest);          
+	al_destroy_bitmap(this->tile_cliff_northeast);          
+	al_destroy_bitmap(this->tile_edge);                      
+	al_destroy_bitmap(this->tile_ice);                           
+	al_destroy_bitmap(this->tile_collapse);                               
+	al_destroy_bitmap(this->tile_hole);                              
+	al_destroy_bitmap(this->bitmap_crate_water);                     
+	
+	for (i = 0; i < 5; i++)
+	  al_destroy_bitmap(this->tile_water[i]);            
+
+	for (i = 0; i < 3; i++)
+	  {
+	    al_destroy_bitmap(this->spell_mia_1[i]);                           
+	    al_destroy_bitmap(this->spell_mia_2[i]);                         
+		al_destroy_bitmap(this->spell_metodej_1[i]);        
+	    al_destroy_bitmap(this->spell_starovous_1[i]);                  
+	    al_destroy_bitmap(this->spell_starovous_2[i]); 
+	  }
+
+	for (i = 0; i < 7; i++)
+	  al_destroy_bitmap(this->spell_icons[i]);   
+
+	al_destroy_sample(this->change_player_sound);    // destroy sounds
+
+	for (i = 0; i < 2; i++)
+	  {
+	    al_destroy_sample(this->spell_sounds_mia[i]);        
+	    al_destroy_sample(this->spell_sounds_metodej[i]);                   
+	    al_destroy_sample(this->spell_sounds_starovous[i]);                  
+	  }
+
+	al_destroy_font(this->text_font);               // destroy the font
   }
 
 //-----------------------------------------------
@@ -1371,7 +1262,7 @@ void c_map::draw(int x, int y)
 	int i, j, k, help_height, elevation, number_of_crates, elevator_height;
 	al_clear_to_color(al_map_rgb(0,0,0));      // clear the screen
 	this->animation_frame = *this->global_time / 16;
-
+	
 	for (j = this->screen_square_position[1] - 1; j < this->screen_square_end[1] + 1; j++)                         // go through lines
 	  { 
 		if (j < 0 || j >= this->height)
@@ -1388,7 +1279,7 @@ void c_map::draw(int x, int y)
 	              continue;
 
 				if (this->squares[i][j].height == help_height)
-		          { 
+		          {  
 			        switch (this->squares[i][j].type)
 			          {
 			            case SQUARE_NORMAL:                      // normal square
@@ -1466,7 +1357,7 @@ void c_map::draw(int x, int y)
 			  }
 	      }
 
-		for (i = 0; i < this->width; i++)      // draw the same line of objects (and animations)
+		for (i = 0; i < this->screen_square_end[0] + 1; i++)      // draw the same line of objects (and animations)
 	      {
 			number_of_crates = 0;
 			elevator_height = 0;
@@ -1488,11 +1379,11 @@ void c_map::draw(int x, int y)
 					number_of_crates++;
 				  }
 				else
-				  {
+				  { 
 					if (this->squares[i][j].map_objects[k]->get_type() == OBJECT_ELEVATOR)
 					  if (this->squares[i][j].map_objects[k]->get_state() == OBJECT_STATE_ON)
 						elevator_height = 27;
-
+			
 				    this->squares[i][j].map_objects[k]->draw(x + i * 64 - this->screen_pixel_position[0], y + j * 50 - this->squares[i][j].height * 27 - this->screen_pixel_position[1]);
 				  }
 			  else
@@ -1504,7 +1395,7 @@ void c_map::draw(int x, int y)
 			  else
 			    this->squares[i][j].animation = NULL;
 	      }
-	
+
 		for (i = 0; i < 3; i++)                // draw players
 		  if (this->player_characters[i] != NULL && this->player_characters[i]->get_square_y() == j)
 		    {
@@ -1983,7 +1874,7 @@ void c_map::display_text(string text, double duration)
 	  {
 	    for (i = 0; i < MAX_TEXT_CHARACTERS_PER_LINE - 1; i++)
 		  {
-			if (position >= (int) (text.length() - 1))
+			if (position >= (int) (text.length()))
 			  {
 			    this->text_lines[j][i] = 0;
 			    break;

@@ -87,7 +87,7 @@ class c_map: public c_graphic_object
 	  bool mouse_pressed;
 	  bool check_firecloak;                                            /** says if fire cloak spell time should be being checked */
 	  double fire_cloak_end_time;                                      /** stores the end time for the fire cloak spell */
-
+	  int language;                                                    /** number of language, it must be know in order to set right sign texts etc. */
 
 	  char text_lines[MAX_TEXT_LINES][MAX_TEXT_CHARACTERS_PER_LINE];   /** lines of text being displayed on screen */
 	  bool text_is_displayed;                                          /** whether the text is to be displayed */
@@ -165,6 +165,19 @@ class c_map: public c_graphic_object
 		  @param next_y in this variable will be
 		    the y coordination of the next square
 			returned
+		*/
+
+	  static string get_nth_substring(string from_what, int n);
+
+	    /**
+		  Returns nth substring from string in
+		  format "part1|part2|..." If for example
+		  n equals 0, then "part1" is returned.
+
+		  @param from_what string to be parsed
+		  @param n number of substring to return
+		  @return nth substring of from_what
+		    string, without the '|' separators
 		*/
 
 	  void move_character(c_character *character, t_direction direction);
@@ -647,7 +660,7 @@ class c_map: public c_graphic_object
 
     public:
 
-      c_map(string filename, t_input_output_state *input_output_state, long int *global_time);
+      c_map(string filename, t_input_output_state *input_output_state, long int *global_time, int language);
 
 	    /** 
 	      Class constructor, loads new map from
@@ -661,6 +674,8 @@ class c_map: public c_graphic_object
 		  @param global_time reference to a
 		    global time counter variable which is
 			needed for animations
+		  @param language language number, 0 =
+		    english, 1 = czech
 	    */
 
 	  ~c_map();

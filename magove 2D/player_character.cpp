@@ -103,6 +103,12 @@ c_player_character::~c_player_character()
 	al_destroy_bitmap(this->sprite_west_casting);
 	al_destroy_bitmap(this->sprite_west_running_1);
 	al_destroy_bitmap(this->sprite_west_running_2);
+	al_destroy_bitmap(this->fire_cloak_1);
+	al_destroy_bitmap(this->fire_cloak_2);
+	al_destroy_bitmap(this->fire_cloak_3);
+	al_destroy_sample(this->sound_firecloak);
+	al_destroy_sample(this->sound_footsteps);
+	al_destroy_sample(this->sound_skate);
   }
 
 //-----------------------------------------------

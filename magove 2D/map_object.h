@@ -51,6 +51,13 @@ class c_map_object: public c_graphic_object
 			is needed for animations
 	    */
 
+	  ~c_map_object();
+
+	    /**
+		  Class destructor, frees all its
+		  memory.
+		*/
+
 	  void update_controlled_objects();
 
 	    /**

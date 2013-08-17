@@ -109,20 +109,26 @@ c_game::c_game()
 
 c_game::~c_game()
   {
-	al_destroy_event_queue(this->event_queue);
+	al_stop_samples();                           // stop all sounds	
+	delete this->map;
+	al_uninstall_keyboard();
+	al_uninstall_mouse(); 
+	al_shutdown_primitives_addon();
+	al_shutdown_image_addon();
+	al_shutdown_font_addon();
 	al_destroy_timer(this->global_timer); 
 	al_destroy_display(this->display);
-    delete this->map;
+	al_destroy_event_queue(this->event_queue);
+	al_uninstall_audio();
   }
 
 //-----------------------------------------------
 
 void c_game::run()
   {
-	c_map *map;
 	string help_str;
 
-	map = new c_map("resources/map1",&this->input_output_state,&this->global_time);
+	this->map = new c_map("resources/map2",&this->input_output_state,&this->global_time,0);
 
 	if (!map->is_succesfully_loaded())
 	  {

@@ -81,6 +81,21 @@ t_monster_type c_monster_character::get_monster_type()
 
 c_monster_character::~c_monster_character()
   {
+	al_destroy_bitmap(this->shadow);                // free bitmaps
+	al_destroy_bitmap(this->sprite_north);
+	al_destroy_bitmap(this->sprite_north_running_1);
+	al_destroy_bitmap(this->sprite_north_running_2);
+	al_destroy_bitmap(this->sprite_east);
+	al_destroy_bitmap(this->sprite_east_running_1);
+	al_destroy_bitmap(this->sprite_east_running_2);
+	al_destroy_bitmap(this->sprite_south); 
+	al_destroy_bitmap(this->sprite_south_running_1);
+	al_destroy_bitmap(this->sprite_south_running_2);
+	al_destroy_bitmap(this->sprite_west);
+	al_destroy_bitmap(this->sprite_west_running_1);
+	al_destroy_bitmap(this->sprite_west_running_2);
+	al_destroy_sample(this->sound_footsteps);
+	al_destroy_sample(this->sound_skate);
   }
 
 //-----------------------------------------------

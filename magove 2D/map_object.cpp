@@ -27,6 +27,8 @@ c_map_object::c_map_object(t_object_type object_type, int link_id,  int link_id2
 	this->sound = NULL;
 	this->sound_gain = 1.0;
 	this->sign_text = "";
+
+	this->update_animation_period();
 	 
 	for (i = 0; i < 5; i++)
       this->bitmaps[i] = NULL;
@@ -223,6 +225,18 @@ c_map_object::c_map_object(t_object_type object_type, int link_id,  int link_id2
 		  this->succesfully_loaded = false;
 		  break;
 		}
+  }
+
+//-----------------------------------------------
+
+c_map_object::~c_map_object()
+  {
+	int i;
+
+	al_destroy_sample(this->sound);
+
+	for (i = 0; i < 5; i++)
+	  al_destroy_bitmap(this->bitmaps[i]);
   }
 
 //-----------------------------------------------
@@ -436,7 +450,7 @@ void c_map_object::draw(int x, int y)
 
 		case OBJECT_DOOR_HORIZONTAL:
 		case OBJECT_DOOR_VERTICAL:
-		case OBJECT_ELEVATOR:
+		case OBJECT_ELEVATOR:  
 		  switch (this->playing_animation)
 		    {
 		      case ANIMATION_NONE:
@@ -605,7 +619,7 @@ c_map_object *c_map_object::get_controlled_object(int index)
 //-----------------------------------------------
 
 void c_map_object::set_sign_text(string text)
-  {
+  { 
 	this->sign_text = text;
   }
 

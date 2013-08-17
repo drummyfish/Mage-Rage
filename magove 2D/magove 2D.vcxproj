@@ -94,6 +94,9 @@
     <ClInclude Include="monster_character.h" />
     <ClInclude Include="player_character.h" />
   </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="..\Release\resources.rc" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>

@@ -27,11 +27,11 @@ map objects:
     cr,  // crate            (cr,x,y)
     ic,  // ice              (ic,x,y)
     tr,  // tree             (tr,x,y)
-    bu,  // button           (bu,x,y,id1,id2,state)      state = {1|0}
+    bu,  // button           (bu,x,y,id1,id2)      
     si,  // sign             (si,x,y,"cz czech sign text|en sign text")
     dh,  // door horizontal  (dh,x,y,id1,id2,state)
     dv,  // door vertical    (dv,x,y,id1,id2,state)
-    fo,  // fountain         (fo,x,y)
+    fo,  // fountain         (fo,x,y)                   state = {1|0}
     le,  // lever            (le,x,y,id1,id2,state)
     sn,  // stairs north     (sn,x,y)
     se,  // stairs east      (se,x,y)
@@ -45,6 +45,7 @@ map objects:
     c2,  // carpet 2         (c2,x,y)
     wl,  // water lilly      (wl,x,y)
     ga,  // gate             (ga,x,y)
+    el   // elevator         (el,x,y,id1,id2,state)
   }
 
 monsters:
