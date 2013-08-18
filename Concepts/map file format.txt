@@ -45,7 +45,10 @@ map objects:
     c2,  // carpet 2         (c2,x,y)
     wl,  // water lilly      (wl,x,y)
     ga,  // gate             (ga,x,y)
-    el   // elevator         (el,x,y,id1,id2,state)
+    el,  // elevator         (el,x,y,id1,id2,state)
+    tw,  // tree winter      (tw,x,y)
+    ts,  // teleport source  (ts,x,y,id)
+    td   // teleport dest.   (td,x,y,id)
   }
 
 monsters:

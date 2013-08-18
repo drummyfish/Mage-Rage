@@ -189,6 +189,8 @@ c_map::c_map(string filename, t_input_output_state *input_output_state, long int
 	portrait_y_position = this->input_output_state->screen_y - 75;
 
 	this->succesfully_loaded = this->load_from_file(filename);
+
+	this->update_screen_position();
   }
 
 //-----------------------------------------------
@@ -360,6 +362,8 @@ void c_map::set_map_objects(string object_string)
 			  this->add_map_object(new c_map_object(OBJECT_WATER_LILY,-1,-1,this->global_time),numbers[0],numbers[1]);
 		    else if (object_type.compare("ga") == 0)
 			  this->add_map_object(new c_map_object(OBJECT_GATE,-1,-1,&this->animation_frame),numbers[0],numbers[1]);
+		    else if (object_type.compare("tw") == 0)
+			  this->add_map_object(new c_map_object(OBJECT_TREE_WINTER,-1,-1,&this->animation_frame),numbers[0],numbers[1]);
 			else if (object_type.compare("el") == 0)
 			  {
 			    help_object = new c_map_object(OBJECT_ELEVATOR,numbers[2],numbers[3],this->global_time);
@@ -367,6 +371,16 @@ void c_map::set_map_objects(string object_string)
 
 				if (numbers[4])
 				  help_object->set_state(OBJECT_STATE_ON);
+			  }
+			else if (object_type.compare("ts") == 0)
+			  {
+			    help_object = new c_map_object(OBJECT_TELEPORT_INPUT,numbers[2],-1,this->global_time);
+				this->add_map_object(help_object,numbers[0],numbers[1]);
+			  }
+		    else if (object_type.compare("td") == 0)
+			  {
+			    help_object = new c_map_object(OBJECT_TELEPORT_OUTPUT,numbers[2],numbers[3],this->global_time);
+				this->add_map_object(help_object,numbers[0],numbers[1]);
 			  }
          }
 	  }
@@ -496,7 +510,7 @@ void c_map::set_monsters(string monster_string)
 bool c_map::load_from_file(string filename)
   {
 	c_associative_array *associative_array;
-	int i, j, k;
+	int i, j, k, next_player;
 	bool all_ok;
 
 	all_ok = true;
@@ -565,28 +579,32 @@ bool c_map::load_from_file(string filename)
 		    }
 		}
 
+	next_player = 0;
+
 	if (associative_array->get_text("mia_x").compare("") == 0) // set players
-	  this->player_characters[0] = NULL;
+	  this->player_characters[next_player] = NULL;
 	else
 	  {
-	    this->player_characters[0] = new c_player_character(PLAYER_MIA,this->global_time); 
-		this->player_characters[0]->set_square_position(atoi(associative_array->get_text("mia_x").c_str()),atoi(associative_array->get_text("mia_y").c_str()));
+	    this->player_characters[next_player] = new c_player_character(PLAYER_MIA,this->global_time); 
+		this->player_characters[next_player]->set_square_position(atoi(associative_array->get_text("mia_x").c_str()),atoi(associative_array->get_text("mia_y").c_str()));
+	    next_player++;
 	  }
 
 	if (associative_array->get_text("metodej_x").compare("") == 0)
-	  this->player_characters[1] = NULL;
+	  this->player_characters[next_player] = NULL;
 	else
 	  {
-	    this->player_characters[1] = new c_player_character(PLAYER_METODEJ,this->global_time); 
-		this->player_characters[1]->set_square_position(atoi(associative_array->get_text("metodej_x").c_str()),atoi(associative_array->get_text("metodej_y").c_str()));
+	    this->player_characters[next_player] = new c_player_character(PLAYER_METODEJ,this->global_time); 
+		this->player_characters[next_player]->set_square_position(atoi(associative_array->get_text("metodej_x").c_str()),atoi(associative_array->get_text("metodej_y").c_str()));
+	    next_player++;
 	  }
 
 	if (associative_array->get_text("starovous_x").compare("") == 0)
-	  this->player_characters[2] = NULL;
+	  this->player_characters[next_player] = NULL;
 	else
 	  {
-	    this->player_characters[2] = new c_player_character(PLAYER_STAROVOUS,this->global_time); 
-		this->player_characters[2]->set_square_position(atoi(associative_array->get_text("starovous_x").c_str()),atoi(associative_array->get_text("starovous_y").c_str()));
+	    this->player_characters[next_player] = new c_player_character(PLAYER_STAROVOUS,this->global_time); 
+		this->player_characters[next_player]->set_square_position(atoi(associative_array->get_text("starovous_x").c_str()),atoi(associative_array->get_text("starovous_y").c_str()));
 	  }
 
 	this->set_map_objects(associative_array->get_text("objects")); // set objects
@@ -1270,7 +1288,7 @@ void c_map::draw(int x, int y)
 
         for (help_height = 0; help_height < 3; help_height++)  // go through all 3 heights
 	      { 
-
+			  
 			elevation = help_height * 27;
 	
 			for (i = this->screen_square_position[0] - 1; i < this->screen_square_end[0] + 1; i++)                 // go through columns
@@ -1404,7 +1422,7 @@ void c_map::draw(int x, int y)
 			  this->player_characters[i]->draw((int) (x + this->player_characters[i]->get_position_x() * 64 - this->screen_pixel_position[0]),
 			  (int) (y + this->player_characters[i]->get_position_y() * 50 - this->screen_pixel_position[1]) - elevation);
 		    }
-
+ 
 		for (i = 0; i < this->number_of_monsters; i++) // draw monsters
 		  if (this->monster_characters[i] != NULL && this->monster_characters[i]->get_square_y() == j)
 		    { 
@@ -1458,7 +1476,7 @@ void c_map::draw(int x, int y)
 		  al_draw_bitmap(this->spell_icons[1],x + 550,y + this->portrait_y_position + 10,0);
 		  break;
 			  
-		case PLAYER_METODEJ:
+		case PLAYER_METODEJ: 
 		  al_draw_bitmap(this->spell_icons[2],x + 490,y + this->portrait_y_position + 10,0);
 		  al_draw_bitmap(this->spell_icons[3],x + 550,y + this->portrait_y_position + 10,0);
 		  break;
@@ -1944,77 +1962,78 @@ void c_map::update_missiles()
 		else if (!this->door_can_be_passed(this->missiles[i].square_x,this->missiles[i].square_y,this->missiles[i].direction))
 		  died = true;
 
-		switch (this->missiles[i].type)    // check the missile effect
-		  {
-		    case MISSILE_MIA_1:
-			  if (this->square_has_object(this->missiles[i].square_x,this->missiles[i].square_y,OBJECT_CRATE) &&
-			      this->crate_can_be_shifted(this->missiles[i].square_x,this->missiles[i].square_y,this->missiles[i].height,this->missiles[i].direction))
-			    {
-				  this->shift_crate(this->missiles[i].square_x,this->missiles[i].square_y,this->missiles[i].direction);
-			      died = true;
-			    }
+		if (this->get_terrain_height(this->missiles[i].square_x,this->missiles[i].square_y) == this->missiles[i].height)  // the missile can only take effect at the same height
+		  switch (this->missiles[i].type)    // check the missile effect
+		    {
+		      case MISSILE_MIA_1:
+		  	    if (this->square_has_object(this->missiles[i].square_x,this->missiles[i].square_y,OBJECT_CRATE) &&
+			        this->crate_can_be_shifted(this->missiles[i].square_x,this->missiles[i].square_y,this->missiles[i].height,this->missiles[i].direction))
+			      {
+				    this->shift_crate(this->missiles[i].square_x,this->missiles[i].square_y,this->missiles[i].direction);
+			        died = true;
+			      }
 
-			  break;
+			    break;
 
-            case MISSILE_MIA_2:
-			  if (this->get_square_type(this->missiles[i].square_x,this->missiles[i].square_y) == SQUARE_HOLE)
-			    {
-				  this->set_square_type(this->missiles[i].square_x,this->missiles[i].square_y,SQUARE_COLLAPSE);
-			      died = true;
-			    }
+              case MISSILE_MIA_2:
+			    if (this->get_square_type(this->missiles[i].square_x,this->missiles[i].square_y) == SQUARE_HOLE)
+			      {
+				    this->set_square_type(this->missiles[i].square_x,this->missiles[i].square_y,SQUARE_COLLAPSE);
+			        died = true;
+			      }
 
-			  break;
+			    break;
 
-			case MISSILE_METODEJ_1:
-			  if (this->square_has_object(this->missiles[i].square_x,this->missiles[i].square_y,OBJECT_ICE))
-			    {
-				  for (j = 0; j < MAX_OBJECTS_PER_SQUARE; j++)
-					if (this->squares[this->missiles[i].square_x][this->missiles[i].square_y].map_objects[j]->get_type() == OBJECT_ICE)
-					  {
-					    this->remove_object(this->missiles[i].square_x,this->missiles[i].square_y,j);
-						this->display_animation(DISPLAY_ANIMATION_MELT,this->missiles[i].square_x,this->missiles[i].square_y);
+			  case MISSILE_METODEJ_1:
+			    if (this->square_has_object(this->missiles[i].square_x,this->missiles[i].square_y,OBJECT_ICE))
+			      {
+				    for (j = 0; j < MAX_OBJECTS_PER_SQUARE; j++)
+					  if (this->squares[this->missiles[i].square_x][this->missiles[i].square_y].map_objects[j]->get_type() == OBJECT_ICE)
+					    {
+					      this->remove_object(this->missiles[i].square_x,this->missiles[i].square_y,j);
+						  this->display_animation(DISPLAY_ANIMATION_MELT,this->missiles[i].square_x,this->missiles[i].square_y);
 
 
-						break;
-					  }
+					  	  break;
+					    }
 
-			      died = true;
-			    }
+			        died = true;
+			      }
 
-			  break;
+			    break;
 
-			case MISSILE_STAROVOUS_1:
-			  for (j = 0; j < this->number_of_monsters; j++)
-			    {
-				  if (this->monster_characters[j] != NULL
-					&& this->monster_characters[j]->get_monster_type() == MONSTER_GHOST
-					&& this->monster_characters[j]->get_square_x() == this->missiles[i].square_x
-					&& this->monster_characters[j]->get_square_y() == this->missiles[i].square_y)
+			  case MISSILE_STAROVOUS_1:
+			    for (j = 0; j < this->number_of_monsters; j++)
+			      {
+				    if (this->monster_characters[j] != NULL
+					  && this->monster_characters[j]->get_monster_type() == MONSTER_GHOST
+					  && this->monster_characters[j]->get_square_x() == this->missiles[i].square_x
+					  && this->monster_characters[j]->get_square_y() == this->missiles[i].square_y)
+				      {
+				  	    this->monster_characters[j] = NULL;
+					    this->display_animation(DISPLAY_ANIMATION_SHADOW_EXPLOSION,this->missiles[i].square_x,this->missiles[i].square_y);
+				        died = true;
+				      }
+			      }
+
+			    break;
+
+			  case MISSILE_STAROVOUS_2:
+			    for (j = 0; j < 3; j++)
+				  if (this->player_characters[j] != NULL &&
+				    this->player_characters[j]->get_square_x() == this->missiles[i].square_x &&
+				    this->player_characters[j]->get_square_y() == this->missiles[i].square_y &&
+				    (this->player_characters[j]->get_player_type() == PLAYER_MIA ||
+				    this->player_characters[j]->get_player_type() == PLAYER_METODEJ))
 				    {
-				  	  this->monster_characters[j] = NULL;
-					  this->display_animation(DISPLAY_ANIMATION_SHADOW_EXPLOSION,this->missiles[i].square_x,this->missiles[i].square_y);
-				      died = true;
+					  this->player_characters[j]->change_magic_energy(1);
+					  died = true;
+					  this->display_animation(DISPLAY_ANIMATION_REFRESH,this->missiles[i].square_x,this->missiles[i].square_y);
+					  break;
 				    }
-			    }
 
-			  break;
-
-			case MISSILE_STAROVOUS_2:
-			  for (j = 0; j < 3; j++)
-				if (this->player_characters[j] != NULL &&
-				  this->player_characters[j]->get_square_x() == this->missiles[i].square_x &&
-				  this->player_characters[j]->get_square_y() == this->missiles[i].square_y &&
-				  (this->player_characters[j]->get_player_type() == PLAYER_MIA ||
-				  this->player_characters[j]->get_player_type() == PLAYER_METODEJ))
-				  {
-					this->player_characters[j]->change_magic_energy(1);
-					died = true;
-					this->display_animation(DISPLAY_ANIMATION_REFRESH,this->missiles[i].square_x,this->missiles[i].square_y);
-					break;
-				  }
-
-			  break;
-		  }
+			    break;
+		    }
 
 		if (this->missiles[i].position_x < 0 ||
 		  this->missiles[i].position_x > this->width ||
@@ -2024,7 +2043,7 @@ void c_map::update_missiles()
 
 		if (died)    // remove the missile
 		  {
-			if (this->missiles[i].type == MISSILE_METODEJ_1) // display explosion
+			  if (this->missiles[i].type == MISSILE_METODEJ_1) // display explosion
 			  {
 				switch (this->missiles[i].direction) // find the square that the missile was before
 				  {
@@ -2104,7 +2123,7 @@ void c_map::check_ice()
 t_game_state c_map::update()
   {  
 	int i; 
-
+	
 	this->time_difference = al_current_time() - this->time_before;
 	
 	if (this->text_is_displayed && this->text_end_time <= al_current_time()) // erase the text displayed
@@ -2476,49 +2495,52 @@ void c_map::use_key_press()
 	  this->player_characters[this->current_player]->get_direction(),
 	  &facing_square[0],&facing_square[1]);
 
-	if (facing_square[0] >= 0 && facing_square[0] < this->width &&
-      facing_square[1] >= 0 && facing_square[1] < this->height)
-	for (i = 0; i < MAX_OBJECTS_PER_SQUARE; i++)
-	  {
-		help_object = this->squares[facing_square[0]][facing_square[1]].map_objects[i];
-
-	    if (help_object != NULL)
-	      {
-		    if (help_object->get_type() == OBJECT_CRATE)
-		      {
-				if (this->crate_can_be_shifted(facing_square[0],facing_square[1],this->get_height(coordinations[0],coordinations[1]),this->player_characters[this->current_player]->get_direction()))
-			      {  
-				    this->shift_crate(facing_square[0],facing_square[1],this->player_characters[this->current_player]->get_direction());
-		            this->player_characters[this->current_player]->play_animation(ANIMATION_CAST);
-			      }
-		      }
-		    else if (help_object->get_type() == OBJECT_LEVER && !help_object->is_animating())
-		      {
-			    this->player_characters[this->current_player]->play_animation(ANIMATION_USE);
-
-				if (this->object_can_be_used(help_object))
-			      help_object->use();
-		      }
-			else if (help_object->get_type() == OBJECT_FOUNTAIN)
-			  {
-				this->player_characters[this->current_player]->change_magic_energy(1);
-				this->display_animation(DISPLAY_ANIMATION_REFRESH,coordinations[0],coordinations[1]);
-			  }
-			else if (help_object->get_type() == OBJECT_SIGN)
-			  {
-				this->display_text(help_object->get_sign_text(),10);
-			  }
-			else if (help_object->get_type() == OBJECT_KEY_RED || help_object->get_type() == OBJECT_KEY_GREEN || help_object->get_type() == OBJECT_KEY_BLUE)
-			  {
-				this->remove_object(facing_square[0],facing_square[1],i);
-			  }
-	      }
-		else
-	      break;
-	  }
-
 	if (this->square_has_object(coordinations[0],coordinations[1],OBJECT_TELEPORT_INPUT)) // check teleport
 	  this->check_teleport();
+
+	if (this->get_terrain_height(facing_square[0],facing_square[1]) != this->get_height(coordinations[0],coordinations[1]))  // so that player can't use objects at different height levels
+	  return;
+
+	if (facing_square[0] >= 0 && facing_square[0] < this->width &&
+      facing_square[1] >= 0 && facing_square[1] < this->height)
+	    for (i = 0; i < MAX_OBJECTS_PER_SQUARE; i++)
+	      {
+		    help_object = this->squares[facing_square[0]][facing_square[1]].map_objects[i];
+
+	        if (help_object != NULL)
+	          {
+		         if (help_object->get_type() == OBJECT_CRATE)
+		           {
+				     if (this->crate_can_be_shifted(facing_square[0],facing_square[1],this->get_height(coordinations[0],coordinations[1]),this->player_characters[this->current_player]->get_direction()))
+			           {  
+				         this->shift_crate(facing_square[0],facing_square[1],this->player_characters[this->current_player]->get_direction());
+		                 this->player_characters[this->current_player]->play_animation(ANIMATION_CAST);
+			           }
+		           }
+		         else if (help_object->get_type() == OBJECT_LEVER && !help_object->is_animating())
+		           {
+			         this->player_characters[this->current_player]->play_animation(ANIMATION_USE);
+
+			     	if (this->object_can_be_used(help_object))
+			           help_object->use();
+		           }
+			     else if (help_object->get_type() == OBJECT_FOUNTAIN)
+			       {
+			     	this->player_characters[this->current_player]->change_magic_energy(1);
+			     	this->display_animation(DISPLAY_ANIMATION_REFRESH,coordinations[0],coordinations[1]);
+			       }
+			     else if (help_object->get_type() == OBJECT_SIGN)
+			       {
+			     	this->display_text(help_object->get_sign_text(),10);
+			       }
+			     else if (help_object->get_type() == OBJECT_KEY_RED || help_object->get_type() == OBJECT_KEY_GREEN || help_object->get_type() == OBJECT_KEY_BLUE)
+			       {
+			     	this->remove_object(facing_square[0],facing_square[1],i);
+			       }
+	           }
+		     else
+	           break;
+	       }
   }
 
 //-----------------------------------------------
