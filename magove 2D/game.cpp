@@ -111,6 +111,7 @@ c_game::~c_game()
   {
 	al_stop_samples();                           // stop all sounds	
 	delete this->map;
+	delete this->menu;
 	al_uninstall_keyboard();
 	al_uninstall_mouse(); 
 	al_shutdown_primitives_addon();
@@ -130,6 +131,24 @@ void c_game::run()
 
 	this->map = new c_map("resources/map5",&this->input_output_state,&this->global_time,0);
 
+	this->menu = new c_menu(&this->input_output_state);
+
+	string aaa[10];
+
+	aaa[0] = "Jednoho dne na jedne z nejprestiznejsich.";
+	aaa[1] = "doktor bile magie magie, profesor Starovous akutni poradu ohledne zavazne veci.";
+	aaa[2] = "Sesel se cely ucitelsky sbor spolu s nejnadejnejsimi doktorandy. 'Svolal jsem vas,";
+	aaa[3] = "nebot mam neblahe zpravy,' pravi prof. Starovous.";
+	aaa[4] = "EXIT";
+	aaa[5] = "EXIT";
+	aaa[6] = "EXIT";
+	aaa[7] = "EXIT";
+	aaa[8] = "EXIT";
+	aaa[9] = "EXIT";
+
+	//this->menu->set_menu_items(aaa,5);
+	this->menu->set_menu_info_screen("resources/characters.png",aaa,10);
+
 	if (!map->is_succesfully_loaded())
 	  {
 		cerr << "ERROR: the map couldn't be loaded." << endl;
@@ -148,7 +167,7 @@ void c_game::run()
 	quit_program = false;
 	
 	while (true)                   // main loop
-	  { 
+	  {  /*
 		switch (map->update())
 		  {
 		    case GAME_STATE_PLAYING:
@@ -167,6 +186,16 @@ void c_game::run()
 			  break;
 		  }
 
+		al_rest(0.01);
+		*/
+		
+		int a;
+
+		a = this->menu->update();
+		
+		if (a >= 0)
+		  cout << a << endl;
+		  
 	    al_flip_display();
 		
 		this->input_output_state.key_use = false;             // we only want to detect one press
@@ -302,9 +331,7 @@ void c_game::run()
 		    }
 
 		if (quit_program)
-		  break;
-
-		al_rest(0.01); 
+		  break; 
 	  }
   }
 

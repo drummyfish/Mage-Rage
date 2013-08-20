@@ -181,7 +181,8 @@ typedef enum
 	OBJECT_WATER_LILY,         /** water lily (water decoration) */
 	OBJECT_KEY_RED,            /** red key (part of storyline) */ 
 	OBJECT_KEY_GREEN,          /** green key (part of storyline) */
-	OBJECT_KEY_BLUE            /** blue key (part of storyline) */
+	OBJECT_KEY_BLUE,           /** blue key (part of storyline) */
+    OBJECT_STATUE              /** statue - only blocks way */
   } t_object_type;
 
 typedef enum

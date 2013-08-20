@@ -150,6 +150,10 @@ c_map_object::c_map_object(t_object_type object_type, int link_id,  int link_id2
 		  this->bitmaps[0] = al_load_bitmap("resources/object_tree.png");
 		  break;
 
+		case OBJECT_STATUE:
+		  this->bitmaps[0] = al_load_bitmap("resources/object_statue.png");
+		  break;
+
 		case OBJECT_STAIRS_NORTH:
 		  this->stepable = true;
 		  this->bitmaps[0] = al_load_bitmap("resources/object_stairs_north.png");

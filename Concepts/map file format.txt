@@ -48,7 +48,8 @@ map objects:
     el,  // elevator         (el,x,y,id1,id2,state)
     tw,  // tree winter      (tw,x,y)
     ts,  // teleport source  (ts,x,y,id)
-    td   // teleport dest.   (td,x,y,id)
+    td,  // teleport dest.   (td,x,y,id)
+    st   // statue           (st,x,y)
   }
 
 monsters:

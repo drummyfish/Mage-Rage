@@ -298,6 +298,8 @@ void c_map::set_map_objects(string object_string)
 			  this->add_map_object(new c_map_object(OBJECT_ICE,-1,-1,this->global_time),numbers[0],numbers[1]);
 			else if (object_type.compare("tr") == 0)
 			  this->add_map_object(new c_map_object(OBJECT_TREE,-1,-1,this->global_time),numbers[0],numbers[1]);
+			else if (object_type.compare("st") == 0)
+			  this->add_map_object(new c_map_object(OBJECT_STATUE,-1,-1,this->global_time),numbers[0],numbers[1]);
 		    else if (object_type.compare("bu") == 0)
 			  this->add_map_object(new c_map_object(OBJECT_BUTTON,numbers[2],numbers[3],this->global_time),numbers[0],numbers[1]);
 			else if (object_type.compare("si") == 0)
@@ -1491,10 +1493,12 @@ void c_map::draw(int x, int y)
 
 	if (this->text_is_displayed)    // draw text
 	  {
+		al_draw_filled_rectangle(this->screen_center_x - (this->textbox_size[0] / 2),this->screen_center_y - 220,this->screen_center_x + (this->textbox_size[0] / 2),this->screen_center_y - 220 + this->textbox_size[1],al_map_rgba(94,47,0,220));
+
 		for (i = 0; i < MAX_TEXT_LINES; i++)
 		  {
-			al_draw_text(this->text_font,al_map_rgb(0,0,0),this->screen_center_x + 1,this->screen_center_y - 200 + 30 * i + 1,ALLEGRO_ALIGN_CENTRE,this->text_lines[i]); // text shadow
-			al_draw_text(this->text_font,al_map_rgb(255,220,220),this->screen_center_x,this->screen_center_y - 200 + 30 * i,ALLEGRO_ALIGN_CENTRE,this->text_lines[i]);
+			al_draw_text(this->text_font,al_map_rgb(0,0,0),this->screen_center_x + 1,this->screen_center_y - 200 + al_get_font_line_height(this->text_font) * i + 1,ALLEGRO_ALIGN_CENTRE,this->text_lines[i]); // text shadow
+			al_draw_text(this->text_font,al_map_rgb(255,220,220),this->screen_center_x,this->screen_center_y - 200 + al_get_font_line_height(this->text_font) * i,ALLEGRO_ALIGN_CENTRE,this->text_lines[i]);
 		  }
 	  }
 
@@ -1884,9 +1888,14 @@ void c_map::set_square_type(int x, int y, t_square_type type)
 
 void c_map::display_text(string text, double duration)
   {
-	int i, j, position;
+	int i, j, position, greatest_width, lines;
+	bool end;
 
 	position = 0;     // position in the text
+
+	greatest_width = 0;
+	lines = 0;
+	end = false;
 
 	for (j = 0; j < MAX_TEXT_LINES; j++) // split the string into lines
 	  {
@@ -1895,6 +1904,7 @@ void c_map::display_text(string text, double duration)
 			if (position >= (int) (text.length()))
 			  {
 			    this->text_lines[j][i] = 0;
+				end = true;
 			    break;
 			  }
 
@@ -1911,7 +1921,19 @@ void c_map::display_text(string text, double duration)
 		  }
 
 		this->text_lines[j][i + 1] = 0;  // terminate the string
+
+		if (al_get_text_width(this->text_font,this->text_lines[j]) > greatest_width)
+		  greatest_width = al_get_text_width(this->text_font,this->text_lines[j]);
+	  
+	    if (end)
+		  {
+			lines = j + 1;
+			break;
+		  }
 	  }
+
+	textbox_size[0] = greatest_width + 50;
+	textbox_size[1] = lines * al_get_font_line_height(this->text_font) + 50;
 
     this->text_is_displayed = true;
 	this->text_end_time = al_current_time() + duration;

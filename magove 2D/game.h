@@ -10,6 +10,7 @@
 
 #include "general.h"
 #include "map.h"
+#include "menu.h"
 
 class c_game
   {
@@ -20,6 +21,7 @@ class c_game
 
     protected:
 	  c_map *map;                               /** handles the map */
+	  c_menu *menu;                             /** handles menus and info screens */
 	  ALLEGRO_DISPLAY *display;                 /** the game screen */
 	  ALLEGRO_EVENT_QUEUE *event_queue;         /** event queue */
 	  ALLEGRO_TIMER *global_timer;              /** global clock */
