@@ -21,6 +21,7 @@
 #include <allegro5/allegro_font.h>
 #include <allegro5/allegro_ttf.h>
 
+#define VERSION "1.0"                   /** program version */
 #define MAP_MAX_WIDTH 30                /** maximum map width in squares */
 #define MAP_MAX_HEIGHT 30               /** maximum map height in squares */
 #define CLIFF_DISTANCE_SOUTH 0.4        /** character collision distance with south cliff (in fraction of one square) */

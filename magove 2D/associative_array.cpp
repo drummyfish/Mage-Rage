@@ -53,9 +53,9 @@ string c_associative_array::get_text(string identifier)
 //-----------------------------------------------
 
 void c_associative_array::delete_text(string identifier)
-  {
+  { 
 	int i;
-
+	
 	for(i = 0; (unsigned int) i < this->keys->size(); i++)
 	  {
 		if(this->keys->at(i).compare(identifier) == 0)
@@ -77,7 +77,10 @@ bool c_associative_array::load_from_file(string file_name)
 	 if (!file.is_open())
 	   return false;
 
-	 while (getline(file, line))
+	 this->keys->clear();
+	 this->values->clear();
+
+	 while (getline(file,line))
        {
 		 separator_position = 0;
 

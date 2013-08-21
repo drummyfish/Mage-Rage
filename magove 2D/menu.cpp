@@ -18,7 +18,7 @@ c_menu::c_menu(t_input_output_state *input_output_state)
 	this->io = input_output_state;
 	this->pressed = false;
 	
-	this->text_font = al_load_ttf_font("resources/benegraphic.ttf",40,0);
+	this->text_font = al_load_ttf_font("resources/benegraphic.ttf",38,0);
 	
 	this->menu_top = al_load_bitmap("resources/menu_top.png");
 	this->menu_middle = al_load_bitmap("resources/menu_middle.png");
@@ -40,10 +40,14 @@ c_menu::~c_menu()
 
 //-----------------------------------------------
 
-void c_menu::set_menu_items(string items[], int number_of_items)
+void c_menu::set_menu_items(string items[], int number_of_items, string title, bool keep_cursor)
   {
 	int i;
 
+	if (!keep_cursor || this->menu_type != MENU_TYPE_NORMAL)
+	  this->current_item = 0;
+	
+	this->title = title;
 	this->menu_type = MENU_TYPE_NORMAL;
 	this->number_of_text_lines = number_of_items;
 
@@ -56,30 +60,53 @@ void c_menu::set_menu_items(string items[], int number_of_items)
 
 //-----------------------------------------------
 
-void c_menu::set_menu_info_screen(string image_path, string text_lines[], int number_of_lines)
+void c_menu::set_menu_info_screen(string image_path, string text_lines[], int number_of_lines, double duration, unsigned char bg_red, unsigned char bg_green, unsigned char bg_blue)
   {
 	int i;
 
 	this->menu_type = MENU_TYPE_INFO;
+
+	this->bg_color[0] = bg_red;
+	this->bg_color[1] = bg_green;
+	this->bg_color[2] = bg_blue;
 
 	this->number_of_text_lines = number_of_lines;
 	
 	for (i = 0; i < number_of_lines; i++)
 	  this->text_lines[i] = text_lines[i];
 
-	this->info_background = al_load_bitmap(image_path.c_str());
+	if (image_path.length() != 0)
+	  this->info_background = al_load_bitmap(image_path.c_str());
+	else
+	  this->info_background = NULL;
 
 	this->effect_time = al_current_time() + 1.0;
+	this->fading_in = true;
+	this->fading_out = false;
+
+	if (duration < 0.0)
+	  this->screen_end_time = -1.0;
+	else
+	  this->screen_end_time = al_current_time() + duration;
+  }
+
+//-----------------------------------------------
+
+void c_menu::set_menu_choose_level(int number_of_levels)
+  {
+	this->menu_type = MENU_TYPE_LEVEL_CHOOSE;
+	this->number_of_levels = number_of_levels;
+	this->info_background = al_load_bitmap("resources/castle.png");
   }
 
 //-----------------------------------------------
 
 int c_menu::update()
   {
-	int x, y, i, alpha_value;
+	int x, y, i, alpha_value, return_value;
 	double time_difference;
-	
-	al_clear_to_color(al_map_rgb(255,255,255));
+
+	return_value = -1;
 
 	switch (this->menu_type)
 	  {
@@ -110,7 +137,7 @@ int c_menu::update()
 		      if (!this->pressed)
 			    {
 				  this->pressed = true;
-			      return this->current_item;
+			      return_value = this->current_item;
 			    }
 		    }
 		  else if (this->io->key_left)
@@ -118,7 +145,7 @@ int c_menu::update()
 		      if (!this->pressed)
 			    {
 			  	  this->pressed = true;
-			      return this->number_of_text_lines - 1;
+			      return_value = this->number_of_text_lines - 1;
 			    }
 		    }
 		  else
@@ -126,32 +153,59 @@ int c_menu::update()
 
 		  // now draw the menu:
 
+		  al_clear_to_color(al_map_rgb(255,255,255));
+		  al_draw_text(this->text_font,al_map_rgb(200,200,200),5,5,0,VERSION);
+
 		  x = this->io->screen_x / 2 - 162;
 		  y = 20;
 
 		  al_draw_bitmap(this->menu_top,x,y,0);
-
-		  al_draw_text(this->text_font,al_map_rgb(0,0,0),x + 75,y + 65,0,this->text_lines[0].c_str());
+		  al_draw_text(this->text_font,al_map_rgb(200,100,100),x + 55,y - 10,0,this->title.c_str());
+		  al_draw_text(this->text_font,al_map_rgb(0,0,0),x + 60,y + 65,0,this->text_lines[0].c_str());
 
 		  y += 101;
 
 		  for (i = 0; i < this->number_of_text_lines - 2; i++)
 		    {
 		      al_draw_bitmap(this->menu_middle,x,y,0);
-			  al_draw_text(this->text_font,al_map_rgb(0,0,0),x + 75,y + 12,0,this->text_lines[i + 1].c_str());
+			  al_draw_text(this->text_font,al_map_rgb(0,0,0),x + 60,y + 12,0,this->text_lines[i + 1].c_str());
 			  y += 58;
 		    }
 		  
 		  al_draw_bitmap(this->menu_bottom,x,y,0);
 
 		  if (this->number_of_text_lines >= 2)   // draw the last menu item
-			al_draw_text(this->text_font,al_map_rgb(0,0,0),x + 75,y + 10,0,this->text_lines[this->number_of_text_lines - 1].c_str());
+			al_draw_text(this->text_font,al_map_rgb(0,0,0),x + 60,y + 10,0,this->text_lines[this->number_of_text_lines - 1].c_str());
 
 		  al_draw_bitmap(this->menu_selection,x - 65,85 + this->current_item * 55,0);  // highlight the selected item
 
 		  break;
 
 		case MENU_TYPE_INFO:
+
+		  // check if the screen should disappear:
+
+		  if (this->screen_end_time < 0.0)
+		    {
+			  if (!this->fading_in && !this->fading_out && (this->io->key_use || this->io->key_down ||
+			    this->io->key_left || this->io->key_up || this->io->key_right))
+		        { 
+			      this->fading_out = true;
+			      this->effect_time = al_current_time();
+		        }
+		    }
+		  else
+		    { 
+		      if (!this->fading_in && !this->fading_out && this->screen_end_time < al_current_time())
+			    {
+				  this->fading_out = true;
+			      this->effect_time = al_current_time();
+			    }
+		    }
+
+		  // draw the screen:
+
+		  al_clear_to_color(al_map_rgb(this->bg_color[0],this->bg_color[1],this->bg_color[2]));
 
 		  x = this->io->screen_x / 2;
 		  
@@ -175,27 +229,46 @@ int c_menu::update()
 
 		  // the fade in effect:
 
-		  time_difference = this->effect_time - al_current_time();
-
-		  if (time_difference > 0)
+		  if (fading_in)
 		    {
+			  time_difference = this->effect_time - al_current_time();
+		    
+			  if (time_difference > 0)
+		        {
+			      alpha_value = time_difference * 255;
+
+			      if (alpha_value > 255)
+			        alpha_value = 255;
+			      else if (alpha_value < 0)
+				    alpha_value = 0;
+
+		          al_draw_filled_rectangle(0,0,this->io->screen_x - 1,this->io->screen_y - 1,al_map_rgba(0,0,0,alpha_value));
+		        }
+			  else
+				fading_in = false;
+		    }
+		  else if (fading_out)
+		    {
+			  time_difference = al_current_time() - this->effect_time;
+
 			  alpha_value = time_difference * 255;
 
 			  if (alpha_value > 255)
-			    alpha_value = 255;
-			  else if (alpha_value < 0)
-				alpha_value = 0;
+				return 1;
 
-		      al_draw_filled_rectangle(0,0,this->io->screen_x - 1,this->io->screen_y - 1,al_map_rgba(0,0,0,alpha_value));
+			  al_draw_filled_rectangle(0,0,this->io->screen_x - 1,this->io->screen_y - 1,al_map_rgba(0,0,0,alpha_value));
 		    }
 
 		  break;
 
 		case MENU_TYPE_LEVEL_CHOOSE:
+		  al_clear_to_color(al_map_rgb(41,43,38));
+		  x = this->io->screen_x / 2 - 320;
+		  al_draw_bitmap(this->info_background,x,0,0);
 		  break;
 	  }
 
-	return -1;
+	return return_value;
   }
 
 //-----------------------------------------------
