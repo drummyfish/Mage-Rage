@@ -1,8 +1,10 @@
+level:level
 main_menu_title:MAIN MENU
 main_menu_0:NEW GAME
 main_menu_1:SETTINGS
-main_menu_2:ABOUT
-main_menu_3:EXIT
+main_menu_2:HOW TO PLAY
+main_menu_3:ABOUT
+main_menu_4:EXIT
 game_menu_title:GAME MENU
 game_menu_0:RESUME
 game_menu_1:RESTART
@@ -38,3 +40,13 @@ intro_16:
 intro_17:
 intro_18:
 intro_19:
+how_to_play_0:You take control of one to three mages in each level. The goal is to get them all to the red gate
+how_to_play_1:and not to be killed by any monster or flames. You can switch between the players with 1, 2 and 3      
+how_to_play_2:keys. Each mage can move and use objects on the map with the ENTER key, which can also be used to
+how_to_play_3:shift crates.  Each mage is capable of casting three spells (with Q, W and E keys) - two specific
+how_to_play_4:ones plus teleport, which serves two mages to summon the third one to the place, at which they're
+how_to_play_5:standing. The specific spells are telekinesis (shifting crates at long distances) and magic path
+how_to_play_6:(creating collapsing floor squares) for Mia,  fireball (melting ice blocks) and fire cloak
+how_to_play_7:(temporary fire protection) for Metodej and a light (kills ghosts) and regeneration (restoring 
+how_to_play_8:other player's energy) for Starovous. Casting spells costs magical energy, which can be restored 
+how_to_play_9:by drinking from fountains. Holding the SPACE key allows the camera to be moved.
