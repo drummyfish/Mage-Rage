@@ -107,6 +107,7 @@ c_game::c_game()
 	al_set_mouse_cursor(display,this->cursor);
 	
 	this->set_keys();
+	this->update_volume();
 
 	this->input_output_state.key_down = false;            // set keyboard/mouse state
 	this->input_output_state.key_up = false;
@@ -124,6 +125,44 @@ c_game::c_game()
 	this->input_output_state.mouse_1 = false; 
 	this->input_output_state.key_map_explore = false;
 	this->input_output_state.key_back = false;
+
+	this->map = NULL;
+  }
+
+//-----------------------------------------------
+
+void c_game::initialise_new_game(int level_number)
+  {
+	int language;
+
+	if (this->map != NULL)
+	  {
+	    delete this->map;
+	  }
+
+	if (this->settings.language.compare("english") == 0)
+	  language = 0;
+	else
+	  language = 1;
+
+	if (level_number >= 1 && level_number <= 22)
+	  this->map = new c_map("resources/map" + to_string((long long) level_number),&this->input_output_state,&this->global_time,language);
+  }
+
+//-----------------------------------------------
+
+void c_game::update_volume()
+  {
+	double gain;
+
+	gain = this->settings.sound_volume / (double) 100;
+
+	if (gain > 1.0)
+	  gain = 1.0;
+	else if (gain < 0.0)
+      gain = 0.0;
+
+	al_set_mixer_gain(al_get_default_mixer(),gain);
   }
 
 //-----------------------------------------------
@@ -161,6 +200,11 @@ void c_game::set_language(string language)
 	this->main_menu_items[1] = this->local_texts->get_text("main_menu_1");
 	this->main_menu_items[2] = this->local_texts->get_text("main_menu_2");
 	this->main_menu_items[3] = this->local_texts->get_text("main_menu_3");
+	this->game_menu_title = this->local_texts->get_text("game_menu_title");
+	this->game_menu_items[0] = this->local_texts->get_text("game_menu_0");
+	this->game_menu_items[1] = this->local_texts->get_text("game_menu_1");
+	this->game_menu_items[2] = this->local_texts->get_text("game_menu_2");
+	this->game_menu_items[3] = this->local_texts->get_text("game_menu_3");
 	this->settings_menu_title = this->local_texts->get_text("settings_menu_title");
 	this->settings_menu_items[0] = this->local_texts->get_text("settings_menu_0");
 	this->settings_menu_items[1] = this->local_texts->get_text("settings_menu_1");
@@ -289,7 +333,7 @@ void c_game::update_settings_menu_items()
 //-----------------------------------------------
 
 void c_game::run()
-  {
+  { 
 	string help_str;
 	int menu_return_value;
 	bool quit_program;
@@ -302,11 +346,6 @@ void c_game::run()
 	this->menu_state = MENU_STATE_FIRST_SCREEN;                        // CHANGE TIMEOUT TO 5.0 !!!!
 	this->menu->set_menu_info_screen("resources/introduction.png",NULL,0,1.0,255,255,255); 
 
-	if (!map->is_succesfully_loaded())
-	  {
-		cerr << "ERROR: the map couldn't be loaded." << endl;
-	  }
-
 	al_start_timer(this->global_timer);
 
 	al_init_timeout(&timeout, 0.05);
@@ -318,6 +357,7 @@ void c_game::run()
 		switch (this->menu_state)             // manage the menu state machine
 		  {
 		    case MENU_STATE_PLAYING:
+
 			  switch (map->update())
 			    {
 				  case GAME_STATE_PLAYING:
@@ -332,12 +372,36 @@ void c_game::run()
 				    break;
 
 				  case GAME_STATE_PAUSE:
-				    cout << "pause" << endl;
+					al_stop_samples();        // stops the looping sounds
+					this->menu_state = MENU_STATE_GAME_MENU;
+					this->menu->set_menu_items(this->game_menu_items,3,this->game_menu_title,false);
 				    break;
 			    }
 
 			  al_rest(0.01);
 		      break;
+
+			case MENU_STATE_GAME_MENU:
+			  menu_return_value = this->menu->update();
+
+			  switch (menu_return_value)
+			    {
+			      case 0:   // resume
+					this->menu_state = MENU_STATE_PLAYING;
+					break;
+
+				  case 1:   // restart the game
+					this->initialise_new_game(this->current_level);
+					this->menu_state = MENU_STATE_PLAYING;
+					break;
+
+				  case 2:   // back to menu
+					this->menu_state = MENU_STATE_MAIN_MENU;
+				    this->menu->set_menu_items(this->main_menu_items,4,this->main_menu_title,false);
+					break;
+			    }
+
+			  break;
 
 		    case MENU_STATE_FIRST_SCREEN:
 			case MENU_STATE_ABOUT:
@@ -392,7 +456,8 @@ void c_game::run()
 			    }
 			  else  // a level was chosen
 			    {
-				  this->map = new c_map("resources/map" + to_string((long long) (menu_return_value + 1)),&this->input_output_state,&this->global_time,0);
+				  this->current_level = menu_return_value + 1;
+				  this->initialise_new_game(this->current_level);
 				  this->menu_state = MENU_STATE_PLAYING;
 			    }
 
@@ -443,29 +508,31 @@ void c_game::run()
 
 			  switch (menu_return_value)
 			    {
-			      case 0:
+			      case 0: // fullscreen
 					this->settings.fullscreen = !this->settings.fullscreen;
 					this->update_settings_menu_items();
 					this->menu->set_menu_items(this->settings_menu_items_done,5,this->settings_menu_title,true);
 				    break;
 
-				  case 1:
+				  case 1: // music on/off
 					this->settings.music_on = !this->settings.music_on;
 					this->update_settings_menu_items();
 					this->menu->set_menu_items(this->settings_menu_items_done,5,this->settings_menu_title,true);
 					break;
 
-				  case 2:
+				  case 2: // sound volume
 					this->settings.sound_volume += 20;
 
 					if (this->settings.sound_volume > 100)
 					  this->settings.sound_volume = 0;
 					
+					this->update_volume();
+
 					this->update_settings_menu_items();
 					this->menu->set_menu_items(this->settings_menu_items_done,5,this->settings_menu_title,true);
 					break;
 
-				  case 3:
+				  case 3: // language
 					if (this->settings.language.compare("english") == 0)
 					  this->settings.language = "czech";
 					else

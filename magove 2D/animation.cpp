@@ -50,6 +50,18 @@ c_animation::c_animation(long int *global_time, string file_prefix, int number_o
 
 //----------------------------------------------
 
+c_animation::~c_animation()
+  {
+	int i;
+
+	al_destroy_sample(this->sound);
+
+	for (i = 0; i < MAX_ANIMATION_FRAMES; i++)
+	  al_destroy_bitmap(this->frames[i]);
+  }
+
+//----------------------------------------------
+
 void c_animation::draw(int x, int y)
   {
 	this->animation_frame = (*this->global_time - this->started_playing) / this->speed;

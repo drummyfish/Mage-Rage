@@ -68,6 +68,13 @@ class c_animation: public c_graphic_object
 		    (volume), 1.0 is normal
 		*/
 
+	  ~c_animation();
+
+	    /**
+		  Class destructor, frees all it's
+		  memory.
+		*/
+
       virtual void draw(int x, int y);
 
 	    /**

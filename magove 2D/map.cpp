@@ -890,7 +890,7 @@ c_map::~c_map()
 		for (k = 0; k < MAX_OBJECTS_PER_SQUARE; k++)
 		  {
 		    if (this->squares[i][j].map_objects[k] != NULL)
-		      delete this->squares[i][j].map_objects[k];
+			  delete this->squares[i][j].map_objects[k];
 		  }
 
 	for (i = 0; i < 3; i++)                         // destroy players
@@ -1282,7 +1282,7 @@ void c_map::draw(int x, int y)
 	int i, j, k, help_height, elevation, number_of_crates, elevator_height;
 	al_clear_to_color(al_map_rgb(0,0,0));      // clear the screen
 	this->animation_frame = *this->global_time / 16;
-	
+
 	for (j = this->screen_square_position[1] - 1; j < this->screen_square_end[1] + 1; j++)                         // go through lines
 	  { 
 		if (j < 0 || j >= this->height)
@@ -1326,7 +1326,7 @@ void c_map::draw(int x, int y)
 						  this->draw_borders(i,j,x - this->screen_pixel_position[0],y - this->screen_pixel_position[1]);
 						  break;
 					  }
-					
+				
 			        if (help_height != 3)                                                    // draw south cliffs
 				      {
 				        if (this->get_terrain_height(i,j - 1) == help_height + 1)                    // south
@@ -1350,7 +1350,7 @@ void c_map::draw(int x, int y)
 						      al_draw_bitmap(this->tile_cliff_southwest_2,x + i * 64 - 10 - this->screen_pixel_position[0],y + j * 50 - elevation - 54 - this->screen_pixel_position[1],0);
 					      }
 				      }
-					  
+			  
 				    if (help_height != 0)                                                  // draw other cliffs
 				      {
 				        if (this->get_terrain_height(i,j - 1) < help_height)                       // north
@@ -1379,6 +1379,9 @@ void c_map::draw(int x, int y)
 
 		for (i = 0; i < this->screen_square_end[0] + 1; i++)      // draw the same line of objects (and animations)
 	      {
+			if (i < 0 || i >= this->width)
+			  break;
+
 			number_of_crates = 0;
 			elevator_height = 0;
 
@@ -1403,8 +1406,8 @@ void c_map::draw(int x, int y)
 					if (this->squares[i][j].map_objects[k]->get_type() == OBJECT_ELEVATOR)
 					  if (this->squares[i][j].map_objects[k]->get_state() == OBJECT_STATE_ON)
 						elevator_height = 27;
-			
-				    this->squares[i][j].map_objects[k]->draw(x + i * 64 - this->screen_pixel_position[0], y + j * 50 - this->squares[i][j].height * 27 - this->screen_pixel_position[1]);
+			        
+                    this->squares[i][j].map_objects[k]->draw(x + i * 64 - this->screen_pixel_position[0], y + j * 50 - this->squares[i][j].height * 27 - this->screen_pixel_position[1]);
 				  }
 			  else
 				break;
@@ -2167,7 +2170,7 @@ t_game_state c_map::update()
 	this->update_monsters();
 
 	this->draw(0,0);
-	
+
 	this->frame_count++;
 
 	if (this->frame_count % 128 == 0)
@@ -2175,30 +2178,6 @@ t_game_state c_map::update()
 		this->flames_on = !this->flames_on;
 		this->update_flames();
 	  }
-
-	if (this->input_output_state->mouse_1)  // switching players with mouse
-	  {
-		if (!this->mouse_pressed)
-		  {
-			if (this->input_output_state->mouse_y > this->portrait_y_position &&
-			  this->input_output_state->mouse_y < this->portrait_y_position + 50)
-			  {
-			    if (this->input_output_state->mouse_x > this->portrait_x_positions[0] &&
-				  this->input_output_state->mouse_x < this->portrait_x_positions[0] + 150)
-				  this->switch_player(0);
-				else if (this->input_output_state->mouse_x > this->portrait_x_positions[1] &&
-				  this->input_output_state->mouse_x < this->portrait_x_positions[1] + 150)
-				  this->switch_player(1);
-				else if (this->input_output_state->mouse_x > this->portrait_x_positions[2] &&
-				  this->input_output_state->mouse_x < this->portrait_x_positions[2] + 150)
-				  this->switch_player(2);
-			  }
-		  }
-
-		this->mouse_pressed = true;
-	  }
-	else
-	  this->mouse_pressed = false;
 
 	if (this->input_output_state->key_map_explore) // moving camera
 	  {
@@ -2307,6 +2286,9 @@ t_game_state c_map::check_game_state()
 	bool won;
 
 	won = true; // assume victory
+
+	if (this->input_output_state->key_back)
+	  return GAME_STATE_PAUSE;
 
 	for (i = 0; i < 3; i++)
 	  if (this->player_characters[i] != NULL)

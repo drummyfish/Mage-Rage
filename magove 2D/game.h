@@ -63,6 +63,7 @@ class c_game
 	  t_game_settings settings;                 /** game settings and the player's progress */
 	  t_menu_state menu_state;                  /** stores the state of the menu system */
 	  c_associative_array *local_texts;         /** stores game texts in local language */
+	  int current_level;                        /** current level being played */
 
 	  int key_up;                               /** keycode for key up */
 	  int key_down;                             /** keycode for key down */
@@ -80,6 +81,8 @@ class c_game
 
 	  string main_menu_items[4];                /** main menu items */
 	  string main_menu_title;                   /** main menu title */
+	  string game_menu_items[3];                /** game menu items */
+	  string game_menu_title;                   /** game menu title */
 	  string settings_menu_items[5];            /** settings menu items */
 	  string settings_menu_title;               /** settings menu title */
 	  string settings_menu_items_done[5];       /** settings menu items with values added (on/off etc.) */
@@ -114,6 +117,26 @@ class c_game
 		  Loads the keyboard layout from file
 		  and sets the classes variables for
 		  the key codes.
+		*/
+
+	  void update_volume();
+	    
+	    /**
+		  Sets the master volume of the game to
+		  current value of volume value in game
+		  settings structure.
+		*/
+
+	  void initialise_new_game(int level_number);
+
+	    /**
+	      Initialises a new game, which means
+		  that the classes map object will be
+		  possibly deleted and newly loaded
+		  from file depending on given level
+		  number.
+
+		  @param level_number level number
 		*/
 
     public:
