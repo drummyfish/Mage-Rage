@@ -40,7 +40,9 @@ typedef enum
 	MENU_STATE_INTRO2,
 	MENU_STATE_OUTRO,
 	MENU_STATE_FIRST_SCREEN,
-	MENU_STATE_LEVEL_CHOOSING
+	MENU_STATE_LEVEL_CHOOSING,
+	MENU_STATE_HOW_TO_PLAY,
+	MENU_STATE_LEVEL_INTRO
   } t_menu_state;
 
 class c_game
@@ -79,7 +81,7 @@ class c_game
 	  int key_back;                             /** keycode for key back */
 	  int key_map;                              /** keycode for key that manipulates the camera */
 
-	  string main_menu_items[4];                /** main menu items */
+	  string main_menu_items[5];                /** main menu items */
 	  string main_menu_title;                   /** main menu title */
 	  string game_menu_items[3];                /** game menu items */
 	  string game_menu_title;                   /** game menu title */
@@ -89,6 +91,7 @@ class c_game
 	  string about_lines[3];                    /** information about the program for the about screen */
       string intro_lines_1[10];                 /** intro text, page one */
 	  string intro_lines_2[10];                 /** intro text, page two */
+	  string how_to_play_lines[10];             /** text of how to play the game */
 
       void update_settings_menu_items();
 

@@ -200,6 +200,7 @@ void c_game::set_language(string language)
 	this->main_menu_items[1] = this->local_texts->get_text("main_menu_1");
 	this->main_menu_items[2] = this->local_texts->get_text("main_menu_2");
 	this->main_menu_items[3] = this->local_texts->get_text("main_menu_3");
+	this->main_menu_items[4] = this->local_texts->get_text("main_menu_4");
 	this->game_menu_title = this->local_texts->get_text("game_menu_title");
 	this->game_menu_items[0] = this->local_texts->get_text("game_menu_0");
 	this->game_menu_items[1] = this->local_texts->get_text("game_menu_1");
@@ -234,6 +235,16 @@ void c_game::set_language(string language)
 	this->intro_lines_2[7] = this->local_texts->get_text("intro_17");
 	this->intro_lines_2[8] = this->local_texts->get_text("intro_18");
 	this->intro_lines_2[9] = this->local_texts->get_text("intro_19");
+	this->how_to_play_lines[0] = this->local_texts->get_text("how_to_play_0");
+	this->how_to_play_lines[1] = this->local_texts->get_text("how_to_play_1");
+	this->how_to_play_lines[2] = this->local_texts->get_text("how_to_play_2");
+	this->how_to_play_lines[3] = this->local_texts->get_text("how_to_play_3");
+	this->how_to_play_lines[4] = this->local_texts->get_text("how_to_play_4");
+	this->how_to_play_lines[5] = this->local_texts->get_text("how_to_play_5");
+	this->how_to_play_lines[6] = this->local_texts->get_text("how_to_play_6");
+	this->how_to_play_lines[7] = this->local_texts->get_text("how_to_play_7");
+	this->how_to_play_lines[8] = this->local_texts->get_text("how_to_play_8");
+	this->how_to_play_lines[9] = this->local_texts->get_text("how_to_play_9");
   }
 
 //-----------------------------------------------
@@ -340,6 +351,7 @@ void c_game::run()
 	bool event_occured;
 	ALLEGRO_EVENT program_event;
 	ALLEGRO_TIMEOUT timeout;
+	string help_string_array[2];
 	
 	this->menu = new c_menu(&this->input_output_state);
 
@@ -364,12 +376,14 @@ void c_game::run()
 				    break;
 
 				  case GAME_STATE_LOSE:
-				    cout << "lost" << endl;
+					this->initialise_new_game(this->current_level);
 				    break;
 
 				  case GAME_STATE_WIN:
-				    cout << "won" << endl;
-				    break;
+					this->menu_state = MENU_STATE_LEVEL_CHOOSING;
+					this->settings.last_level++;
+					this->save();
+					break;
 
 				  case GAME_STATE_PAUSE:
 					al_stop_samples();        // stops the looping sounds
@@ -392,12 +406,14 @@ void c_game::run()
 
 				  case 1:   // restart the game
 					this->initialise_new_game(this->current_level);
-					this->menu_state = MENU_STATE_PLAYING;
+					help_string_array[0] = this->local_texts->get_text("level") + " " + to_string((long long) this->current_level);
+				    help_string_array[1] = this->map->get_description();
+					this->menu_state = MENU_STATE_LEVEL_INTRO;
 					break;
 
 				  case 2:   // back to menu
 					this->menu_state = MENU_STATE_MAIN_MENU;
-				    this->menu->set_menu_items(this->main_menu_items,4,this->main_menu_title,false);
+				    this->menu->set_menu_items(this->main_menu_items,5,this->main_menu_title,false);
 					break;
 			    }
 
@@ -405,14 +421,23 @@ void c_game::run()
 
 		    case MENU_STATE_FIRST_SCREEN:
 			case MENU_STATE_ABOUT:
+			case MENU_STATE_HOW_TO_PLAY:
               menu_return_value = this->menu->update();
 
 			  if (menu_return_value > 0)
 			    {
 				  this->menu_state = MENU_STATE_MAIN_MENU;
-				  this->menu->set_menu_items(this->main_menu_items,4,this->main_menu_title,false);
+				  this->menu->set_menu_items(this->main_menu_items,5,this->main_menu_title,false);
 			    }
 
+			  break;
+
+			case MENU_STATE_LEVEL_INTRO:
+              menu_return_value = this->menu->update();
+
+			  if (menu_return_value > 0)
+				this->menu_state = MENU_STATE_PLAYING;
+			  
 			  break;
 
 			case MENU_STATE_INTRO:
@@ -447,7 +472,7 @@ void c_game::run()
 			  else if (menu_return_value == this->settings.last_level + 1) // back pressed
 			    {
 				  this->menu_state = MENU_STATE_MAIN_MENU;
-				  this->menu->set_menu_items(this->main_menu_items,4,this->main_menu_title,false);				  
+				  this->menu->set_menu_items(this->main_menu_items,5,this->main_menu_title,false);				  
 			    }
 			  else if (menu_return_value == this->settings.last_level) // intro pressed
 			    {
@@ -458,7 +483,10 @@ void c_game::run()
 			    {
 				  this->current_level = menu_return_value + 1;
 				  this->initialise_new_game(this->current_level);
-				  this->menu_state = MENU_STATE_PLAYING;
+				  help_string_array[0] = this->local_texts->get_text("level") + " " + to_string((long long) this->current_level);
+				  help_string_array[1] = this->map->get_description();
+				  this->menu->set_menu_info_screen("",help_string_array,2,-1,255,255,255);
+				  this->menu_state = MENU_STATE_LEVEL_INTRO;
 			    }
 
 			  break;
@@ -468,7 +496,7 @@ void c_game::run()
 
 			  switch (menu_return_value)
 			    {
-			      case 0:
+			      case 0: // new game
 					if (this->settings.last_level == 0)
 					  {
 						this->settings.last_level = 1;        // set information that the intro has been played
@@ -484,18 +512,23 @@ void c_game::run()
 
 					break;
 
-				  case 1:
+				  case 1: // settings
 					this->menu_state = MENU_STATE_SETTINGS_MENU;
 					this->update_settings_menu_items();
 					this->menu->set_menu_items(this->settings_menu_items_done,5,this->settings_menu_title,false);
 					break;
 
-				  case 2:
+				  case 2: // how to play
+					this->menu_state = MENU_STATE_HOW_TO_PLAY;
+					this->menu->set_menu_info_screen("",this->how_to_play_lines,10,-1.0,253,221,91);
+                    break;
+
+				  case 3: // about
 					this->menu_state = MENU_STATE_ABOUT;
 					this->menu->set_menu_info_screen("",this->about_lines,3,-1.0,253,221,91);
 					break;
 
-				  case 3:
+				  case 4: // exit
 					quit_program = true;
 					break;
 			    }
@@ -545,7 +578,7 @@ void c_game::run()
 
 				  case 4:
 					this->menu_state = MENU_STATE_MAIN_MENU;
-				    this->menu->set_menu_items(this->main_menu_items,4,this->main_menu_title,false);
+				    this->menu->set_menu_items(this->main_menu_items,5,this->main_menu_title,false);
 					this->save();
 					break;
 			    }

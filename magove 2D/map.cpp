@@ -509,6 +509,13 @@ void c_map::set_monsters(string monster_string)
 
 //-----------------------------------------------
 
+string c_map::get_description()
+  {
+	return this->description;
+  }
+
+//-----------------------------------------------
+
 bool c_map::load_from_file(string filename)
   {
 	c_associative_array *associative_array;
@@ -522,6 +529,8 @@ bool c_map::load_from_file(string filename)
 
 	this->width = atoi(associative_array->get_text("width").c_str());       // set width and height
 	this->height = atoi(associative_array->get_text("height").c_str());
+
+	this->description = this->get_nth_substring(associative_array->get_text("description"),this->language);
 
 	if (associative_array->get_text("environment").compare("grass") == 0)   // set environment
 	  all_ok = this->set_environment(ENVIRONMENT_GRASS);
