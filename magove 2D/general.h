@@ -102,6 +102,8 @@ typedef struct
 	bool key_cast_2;      /** key used to cast spell 2 */
 	bool key_cast_3;      /** key used to cast spell 3 */
 	bool key_map_explore; /** key used to move camera freely to explore the map */
+	bool key_back;        /** key used to go back in menus and to pause the game */
+	
 	bool mouse_1;         /** mouse button 1 */
 
 	int mouse_x;          /** mouse x position */

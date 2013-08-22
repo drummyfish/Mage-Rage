@@ -106,6 +106,8 @@ c_game::c_game()
 	this->cursor = al_create_mouse_cursor(this->cursor_bitmap,1,1);
 	al_set_mouse_cursor(display,this->cursor);
 	
+	this->set_keys();
+
 	this->input_output_state.key_down = false;            // set keyboard/mouse state
 	this->input_output_state.key_up = false;
 	this->input_output_state.key_left = false;
@@ -121,6 +123,26 @@ c_game::c_game()
 	this->input_output_state.key_cast_3 = false;
 	this->input_output_state.mouse_1 = false; 
 	this->input_output_state.key_map_explore = false;
+	this->input_output_state.key_back = false;
+  }
+
+//-----------------------------------------------
+
+void c_game::set_keys()
+  {
+	this->key_up = ALLEGRO_KEY_UP;
+	this->key_down = ALLEGRO_KEY_DOWN;
+	this->key_right = ALLEGRO_KEY_RIGHT;
+	this->key_left = ALLEGRO_KEY_LEFT;
+	this->key_cast1 = ALLEGRO_KEY_Q;
+	this->key_cast2 = ALLEGRO_KEY_W;
+	this->key_cast3 = ALLEGRO_KEY_E;
+	this->key_switch1 = ALLEGRO_KEY_1;
+	this->key_switch2 = ALLEGRO_KEY_2;
+	this->key_switch3  = ALLEGRO_KEY_3;
+	this->key_use = ALLEGRO_KEY_ENTER;
+	this->key_back = ALLEGRO_KEY_ESCAPE;
+	this->key_map = ALLEGRO_KEY_SPACE;
   }
 
 //-----------------------------------------------
@@ -274,13 +296,11 @@ void c_game::run()
 	bool event_occured;
 	ALLEGRO_EVENT program_event;
 	ALLEGRO_TIMEOUT timeout;
-
-	this->map = new c_map("resources/map5",&this->input_output_state,&this->global_time,0);
 	
 	this->menu = new c_menu(&this->input_output_state);
 
-	this->menu_state = MENU_STATE_FIRST_SCREEN;
-	this->menu->set_menu_info_screen("resources/introduction.png",NULL,0,5.0,255,255,255);
+	this->menu_state = MENU_STATE_FIRST_SCREEN;                        // CHANGE TIMEOUT TO 5.0 !!!!
+	this->menu->set_menu_info_screen("resources/introduction.png",NULL,0,1.0,255,255,255); 
 
 	if (!map->is_succesfully_loaded())
 	  {
@@ -294,30 +314,31 @@ void c_game::run()
 	quit_program = false;
 	
 	while (true)                   // main loop
-	  {  /*
-		switch (map->update())
+	  {
+		switch (this->menu_state)             // manage the menu state machine
 		  {
-		    case GAME_STATE_PLAYING:
-			  break;
+		    case MENU_STATE_PLAYING:
+			  switch (map->update())
+			    {
+				  case GAME_STATE_PLAYING:
+				    break;
 
-			case GAME_STATE_LOSE:
-			  cout << "lost" << endl;
-			  break;
+				  case GAME_STATE_LOSE:
+				    cout << "lost" << endl;
+				    break;
 
-			case GAME_STATE_WIN:
-			  cout << "won" << endl;
-			  break;
+				  case GAME_STATE_WIN:
+				    cout << "won" << endl;
+				    break;
 
-			case GAME_STATE_PAUSE:
-			  cout << "pause" << endl;
-			  break;
-		  }
+				  case GAME_STATE_PAUSE:
+				    cout << "pause" << endl;
+				    break;
+			    }
 
-		al_rest(0.01);
-		*/
-		
-		switch (this->menu_state)
-		  {
+			  al_rest(0.01);
+		      break;
+
 		    case MENU_STATE_FIRST_SCREEN:
 			case MENU_STATE_ABOUT:
               menu_return_value = this->menu->update();
@@ -354,6 +375,27 @@ void c_game::run()
 
 			case MENU_STATE_LEVEL_CHOOSING:
 			  menu_return_value = this->menu->update();
+			  
+			  if (menu_return_value < 0)
+			    { 
+				  // nothing chosen - do nothing
+			    }
+			  else if (menu_return_value == this->settings.last_level + 1) // back pressed
+			    {
+				  this->menu_state = MENU_STATE_MAIN_MENU;
+				  this->menu->set_menu_items(this->main_menu_items,4,this->main_menu_title,false);				  
+			    }
+			  else if (menu_return_value == this->settings.last_level) // intro pressed
+			    {
+                  this->menu_state = MENU_STATE_INTRO;
+				  this->menu->set_menu_info_screen("resources/characters.png",this->intro_lines_1,10,-1,255,255,255);				  
+			    }
+			  else  // a level was chosen
+			    {
+				  this->map = new c_map("resources/map" + to_string((long long) (menu_return_value + 1)),&this->input_output_state,&this->global_time,0);
+				  this->menu_state = MENU_STATE_PLAYING;
+			    }
+
 			  break;
 
 			case MENU_STATE_MAIN_MENU:
@@ -446,7 +488,7 @@ void c_game::run()
 
 		al_flip_display();
 		
-		this->input_output_state.key_use = false;      // we only want to detect one press
+		this->input_output_state.key_use = false;      // we only want to detect one key press
 
 		event_occured = al_get_next_event(this->event_queue, &program_event);
 
@@ -462,120 +504,64 @@ void c_game::run()
 				break;
 
 			  case ALLEGRO_EVENT_KEY_DOWN:             // key down event
-				switch(program_event.keyboard.keycode)
-				  {
-					case ALLEGRO_KEY_UP:
-					   this->input_output_state.key_up = true;
-					   break;
- 
-					case ALLEGRO_KEY_DOWN:
-					   this->input_output_state.key_down = true;
-					   break;
- 
-					case ALLEGRO_KEY_LEFT: 
-					   this->input_output_state.key_left = true;
-					   break;
- 
-					case ALLEGRO_KEY_RIGHT:
-					   this->input_output_state.key_right = true;
-					   break;
-
-					case ALLEGRO_KEY_1:
-					   this->input_output_state.key_1 = true;
-					   break;
-
-					case ALLEGRO_KEY_2:
-					   this->input_output_state.key_2 = true;
-					   break;
-
-					case ALLEGRO_KEY_3:
-					   this->input_output_state.key_3 = true;
-					   break;
-
-					case ALLEGRO_KEY_8:
-					   this->input_output_state.key_cast_1 = true;
-					   break;
-
-					case ALLEGRO_KEY_9:
-					   this->input_output_state.key_cast_2 = true;
-					   break;
-
-					case ALLEGRO_KEY_0:
-					   this->input_output_state.key_cast_3 = true;
-					   break;
-
-					case ALLEGRO_KEY_Q:
-					  this->input_output_state.key_use = true;
-					  break;
-
-					case ALLEGRO_KEY_W:
-					  this->input_output_state.key_map_explore = true;
-					  break;
-				  }
+				if (program_event.keyboard.keycode == this->key_up)
+				  this->input_output_state.key_up = true;
+                else if (program_event.keyboard.keycode == this->key_down)
+				  this->input_output_state.key_down = true;
+                else if (program_event.keyboard.keycode == this->key_left)
+				  this->input_output_state.key_left = true;
+                else if (program_event.keyboard.keycode == this->key_right)
+				  this->input_output_state.key_right = true;
+                else if (program_event.keyboard.keycode == this->key_switch1)
+				  this->input_output_state.key_1 = true;
+			    else if (program_event.keyboard.keycode == this->key_switch2)
+				  this->input_output_state.key_2 = true;
+			    else if (program_event.keyboard.keycode == this->key_switch3)
+				  this->input_output_state.key_3 = true; 
+                else if (program_event.keyboard.keycode == this->key_cast1)
+				  this->input_output_state.key_cast_1 = true;
+				else if (program_event.keyboard.keycode == this->key_cast2)
+				  this->input_output_state.key_cast_2 = true;
+				else if (program_event.keyboard.keycode == this->key_cast3)
+				  this->input_output_state.key_cast_3 = true;
+				else if (program_event.keyboard.keycode == this->key_use)
+				  this->input_output_state.key_use = true;
+				else if (program_event.keyboard.keycode == this->key_map)
+				  this->input_output_state.key_map_explore = true;
+				else if (program_event.keyboard.keycode == this->key_back)
+				  this->input_output_state.key_back = true;
+				
 				break;
 
 			  case ALLEGRO_EVENT_KEY_UP:               // key up event
-				switch(program_event.keyboard.keycode)
-				  {
-					case ALLEGRO_KEY_UP:
-					   this->input_output_state.key_up = false;
-					   break;
- 
-					case ALLEGRO_KEY_DOWN:
-					   this->input_output_state.key_down = false;
-					   break;
- 
-					case ALLEGRO_KEY_LEFT: 
-					   this->input_output_state.key_left = false;
-					   break;
- 
-					case ALLEGRO_KEY_RIGHT:
-					   this->input_output_state.key_right = false;
-					   break;
+				if (program_event.keyboard.keycode == this->key_up)
+				  this->input_output_state.key_up = false;
+                else if (program_event.keyboard.keycode == this->key_down)
+				  this->input_output_state.key_down = false;
+                else if (program_event.keyboard.keycode == this->key_left)
+				  this->input_output_state.key_left = false;
+                else if (program_event.keyboard.keycode == this->key_right)
+				  this->input_output_state.key_right = false;
+                else if (program_event.keyboard.keycode == this->key_switch1)
+				  this->input_output_state.key_1 = false;
+			    else if (program_event.keyboard.keycode == this->key_switch2)
+				  this->input_output_state.key_2 = false;
+			    else if (program_event.keyboard.keycode == this->key_switch3)
+				  this->input_output_state.key_3 = false; 
+                else if (program_event.keyboard.keycode == this->key_cast1)
+				  this->input_output_state.key_cast_1 = false;
+				else if (program_event.keyboard.keycode == this->key_cast2)
+				  this->input_output_state.key_cast_2 = false;
+				else if (program_event.keyboard.keycode == this->key_cast3)
+				  this->input_output_state.key_cast_3 = false;
+				else if (program_event.keyboard.keycode == this->key_use)
+				  this->input_output_state.key_use = false;
+				else if (program_event.keyboard.keycode == this->key_map)
+				  this->input_output_state.key_map_explore = false;
+				else if (program_event.keyboard.keycode == this->key_back)
+				  this->input_output_state.key_back = false;
 
-					case ALLEGRO_KEY_1:
-					   this->input_output_state.key_1 = false;
-					   break;
-
-					case ALLEGRO_KEY_2:
-					   this->input_output_state.key_2 = false;
-					   break;
-
-					case ALLEGRO_KEY_3:
-					   this->input_output_state.key_3 = false;
-					   break;
-
-					case ALLEGRO_KEY_8:
-					   this->input_output_state.key_cast_1 = false;
-					   break;
-
-					case ALLEGRO_KEY_9:
-					   this->input_output_state.key_cast_2 = false;
-					   break;
-
-					case ALLEGRO_KEY_0:
-					   this->input_output_state.key_cast_3 = false;
-					   break;
-
-					case ALLEGRO_KEY_Q:
-					  this->input_output_state.key_use = false;
-					  break;
-
-					case ALLEGRO_KEY_W:
-					  this->input_output_state.key_map_explore = false;
-					  break;
-				  }
-			  break;
-
-			  case ALLEGRO_EVENT_MOUSE_BUTTON_DOWN:
-				this->input_output_state.mouse_1 = true;
-				this->input_output_state.mouse_x = program_event.mouse.x;
-				this->input_output_state.mouse_y = program_event.mouse.y;
 			    break;
-
-			  case ALLEGRO_EVENT_MOUSE_BUTTON_UP:
-			    this->input_output_state.mouse_1 = false;
-				break;
 		    }
 
 		if (quit_program)

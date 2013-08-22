@@ -29,25 +29,28 @@ class c_menu
 	*/
 
     protected:
-	  t_menu_type menu_type;           /** menu type */
-	  int current_item;                /** currently highlighted menu item */
-	  int number_of_text_lines;        /** number of text lines or items displayed on info screen */  
-	  string text_lines[10];           /** text displayed on info screen or items displayed in the menu */
-	  int number_of_levels;            /** number of available levels on the level selection screen */
-	  t_input_output_state *io;        /** information about keys pressed etc. */
-	  boolean pressed;                 /** to capture key down only once */
-	  double effect_time;              /** this is used to display effects such as fade in etc. */
-	  double screen_end_time;          /** time when the info screen will disappear */
-	  bool fading_in;                  /** whether the fade in effect is active */               
-	  bool fading_out;                 /** whether the fade out effect is active */
-	  string title;                    /** menu title */
-	  unsigned char bg_color[3];       /** background color for the info screen */
+	  t_menu_type menu_type;            /** menu type */
+	  int current_item;                 /** currently highlighted menu item */
+	  int number_of_text_lines;         /** number of text lines or items displayed on info screen */  
+	  string text_lines[10];            /** text displayed on info screen or items displayed in the menu */
+	  int number_of_levels;             /** number of available levels on the level selection screen */
+	  t_input_output_state *io;         /** information about keys pressed etc. */
+	  boolean pressed;                  /** to capture key down only once */
+	  double effect_time;               /** this is used to display effects such as fade in etc. */
+	  double screen_end_time;           /** time when the info screen will disappear */
+	  bool fading_in;                   /** whether the fade in effect is active */               
+	  bool fading_out;                  /** whether the fade out effect is active */
+	  string title;                     /** menu title */
+	  unsigned char bg_color[3];        /** background color for the info screen */
 
-	  ALLEGRO_BITMAP *menu_top;        /** bitmap - top part of the menu */
-	  ALLEGRO_BITMAP *menu_middle;     /** bitmap - middle part part of the menu */
-	  ALLEGRO_BITMAP *menu_bottom;     /** bitmap - bottom part of the menu */
-	  ALLEGRO_BITMAP *menu_selection;  /** bitmap - highlight for menu items */
-	  ALLEGRO_BITMAP *info_background; /** bitmap - info screen image */
+	  int level_number_positions_x[22]; /** x poxel positions of level numbers at level choosing screen */
+	  int level_number_positions_y[22]; /** same as above but with y coordinations */
+
+	  ALLEGRO_BITMAP *menu_top;         /** bitmap - top part of the menu */
+	  ALLEGRO_BITMAP *menu_middle;      /** bitmap - middle part part of the menu */
+	  ALLEGRO_BITMAP *menu_bottom;      /** bitmap - bottom part of the menu */
+	  ALLEGRO_BITMAP *menu_selection;   /** bitmap - highlight for menu items */
+	  ALLEGRO_BITMAP *info_background;  /** bitmap - info screen image */
 
 	  ALLEGRO_FONT *text_font;         /** font to display the text */
 

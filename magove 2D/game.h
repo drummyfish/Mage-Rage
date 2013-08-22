@@ -64,6 +64,20 @@ class c_game
 	  t_menu_state menu_state;                  /** stores the state of the menu system */
 	  c_associative_array *local_texts;         /** stores game texts in local language */
 
+	  int key_up;                               /** keycode for key up */
+	  int key_down;                             /** keycode for key down */
+	  int key_right;                            /** keycode for key right */
+	  int key_left;                             /** keycode for key left */
+	  int key_cast1;                            /** keycode for key cast spell 1 */
+	  int key_cast2;                            /** keycode for key cast spell 2 */
+	  int key_cast3;                            /** keycode for key cast spell 3 */
+	  int key_switch1;                          /** keycode for key switch to player 1 */
+	  int key_switch2;                          /** keycode for key switch to player 2 */
+	  int key_switch3;                          /** keycode for key switch to player 3 */
+	  int key_use;                              /** keycode for key used to use items and confirm things */
+	  int key_back;                             /** keycode for key back */
+	  int key_map;                              /** keycode for key that manipulates the camera */
+
 	  string main_menu_items[4];                /** main menu items */
 	  string main_menu_title;                   /** main menu title */
 	  string settings_menu_items[5];            /** settings menu items */
@@ -92,6 +106,14 @@ class c_game
 		    "english" or "czech" which will
 			be loaded from the corresponding
 			file in game resources
+		*/
+
+	  void set_keys();
+
+	    /**
+		  Loads the keyboard layout from file
+		  and sets the classes variables for
+		  the key codes.
 		*/
 
     public:
