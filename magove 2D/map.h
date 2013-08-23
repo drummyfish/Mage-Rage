@@ -90,6 +90,7 @@ class c_map: public c_graphic_object
 	  int language;                                                    /** number of language, it must be know in order to set right sign texts etc. */
 	  int textbox_size[2];                                             /** width and height of the textbox for displayed message */
 	  string description;                                              /** map text description displayed during the intro */
+	  bool center_map;                                                 /** whether the map should be centered at the beginning */
 
 	  char text_lines[MAX_TEXT_LINES][MAX_TEXT_CHARACTERS_PER_LINE];   /** lines of text being displayed on screen */
 	  bool text_is_displayed;                                          /** whether the text is to be displayed */

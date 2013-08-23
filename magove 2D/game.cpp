@@ -381,8 +381,13 @@ void c_game::run()
 
 				  case GAME_STATE_WIN:
 					this->menu_state = MENU_STATE_LEVEL_CHOOSING;
-					this->settings.last_level++;
-					this->save();
+					
+					if (this->current_level == this->settings.last_level) // unlock the next level
+					  {
+						this->settings.last_level++;
+					    this->save();
+					  }
+					
 					break;
 
 				  case GAME_STATE_PAUSE:

@@ -190,7 +190,18 @@ c_map::c_map(string filename, t_input_output_state *input_output_state, long int
 
 	this->succesfully_loaded = this->load_from_file(filename);
 
-	this->update_screen_position();
+	this->center_map = !((this->width + 2) * 64 > this->input_output_state->screen_x || (this->height + 2) > this->height * 50);
+
+    if (this->center_map)
+	  {
+		this->screen_square_position[0] = -1 * ((this->screen_square_resolution[0] - this->width) / 2);
+		this->screen_square_position[1] = -1 * ((this->screen_square_resolution[1] - this->height) / 2);
+		this->screen_pixel_position[0] = this->screen_square_position[0] * 64;
+		this->screen_pixel_position[1] = this->screen_square_position[1] * 50 - 10;
+		return;
+	  }  
+	else
+      this->update_screen_position();
   }
 
 //-----------------------------------------------
@@ -1724,6 +1735,9 @@ void c_map::update_screen_position()
 	int player_position[2];
 	int i, player_height;
 
+	if (this->center_map)
+	  return;
+
 	player_position[0] = this->player_characters[this->current_player]->get_square_x();
 	player_position[1] = this->player_characters[this->current_player]->get_square_y();
 
@@ -1760,11 +1774,14 @@ void c_map::update_screen_position()
 
 void c_map::shift_screen(int x, int y)
   {
-	if (x > 0 && this->screen_square_position[0] > this->width - 8) // check map borders
+    if (this->center_map)
+	  return;
+
+	if (x > 0 && this->screen_square_position[0] > this->width -8) // check map borders
 	  return;
 	else if (x < 0 && this->screen_pixel_position[0] < -200)
 	  return;
-	else if (y > 0 && this->screen_square_position[1] > this->height - 8)
+	else if (y > 0 && this->screen_square_position[1] > this->height -8)
 	  return;
 	else if (y < 0 && this->screen_pixel_position[1] < -200)
 	  return;
@@ -2293,6 +2310,7 @@ t_game_state c_map::check_game_state()
   {
 	int i, j;
 	bool won;
+	int player_position[2];
 
 	won = true; // assume victory
 
@@ -2302,14 +2320,25 @@ t_game_state c_map::check_game_state()
 	for (i = 0; i < 3; i++)
 	  if (this->player_characters[i] != NULL)
 	    {
+		  player_position[0] = this->player_characters[i]->get_square_x();
+		  player_position[1] = this->player_characters[i]->get_square_y();
+
 		  if (won && !this->square_has_object(this->player_characters[i]->get_square_x(),this->player_characters[i]->get_square_y(),OBJECT_GATE))
 			won = false;
 
 		  // check monsters:
 		  for (j = 0; j < this->number_of_monsters; j++)
 			if (this->monster_characters[j] != NULL &&
-			  this->monster_characters[j]->get_square_x() == this->player_characters[i]->get_square_x() &&
-			  this->monster_characters[j]->get_square_y() == this->player_characters[i]->get_square_y())
+			  this->monster_characters[j]->get_square_x() == player_position[0] &&
+			  this->monster_characters[j]->get_square_y() == player_position[1])
+			  return GAME_STATE_LOSE;
+		  
+		  // check flames:
+		  for (j = 0; j < MAX_OBJECTS_PER_SQUARE; j++)
+			if ( this->squares[player_position[0]][player_position[1]].map_objects[j] != NULL &&
+			  this->squares[player_position[0]][player_position[1]].map_objects[j]->get_type() == OBJECT_FLAMES &&
+			  this->squares[player_position[0]][player_position[1]].map_objects[j]->get_state() == OBJECT_STATE_ON_ACTIVE &&
+			  !this->player_characters[i]->fire_cloak_is_on())
 			  return GAME_STATE_LOSE;
 	    }
 
