@@ -376,17 +376,23 @@ void c_game::run()
 				    break;
 
 				  case GAME_STATE_LOSE:
+					this->menu_state = MENU_STATE_LOST;
+					help_string_array[0] = this->local_texts->get_text("lost");
+					this->menu->set_menu_info_screen("",help_string_array,1,-1,240,0,0);
+
 					this->initialise_new_game(this->current_level);
 				    break;
 
 				  case GAME_STATE_WIN:
 					this->menu_state = MENU_STATE_LEVEL_CHOOSING;
-					
+
 					if (this->current_level == this->settings.last_level) // unlock the next level
 					  {
 						this->settings.last_level++;
 					    this->save();
 					  }
+
+					this->menu->set_menu_choose_level(this->settings.last_level);
 					
 					break;
 
@@ -399,6 +405,17 @@ void c_game::run()
 
 			  al_rest(0.01);
 		      break;
+
+			case MENU_STATE_LOST:
+			  menu_return_value = this->menu->update();
+
+			  if (menu_return_value >= 0)
+			    {
+				  this->menu_state = MENU_STATE_PLAYING;
+				  this->initialise_new_game(this->current_level);
+			    }
+
+			  break;
 
 			case MENU_STATE_GAME_MENU:
 			  menu_return_value = this->menu->update();
