@@ -376,6 +376,7 @@ void c_game::run()
 				    break;
 
 				  case GAME_STATE_LOSE:
+					al_stop_samples();
 					this->menu_state = MENU_STATE_LOST;
 					help_string_array[0] = this->local_texts->get_text("lost");
 					this->menu->set_menu_info_screen("",help_string_array,1,-1,240,0,0);
@@ -384,6 +385,7 @@ void c_game::run()
 				    break;
 
 				  case GAME_STATE_WIN:
+					al_stop_samples();
 					this->menu_state = MENU_STATE_LEVEL_CHOOSING;
 
 					if (this->current_level == this->settings.last_level) // unlock the next level

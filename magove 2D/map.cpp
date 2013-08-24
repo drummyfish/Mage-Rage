@@ -1071,7 +1071,7 @@ bool c_map::crate_can_be_shifted(int x, int y, int height, t_direction direction
 
 	this->next_square(x,y,direction,&next_square[0],&next_square[1]);
 
-	if (next_square[0] < 0 || next_square[0] >= this->width ||
+	if (next_square[0] < 0 || next_square[0] >= this->width ||      // check the map range
 	  next_square[1] < 0 || next_square[1] >= this->height)
 	  return false;
 
@@ -2010,81 +2010,85 @@ void c_map::update_missiles()
 		  {
 		    died = true;
 		  }
-		else if (!this->door_can_be_passed(this->missiles[i].square_x,this->missiles[i].square_y,this->missiles[i].direction))
+		else if (!this->door_can_be_passed(this->missiles[i].square_x,this->missiles[i].square_y,this->missiles[i].direction)
+		  && this->get_height(this->missiles[i].square_x,this->missiles[i].square_y) == this->missiles[i].height)
 		  died = true;
+  
+		switch (this->missiles[i].type)    // check the missile effect
+		  {
+		    case MISSILE_MIA_1:
+		  	  if (this->square_has_object(this->missiles[i].square_x,this->missiles[i].square_y,OBJECT_CRATE) &&
+		        this->crate_can_be_shifted(this->missiles[i].square_x,this->missiles[i].square_y,this->missiles[i].height,this->missiles[i].direction))
+			    {
+				  this->shift_crate(this->missiles[i].square_x,this->missiles[i].square_y,this->missiles[i].direction);
+			      died = true;
+			    }
 
-		if (this->get_terrain_height(this->missiles[i].square_x,this->missiles[i].square_y) == this->missiles[i].height)  // the missile can only take effect at the same height
-		  switch (this->missiles[i].type)    // check the missile effect
-		    {
-		      case MISSILE_MIA_1:
-		  	    if (this->square_has_object(this->missiles[i].square_x,this->missiles[i].square_y,OBJECT_CRATE) &&
-			        this->crate_can_be_shifted(this->missiles[i].square_x,this->missiles[i].square_y,this->missiles[i].height,this->missiles[i].direction))
-			      {
-				    this->shift_crate(this->missiles[i].square_x,this->missiles[i].square_y,this->missiles[i].direction);
-			        died = true;
-			      }
+			  break;
 
-			    break;
+            case MISSILE_MIA_2:
+			  if (this->get_square_type(this->missiles[i].square_x,this->missiles[i].square_y) == SQUARE_HOLE &&
+			    this->get_terrain_height(this->missiles[i].square_x,this->missiles[i].square_y) == this->missiles[i].height)
+			    {
+				  this->set_square_type(this->missiles[i].square_x,this->missiles[i].square_y,SQUARE_COLLAPSE);
+			      died = true;
+			    }
 
-              case MISSILE_MIA_2:
-			    if (this->get_square_type(this->missiles[i].square_x,this->missiles[i].square_y) == SQUARE_HOLE)
-			      {
-				    this->set_square_type(this->missiles[i].square_x,this->missiles[i].square_y,SQUARE_COLLAPSE);
-			        died = true;
-			      }
+			  break;
 
-			    break;
-
-			  case MISSILE_METODEJ_1:
-			    if (this->square_has_object(this->missiles[i].square_x,this->missiles[i].square_y,OBJECT_ICE))
-			      {
-				    for (j = 0; j < MAX_OBJECTS_PER_SQUARE; j++)
-					  if (this->squares[this->missiles[i].square_x][this->missiles[i].square_y].map_objects[j]->get_type() == OBJECT_ICE)
-					    {
-					      this->remove_object(this->missiles[i].square_x,this->missiles[i].square_y,j);
-						  this->display_animation(DISPLAY_ANIMATION_MELT,this->missiles[i].square_x,this->missiles[i].square_y);
+			case MISSILE_METODEJ_1:
+			  if (this->square_has_object(this->missiles[i].square_x,this->missiles[i].square_y,OBJECT_ICE) &&
+				this->get_terrain_height(this->missiles[i].square_x,this->missiles[i].square_y) == this->missiles[i].height)
+			    {
+				  for (j = 0; j < MAX_OBJECTS_PER_SQUARE; j++)
+					if (this->squares[this->missiles[i].square_x][this->missiles[i].square_y].map_objects[j]->get_type() == OBJECT_ICE)
+					  {
+					    this->remove_object(this->missiles[i].square_x,this->missiles[i].square_y,j);
+						this->display_animation(DISPLAY_ANIMATION_MELT,this->missiles[i].square_x,this->missiles[i].square_y);
 
 
-					  	  break;
-					    }
+					  	break;
+					  }
 
-			        died = true;
-			      }
-
-			    break;
-
-			  case MISSILE_STAROVOUS_1:
-			    for (j = 0; j < this->number_of_monsters; j++)
-			      {
-				    if (this->monster_characters[j] != NULL
-					  && this->monster_characters[j]->get_monster_type() == MONSTER_GHOST
-					  && this->monster_characters[j]->get_square_x() == this->missiles[i].square_x
-					  && this->monster_characters[j]->get_square_y() == this->missiles[i].square_y)
-				      {
-				  	    this->monster_characters[j] = NULL;
-					    this->display_animation(DISPLAY_ANIMATION_SHADOW_EXPLOSION,this->missiles[i].square_x,this->missiles[i].square_y);
-				        died = true;
-				      }
-			      }
+			      died = true;
+			    }
 
 			    break;
 
-			  case MISSILE_STAROVOUS_2:
-			    for (j = 0; j < 3; j++)
-				  if (this->player_characters[j] != NULL &&
-				    this->player_characters[j]->get_square_x() == this->missiles[i].square_x &&
-				    this->player_characters[j]->get_square_y() == this->missiles[i].square_y &&
-				    (this->player_characters[j]->get_player_type() == PLAYER_MIA ||
-				    this->player_characters[j]->get_player_type() == PLAYER_METODEJ))
+			case MISSILE_STAROVOUS_1:
+			  for (j = 0; j < this->number_of_monsters; j++)
+			    {
+				  if (this->monster_characters[j] != NULL
+					&& this->monster_characters[j]->get_monster_type() == MONSTER_GHOST
+					&& this->monster_characters[j]->get_square_x() == this->missiles[i].square_x
+					&& this->monster_characters[j]->get_square_y() == this->missiles[i].square_y
+					&& this->get_height(this->missiles[i].square_x,this->missiles[i].square_y) == this->missiles[i].height)
 				    {
-					  this->player_characters[j]->change_magic_energy(1);
-					  died = true;
-					  this->display_animation(DISPLAY_ANIMATION_REFRESH,this->missiles[i].square_x,this->missiles[i].square_y);
-					  break;
+				  	  this->monster_characters[j] = NULL;
+					  this->display_animation(DISPLAY_ANIMATION_SHADOW_EXPLOSION,this->missiles[i].square_x,this->missiles[i].square_y);
+				      died = true;
 				    }
+			    }
 
-			    break;
-		    }
+			  break;
+
+			case MISSILE_STAROVOUS_2:
+			  for (j = 0; j < 3; j++)
+				if (this->player_characters[j] != NULL &&
+				  this->player_characters[j]->get_square_x() == this->missiles[i].square_x &&
+				  this->player_characters[j]->get_square_y() == this->missiles[i].square_y &&
+				  this->get_height(this->missiles[i].square_x,this->missiles[i].square_y) == this->missiles[i].height &&
+				  (this->player_characters[j]->get_player_type() == PLAYER_MIA ||
+				  this->player_characters[j]->get_player_type() == PLAYER_METODEJ))
+				  {
+					this->player_characters[j]->change_magic_energy(1);
+					died = true;
+					this->display_animation(DISPLAY_ANIMATION_REFRESH,this->missiles[i].square_x,this->missiles[i].square_y);
+					break;
+				  }
+
+			  break;
+		  }
 
 		if (this->missiles[i].position_x < 0 ||
 		  this->missiles[i].position_x > this->width ||
@@ -2139,8 +2143,10 @@ void c_map::switch_player(int player_number)
 	if (this->player_characters[player_number] == NULL)
 	  return;
 
-	this->player_characters[this->current_player]->stop_animation();
-    this->current_player = player_number;
+	if (this->player_characters[this->current_player]->get_playing_animation() != ANIMATION_SKATE) // skating mustn't be stopped
+	  this->player_characters[this->current_player]->stop_animation();
+    
+	this->current_player = player_number;
 	this->update_screen_position();
 	al_play_sample(this->change_player_sound,1.0,0.0,1.0,ALLEGRO_PLAYMODE_ONCE,&sample_id);
   }
@@ -2540,9 +2546,6 @@ void c_map::use_key_press()
 	if (this->square_has_object(coordinations[0],coordinations[1],OBJECT_TELEPORT_INPUT)) // check teleport
 	  this->check_teleport();
 
-	if (this->get_terrain_height(facing_square[0],facing_square[1]) != this->get_height(coordinations[0],coordinations[1]))  // so that player can't use objects at different height levels
-	  return;
-
 	if (facing_square[0] >= 0 && facing_square[0] < this->width &&
       facing_square[1] >= 0 && facing_square[1] < this->height)
 	    for (i = 0; i < MAX_OBJECTS_PER_SQUARE; i++)
@@ -2559,7 +2562,11 @@ void c_map::use_key_press()
 		                 this->player_characters[this->current_player]->play_animation(ANIMATION_CAST);
 			           }
 		           }
-		         else if (help_object->get_type() == OBJECT_LEVER && !help_object->is_animating())
+		         
+				 if (this->get_height(facing_square[0],facing_square[1]) != this->get_height(coordinations[0],coordinations[1]))  // so that player can't use objects at different height levels
+	               continue;
+				 
+				 if (help_object->get_type() == OBJECT_LEVER && !help_object->is_animating())
 		           {
 			         this->player_characters[this->current_player]->play_animation(ANIMATION_USE);
 
