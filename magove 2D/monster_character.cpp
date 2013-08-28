@@ -83,17 +83,29 @@ c_monster_character::~c_monster_character()
   {
 	al_destroy_bitmap(this->shadow);                // free bitmaps
 	al_destroy_bitmap(this->sprite_north);
-	al_destroy_bitmap(this->sprite_north_running_1);
-	al_destroy_bitmap(this->sprite_north_running_2);
+	this->sprite_north = NULL;
+	
 	al_destroy_bitmap(this->sprite_east);
-	al_destroy_bitmap(this->sprite_east_running_1);
-	al_destroy_bitmap(this->sprite_east_running_2);
+	this->sprite_east = NULL;
+	
 	al_destroy_bitmap(this->sprite_south); 
-	al_destroy_bitmap(this->sprite_south_running_1);
-	al_destroy_bitmap(this->sprite_south_running_2);
+	this->sprite_south = NULL;
+	
 	al_destroy_bitmap(this->sprite_west);
-	al_destroy_bitmap(this->sprite_west_running_1);
-	al_destroy_bitmap(this->sprite_west_running_2);
+	this->sprite_west = NULL;
+
+	if (this->type != MONSTER_GHOST)    // ghost doesn't have those to destroy
+	  {
+	    al_destroy_bitmap(this->sprite_north_running_1);
+	    al_destroy_bitmap(this->sprite_north_running_2);
+	    al_destroy_bitmap(this->sprite_east_running_1);
+	    al_destroy_bitmap(this->sprite_east_running_2);
+	    al_destroy_bitmap(this->sprite_south_running_1);
+	    al_destroy_bitmap(this->sprite_south_running_2);
+	    al_destroy_bitmap(this->sprite_west_running_1);
+	    al_destroy_bitmap(this->sprite_west_running_2);
+	  }
+
 	al_destroy_sample(this->sound_footsteps);
 	al_destroy_sample(this->sound_skate);
   }
@@ -168,6 +180,9 @@ void c_monster_character::draw(int x, int y)
 
 void c_monster_character::next_instruction()
   {
+	if (this->path_length == 0)
+	  return;
+
     this->current_path_instruction = (this->current_path_instruction + 1) % this->path_length;
 	
 	switch(this->path_directions[this->current_path_instruction])

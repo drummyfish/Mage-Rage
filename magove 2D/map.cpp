@@ -951,7 +951,7 @@ c_map::~c_map()
 	al_destroy_bitmap(this->tile_collapse);                               
 	al_destroy_bitmap(this->tile_hole);                              
 	al_destroy_bitmap(this->bitmap_crate_water);                     
-	
+
 	for (i = 0; i < 5; i++)
 	  al_destroy_bitmap(this->tile_water[i]);            
 
