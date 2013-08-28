@@ -1,0 +1,14 @@
+description:
+mia_x:11
+mia_y:0
+metodej_x:12
+metodej_y:0
+starovous_x:12
+starovous_y:1
+environment:castle
+width:23
+height:14
+heightmap:2221111111211222222222222212222212112112121010222122111121120111110102221221111211200010101022212222212122010111000222111221111120101011112111112211111201011101022211122112112000011111222122211121120110220002211122111211201102200021111122222112000001110211111111111121110000100010100000000111111111000000000000002111100000
+typemap:nnnnhhhnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnwwwnnnnnnwnnnnnnnnnnnnnnnwwnnnnnwnnnnninnnnnnnnnnwnnnnnwnnnnnncnnnnwwnwnwwwwwwwnnnnnnnnnnnwwwwwwwwwwwwwnnnnnnnnnn
+objects:(sw,3,0),(ic,8,0),(ic,3,1),(dh,9,1,12,-1,0),(st,16,1),(st,18,1),(fl,20,1,-1,-1,1),(ga,21,1),(fl,22,1,-1,-1,1),(ic,3,2),(le,14,2,14,-1,0),(fl,20,2,-1,-1,1),(c1,21,2),(fl,22,2,-1,-1,1),(ic,3,3),(ts,12,3,10),(fl,20,3,-1,-1,1),(c1,21,3),(fl,22,3,-1,-1,1),(dh,3,4,1,9,0),(ic,9,4),(st,10,4),(dh,11,4,11,-1,0),(fo,18,4),(fl,20,4,-1,-1,1),(el,21,4,14,-1,0),(fl,22,4,-1,-1,1),(bu,3,5,4,-1),(dv,4,5,1,-1,1),(bu,5,5,5,-1),(sn,8,5),(bo,14,5),(le,1,6,13,-1,0),(bu,3,6,6,-1),(dv,4,6,2,-1,1),(bu,5,6,7,-1),(bu,3,7,8,-1),(dv,4,7,3,-1,1),(bu,5,7,6,7),(cr,7,7),(st,10,7),(cr,3,8),(st,6,8),(sn,20,8),(sn,21,8),(sn,22,8),(le,7,9,1,-1,0),(le,8,9,9,2,0),(le,9,9,9,3,0),(ts,20,9,15),(si,21,9,""),(td,3,10,10),(st,10,10),(ic,2,11),(el,6,11,8,5,0),(el,7,11,7,4,0),(dv,8,11,6,5,1),(el,9,11,7,4,0),(el,10,11,8,5,0),(ic,19,11),(td,20,11,15),(le,2,12,12,-1,0),(bu,4,12,11,-1),(dv,13,12,13,-1,0),(c2,15,12),(wl,6,13),(wl,9,13),(sw,18,13)
+monsters:(tr,3,5,e,2,-,2,w,2,-,2),(tr,5,6,w,2,-,2,e,2,-,2),(tr,3,7,e,2,-,2,w,2,-,2),(tr,14,3,s,4,e,2,n,4,w,2),(tr,16,7,n,4,w,2,s,4,e,2),(tr,15,7,-,5),(gh,2,6,-,5)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              
