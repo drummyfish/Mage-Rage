@@ -1,0 +1,13 @@
+description:
+mia_x:2
+mia_y:15
+metodej_x:
+metodej_y:
+starovous_x:
+starovous_y:
+environment:grass
+width:23
+height:19
+heightmap:01110000111000000000000011110001110000000000001111000011100000001112211110000010000000111112111100001110000001000120100000011100000000001100000000000000000000111000000000000000000000010000000000000000000000000000000000000000000000000000000000000000000000000000000000000000100000000000000000001011111000000000000000010100010000000000000000101010100000000000000001010101000000000000000010001010000000000000000111110100000000000000000111101
+typemap:wnnnwwwwnnnwwwwwwwwwwwwwnnnnwwwnnnwwwwwwwwwwwwnnnnwwwwnnnwwwwwwwnnnnnnnnnwnnnnnwwnnwwwnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnwnnnnnnnwnnnnnnwwwnnnnwnnnnnnnnwwwwwnwwwwwnnnwnnnnnnnwwwwwwnwwwwwwwwwwnnnwwwnnnwwwnwnwnnnnwwwwwwwwwwwnnnnnnnnnnnnwwwwwwwwwwwwwwnnnnnnnnwwnnnnhwwwwwwwwwwwwnwwwwnnnnnhhnnnnnwwwwwnnwwwnnwnnnnnnnnnnnccccnnnwnnnwnnnnnnnnnnnwwwwnnnnnnnwnnnnnnnnnnnwwwwnnwwwwwwnnnnnnnnnnwwwwwwwwwnnwwnnnnnnnnnwwwwwwwwwnnnnwwnnnnnn
+objects:(tr,1,0),(tr,2,0),(tr,8,0),(ga,9,0),(tr,10,0),(wl,7,1),(tr,0,2),(f2,3,2),(wl,4,2),(si,10,2,""),(tr,22,2),(cr,2,3),(ro,5,3),(kg,9,3),(ro,13,3),(tr,19,3),(bu,5,4,1,-1),(el,7,4,1,-1,0),(se,16,4),(sn,0,5),(f1,12,5),(fo,13,5),(cr,17,5),(f2,14,6),(se,21,7),(cr,0,8),(dh,6,8,5,-1,0),(bu,19,8,6,-1),(dh,6,7,6,-1,0),(f2,10,9),(wl,14,9),(dv,4,10,7,-1,0),(cr,9,10),(bu,13,10,7,-1),(cr,13,10),(wl,17,10),(si,12,11,""),(se,18,11),(fl,17,12,-1,-1,1),(le,21,12,5,-1,0),(tr,22,12),(el,13,13,4,-1,1),(fl,17,13,-1,-1,1),(fl,19,13,-1,-1,1),(fl,20,13,-1,-1,1),(fl,21,13,-1,-1,0),(tr,0,14),(f1,2,14),(fl,17,14,-1,-1,0),(fl,19,14,-1,-1,0),(fl,21,14,-1,-1,1),(fl,17,15,-1,-1,1),(fl,19,15,-1,-1,1),(fl,21,15,-1,-1,1),(tr,0,16),(si,3,16,""),(f2,8,16),(fl,17,16,-1,-1,1),(fl,18,16,-1,-1,0),(fl,19,16,-1,-1,1),(fl,21,16,-1,-1,0),(tr,0,17),(tr,1,17),(tr,2,17),(wl,9,17),(wl,15,17),(fl,21,17,-1,-1,1),(tr,0,18),(tr,1,18),(wl,8,18),(le,11,18,4,-1,0),(td,14,18,2),(wl,15,18),(f1,18,18),(ts,21,18,2)
