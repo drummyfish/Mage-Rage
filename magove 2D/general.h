@@ -20,6 +20,7 @@
 #include <allegro5/allegro_acodec.h>
 #include <allegro5/allegro_font.h>
 #include <allegro5/allegro_ttf.h>
+#include <stdlib.h>
 
 #define VERSION "1.0"                   /** program version */
 #define MAP_MAX_WIDTH 30                /** maximum map width in squares */
@@ -185,7 +186,8 @@ typedef enum
 	OBJECT_KEY_RED,            /** red key (part of storyline) */ 
 	OBJECT_KEY_GREEN,          /** green key (part of storyline) */
 	OBJECT_KEY_BLUE,           /** blue key (part of storyline) */
-    OBJECT_STATUE              /** statue - only blocks way */
+    OBJECT_STATUE,             /** statue - only blocks way */
+    OBJECT_OREN                /** oren - when destroyed with Starovous' light spell, the map is won */
   } t_object_type;
 
 typedef enum

@@ -37,6 +37,10 @@ c_map_object::c_map_object(t_object_type object_type, int link_id,  int link_id2
 
 	switch (this->type)
 	  {
+	    case OBJECT_OREN:
+		  this->bitmaps[0] = al_load_bitmap("resources/object_oren.png");
+		  break; 
+
 	    case OBJECT_KEY_RED:
           this->bitmaps[0] = al_load_bitmap("resources/object_key_red.png");
 		  break;

@@ -235,6 +235,16 @@ void c_game::set_language(string language)
 	this->intro_lines_2[7] = this->local_texts->get_text("intro_17");
 	this->intro_lines_2[8] = this->local_texts->get_text("intro_18");
 	this->intro_lines_2[9] = this->local_texts->get_text("intro_19");
+	this->outro_lines[0] = this->local_texts->get_text("outro_0");
+	this->outro_lines[1] = this->local_texts->get_text("outro_1");
+	this->outro_lines[2] = this->local_texts->get_text("outro_2");
+	this->outro_lines[3] = this->local_texts->get_text("outro_3");
+	this->outro_lines[4] = this->local_texts->get_text("outro_4");
+	this->outro_lines[5] = this->local_texts->get_text("outro_5");
+	this->outro_lines[6] = this->local_texts->get_text("outro_6");
+	this->outro_lines[7] = this->local_texts->get_text("outro_7");
+	this->outro_lines[8] = this->local_texts->get_text("outro_8");
+	this->outro_lines[9] = this->local_texts->get_text("outro_9");
 	this->how_to_play_lines[0] = this->local_texts->get_text("how_to_play_0");
 	this->how_to_play_lines[1] = this->local_texts->get_text("how_to_play_1");
 	this->how_to_play_lines[2] = this->local_texts->get_text("how_to_play_2");
@@ -352,6 +362,7 @@ void c_game::run()
 	ALLEGRO_EVENT program_event;
 	ALLEGRO_TIMEOUT timeout;
 	string help_string_array[2];
+	ALLEGRO_KEYBOARD_STATE keyboard_state;
 	
 	this->menu = new c_menu(&this->input_output_state);
 
@@ -386,15 +397,23 @@ void c_game::run()
 
 				  case GAME_STATE_WIN:
 					al_stop_samples();
-					this->menu_state = MENU_STATE_LEVEL_CHOOSING;
 
-					if (this->current_level == this->settings.last_level) // unlock the next level
+                    if (this->current_level == 22) // last level - the game is won
 					  {
-						this->settings.last_level++;
-					    this->save();
+					    this->menu_state = MENU_STATE_OUTRO;
+						this->menu->set_menu_info_screen("resources/characters.png",this->outro_lines,10,-1.0,255,255,255);
 					  }
+					else  
+					  {
+						if (this->current_level == this->settings.last_level) // unlock the next level
+						  {
+							this->settings.last_level++;
+					        this->save();
+						  }
 
-					this->menu->set_menu_choose_level(this->settings.last_level);
+						this->menu_state = MENU_STATE_LEVEL_CHOOSING;
+						this->menu->set_menu_choose_level(this->settings.last_level);
+					  }				
 					
 					break;
 
@@ -405,7 +424,6 @@ void c_game::run()
 				    break;
 			    }
 
-			  al_rest(0.01);
 		      break;
 
 			case MENU_STATE_LOST:
@@ -452,6 +470,17 @@ void c_game::run()
 			    {
 				  this->menu_state = MENU_STATE_MAIN_MENU;
 				  this->menu->set_menu_items(this->main_menu_items,5,this->main_menu_title,false);
+			    }
+
+			  break;
+
+			case MENU_STATE_OUTRO:
+			  menu_return_value = this->menu->update();
+
+			  if (menu_return_value > 0)
+			    {
+				  this->menu_state = MENU_STATE_ABOUT;
+				  this->menu->set_menu_info_screen("resources/characters.png",this->about_lines,3,-1.0,255,255,255);
 			    }
 
 			  break;
@@ -517,6 +546,11 @@ void c_game::run()
 
 			case MENU_STATE_MAIN_MENU:
 			  menu_return_value = this->menu->update();
+
+			  al_get_keyboard_state(&keyboard_state);
+
+			  if (al_key_down(&keyboard_state,ALLEGRO_KEY_H) && al_key_down(&keyboard_state,ALLEGRO_KEY_I)) // easter egg when E and I pressed together
+				this->menu->display_easter_egg();
 
 			  switch (menu_return_value)
 			    {

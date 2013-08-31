@@ -42,6 +42,7 @@ class c_menu
 	  bool fading_out;                  /** whether the fade out effect is active */
 	  string title;                     /** menu title */
 	  unsigned char bg_color[3];        /** background color for the info screen */
+	  double easter_egg_started;        /** easter egg start time */
 
 	  int level_number_positions_x[22]; /** x poxel positions of level numbers at level choosing screen */
 	  int level_number_positions_y[22]; /** same as above but with y coordinations */
@@ -51,8 +52,10 @@ class c_menu
 	  ALLEGRO_BITMAP *menu_bottom;      /** bitmap - bottom part of the menu */
 	  ALLEGRO_BITMAP *menu_selection;   /** bitmap - highlight for menu items */
 	  ALLEGRO_BITMAP *info_background;  /** bitmap - info screen image */
+	  ALLEGRO_BITMAP *menu_border;      /** bitmap - menu decorative border */
+	  ALLEGRO_BITMAP *easter_egg;       /** bitmap - easter egg */
 
-	  ALLEGRO_FONT *text_font;         /** font to display the text */
+	  ALLEGRO_FONT *text_font;          /** font to display the text */
 
     public: 
 	  c_menu(t_input_output_state *input_output_state);
@@ -88,6 +91,14 @@ class c_menu
 		    highlight cursor will stay on its
 			position, otherwise it will move
 			to the first item
+		*/
+
+	  void display_easter_egg();
+
+	    /**
+		  Displays the easter egg for a little
+		  while no matter what menu type is
+		  set.
 		*/
 
 	  void set_menu_info_screen(string image_path, string text_lines[], int number_of_lines, double duration, unsigned char bg_red, unsigned char bg_green, unsigned char bg_blue);

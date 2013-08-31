@@ -156,6 +156,7 @@ bool c_map::set_environment(t_environment new_environment)
 
 c_map::c_map(string filename, t_input_output_state *input_output_state, long int *global_time, int language)
   {
+	this->change_flame_state = 0;
 	this->language = language;
     this->current_player = 0;
 	this->pressed_1 = false;
@@ -182,6 +183,7 @@ c_map::c_map(string filename, t_input_output_state *input_output_state, long int
 	this->screen_square_end[1] = this->screen_square_resolution[1];
 	this->screen_center_x = this->input_output_state->screen_x / 2; 
     this->screen_center_y = this->input_output_state->screen_y / 2;
+	this->oren_destroyed = false;
 
 	portrait_x_positions[0] = 20;
 	portrait_x_positions[1] = 170;
@@ -202,6 +204,8 @@ c_map::c_map(string filename, t_input_output_state *input_output_state, long int
 	  }  
 	else
       this->update_screen_position();
+
+	this->check_buttons();
   }
 
 //-----------------------------------------------
@@ -313,6 +317,14 @@ void c_map::set_map_objects(string object_string)
 			  this->add_map_object(new c_map_object(OBJECT_STATUE,-1,-1,this->global_time),numbers[0],numbers[1]);
 		    else if (object_type.compare("bu") == 0)
 			  this->add_map_object(new c_map_object(OBJECT_BUTTON,numbers[2],numbers[3],this->global_time),numbers[0],numbers[1]);
+			else if (object_type.compare("or") == 0)
+              this->add_map_object(new c_map_object(OBJECT_OREN,-1,-1,this->global_time),numbers[0],numbers[1]);
+		    else if (object_type.compare("kr") == 0)
+              this->add_map_object(new c_map_object(OBJECT_KEY_RED,-1,-1,this->global_time),numbers[0],numbers[1]);
+			else if (object_type.compare("kg") == 0)
+              this->add_map_object(new c_map_object(OBJECT_KEY_GREEN,-1,-1,this->global_time),numbers[0],numbers[1]);
+			else if (object_type.compare("kb") == 0)
+              this->add_map_object(new c_map_object(OBJECT_KEY_BLUE,-1,-1,this->global_time),numbers[0],numbers[1]);
 			else if (object_type.compare("si") == 0)
 			  {
 				help_object = new c_map_object(OBJECT_SIGN,-1,-1,this->global_time);
@@ -1300,7 +1312,9 @@ void c_map::draw_borders(int x, int y, int plus_x, int plus_y)
 void c_map::draw(int x, int y)
   { 
 	int i, j, k, help_height, elevation, number_of_crates, elevator_height;
+
 	al_clear_to_color(al_map_rgb(0,0,0));      // clear the screen
+	
 	this->animation_frame = *this->global_time / 16;
 
 	for (j = this->screen_square_position[1] - 1; j < this->screen_square_end[1] + 1; j++)                         // go through lines
@@ -1735,9 +1749,6 @@ void c_map::update_screen_position()
 	int player_position[2];
 	int i, player_height;
 
-	if (this->center_map)
-	  return;
-
 	player_position[0] = this->player_characters[this->current_player]->get_square_x();
 	player_position[1] = this->player_characters[this->current_player]->get_square_y();
 
@@ -1774,16 +1785,13 @@ void c_map::update_screen_position()
 
 void c_map::shift_screen(int x, int y)
   {
-    if (this->center_map)
+	if (x > 0 && this->screen_square_end[0] > this->width + 16) // check map borders
 	  return;
-
-	if (x > 0 && this->screen_square_position[0] > this->width -8) // check map borders
+	else if (x < 0 && this->screen_pixel_position[0] < - 800)
 	  return;
-	else if (x < 0 && this->screen_pixel_position[0] < -200)
+	else if (y > 0 && this->screen_square_end[1] > this->height + 10)
 	  return;
-	else if (y > 0 && this->screen_square_position[1] > this->height -8)
-	  return;
-	else if (y < 0 && this->screen_pixel_position[1] < -200)
+	else if (y < 0 && this->screen_pixel_position[1] < - 640)
 	  return;
 
 	this->screen_pixel_position[0] += x;
@@ -1807,7 +1815,11 @@ void c_map::move_character(c_character *character, t_direction direction)
 	if (direction == DIRECTION_NONE)
 	  return;
 	
-	step_length = 0.026;
+	step_length = this->time_difference * 2;//0.026;
+
+	if (step_length > 0.025)  // so that player can't make too long steps and go through walls etc.
+	  step_length = 0.025;
+
 	moved = false;
 
 	square_position[0] = character->get_square_x();
@@ -1975,6 +1987,9 @@ void c_map::update_missiles()
 	int i, j;
 	int help_position[2];
 	bool died;
+	double step_length;
+
+	step_length = this->time_difference * 4;
 
 	for (i = 0; i < this->number_of_missiles; i++)
 	  {
@@ -1986,19 +2001,19 @@ void c_map::update_missiles()
 		switch (this->missiles[i].direction)
 		  {
 		    case DIRECTION_NORTH:
-			  missiles[i].position_y -= 0.1;
+			  missiles[i].position_y -= step_length;
 			  break;
 
 			case DIRECTION_EAST:
-			  missiles[i].position_x += 0.1;
+			  missiles[i].position_x += step_length;
 			  break;
 
 			case DIRECTION_SOUTH:
-			  missiles[i].position_y += 0.1;
+			  missiles[i].position_y += step_length;
 			  break;
 
 			case DIRECTION_WEST:
-			  missiles[i].position_x -= 0.1;
+			  missiles[i].position_x -= step_length;
 			  break;
 		  }
 
@@ -2069,6 +2084,10 @@ void c_map::update_missiles()
 				      died = true;
 				    }
 			    }
+
+			  if (this->square_has_object(this->missiles[i].square_x,this->missiles[i].square_y,OBJECT_OREN) && // killing oren
+			    this->get_height(this->missiles[i].square_x,this->missiles[i].square_y) == this->missiles[i].height)
+				this->oren_destroyed = true;
 
 			  break;
 
@@ -2182,7 +2201,8 @@ t_game_state c_map::update()
 	int i; 
 	
 	this->time_difference = al_current_time() - this->time_before;
-	
+	this->time_before = al_current_time();
+
 	if (this->text_is_displayed && this->text_end_time <= al_current_time()) // erase the text displayed
 	  {
 		this->text_is_displayed = false;
@@ -2205,15 +2225,17 @@ t_game_state c_map::update()
 
 	this->frame_count++;
 
-	if (this->frame_count % 128 == 0)
+	if (al_current_time() >= this->change_flame_state)
 	  {
 		this->flames_on = !this->flames_on;
 		this->update_flames();
+		change_flame_state = al_current_time() + 3; // next change in 3 seconds
 	  }
 
 	if (this->input_output_state->key_map_explore) // moving camera
 	  {
-		this->player_characters[this->current_player]->stop_animation();
+		if (this->player_characters[this->current_player]->get_playing_animation() != ANIMATION_SKATE)
+		  this->player_characters[this->current_player]->stop_animation();
 
 		if (this->input_output_state->key_left)
 		  this->shift_screen(-5,0);
@@ -2322,6 +2344,9 @@ t_game_state c_map::check_game_state()
 
 	if (this->input_output_state->key_back)
 	  return GAME_STATE_PAUSE;
+
+	if (this->oren_destroyed)
+	  return GAME_STATE_WIN;
 
 	for (i = 0; i < 3; i++)
 	  if (this->player_characters[i] != NULL)
@@ -2570,21 +2595,22 @@ void c_map::use_key_press()
 		           {
 			         this->player_characters[this->current_player]->play_animation(ANIMATION_USE);
 
-			     	if (this->object_can_be_used(help_object))
+			     	 if (this->object_can_be_used(help_object))
 			           help_object->use();
 		           }
 			     else if (help_object->get_type() == OBJECT_FOUNTAIN)
 			       {
-			     	this->player_characters[this->current_player]->change_magic_energy(1);
-			     	this->display_animation(DISPLAY_ANIMATION_REFRESH,coordinations[0],coordinations[1]);
+			     	 this->player_characters[this->current_player]->change_magic_energy(1);
+			     	 this->display_animation(DISPLAY_ANIMATION_REFRESH,coordinations[0],coordinations[1]);
 			       }
 			     else if (help_object->get_type() == OBJECT_SIGN)
 			       {
-			     	this->display_text(help_object->get_sign_text(),10);
+			     	 this->display_text(help_object->get_sign_text(),10);
 			       }
 			     else if (help_object->get_type() == OBJECT_KEY_RED || help_object->get_type() == OBJECT_KEY_GREEN || help_object->get_type() == OBJECT_KEY_BLUE)
 			       {
-			     	this->remove_object(facing_square[0],facing_square[1],i);
+			     	 this->remove_object(facing_square[0],facing_square[1],i);
+					 this->display_animation(DISPLAY_ANIMATION_REFRESH,facing_square[0],facing_square[1]);
 			       }
 	           }
 		     else

@@ -17,6 +17,7 @@ c_menu::c_menu(t_input_output_state *input_output_state)
 	this->number_of_text_lines = 0;
 	this->io = input_output_state;
 	this->pressed = false;
+	this->easter_egg_started = -1.0;
 	
 	this->text_font = al_load_ttf_font("resources/benegraphic.ttf",38,0);
 	
@@ -24,6 +25,8 @@ c_menu::c_menu(t_input_output_state *input_output_state)
 	this->menu_middle = al_load_bitmap("resources/menu_middle.png");
 	this->menu_bottom = al_load_bitmap("resources/menu_bottom.png");
 	this->menu_selection = al_load_bitmap("resources/menu_selection.png");
+	this->menu_border = al_load_bitmap("resources/menu_border.png");
+	this->easter_egg = al_load_bitmap("resources/awesome.png");
 	this->info_background = NULL;
 
 	level_number_positions_x[0] = 270;
@@ -80,6 +83,8 @@ c_menu::~c_menu()
     al_destroy_bitmap(this->menu_middle);
 	al_destroy_bitmap(this->menu_bottom);
 	al_destroy_bitmap(this->menu_selection);
+	al_destroy_bitmap(this->menu_border);
+	al_destroy_bitmap(this->easter_egg);
 	al_destroy_font(this->text_font);
   }
 
@@ -149,7 +154,7 @@ void c_menu::set_menu_choose_level(int number_of_levels)
 
 int c_menu::update()
   {
-	int x, y, i, alpha_value, return_value;
+	int x, y, i, alpha_value, return_value, border1_x, border2_x, border_y, red, green, blue;
 	double time_difference;
 
 	return_value = -1;
@@ -199,7 +204,19 @@ int c_menu::update()
 
 		  // now draw the menu:
 
+		  border1_x = 40;
+		  border2_x = this->io->screen_x - 83;
+		  border_y = -134 + ((int) (al_current_time() * 100)) % 134;
+
 		  al_clear_to_color(al_map_rgb(255,255,255));
+
+		  while (border_y < this->io->screen_y)
+		    {
+			  al_draw_bitmap(this->menu_border,border1_x,border_y,0);
+			  al_draw_bitmap(this->menu_border,border2_x,border_y,0);
+			  border_y += 134;
+		    }
+
 		  al_draw_text(this->text_font,al_map_rgb(200,200,200),5,5,0,VERSION);
 
 		  x = this->io->screen_x / 2 - 162;
@@ -368,7 +385,49 @@ int c_menu::update()
 		  break;
 	  }
 
+	if (this->easter_egg_started >= 0.0) // display easter egg
+	  {
+		time_difference = al_current_time() - this->easter_egg_started;
+
+		if (time_difference <= 2.0)
+		  al_draw_bitmap(this->easter_egg,(int) (-112 + (time_difference / 2) * (this->io->screen_x / 3)),20,0);
+		else if (time_difference <= 4.0)
+		  {
+		    al_draw_bitmap(this->easter_egg,this->io->screen_x / 3 - 112,20,0); 
+				
+			switch((int) (al_current_time() * 5) % 10) // some random colors for the text
+			  {
+			    case 0: red = 0; green = 55; blue = 0; break;
+			    case 1: red = 50; green = 0; blue = 63; break;
+			    case 2: red = 170; green = 55; blue = 80; break;
+			    case 3: red = 7; green = 10; blue = 244; break;
+			    case 4: red = 30; green = 180; blue = 25; break;
+			    case 5: red = 0; green = 113; blue = 0; break;
+			    case 6: red = 0; green = 55; blue = 10; break;
+			    case 7: red = 256; green = 0; blue = 190; break;
+			    case 8: red = 30; green = 200; blue = 50; break;
+			    case 9: red = 200; green = 200; blue = 180; break;
+			  }
+
+			al_draw_text(this->text_font,al_map_rgb(red,green,blue),this->io->screen_x / 3 - 200,2,0,"HELLO!");
+		  }
+		else if (time_difference <= 6.0)
+		  al_draw_bitmap(this->easter_egg,(int) (-112 + (1 - ((time_difference - 4) / 2)) * this->io->screen_x / 3),20,0);
+		else
+		  this->easter_egg_started = -1;
+	  }
+
 	return return_value;
+  }
+
+//-----------------------------------------------
+
+void c_menu::display_easter_egg()
+  {
+	if (this->easter_egg_started >= 0.0)
+	  return;
+
+	this->easter_egg_started = al_current_time(); // two seconds for the easter egg
   }
 
 //-----------------------------------------------

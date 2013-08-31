@@ -49,7 +49,11 @@ map objects:
     tw,  // tree winter      (tw,x,y)
     ts,  // teleport source  (ts,x,y,id)
     td,  // teleport dest.   (td,x,y,id)
-    st   // statue           (st,x,y)
+    st,  // statue           (st,x,y)
+    or,  // oren             (or,x,y)
+    kr,  // key red          (kr,x,y)
+    kb,  // key green        (kg,x,y)
+    kg   // key blue         (kb,x,y)
   }
 
 monsters:

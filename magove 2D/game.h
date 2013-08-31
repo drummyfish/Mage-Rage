@@ -92,6 +92,7 @@ class c_game
 	  string about_lines[3];                    /** information about the program for the about screen */
       string intro_lines_1[10];                 /** intro text, page one */
 	  string intro_lines_2[10];                 /** intro text, page two */
+	  string outro_lines[10];                   /** outro text */
 	  string how_to_play_lines[10];             /** text of how to play the game */
 
       void update_settings_menu_items();
