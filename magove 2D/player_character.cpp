@@ -14,7 +14,7 @@ c_player_character::c_player_character(t_player_type player_type, long int *glob
 	string help_string;
 
 	this->global_time = global_time;
-	this->footsteps_gain = 1.0;
+	this->footsteps_gain = 2.0;
 	this->magic_energy = MAX_MAGIC_ENERGY;
 	this->playing_sound = false;
 	this->set_position(0,0);

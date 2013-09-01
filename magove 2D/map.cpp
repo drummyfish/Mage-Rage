@@ -1097,6 +1097,9 @@ bool c_map::crate_can_be_shifted(int x, int y, int height, t_direction direction
 	  this->square_has_object(next_square[0],next_square[1],OBJECT_TELEPORT_OUTPUT))
 	  return false;
 
+	if (this->square_has_character(x,y))
+	  return false;
+
 	if (this->square_has_character(next_square[0],next_square[1]))
 	  return false;
 
@@ -1203,6 +1206,8 @@ void c_map::shift_crate(int x, int y, t_direction direction)
 	    }
 	  else
 		break;
+
+	this->check_buttons();
   }
 
 //-----------------------------------------------
@@ -1938,6 +1943,9 @@ void c_map::display_text(string text, double duration)
 	lines = 0;
 	end = false;
 
+	for (i = 0; i < MAX_TEXT_LINES; i++) // delete all lines
+	  this->text_lines[i][0] = 0;
+
 	for (j = 0; j < MAX_TEXT_LINES; j++) // split the string into lines
 	  {
 	    for (i = 0; i < MAX_TEXT_CHARACTERS_PER_LINE - 1; i++)
@@ -1961,7 +1969,7 @@ void c_map::display_text(string text, double duration)
 			  }
 		  }
 
-		this->text_lines[j][i + 1] = 0;  // terminate the string
+		this->text_lines[j][i] = 0;  // terminate the string
 
 		if (al_get_text_width(this->text_font,this->text_lines[j]) > greatest_width)
 		  greatest_width = al_get_text_width(this->text_font,this->text_lines[j]);

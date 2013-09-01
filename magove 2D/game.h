@@ -67,6 +67,9 @@ class c_game
 	  t_menu_state menu_state;                  /** stores the state of the menu system */
 	  c_associative_array *local_texts;         /** stores game texts in local language */
 	  int current_level;                        /** current level being played */
+	  bool letter_pressed;                      /** to catch only one keydown when writing cheat letters */
+	  char cheat_buffer[7];                     /** holds letters typed to recognize the cheat code ("iamnoob") */
+	  bool cheat_used;                          /** a flag that turns true if the cheat has been used */
 
 	  int key_up;                               /** keycode for key up */
 	  int key_down;                             /** keycode for key down */
@@ -94,6 +97,9 @@ class c_game
 	  string intro_lines_2[10];                 /** intro text, page two */
 	  string outro_lines[10];                   /** outro text */
 	  string how_to_play_lines[10];             /** text of how to play the game */
+
+	  ALLEGRO_SAMPLE *win_sound;                /** sound played when the map is won */
+	  ALLEGRO_SAMPLE *lose_sound;               /** sound played when the game is lost */
 
       void update_settings_menu_items();
 

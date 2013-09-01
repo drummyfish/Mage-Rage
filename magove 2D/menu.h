@@ -57,6 +57,8 @@ class c_menu
 
 	  ALLEGRO_FONT *text_font;          /** font to display the text */
 
+	  ALLEGRO_SAMPLE *click_sound;      /** click sound for the menu */
+
     public: 
 	  c_menu(t_input_output_state *input_output_state);
 

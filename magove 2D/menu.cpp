@@ -27,6 +27,7 @@ c_menu::c_menu(t_input_output_state *input_output_state)
 	this->menu_selection = al_load_bitmap("resources/menu_selection.png");
 	this->menu_border = al_load_bitmap("resources/menu_border.png");
 	this->easter_egg = al_load_bitmap("resources/awesome.png");
+	this->click_sound = al_load_sample("resources/menu_click.wav");
 	this->info_background = NULL;
 
 	level_number_positions_x[0] = 270;
@@ -86,6 +87,7 @@ c_menu::~c_menu()
 	al_destroy_bitmap(this->menu_border);
 	al_destroy_bitmap(this->easter_egg);
 	al_destroy_font(this->text_font);
+	al_destroy_sample(this->click_sound);
   }
 
 //-----------------------------------------------
@@ -166,7 +168,10 @@ int c_menu::update()
 		  if (this->io->key_down)
 		    {
 		      if (!this->pressed)
-			    this->current_item++;
+			    {
+			      this->current_item++;
+				  al_play_sample(this->click_sound,0.4,0.0,1.0,ALLEGRO_PLAYMODE_ONCE,NULL);
+			    }
 
 			  this->pressed = true;
 
@@ -176,7 +181,10 @@ int c_menu::update()
 		  else if (this->io->key_up)
 		    {
 		      if (!this->pressed)
-			    this->current_item--;
+			    {
+			      this->current_item--;
+			      al_play_sample(this->click_sound,0.4,0.0,1.0,ALLEGRO_PLAYMODE_ONCE,NULL);
+			    }
 			
 			  this->pressed = true;
 
@@ -188,6 +196,7 @@ int c_menu::update()
 		      if (!this->pressed)
 			    {
 				  this->pressed = true;
+				  al_play_sample(this->click_sound,0.4,0.0,1.0,ALLEGRO_PLAYMODE_ONCE,NULL);
 			      return_value = this->current_item;
 			    }
 		    }
@@ -196,6 +205,7 @@ int c_menu::update()
 		      if (!this->pressed)
 			    {
 			  	  this->pressed = true;
+				  al_play_sample(this->click_sound,0.4,0.0,1.0,ALLEGRO_PLAYMODE_ONCE,NULL);
 			      return_value = this->number_of_text_lines - 1;
 			    }
 		    }
@@ -329,7 +339,10 @@ int c_menu::update()
           if (this->io->key_down)
 		    {
 		      if (!this->pressed)
-			    this->current_item--;
+			    {
+				  al_play_sample(this->click_sound,0.4,0.0,1.0,ALLEGRO_PLAYMODE_ONCE,NULL);
+			      this->current_item--;
+			    }
 
 			  this->pressed = true;
 
@@ -339,8 +352,11 @@ int c_menu::update()
 		  else if (this->io->key_up)
 		    {
 		      if (!this->pressed)
-			    this->current_item++;
-			
+			    {
+				  al_play_sample(this->click_sound,0.4,0.0,1.0,ALLEGRO_PLAYMODE_ONCE,NULL);
+			      this->current_item++;
+			    }
+
 			  this->pressed = true;
 
 			  if (this->current_item > this->number_of_levels)
@@ -351,6 +367,7 @@ int c_menu::update()
 			  if (!this->pressed)
 			    { 
 			      return_value = this->current_item;
+				  al_play_sample(this->click_sound,0.4,0.0,1.0,ALLEGRO_PLAYMODE_ONCE,NULL);
 			      this->pressed = true;
 			    }
 		    } 
@@ -359,6 +376,7 @@ int c_menu::update()
 			  if (!this->pressed)
 			    {
 			      return_value = this->number_of_levels + 1;
+				  al_play_sample(this->click_sound,0.4,0.0,1.0,ALLEGRO_PLAYMODE_ONCE,NULL);
 			      this->pressed = true;
 			    }
 		    }

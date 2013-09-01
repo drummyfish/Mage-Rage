@@ -57,6 +57,9 @@ c_game::c_game()
         cerr << "ERROR: failed to initialize mouse." << endl;
       }
 	
+	this->win_sound = al_load_sample("resources/win.wav");
+	this->lose_sound = al_load_sample("resources/lose.wav");
+
 	this->load();                                  // load the progress and settings from the data file
 
 	if (this->settings.fullscreen)
@@ -99,9 +102,11 @@ c_game::c_game()
 	al_register_event_source(this->event_queue,al_get_display_event_source(display));
 	al_register_event_source(this->event_queue,al_get_timer_event_source(this->global_timer));
 	al_register_event_source(this->event_queue,al_get_keyboard_event_source());
-//	al_register_event_source(this->event_queue,al_get_mouse_event_source());
 	this->global_time = 0;
 	
+	this->cheat_buffer[0] = 0;
+	this->cheat_used = false;
+
 	this->cursor_bitmap = al_load_bitmap("resources/cursor.png");
 	this->cursor = al_create_mouse_cursor(this->cursor_bitmap,1,1);
 	al_set_mouse_cursor(display,this->cursor);
@@ -266,13 +271,15 @@ c_game::~c_game()
 	delete this->menu;
 	delete this->local_texts;
 	al_uninstall_keyboard();
-	al_uninstall_mouse(); 
+	al_uninstall_mouse();
 	al_shutdown_primitives_addon();
 	al_shutdown_image_addon();
 	al_shutdown_font_addon();
 	al_destroy_timer(this->global_timer); 
 	al_destroy_display(this->display);
 	al_destroy_event_queue(this->event_queue);
+	al_destroy_sample(this->win_sound);
+	al_destroy_sample(this->lose_sound);
 	al_uninstall_audio();
   }
 
@@ -357,12 +364,15 @@ void c_game::run()
   { 
 	string help_str;
 	int menu_return_value;
+	int i;
 	bool quit_program;
 	bool event_occured;
 	ALLEGRO_EVENT program_event;
 	ALLEGRO_TIMEOUT timeout;
 	string help_string_array[2];
 	ALLEGRO_KEYBOARD_STATE keyboard_state;
+	char character;
+	t_game_state game_state;
 	
 	this->menu = new c_menu(&this->input_output_state);
 
@@ -381,13 +391,22 @@ void c_game::run()
 		  {
 		    case MENU_STATE_PLAYING:
 
-			  switch (map->update())
+			  game_state = map->update();
+
+			  if (this->cheat_used)
+			    {
+				  game_state = GAME_STATE_WIN;
+				  this->cheat_used = false;
+			    }
+
+			  switch (game_state)
 			    {
 				  case GAME_STATE_PLAYING:
 				    break;
 
 				  case GAME_STATE_LOSE:
 					al_stop_samples();
+					al_play_sample(this->lose_sound,1.0,0.0,1.0,ALLEGRO_PLAYMODE_ONCE,NULL);
 					this->menu_state = MENU_STATE_LOST;
 					help_string_array[0] = this->local_texts->get_text("lost");
 					this->menu->set_menu_info_screen("",help_string_array,1,-1,240,0,0);
@@ -397,6 +416,7 @@ void c_game::run()
 
 				  case GAME_STATE_WIN:
 					al_stop_samples();
+					al_play_sample(this->win_sound,1.0,0.0,1.0,ALLEGRO_PLAYMODE_ONCE,NULL);
 
                     if (this->current_level == 22) // last level - the game is won
 					  {
@@ -688,6 +708,59 @@ void c_game::run()
 				  this->input_output_state.key_map_explore = true;
 				else if (program_event.keyboard.keycode == this->key_back)
 				  this->input_output_state.key_back = true;
+				else if (!this->letter_pressed)       // possibly typing a cheatcode
+				  {
+					 switch (program_event.keyboard.keycode)
+					   {
+					     case ALLEGRO_KEY_I:
+						   character = 'i';
+						   this->letter_pressed = true;
+						   break;
+
+                         case ALLEGRO_KEY_A:
+						   character = 'a';
+						   this->letter_pressed = true;
+						   break;
+
+						 case ALLEGRO_KEY_M:
+						   character = 'm';
+						   this->letter_pressed = true;
+						   break;
+
+						 case ALLEGRO_KEY_N:
+						   character = 'n';
+						   this->letter_pressed = true;
+						   break;
+
+						 case ALLEGRO_KEY_O:
+						   character = 'o';
+						   this->letter_pressed = true;
+						   break;
+
+						 case ALLEGRO_KEY_B:
+						   character = 'b';
+						   this->letter_pressed = true;
+						   break;
+
+						 default:
+                           character = '-';
+						   break;
+					   }
+
+					 if (character != '-')
+					   {
+						 for (i = 0; i < 6; i++) // shift the buffer to the left
+						   this->cheat_buffer[i] = this->cheat_buffer[i + 1];
+
+						 this->cheat_buffer[6] = character;
+
+						 if (this->cheat_buffer[0] == 'i' && this->cheat_buffer[1] == 'a' &&
+						   this->cheat_buffer[2] == 'm' && this->cheat_buffer[3] == 'n' &&
+						   this->cheat_buffer[4] == 'o' && this->cheat_buffer[5] == 'o' &&
+						   this->cheat_buffer[6] == 'b')
+						   this->cheat_used = true;
+					   }
+				  }
 				
 				break;
 
@@ -718,6 +791,8 @@ void c_game::run()
 				  this->input_output_state.key_map_explore = false;
 				else if (program_event.keyboard.keycode == this->key_back)
 				  this->input_output_state.key_back = false;
+
+				this->letter_pressed = false;
 
 			    break;
 		    }
