@@ -1,0 +1,13 @@
+description:Mia meets Metodej on their way to the castle gate.|Mia se setkava s Metodejem, aby spolecne vyrazili k brane hradu.
+mia_x:2
+mia_y:17
+metodej_x:3
+metodej_y:17
+starovous_x:
+starovous_y:
+environment:grass
+width:20
+height:18
+heightmap:000000000011111111111011011000011111111110100010000110000011100000100011111111111010001011111111111110110110111111111111100101000111111111111111110000011111111122100000000000001111221100011000000000012221101111000000000022111000011111111000221110000100001110002111000001000000000021110001110000101000210000111100111110002100001100000000000011000000000000000000
+typemap:nnnnnnnnnnnnnwwwwwnwnnnnnnnnnnnnnwwwwwnwnnnwwwnnnnnnnnnnnnnwnnnwnwnnnnnnnwwwwwwwnnnwwwnnnnnnnnwwwwwwnnnnnnnnnnnnnnnnnnwwnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnwnnnnnnnnnnnnnnnnnnnwnccnnnnnnnnnnnnnnnnwnnnnwnnnnnnnnnnnnnnnnnnnwwwnnnnnnnnwwnnnnwnnnnwnnnnnwwwwwnnnnwnnnnn
+objects:(dh,7,4,10,-1,0),(tr,10,0),(ga,18,0),(dh,1,1,6,-1,0),(f2,8,1),(se,10,1),(bu,1,2,5,-1),(se,10,2),(el,13,2,8,-1,0),(el,14,2,8,-1,0),(el,15,2,8,-1,0),(el,16,2,8,-1,0),(el,17,2,8,-1,0),(ic,4,3),(wl,16,30,(dh,7,4,10,-1,0),(wl,17,4),(cr,4,5),(dh,7,5,5,-1,0),(f1,12,5),(ro,17,5),(td,2,6,7),(bu,4,6,6,-1),(ts,6,6,7),(tr,9,6),(tr,2,7),(ro,10,7),(tr,13,7),(f1,17,7),(sw,3,8),(tr,12,8),(tr,15,8),(ro,16,80,(tr,19,8),(tr,0,9),(le,4,9,9,-1,0),(bu,6,9,10,-1),(tr,9,9),(tr,17,9),(tr,18,9),(dh,5,10,9,-1,0),(ts,11,10,2),(ts,13,10,3),(tr,14,10),(ro,15,10),(tr,19,10),(tr,0,11),(ro,2,11),(tr,10,11),(tr,15,11),(tr,16,11),(tr,17,11),(cr,6,12),(cr,7,12),(td,11,12,2),(td,13,12,3),(f2,17,12),(ro,1,13),(bu,10,13,1,-1),(ic,11,13),(ro,16,13),(tr,19,13),(f1,4,14),(td,11,14,4),(ts,13,14,4),(tr,14,14),(ss,15,14),(si,2,15,"Some problems require cooperation.|Nektere problemy vyzaduji spolupraci."),(ro,9,15),(cr,12,15),(ic,13,15),(dv,14,15,1,-1,0),(se,5,16),(wl,8,16),(cr,16,16),(le,19,17,8,-1,0)
