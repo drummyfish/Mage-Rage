@@ -1,0 +1,14 @@
+description:The snow is slowly changing into green grass...|Snih se pomalu meni v zelenou travu...
+mia_x:
+mia_y:
+metodej_x:1
+metodej_y:1
+starovous_x:
+starovous_y:
+environment:snow
+width:19
+height:20
+heightmap:00001222222111121210000012222221111111000111111222111111110110111111111111111000000011222211111100000001122221111110000000022221111111000000012221111211100000001222112111110000000222112221211101111122111111022110122221111112212200012211111111111210001211111211111101000100112222111112100010002222222112220001000222222111222011100022111111111200000002211112201220000000221011211222
+typemap:nnnnnnnnnnnnnwwnnnwnnnnnnnnnnnnnnwwnwwnnnnnnnnnnnnnnwnnwwnnnnnnnnnnnnnnwwnwwniiiiiiinnnnnnwwnnwniiiiiiinnnnnnwwnwwniiiiiiinnnnnwwnnnwniiiiiiinnnnwwnnnnnniiiiiiinnnnwwnnnnnniiiiiiinnnwwnnnnnnnnnnnnnnnnwwnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnhnnnnnnnnnnnnnnnnnnhnnnnnnnnnnniinnnnhhnnnnnnnnnniiinnwnnnnnnnnniiiiiiiiiwnnnnnnhnniininnniwwnnnnhhhnniniinnnwww
+objects:(tr,7,0),(ga,16,0),(tw,5,1),(ts,9,1,7),(ro,8,2),(ic,11,2),(sw,12,2),(si,15,2,"The red key - it can open the castle gate. No one can get it here. It might as well be a thousand meters under ground.|Cerveny klic - otevira branu hradu. Tady ho nikdo nedostane. Mohl by stejne tak byt tisic metru pod zemi."),(kr,16,2),(le,4,3,1,-1,0),(ss,13,3),(ic,1,4),(tr,10,4),(dh,11,4,11,-1,0),(tw,12,4),(ic,6,6),(le,8,6,2,-1,0),(tw,12,6),(ss,16,6),(ic,1,7),(ic,5,7),(dv,11,7,10,-1,0),(ro,15,7),(ic,16,7),(ro,17,7),(ic,3,8),(tw,11,8),(sn,16,8),(ic,7,9),(si,8,9,"This opens the angry troll cage.|Tohle otvira klec s rozzurenym trolem."),(dh,10,9,9,-1,0),(dh,2,10,1,-1,0),(dv,6,10,6,-1,0),(le,8,10,6,-1,0),(tw,1,11),(dh,2,11,2,-1,0),(bu,3,11,9,-1),(sn,9,11),(tw,13,11),(ro,16,11),(cr,17,11),(ts,18,11,8),(fl,1,12,-1,-1,1),(ss,10,12),(fl,0,13,-1,-1,1),(fl,2,13,-1,-1,1),(ic,10,13),(td,18,13,8),(bu,3,14,10,-1),(cr,10,14),(sn,6,15),(bo,7,15),(tr,13,15),(ro,16,15),(td,17,15,7),(tw,10,16),(tr,11,16),(bu,3,17,11,-1),(dv,14,17,4,-1,1),(bu,15,17,4,-1),(dv,17,17,4,3,1),(ro,8,18),(bu,10,18,5,-1),(le,11,18,3,-1,0),(el,15,18,4,-1,1),(el,10,19,5,-1,1),(le,14,19,12,-1,0),(el,17,13,12,-1,0)
+monsters:(tr,7,10,w,4,s,1,-,2,s,3,-,2,s,3,-,2,w,2)
