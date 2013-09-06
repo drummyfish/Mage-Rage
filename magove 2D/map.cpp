@@ -184,6 +184,7 @@ c_map::c_map(string filename, t_input_output_state *input_output_state, long int
 	this->screen_center_x = this->input_output_state->screen_x / 2; 
     this->screen_center_y = this->input_output_state->screen_y / 2;
 	this->oren_destroyed = false;
+	this->time_difference = 0.0;
 
 	portrait_x_positions[0] = 20;
 	portrait_x_positions[1] = 170;
@@ -697,6 +698,11 @@ bool c_map::load_from_file(string filename)
 	this->spell_icons[5] = al_load_bitmap("resources/icon_heal.png");
 	this->spell_icons[6] = al_load_bitmap("resources/icon_teleport.png");
 
+	this->map_shadow_north = al_load_bitmap("resources/map_shadow_north.png");
+	this->map_shadow_south = al_load_bitmap("resources/map_shadow_south.png");
+	this->map_shadow_east = al_load_bitmap("resources/map_shadow_east.png");
+	this->map_shadow_west = al_load_bitmap("resources/map_shadow_west.png");
+
 	if (!this->portrait_mia || !this->portrait_metodej ||
 		!this->portrait_starovous || !this->portrait_selection ||
 		!this->spell_mia_1[0] || !this->spell_mia_1[1] ||
@@ -963,6 +969,11 @@ c_map::~c_map()
 	al_destroy_bitmap(this->tile_collapse);                               
 	al_destroy_bitmap(this->tile_hole);                              
 	al_destroy_bitmap(this->bitmap_crate_water);                     
+
+	al_destroy_bitmap(this->map_shadow_north);
+	al_destroy_bitmap(this->map_shadow_south);
+	al_destroy_bitmap(this->map_shadow_east);
+	al_destroy_bitmap(this->map_shadow_west);
 
 	for (i = 0; i < 5; i++)
 	  al_destroy_bitmap(this->tile_water[i]);            
@@ -1316,7 +1327,7 @@ void c_map::draw_borders(int x, int y, int plus_x, int plus_y)
 
 void c_map::draw(int x, int y)
   { 
-	int i, j, k, help_height, elevation, number_of_crates, elevator_height;
+	int i, j, k, help_height, elevation, number_of_crates, elevator_height, help_x, help_y;
 
 	al_clear_to_color(al_map_rgb(0,0,0));      // clear the screen
 	
@@ -1370,48 +1381,106 @@ void c_map::draw(int x, int y)
 				      {
 				        if (this->get_terrain_height(i,j - 1) == help_height + 1)                    // south
 					      {
-				  	        al_draw_bitmap(this->tile_cliff_south_1,x + i * 64 - this->screen_pixel_position[0],y + j * 50 - elevation - 27 - this->screen_pixel_position[1],0);
-				      
-					        if (this->get_terrain_height(i + 1,j - 1) != this->get_terrain_height(i,j - 1))  // southeast 1
+							help_x = x + i * 64 - this->screen_pixel_position[0];
+							help_y = y + j * 50 - elevation - 27 - this->screen_pixel_position[1];
+
+				  	        al_draw_bitmap(this->tile_cliff_south_1,help_x,help_y,0);
+
+							if (this->get_terrain_height(i + 1,j - 1) != this->get_terrain_height(i,j - 1) && i != this->width - 1)  // southeast 1
 						      al_draw_bitmap(this->tile_cliff_southeast_1,x + i * 64 + 64 - this->screen_pixel_position[0],y + j * 50 - elevation - 27 - this->screen_pixel_position[1],0);
 				    
-					        if (this->get_terrain_height(i - 1,j - 1) != this->get_terrain_height(i,j - 1))  // southwest 1
+					        if (this->get_terrain_height(i - 1,j - 1) != this->get_terrain_height(i,j - 1) && i != 0)  // southwest 1
 					          al_draw_bitmap(this->tile_cliff_southwest_1,x + i * 64 - 10 - this->screen_pixel_position[0],y + j * 50 - elevation - 27 - this->screen_pixel_position[1],0);
-					      }
+					        
+							if (i == 0)   // cut part of the cliff so it appears like it's in the fog
+							  {
+                                al_draw_filled_rectangle(help_x - 10,help_y,help_x + 8,help_y + 30,al_map_rgb(0,0,0));
+							  }
+							else if (i == this->width - 1)
+							  {
+								al_draw_filled_rectangle(help_x + 57,help_y,help_x + 90,help_y + 30,al_map_rgb(0,0,0));
+							  }
+						  }
 				        else if (this->get_terrain_height(i,j - 1) == help_height + 2)
 					      {
-					        al_draw_bitmap(this->tile_cliff_south_2,x + i * 64 - this->screen_pixel_position[0],y + j * 50 - elevation - 54 - this->screen_pixel_position[1],0);
+							help_x = x + i * 64 - this->screen_pixel_position[0];
+							help_y = y + j * 50 - elevation - 54 - this->screen_pixel_position[1];
 
-					        if (this->get_terrain_height(i + 1,j - 1) != this->get_terrain_height(i,j - 1))  // southeast 2
+					        al_draw_bitmap(this->tile_cliff_south_2,help_x,help_y,0);
+
+					        if (this->get_terrain_height(i + 1,j - 1) != this->get_terrain_height(i,j - 1) && i != this->width - 1)  // southeast 2
 						      al_draw_bitmap(this->tile_cliff_southeast_2,x + i * 64 + 64 - this->screen_pixel_position[0],y + j * 50 - elevation - 54 - this->screen_pixel_position[1],0);
 				    
-					        if (this->get_terrain_height(i - 1,j - 1) != this->get_terrain_height(i,j - 1))  // southwest 2
+					        if (this->get_terrain_height(i - 1,j - 1) != this->get_terrain_height(i,j - 1) && i != 0)  // southwest 2
 						      al_draw_bitmap(this->tile_cliff_southwest_2,x + i * 64 - 10 - this->screen_pixel_position[0],y + j * 50 - elevation - 54 - this->screen_pixel_position[1],0);
-					      }
+					      
+						    if (i == 0)   // cut part of the cliff so it appears like it's in the fog
+							  {
+                                al_draw_filled_rectangle(help_x - 10,help_y,help_x + 8,help_y + 60,al_map_rgb(0,0,0));
+							  }
+							else if (i == this->width - 1)
+							  {
+								al_draw_filled_rectangle(help_x + 57,help_y,help_x + 90,help_y + 60,al_map_rgb(0,0,0));
+							  } 
+						  }
 				      }
 			  
 				    if (help_height != 0)                                                  // draw other cliffs
 				      {
-				        if (this->get_terrain_height(i,j - 1) < help_height)                       // north
+				        if (this->get_terrain_height(i,j - 1) < help_height)                        // north
 					      {
-					        al_draw_bitmap(this->tile_cliff_north,x + i * 64 - this->screen_pixel_position[0],y + j * 50 - elevation - 10 - this->screen_pixel_position[1],0);
+							help_x = x + i * 64 - this->screen_pixel_position[0];
+							help_y = y + j * 50 - elevation - 10 - this->screen_pixel_position[1];
+
+					        al_draw_bitmap(this->tile_cliff_north,help_x,help_y,0);
 				    
 					        if (this->get_terrain_height(i + 1,j - 1) != help_height &&
-						      this->get_terrain_height(i + 1,j) != help_height)                    // northeast
-						     al_draw_bitmap(this->tile_cliff_northeast,x + i * 64 + 64 - this->screen_pixel_position[0],y + j * 50 - elevation - 10 - this->screen_pixel_position[1],0);
+						      this->get_terrain_height(i + 1,j) != help_height)                      // northeast
+						     al_draw_bitmap(this->tile_cliff_northeast,x + i * 64 + 64 - this->screen_pixel_position[0],help_y,0);
 
 					        if (this->get_terrain_height(i - 1,j - 1) != help_height &&
-						      this->get_terrain_height(i - 1,j) != help_height)                    // northwest
-						      al_draw_bitmap(this->tile_cliff_northwest,x + i * 64 -10 - this->screen_pixel_position[0],y + j * 50 - elevation - 10 - this->screen_pixel_position[1],0);
+						      this->get_terrain_height(i - 1,j) != help_height)                      // northwest
+						      al_draw_bitmap(this->tile_cliff_northwest,x + i * 64 - 10 - this->screen_pixel_position[0],help_y,0);
+
+							if (i == 0) // fog
+							  al_draw_filled_rectangle(help_x - 10,help_y + 5,help_x + 10,help_y + 10,al_map_rgb(0,0,0));
+							else if (i == this->width - 1)
+							  al_draw_filled_rectangle(help_x + 55,help_y + 5,help_x + 70,help_y + 10,al_map_rgb(0,0,0));
 					      }
 
-				        if (this->get_terrain_height(i - 1,j) < help_height)                       // west
+						if (this->get_terrain_height(i - 1,j) < help_height && i != 0)               // west
 					      al_draw_bitmap(this->tile_cliff_west,x + i * 64 - 10 - this->screen_pixel_position[0],y + j * 50 - elevation - this->screen_pixel_position[1],0);
 
-				        if (this->get_terrain_height(i + 1,j) < help_height)                       // east
+						if (this->get_terrain_height(i + 1,j) < help_height && i != this->width - 1) // east
 					      al_draw_bitmap(this->tile_cliff_east,x + i * 64 + 64 - this->screen_pixel_position[0],y + j * 50 - elevation - this->screen_pixel_position[1],0);
 		        
-				      } 
+				      }
+
+					if (j == 0)                                                  // draw transition to background (dark fog)
+					  {
+						al_draw_bitmap(this->map_shadow_north,x + i * 64 - this->screen_pixel_position[0],y + j * 50 - elevation - this->screen_pixel_position[1] - 15,0);
+					  
+					    if (this->get_terrain_height(i - 1,j) < help_height)
+						  al_draw_bitmap(this->map_shadow_north,x + (i - 1) * 64 - this->screen_pixel_position[0],y + j * 50 - elevation - this->screen_pixel_position[1] - 15,0);
+
+						if (this->get_terrain_height(i + 1,j) < help_height)
+						  al_draw_bitmap(this->map_shadow_north,x + (i + 1) * 64 - this->screen_pixel_position[0],y + j * 50 - elevation - this->screen_pixel_position[1] - 15,0);  
+					  }
+					else if (j == this->height - 1)
+					  {
+						al_draw_bitmap(this->map_shadow_south,x + i * 64 - this->screen_pixel_position[0],y + j * 50 - elevation - this->screen_pixel_position[1] + 15,0);
+					  }
+
+					if (i == 0)
+					  {
+                        al_draw_bitmap(this->map_shadow_west,x + i * 64 - this->screen_pixel_position[0] - 15,y + j * 50 - elevation - this->screen_pixel_position[1],0);
+					    al_draw_bitmap(this->map_shadow_west,x + i * 64 - this->screen_pixel_position[0] - 15,y + (j + 1) * 50 - elevation - this->screen_pixel_position[1],0);
+					  }
+					else if (i == this->width - 1)
+				      {
+                        al_draw_bitmap(this->map_shadow_east,x + i * 64 - this->screen_pixel_position[0] + 15,y + j * 50 - elevation - this->screen_pixel_position[1],0);
+						al_draw_bitmap(this->map_shadow_east,x + i * 64 - this->screen_pixel_position[0] + 15,y + (j + 1) * 50 - elevation - this->screen_pixel_position[1],0); 
+					  }
 				  } 
 			  }
 	      }
@@ -2206,7 +2275,7 @@ void c_map::check_ice()
 
 t_game_state c_map::update()
   {  
-	int i; 
+	int i, offset;
 	
 	this->time_difference = al_current_time() - this->time_before;
 	this->time_before = al_current_time();
@@ -2245,14 +2314,19 @@ t_game_state c_map::update()
 		if (this->player_characters[this->current_player]->get_playing_animation() != ANIMATION_SKATE)
 		  this->player_characters[this->current_player]->stop_animation();
 
+		offset = (int) (this->time_difference * 1024);
+
+		if (offset == 0)
+		  offset = 1;
+
 		if (this->input_output_state->key_left)
-		  this->shift_screen(-5,0);
+		  this->shift_screen(-1 * offset,0);
 		else if (this->input_output_state->key_right)
-		  this->shift_screen(5,0);
+		  this->shift_screen(offset,0);
 		else if (this->input_output_state->key_up)
-		  this->shift_screen(0,-5);
+		  this->shift_screen(0,-1 * offset);
 		else if (this->input_output_state->key_down)
-		  this->shift_screen(0,5);
+		  this->shift_screen(0,offset);
 	  }
 	else if (this->player_characters[this->current_player]->get_playing_animation() != ANIMATION_SKATE) // moving player
 	  {

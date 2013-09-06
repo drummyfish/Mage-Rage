@@ -156,7 +156,7 @@ void c_menu::set_menu_choose_level(int number_of_levels)
 
 int c_menu::update()
   {
-	int x, y, i, alpha_value, return_value, border1_x, border2_x, border_y, red, green, blue;
+	int x, y, i, alpha_value, return_value, border1_x, border2_x, border_y, red, green, blue, highlight_offset_x, highlight_offset_y;
 	double time_difference;
 
 	return_value = -1;
@@ -218,6 +218,9 @@ int c_menu::update()
 		  border2_x = this->io->screen_x - 83;
 		  border_y = -134 + ((int) (al_current_time() * 100)) % 134;
 
+		  highlight_offset_x = (int) (sin(al_current_time()) * 10);
+          highlight_offset_y = (int) (cos(al_current_time()) * 10);
+
 		  al_clear_to_color(al_map_rgb(255,255,255));
 
 		  while (border_y < this->io->screen_y)
@@ -250,7 +253,7 @@ int c_menu::update()
 		  if (this->number_of_text_lines >= 2)   // draw the last menu item
 			al_draw_text(this->text_font,al_map_rgb(0,0,0),x + 60,y + 10,0,this->text_lines[this->number_of_text_lines - 1].c_str());
 
-		  al_draw_bitmap(this->menu_selection,x - 65,85 + this->current_item * 55,0);  // highlight the selected item
+		  al_draw_bitmap(this->menu_selection,x - 65 + highlight_offset_x,85 + this->current_item * 55 + highlight_offset_y,0);  // highlight the selected item
 
 		  break;
 

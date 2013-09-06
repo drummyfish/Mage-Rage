@@ -147,6 +147,11 @@ class c_map: public c_graphic_object
 	  ALLEGRO_BITMAP *spell_starovous_2[3];                            /** bitmap - Starovous' second spell missile */
 	  ALLEGRO_BITMAP *spell_icons[7];                                  /** bitmaps - spell icons */
 
+	  ALLEGRO_BITMAP *map_shadow_north;                                /** bitmap - map transition to dark background on north edge */
+	  ALLEGRO_BITMAP *map_shadow_south;                                /** bitmap - map transition to dark background on south edge */
+	  ALLEGRO_BITMAP *map_shadow_east;                                 /** bitmap - map transition to dark background on east edge */
+	  ALLEGRO_BITMAP *map_shadow_west;                                 /** bitmap - map transition to dark background on west edge */
+
 	  ALLEGRO_SAMPLE *spell_sounds_mia[2];                             /** Mia's cast sounds */
 	  ALLEGRO_SAMPLE *spell_sounds_metodej[2];                         /** Metodej's cast sounds */
 	  ALLEGRO_SAMPLE *spell_sounds_starovous[2];                       /** Starovous' cast sounds */

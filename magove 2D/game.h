@@ -61,8 +61,6 @@ class c_game
 	  ALLEGRO_TIMER *global_timer;              /** global clock */
 	  long int global_time;                     /** global time counter */
 	  t_input_output_state input_output_state;  /** keyboard and mouse state */
-	  ALLEGRO_BITMAP *cursor_bitmap;            /** mouse cursor bitmap */
-	  ALLEGRO_MOUSE_CURSOR *cursor;             /** mouse cursor */
 	  t_game_settings settings;                 /** game settings and the player's progress */
 	  t_menu_state menu_state;                  /** stores the state of the menu system */
 	  c_associative_array *local_texts;         /** stores game texts in local language */

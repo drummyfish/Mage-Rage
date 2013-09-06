@@ -107,9 +107,7 @@ c_game::c_game()
 	this->cheat_buffer[0] = 0;
 	this->cheat_used = false;
 
-	this->cursor_bitmap = al_load_bitmap("resources/cursor.png");
-	this->cursor = al_create_mouse_cursor(this->cursor_bitmap,1,1);
-	al_set_mouse_cursor(display,this->cursor);
+	al_hide_mouse_cursor(display);
 	
 	this->set_keys();
 	this->update_volume();
