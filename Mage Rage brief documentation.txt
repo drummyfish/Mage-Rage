@@ -1,0 +1,14 @@
+
+
+
+
+Map file format:
+Maps are saved in files with no extension - the name of the file is "mapN" where
+N is the map number. The file consists of text lines in format:
+
+attribute:value
+
+where attribute is a string identifying some particular attribute of the map and
+value 
+
+Data file format:

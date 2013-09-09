@@ -90,7 +90,6 @@ class c_map: public c_graphic_object
 	  int language;                                                    /** number of language, it must be know in order to set right sign texts etc. */
 	  int textbox_size[2];                                             /** width and height of the textbox for displayed message */
 	  string description;                                              /** map text description displayed during the intro */
-	  bool center_map;                                                 /** whether the map should be centered at the beginning */
 	  bool oren_destroyed;                                             /** keeps information about whether the oren was destroyed */
 	  double change_flame_state;                                       /** time when to change flames states (from active to non active and vice versa) */
 

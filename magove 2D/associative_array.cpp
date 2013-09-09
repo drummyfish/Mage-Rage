@@ -81,7 +81,7 @@ bool c_associative_array::load_from_file(string file_name)
 	 this->values->clear();
 
 	 while (getline(file,line))
-       {
+       { 
 		 separator_position = 0;
 
 		 for (i = 0; (unsigned int) i < line.length(); i++)
@@ -91,10 +91,15 @@ bool c_associative_array::load_from_file(string file_name)
 				break;
 		     }
 
-		 key = line.substr(0,i);
-		 value = line.substr(i + 1,line.length() - key.length());
-
-		 this->set_text(key,value);
+		 try
+		   {
+		     key = line.substr(0,i); 
+		     value = line.substr(i + 1,line.length() - key.length());
+             this->set_text(key,value);
+		   }
+		 catch(...)
+		   {
+		   }
        }
 
 	 file.close();

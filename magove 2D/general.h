@@ -37,6 +37,9 @@
 #define FIRE_CLOAK_DURATION 10.0        /** duration of fire cloak spell in seconds */
 #define MAX_MONSTER_PATH_LENGTH 32      /** maximum length of monster path in "instructions" (array length) */
 #define MAX_MONSTERS_ON_MAP 32          /** maximum number of monsters on the map */
+#define SQUARE_WIDTH 64                 /** width of one square in pixels */
+#define SQUARE_HEIGHT 50                /** height of one square in pixels */
+#define ELEVATION 27                    /** elevation of one height level in piels */
 
 using namespace std;
 

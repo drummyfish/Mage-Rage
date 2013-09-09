@@ -13,6 +13,7 @@ c_map_object::c_map_object(t_object_type object_type, int link_id,  int link_id2
   {
 	int i, number_of_bitmaps;
 
+	this->number_of_controlled = 0;
 	this->link_id = link_id;
 	this->link_id2 = link_id2;
 	this->playing_sound = false;
@@ -596,7 +597,8 @@ void c_map_object::update_controlled_objects()
 
 bool c_map_object::compare_link_ids(c_map_object *another_object)
   {
-	if (this->link_id == another_object->get_link_id())
+	if (this->link_id >= 0 &&
+	  this->link_id == another_object->get_link_id())
 	  return true;
 
 	if (this->link_id2 >= 0 &&

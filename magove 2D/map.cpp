@@ -173,8 +173,8 @@ c_map::c_map(string filename, t_input_output_state *input_output_state, long int
 	this->flames_on = false;
     this->input_output_state = input_output_state;
 	this->number_of_missiles = 0;
-	this->screen_square_resolution[0] = this->input_output_state->screen_x / 64 + 1;
-	this->screen_square_resolution[1] = this->input_output_state->screen_y / 50 + 1;
+	this->screen_square_resolution[0] = this->input_output_state->screen_x / SQUARE_WIDTH + 1;
+	this->screen_square_resolution[1] = this->input_output_state->screen_y / SQUARE_HEIGHT + 1;
 	this->screen_square_position[0] = 0;
 	this->screen_square_position[1] = 0;
 	this->screen_pixel_position[0] = 0;
@@ -193,18 +193,7 @@ c_map::c_map(string filename, t_input_output_state *input_output_state, long int
 
 	this->succesfully_loaded = this->load_from_file(filename);
 
-	this->center_map = !((this->width + 2) * 64 > this->input_output_state->screen_x || (this->height + 2) > this->height * 50);
-
-    if (this->center_map)
-	  {
-		this->screen_square_position[0] = -1 * ((this->screen_square_resolution[0] - this->width) / 2);
-		this->screen_square_position[1] = -1 * ((this->screen_square_resolution[1] - this->height) / 2);
-		this->screen_pixel_position[0] = this->screen_square_position[0] * 64;
-		this->screen_pixel_position[1] = this->screen_square_position[1] * 50 - 10;
-		return;
-	  }  
-	else
-      this->update_screen_position();
+	this->update_screen_position();
 
 	this->check_buttons();
   }
@@ -214,6 +203,9 @@ c_map::c_map(string filename, t_input_output_state *input_output_state, long int
 void c_map::add_map_object(c_map_object *map_object, int x, int y)
   {
 	int i;
+
+	if (x < 0 || x >= this->width || y < 0 || y > this->height)
+	  return;
 
 	for (i = 0; i < MAX_OBJECTS_PER_SQUARE; i++)       // find the first free place for the object
 	  if (this->squares[x][y].map_objects[i] == NULL)
@@ -305,6 +297,9 @@ void c_map::set_map_objects(string object_string)
 				if (object_string[position] == ')')
 				  break;
 			  }
+
+			if (numbers[0] < 0 || numbers[0] >= this->width || numbers[1] < 0 || numbers[1] >= this->height)
+			  continue;
 
 			if (object_type.compare("ro") == 0)
 			  this->add_map_object(new c_map_object(OBJECT_ROCK,-1,-1,this->global_time),numbers[0],numbers[1]);
@@ -547,13 +542,17 @@ bool c_map::load_from_file(string filename)
 	bool all_ok;
 
 	all_ok = true;
-
 	associative_array = new c_associative_array();
 	all_ok = associative_array->load_from_file(filename);
 
+    if (!all_ok)
+	  {
+		delete associative_array;
+	    return false;
+	  }
+
 	this->width = atoi(associative_array->get_text("width").c_str());       // set width and height
 	this->height = atoi(associative_array->get_text("height").c_str());
-
 	this->description = this->get_nth_substring(associative_array->get_text("description"),this->language);
 
 	if (associative_array->get_text("environment").compare("grass") == 0)   // set environment
@@ -861,6 +860,7 @@ bool c_map::object_can_be_used(c_map_object *what)
 		    if (this->square_has_character(x,y) || this->square_has_object(x,y,OBJECT_CRATE))
 			  return false;
 		  }
+
 		i++;
 	  }
 
@@ -1021,17 +1021,18 @@ void c_map::check_buttons()
 			    this->player_characters[j]->get_square_y() == this->button_positions_y[i])
 			  {
 				is_pressed = true;
-				break;
+				break; 
 			  }
-	
-        for (j = 0; j < number_of_monsters; j++)  // check if any monster is standing on the square
-		  if (this->monster_characters[j] != NULL)
-			if (this->monster_characters[j]->get_square_x() == this->button_positions_x[i] &&
-			    this->monster_characters[j]->get_square_y() == this->button_positions_y[i])
-			  {
-				is_pressed = true;
-				break;
-			  }
+	    
+		if (!is_pressed)
+          for (j = 0; j < number_of_monsters; j++)  // check if any monster is standing on the square
+		    if (this->monster_characters[j] != NULL)
+			  if (this->monster_characters[j]->get_square_x() == this->button_positions_x[i] &&
+			      this->monster_characters[j]->get_square_y() == this->button_positions_y[i])
+			    {
+				  is_pressed = true;
+				  break;
+			    }
 
 		if (!is_pressed)
 		  {
@@ -1041,24 +1042,23 @@ void c_map::check_buttons()
 	          {
 		        help_object = this->squares[this->button_positions_x[i]][this->button_positions_y[i]].map_objects[j];
 
-		        if (help_object != NULL)
+				if (help_object != NULL && help_object->get_type() == OBJECT_CRATE)
 		          {
 			        nuber_of_objects++;
 		          }
-		        else
-		          break;
 	          }
 
-			if (nuber_of_objects > 1)  // if there are more objects than just the button
+			if (nuber_of_objects >= 1)  // if there are crates, then press the button
 			  is_pressed = true;
 		  }
 
 		for (j = 0; j < MAX_OBJECTS_PER_SQUARE; j++) // find the button and do actions
 		  {
 			help_object = this->squares[this->button_positions_x[i]][this->button_positions_y[i]].map_objects[j];
-		  
+
 			if (help_object != NULL && help_object->get_type() == OBJECT_BUTTON && this->object_can_be_used(help_object))
 			  {
+
 				if (is_pressed)
 				  {
 					if (help_object->get_state() == OBJECT_STATE_OFF)
@@ -1102,10 +1102,6 @@ bool c_map::crate_can_be_shifted(int x, int y, int height, t_direction direction
 	  return false;
 
 	if (this->get_height(x,y) - 1 != height)      // check if shifting from right height 
-	  return false;
-
-	if (this->square_has_object(next_square[0],next_square[1],OBJECT_TELEPORT_INPUT) ||  // check teleports
-	  this->square_has_object(next_square[0],next_square[1],OBJECT_TELEPORT_OUTPUT))
 	  return false;
 
 	if (this->square_has_character(x,y))
@@ -1228,7 +1224,7 @@ void c_map::link_objects()
 	int i, j, k, l, m, n, o;
 	bool is_in_array;
 	c_map_object *help_object, *help_object2;
-	c_map_object *object_array[256];            // buffer to temporarily hold object
+	c_map_object *object_array[256];            // buffer to temporarily hold objects
 	int array_length;
 
 	for (j = 0; j < this->height; j++)
@@ -1274,8 +1270,6 @@ void c_map::link_objects()
 
 			    help_object->add_controlled_objects(array_length,object_array);
 		      }
-		    else
-		      break;
 		}
   }
 
@@ -1304,29 +1298,29 @@ void c_map::draw_borders(int x, int y, int plus_x, int plus_y)
 
 	square_type = this->squares[x][y].type;
 	square_height = this->squares[x][y].height;
-	elevation = square_height * 27;
+	elevation = square_height * ELEVATION;
 			          
 	if (this->must_have_border(this->get_square_type(x,y - 1),square_type)    // north border
 	  || this->get_terrain_height(x,y - 1) != square_height)     
-	  al_draw_bitmap(this->tile_edge,plus_x + x * 64,plus_y + y * 50 - elevation,0);
+	  al_draw_bitmap(this->tile_edge,plus_x + x * SQUARE_WIDTH,plus_y + y * SQUARE_HEIGHT - elevation,0);
 
 	if (this->must_have_border(this->get_square_type(x + 1,y),square_type)    // east border
 	  || this->get_terrain_height(x + 1,y) != square_height)
-      al_draw_bitmap(this->tile_cliff_west,plus_x + x * 64 + 54,plus_y + y * 50 - elevation,0);
+      al_draw_bitmap(this->tile_cliff_west,plus_x + x * SQUARE_WIDTH + 54,plus_y + y * SQUARE_HEIGHT - elevation,0);
 
 	if (this->must_have_border(this->get_square_type(x - 1,y),square_type)    // west border
 	  || this->get_terrain_height(x - 1,y) != square_height)
-      al_draw_bitmap(this->tile_cliff_east,plus_x + x * 64,plus_y + y * 50 - elevation,0);
+      al_draw_bitmap(this->tile_cliff_east,plus_x + x * SQUARE_WIDTH,plus_y + y * SQUARE_HEIGHT - elevation,0);
 
 	if (this->must_have_border(this->get_square_type(x,y + 1),square_type)    // south border
 	  || this->get_terrain_height(x,y + 1) != square_height)
-      al_draw_bitmap(this->tile_cliff_north,plus_x + x * 64,plus_y + y * 50 - elevation + 40,0);
+      al_draw_bitmap(this->tile_cliff_north,plus_x + x * SQUARE_WIDTH,plus_y + y * SQUARE_HEIGHT - elevation + 40,0);
   }
 
 //-----------------------------------------------
 
 void c_map::draw(int x, int y)
-  { 
+  {
 	int i, j, k, help_height, elevation, number_of_crates, elevator_height, help_x, help_y;
 
 	al_clear_to_color(al_map_rgb(0,0,0));      // clear the screen
@@ -1335,64 +1329,66 @@ void c_map::draw(int x, int y)
 
 	for (j = this->screen_square_position[1] - 1; j < this->screen_square_end[1] + 1; j++)                         // go through lines
 	  { 
-		if (j < 0 || j >= this->height)
+		if (j < 0 || j >= this->height)               // outside map boundaries - don't draw
 	      continue;
 
-        for (help_height = 0; help_height < 3; help_height++)  // go through all 3 heights
-	      { 
-			  
-			elevation = help_height * 27;
+        for (help_height = 0; help_height < 3; help_height++)  // go through all 3 height levels
+	      { 		  
+			elevation = help_height * ELEVATION;      // y offset caused by different height levels
 	
 			for (i = this->screen_square_position[0] - 1; i < this->screen_square_end[0] + 1; i++)                 // go through columns
 			  { 
-				if (i < 0 || i >= this->width)
+				if (i < 0 || i >= this->width) // outside map boundaries - don't draw
 	              continue;
 
 				if (this->squares[i][j].height == help_height)
 		          {  
+					help_x = x + i * SQUARE_WIDTH - this->screen_pixel_position[0];
+					help_y = y + j * SQUARE_HEIGHT - elevation - this->screen_pixel_position[1];
+
 			        switch (this->squares[i][j].type)
 			          {
 			            case SQUARE_NORMAL:                      // normal square
-						  al_draw_bitmap(this->tile,x + i * 64 - this->screen_pixel_position[0],y + j * 50 - elevation - this->screen_pixel_position[1],0); // draw floor
+						  al_draw_bitmap(this->tile,help_x,help_y,0); // draw floor
 						  break;
 
 				        case SQUARE_WATER:                       // water square
-					      al_draw_bitmap(this->tile_water[this->animation_frame % 5],x + i * 64 - this->screen_pixel_position[0],y + j * 50 - elevation - this->screen_pixel_position[1],0);			          
+					      al_draw_bitmap(this->tile_water[this->animation_frame % 5],help_x,help_y,0);			          
 					      this->draw_borders(i,j,x - this->screen_pixel_position[0],y - this->screen_pixel_position[1]);
 						  break;
 
 						case SQUARE_ICE:                          // ice square
-						  al_draw_bitmap(this->tile_ice,x + i * 64 - this->screen_pixel_position[0],y + j * 50 - elevation - this->screen_pixel_position[1],0);
+						  al_draw_bitmap(this->tile_ice,help_x,help_y,0);
 						  this->draw_borders(i,j,x - this->screen_pixel_position[0],y - this->screen_pixel_position[1]);
 						  break;
 
 						case SQUARE_COLLAPSE:                     // collapse square
-						  al_draw_bitmap(this->tile_collapse,x + i * 64 - this->screen_pixel_position[0],y + j * 50 - elevation - this->screen_pixel_position[1],0);
+						  al_draw_bitmap(this->tile_collapse,help_x,help_y,0);
 						  this->draw_borders(i,j,x - this->screen_pixel_position[0],y - this->screen_pixel_position[1]);
 						  break;
 
 						case SQUARE_HOLE:                         // hole
-						  al_draw_bitmap(this->tile_hole,x + i * 64 - this->screen_pixel_position[0],y + j * 50 - elevation - this->screen_pixel_position[1],0);
+						  al_draw_bitmap(this->tile_hole,help_x,help_y,0);
 						  this->draw_borders(i,j,x - this->screen_pixel_position[0],y - this->screen_pixel_position[1]);
 						  break;
 					  }
 				
-			        if (help_height != 3)                                                    // draw south cliffs
+			        if (help_height != 3)                                                // draw south cliffs
 				      {
 				        if (this->get_terrain_height(i,j - 1) == help_height + 1)                    // south
 					      {
-							help_x = x + i * 64 - this->screen_pixel_position[0];
-							help_y = y + j * 50 - elevation - 27 - this->screen_pixel_position[1];
+							help_x = x + i * SQUARE_WIDTH - this->screen_pixel_position[0];
+							help_y = y + j * SQUARE_HEIGHT - elevation - ELEVATION - this->screen_pixel_position[1];
 
 				  	        al_draw_bitmap(this->tile_cliff_south_1,help_x,help_y,0);
 
 							if (this->get_terrain_height(i + 1,j - 1) != this->get_terrain_height(i,j - 1) && i != this->width - 1)  // southeast 1
-						      al_draw_bitmap(this->tile_cliff_southeast_1,x + i * 64 + 64 - this->screen_pixel_position[0],y + j * 50 - elevation - 27 - this->screen_pixel_position[1],0);
+						      al_draw_bitmap(this->tile_cliff_southeast_1,x + i * SQUARE_WIDTH + SQUARE_WIDTH - this->screen_pixel_position[0],help_y,0);
 				    
-					        if (this->get_terrain_height(i - 1,j - 1) != this->get_terrain_height(i,j - 1) && i != 0)  // southwest 1
-					          al_draw_bitmap(this->tile_cliff_southwest_1,x + i * 64 - 10 - this->screen_pixel_position[0],y + j * 50 - elevation - 27 - this->screen_pixel_position[1],0);
+					        if (this->get_terrain_height(i - 1,j - 1) != this->get_terrain_height(i,j - 1) && i != 0)                // southwest 1
+					          al_draw_bitmap(this->tile_cliff_southwest_1,x + i * SQUARE_WIDTH - 10 - this->screen_pixel_position[0],help_y,0);
 					        
-							if (i == 0)   // cut part of the cliff so it appears like it's in the fog
+							if (i == 0)   // cut part of the cliff so it appears like it's in fog
 							  {
                                 al_draw_filled_rectangle(help_x - 10,help_y,help_x + 8,help_y + 30,al_map_rgb(0,0,0));
 							  }
@@ -1403,16 +1399,16 @@ void c_map::draw(int x, int y)
 						  }
 				        else if (this->get_terrain_height(i,j - 1) == help_height + 2)
 					      {
-							help_x = x + i * 64 - this->screen_pixel_position[0];
-							help_y = y + j * 50 - elevation - 54 - this->screen_pixel_position[1];
+							help_x = x + i * SQUARE_WIDTH - this->screen_pixel_position[0];
+							help_y = y + j * SQUARE_HEIGHT - elevation - 54 - this->screen_pixel_position[1];
 
 					        al_draw_bitmap(this->tile_cliff_south_2,help_x,help_y,0);
 
 					        if (this->get_terrain_height(i + 1,j - 1) != this->get_terrain_height(i,j - 1) && i != this->width - 1)  // southeast 2
-						      al_draw_bitmap(this->tile_cliff_southeast_2,x + i * 64 + 64 - this->screen_pixel_position[0],y + j * 50 - elevation - 54 - this->screen_pixel_position[1],0);
+						      al_draw_bitmap(this->tile_cliff_southeast_2,x + i * SQUARE_WIDTH + SQUARE_WIDTH - this->screen_pixel_position[0],help_y,0);
 				    
-					        if (this->get_terrain_height(i - 1,j - 1) != this->get_terrain_height(i,j - 1) && i != 0)  // southwest 2
-						      al_draw_bitmap(this->tile_cliff_southwest_2,x + i * 64 - 10 - this->screen_pixel_position[0],y + j * 50 - elevation - 54 - this->screen_pixel_position[1],0);
+					        if (this->get_terrain_height(i - 1,j - 1) != this->get_terrain_height(i,j - 1) && i != 0)                // southwest 2
+						      al_draw_bitmap(this->tile_cliff_southwest_2,x + i * SQUARE_WIDTH - 10 - this->screen_pixel_position[0],help_y,0);
 					      
 						    if (i == 0)   // cut part of the cliff so it appears like it's in the fog
 							  {
@@ -1425,22 +1421,22 @@ void c_map::draw(int x, int y)
 						  }
 				      }
 			  
-				    if (help_height != 0)                                                  // draw other cliffs
+				    if (help_height != 0)                                               // draw other cliffs
 				      {
 				        if (this->get_terrain_height(i,j - 1) < help_height)                        // north
 					      {
-							help_x = x + i * 64 - this->screen_pixel_position[0];
-							help_y = y + j * 50 - elevation - 10 - this->screen_pixel_position[1];
+							help_x = x + i * SQUARE_WIDTH - this->screen_pixel_position[0];
+							help_y = y + j * SQUARE_HEIGHT - elevation - 10 - this->screen_pixel_position[1];
 
 					        al_draw_bitmap(this->tile_cliff_north,help_x,help_y,0);
 				    
 					        if (this->get_terrain_height(i + 1,j - 1) != help_height &&
 						      this->get_terrain_height(i + 1,j) != help_height)                      // northeast
-						     al_draw_bitmap(this->tile_cliff_northeast,x + i * 64 + 64 - this->screen_pixel_position[0],help_y,0);
+						     al_draw_bitmap(this->tile_cliff_northeast,x + i * SQUARE_WIDTH + SQUARE_WIDTH - this->screen_pixel_position[0],help_y,0);
 
 					        if (this->get_terrain_height(i - 1,j - 1) != help_height &&
 						      this->get_terrain_height(i - 1,j) != help_height)                      // northwest
-						      al_draw_bitmap(this->tile_cliff_northwest,x + i * 64 - 10 - this->screen_pixel_position[0],help_y,0);
+						      al_draw_bitmap(this->tile_cliff_northwest,x + i * SQUARE_WIDTH - 10 - this->screen_pixel_position[0],help_y,0);
 
 							if (i == 0) // fog
 							  al_draw_filled_rectangle(help_x - 10,help_y + 5,help_x + 10,help_y + 10,al_map_rgb(0,0,0));
@@ -1449,37 +1445,42 @@ void c_map::draw(int x, int y)
 					      }
 
 						if (this->get_terrain_height(i - 1,j) < help_height && i != 0)               // west
-					      al_draw_bitmap(this->tile_cliff_west,x + i * 64 - 10 - this->screen_pixel_position[0],y + j * 50 - elevation - this->screen_pixel_position[1],0);
+					      al_draw_bitmap(this->tile_cliff_west,x + i * SQUARE_WIDTH - 10 - this->screen_pixel_position[0],y + j * SQUARE_HEIGHT - elevation - this->screen_pixel_position[1],0);
 
 						if (this->get_terrain_height(i + 1,j) < help_height && i != this->width - 1) // east
-					      al_draw_bitmap(this->tile_cliff_east,x + i * 64 + 64 - this->screen_pixel_position[0],y + j * 50 - elevation - this->screen_pixel_position[1],0);
-		        
+					      al_draw_bitmap(this->tile_cliff_east,x + i * SQUARE_WIDTH + SQUARE_WIDTH - this->screen_pixel_position[0],y + j * SQUARE_HEIGHT - elevation - this->screen_pixel_position[1],0);
 				      }
 
 					if (j == 0)                                                  // draw transition to background (dark fog)
 					  {
-						al_draw_bitmap(this->map_shadow_north,x + i * 64 - this->screen_pixel_position[0],y + j * 50 - elevation - this->screen_pixel_position[1] - 15,0);
+						help_y = y + j * SQUARE_HEIGHT - elevation - this->screen_pixel_position[1] - 15;
+
+						al_draw_bitmap(this->map_shadow_north,x + i * SQUARE_WIDTH - this->screen_pixel_position[0],help_y,0);
 					  
 					    if (this->get_terrain_height(i - 1,j) < help_height)
-						  al_draw_bitmap(this->map_shadow_north,x + (i - 1) * 64 - this->screen_pixel_position[0],y + j * 50 - elevation - this->screen_pixel_position[1] - 15,0);
+						  al_draw_bitmap(this->map_shadow_north,x + (i - 1) * SQUARE_WIDTH - this->screen_pixel_position[0],help_y,0);
 
 						if (this->get_terrain_height(i + 1,j) < help_height)
-						  al_draw_bitmap(this->map_shadow_north,x + (i + 1) * 64 - this->screen_pixel_position[0],y + j * 50 - elevation - this->screen_pixel_position[1] - 15,0);  
+						  al_draw_bitmap(this->map_shadow_north,x + (i + 1) * SQUARE_WIDTH - this->screen_pixel_position[0],help_y,0);  
 					  }
 					else if (j == this->height - 1)
 					  {
-						al_draw_bitmap(this->map_shadow_south,x + i * 64 - this->screen_pixel_position[0],y + j * 50 - elevation - this->screen_pixel_position[1] + 15,0);
+						al_draw_bitmap(this->map_shadow_south,x + i * SQUARE_WIDTH - this->screen_pixel_position[0],y + j * SQUARE_HEIGHT - elevation - this->screen_pixel_position[1] + 15,0);
 					  }
 
 					if (i == 0)
 					  {
-                        al_draw_bitmap(this->map_shadow_west,x + i * 64 - this->screen_pixel_position[0] - 15,y + j * 50 - elevation - this->screen_pixel_position[1],0);
-					    al_draw_bitmap(this->map_shadow_west,x + i * 64 - this->screen_pixel_position[0] - 15,y + (j + 1) * 50 - elevation - this->screen_pixel_position[1],0);
+						help_x = x + i * SQUARE_WIDTH - this->screen_pixel_position[0] - 15;
+
+                        al_draw_bitmap(this->map_shadow_west,help_x,y + j * SQUARE_HEIGHT - elevation - this->screen_pixel_position[1],0);
+					    al_draw_bitmap(this->map_shadow_west,help_x,y + (j + 1) * SQUARE_HEIGHT - elevation - this->screen_pixel_position[1],0);
 					  }
 					else if (i == this->width - 1)
 				      {
-                        al_draw_bitmap(this->map_shadow_east,x + i * 64 - this->screen_pixel_position[0] + 15,y + j * 50 - elevation - this->screen_pixel_position[1],0);
-						al_draw_bitmap(this->map_shadow_east,x + i * 64 - this->screen_pixel_position[0] + 15,y + (j + 1) * 50 - elevation - this->screen_pixel_position[1],0); 
+						help_x = x + i * SQUARE_WIDTH - this->screen_pixel_position[0] + 15; 
+
+                        al_draw_bitmap(this->map_shadow_east,help_x,y + j * SQUARE_HEIGHT - elevation - this->screen_pixel_position[1],0);
+						al_draw_bitmap(this->map_shadow_east,help_x,y + (j + 1) * SQUARE_HEIGHT - elevation - this->screen_pixel_position[1],0); 
 					  }
 				  } 
 			  }
@@ -1495,45 +1496,49 @@ void c_map::draw(int x, int y)
 
 			for (k = 0; k < MAX_OBJECTS_PER_SQUARE; k++)
 			  if (this->squares[i][j].map_objects[k] != NULL)
-                if (this->squares[i][j].map_objects[k]->get_type() == OBJECT_CRATE) // draw crates one on another
-				  {
-					if (this->get_square_type(i,j) == SQUARE_WATER) // if the crate is in the water, draw it differently
-					  {
-					    if (number_of_crates == 0) 
-					      al_draw_bitmap(this->bitmap_crate_water,x + i * 64 - this->screen_pixel_position[0], y + j * 50 - this->squares[i][j].height * 27 - this->screen_pixel_position[1],0); 
-					    else
-						  this->squares[i][j].map_objects[k]->draw(x + i * 64 - this->screen_pixel_position[0], y + j * 50 - (this->squares[i][j].height - 1) * 27 - number_of_crates * 27 - this->screen_pixel_position[1]);
-					  }
-					else
-					  this->squares[i][j].map_objects[k]->draw(x + i * 64 - this->screen_pixel_position[0], y + j * 50 - this->squares[i][j].height * 27 - number_of_crates * 27 - elevator_height - this->screen_pixel_position[1]);
+			    {
+				  help_x = x + i * SQUARE_WIDTH - this->screen_pixel_position[0];
+
+                  if (this->squares[i][j].map_objects[k]->get_type() == OBJECT_CRATE)  // draw crates one on another
+				    {
+					  if (this->get_square_type(i,j) == SQUARE_WATER)                  // if the crate is in the water, draw it differently
+					    {
+					      if (number_of_crates == 0) 
+					        al_draw_bitmap(this->bitmap_crate_water,help_x,y + j * SQUARE_HEIGHT - this->squares[i][j].height * ELEVATION - this->screen_pixel_position[1],0); 
+					      else
+						    this->squares[i][j].map_objects[k]->draw(help_x,y + j * SQUARE_HEIGHT - (this->squares[i][j].height - 1) * ELEVATION - number_of_crates * ELEVATION - this->screen_pixel_position[1]);
+					    }
+					  else
+					    this->squares[i][j].map_objects[k]->draw(help_x,y + j * SQUARE_HEIGHT - this->squares[i][j].height * ELEVATION - number_of_crates * ELEVATION - elevator_height - this->screen_pixel_position[1]);
 				    
-					number_of_crates++;
-				  }
-				else
-				  { 
-					if (this->squares[i][j].map_objects[k]->get_type() == OBJECT_ELEVATOR)
-					  if (this->squares[i][j].map_objects[k]->get_state() == OBJECT_STATE_ON)
-						elevator_height = 27;
+					  number_of_crates++;
+				    }
+				  else                                                                 // other map object type
+				    { 
+					  if (this->squares[i][j].map_objects[k]->get_type() == OBJECT_ELEVATOR)
+					    if (this->squares[i][j].map_objects[k]->get_state() == OBJECT_STATE_ON)
+					  	  elevator_height = ELEVATION;
 			        
-                    this->squares[i][j].map_objects[k]->draw(x + i * 64 - this->screen_pixel_position[0], y + j * 50 - this->squares[i][j].height * 27 - this->screen_pixel_position[1]);
-				  }
+                      this->squares[i][j].map_objects[k]->draw(help_x, y + j * SQUARE_HEIGHT - this->squares[i][j].height * ELEVATION - this->screen_pixel_position[1]);
+				    }
+			    }
 			  else
 				break;
 
-			if (this->squares[i][j].animation != NULL)
+			if (this->squares[i][j].animation != NULL)    // draw animation on the square if there is any
 			  if (this->squares[i][j].animation->get_playing_animation() != NULL)
-                this->squares[i][j].animation->draw(x + i * 64 - this->screen_pixel_position[0], y + j * 50 - this->squares[i][j].height * 27 - this->screen_pixel_position[1]);
+                this->squares[i][j].animation->draw(x + i * SQUARE_WIDTH - this->screen_pixel_position[0], y + j * SQUARE_HEIGHT - this->squares[i][j].height * ELEVATION - this->screen_pixel_position[1]);
 			  else
 			    this->squares[i][j].animation = NULL;
 	      }
 
-		for (i = 0; i < 3; i++)                // draw players
+		for (i = 0; i < 3; i++)                        // draw players
 		  if (this->player_characters[i] != NULL && this->player_characters[i]->get_square_y() == j)
 		    {
 			  elevation = this->get_elevation_for_character(this->player_characters[i]);
 
-			  this->player_characters[i]->draw((int) (x + this->player_characters[i]->get_position_x() * 64 - this->screen_pixel_position[0]),
-			  (int) (y + this->player_characters[i]->get_position_y() * 50 - this->screen_pixel_position[1]) - elevation);
+			  this->player_characters[i]->draw((int) (x + this->player_characters[i]->get_position_x() * SQUARE_WIDTH - this->screen_pixel_position[0]),
+			  (int) (y + this->player_characters[i]->get_position_y() * SQUARE_HEIGHT - this->screen_pixel_position[1]) - elevation);
 		    }
  
 		for (i = 0; i < this->number_of_monsters; i++) // draw monsters
@@ -1541,15 +1546,15 @@ void c_map::draw(int x, int y)
 		    { 
 			  elevation = this->get_elevation_for_character(this->monster_characters[i]);
 			  
-			  this->monster_characters[i]->draw((int) (x + this->monster_characters[i]->get_position_x() * 64 - this->screen_pixel_position[0]),
-			    (int) (y + this->monster_characters[i]->get_position_y() * 50 - this->screen_pixel_position[1]) - elevation);
+			  this->monster_characters[i]->draw((int) (x + this->monster_characters[i]->get_position_x() * SQUARE_WIDTH - this->screen_pixel_position[0]),
+			    (int) (y + this->monster_characters[i]->get_position_y() * SQUARE_HEIGHT - this->screen_pixel_position[1]) - elevation);
 		    }
 		
 		for (i = 0; i < this->number_of_missiles; i++) // draw missiles
 		  if (this->missiles[i].square_y == j)
 		    {
-			  elevation = this->missiles[i].height * 27;
-			  al_draw_bitmap(this->missiles[i].bitmap,x + (int) (this->missiles[i].position_x * 64) - this->screen_pixel_position[0], y + (int) (this->missiles[i].position_y * 50) - elevation - this->screen_pixel_position[1],0); 
+			  elevation = this->missiles[i].height * ELEVATION;
+			  al_draw_bitmap(this->missiles[i].bitmap,x + (int) (this->missiles[i].position_x * SQUARE_WIDTH) - this->screen_pixel_position[0], y + (int) (this->missiles[i].position_y * SQUARE_HEIGHT) - elevation - this->screen_pixel_position[1],0); 
 		    }
 	  }
 
@@ -1602,7 +1607,7 @@ void c_map::draw(int x, int y)
 
 	al_draw_bitmap(this->spell_icons[6],x + 610,y + this->portrait_y_position + 10,0);
 
-	if (this->text_is_displayed)    // draw text
+	if (this->text_is_displayed)              // draw displayed text
 	  {
 		al_draw_filled_rectangle(this->screen_center_x - (this->textbox_size[0] / 2),this->screen_center_y - 220,this->screen_center_x + (this->textbox_size[0] / 2),this->screen_center_y - 220 + this->textbox_size[1],al_map_rgba(94,47,0,220));
 
@@ -1641,7 +1646,7 @@ int c_map::get_elevation_for_character(c_character *character)
 	fraction_x = character->get_fraction_x();
 	fraction_y = character->get_fraction_y();
 
-	height = this->get_height(x,y) * 27;
+	height = this->get_height(x,y) * ELEVATION;
 
 	if (this->square_has_object(x,y,OBJECT_STAIRS_NORTH) && fraction_y < 0.5)
 	  height += (int) ((0.5 - fraction_y) * 35);
@@ -1661,12 +1666,12 @@ int c_map::get_elevation_for_character(c_character *character)
 			    {
 			      if (this->squares[x][y].map_objects[i]->get_state() == OBJECT_STATE_ON)
 				    {
-			  	      height -= 27;
+			  	      height -= ELEVATION;
 					  height += this->squares[x][y].map_objects[i]->get_animation_frame() * 7;
 				    }
 				  else
 				    {
-					  height += 27;
+					  height += ELEVATION;
 					  height -= this->squares[x][y].map_objects[i]->get_animation_frame() * 7;
 				    }
 			    }
@@ -1833,14 +1838,14 @@ void c_map::update_screen_position()
 		  this->screen_square_end[i] = this->screen_square_position[i] + this->screen_square_resolution[i];
 
 		   if (i == 0)
-			this->screen_pixel_position[i] = ((this->screen_square_position[i] - 1) * 64) + this->player_characters[this->current_player]->get_fraction_x() * 64;
+			this->screen_pixel_position[i] = ((this->screen_square_position[i] - 1) * SQUARE_WIDTH) + this->player_characters[this->current_player]->get_fraction_x() * SQUARE_WIDTH;
 		  else
 		    {
-			  this->screen_pixel_position[i] = ((this->screen_square_position[i] - 1) * 50) + this->player_characters[this->current_player]->get_fraction_y() * 50;
+			  this->screen_pixel_position[i] = ((this->screen_square_position[i] - 1) * SQUARE_HEIGHT) + this->player_characters[this->current_player]->get_fraction_y() * SQUARE_HEIGHT;
 		    
 			  player_height = this->get_height(player_position[0],player_position[1]); // check camera shift due to height
 
-			  this->screen_pixel_position[i] -= player_height * 27;
+			  this->screen_pixel_position[i] -= player_height * ELEVATION;
 		    }
 	    }
 	  else if (player_position[i] >= this->screen_square_end[i] - 3)
@@ -1849,9 +1854,9 @@ void c_map::update_screen_position()
 		  this->screen_square_end[i] = this->screen_square_position[i] + this->screen_square_resolution[i];
 
 		  if (i == 0)
-			this->screen_pixel_position[i] = (this->screen_square_position[i] + this->player_characters[this->current_player]->get_fraction_x()) * 64;
+			this->screen_pixel_position[i] = (this->screen_square_position[i] + this->player_characters[this->current_player]->get_fraction_x()) * SQUARE_WIDTH;
 		  else
-			this->screen_pixel_position[i] = (this->screen_square_position[i] + this->player_characters[this->current_player]->get_fraction_y()) * 50;
+			this->screen_pixel_position[i] = (this->screen_square_position[i] + this->player_characters[this->current_player]->get_fraction_y()) * SQUARE_HEIGHT;
 	    }
   }
 
@@ -1871,8 +1876,8 @@ void c_map::shift_screen(int x, int y)
 	this->screen_pixel_position[0] += x;
 	this->screen_pixel_position[1] += y;
 
-	this->screen_square_position[0] = this->screen_pixel_position[0] / 64;
-	this->screen_square_position[1] = this->screen_pixel_position[1] / 50;
+	this->screen_square_position[0] = this->screen_pixel_position[0] / SQUARE_WIDTH;
+	this->screen_square_position[1] = this->screen_pixel_position[1] / SQUARE_HEIGHT;
 
 	this->screen_square_end[0] = this->screen_square_position[0] + this->screen_square_resolution[0];
 	this->screen_square_end[1] = this->screen_square_position[1] + this->screen_square_resolution[1];
@@ -2266,7 +2271,9 @@ void c_map::check_ice()
 		  else if (this->player_characters[i]->get_playing_animation() == ANIMATION_SKATE) // already skating
 			{
 			  this->move_character(this->player_characters[i],this->player_characters[i]->get_direction());
-		      this->update_screen_position();
+		      
+			  if (!this->input_output_state->key_map_explore)  // don't mess with the camera if exploring
+			    this->update_screen_position();
 		    }
 		}
   }
@@ -2726,7 +2733,7 @@ void c_map::check_teleport()
 			  for (j = 0; j < MAX_OBJECTS_PER_SQUARE; j++)
 			    if (this->squares[x][y].map_objects[j] == NULL)
 				  break;
-				else if (this->squares[x][y].map_objects[j] == help_object)
+				else if (this->squares[x][y].map_objects[j] == help_object && !this->square_has_object(x,y,OBJECT_CRATE))
 				  {
 					this->player_characters[this->current_player]->set_position(x + 0.1,y - 0.5);
 					this->display_animation(DISPLAY_ANIMATION_TELEPORT,x,y);
