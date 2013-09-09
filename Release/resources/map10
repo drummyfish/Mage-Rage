@@ -1,0 +1,14 @@
+description:There is an underground river ahead, that must be crossed.|Cestu krizuje podzemni reka, kterou je potreba prekonat.
+mia_x:
+mia_y:
+metodej_x:
+metodej_y:
+starovous_x:0
+starovous_y:0
+environment:dirt
+width:8
+height:30
+heightmap:111121221111112211000022110000221111102211111022121220222222100222220000000000000000000000000000000000000000000000000000000000000000000100022022000010110000000100001101011010000000000000001001110100010000000101011001011100120111112200122222
+typemap:nnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnwnnnnnnnwwwwwnnnwwwwwwwwwwwwwwwwwwwwwwwwnnnnnnwwnnnnnnnncccnnnnnccccnnnnccccnnnnccccnnnnnnnnniinnnnniiiinnnnniinnnnnniininnnnnnninnnnnnninnnnnnnnnnnnnnnnnnnnnnn
+objects:(se,3,0),(cr,6,0),(cr,1,1),(sw,2,2),(cr,6,2),(sw,2,3),(cr,7,3),(ss,1,5),(el,5,5,1,-1,0),(bu,7,6,1,-1),(ro,1,7),(tr,4,7),(cr,2,8),(fo,4,10),(si,7,11,"Warning: the water is cold.|Pozor: voda je studena."),(bo,0,15),(dh,5,17,3,-1,0),(tr,7,17),(le,5,18,4,-1,0),(dv,5,19,4,-1,0),(le,7,21,3,-1,0),(tr,1,22),(ss,0,23),(tr,1,23),(tr,7,23),(el,2,24,2,-1,0),(ro,4,24),(cr,2,25),(bu,2,26,2,-1),(tr,7,26),(ro,1,28),(se,5,28),(ga,7,28),(se,1,29),(tr,3,29),(tr,4,29)
+monsters:(gh,0,6,n,6,s,6),(gh,7,4,s,3,-,2,n,3,-,2)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             

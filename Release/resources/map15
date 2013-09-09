@@ -1,0 +1,14 @@
+description:You approach Evil Grove.|Blizite se ke Zlemu lesu.
+mia_x:8
+mia_y:21
+metodej_x:9
+metodej_y:21
+starovous_x:
+starovous_y:
+environment:grass
+width:21
+height:22
+heightmap:111110000000000011111111000000000000000111110000000000000000011100000000000000000001100111000000000111001000101100000001101000000100110000011001000000110010000010011000000011110000011110000000000000000000000000000000000000000000000000100000000000001000000111000000000111000000001110000011100000000001011111110100000000001010000010100000000001110000011100000000000110000011000000000000010000010000000000000000000000000000000000000000000000000000000000000000000000
+typemap:nnnnnwwwwwwwwwwwnnnnnnnnnnnnwwwnnwwnnnnnnnnnnnnnnwwnnnwnnnnnnnnnnnnnnnnnnnnnnwnnnnnnnnnnnnnnnnnnnwwnnnnnnnnnnhnnnnnnnnwnnhnnnnnnnnhhnnnnnnnnnhhnnnnnnnnnhnnnnnnnnnhnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnwnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnhhnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnncnnnnnnncnnnnnnwnnnnncnnnnnnncnnnnnnwnnnnnnnnnnnnnnnnnnnnwwnnnnnnnnnnnnnwwnnnnwnnnnnnnnnnnnnwwnnnnnnnnnniiinnnnnnnnnnnnnnnnnnninnnnnnnnnwnwwnwnnnnnnnnnnnnnnwwwwww                     
+objects:(tr,4,0),(tr,3,1),(ga,11,1),(f1,10,1),(tr,17,1),(tr,20,1),(f2,6,2),(tr,14,2),(ro,1,3),(tr,6,3),(f1,9,3),(tr,15,3),(ro,19,3),(tr,1,4),(tr,2,4),(tr,6,4),(tr,20,4),(tr,7,5),(ro,8,5),(ro,9,5),(tr,10,5),(dh,11,5,9,-1,1),(tr,12,5),(f1,18,5),(le,10,6,9,8,0),(f1,18,6),(fl,6,7,-1,-1,1),(bu,9,7,7,-1),(ro,10,7),(cr,13,7),(fl,14,7,-1,-1,1),(ro,18,7),(tr,19,7),(tr,0,8),(tr,1,8),(bu,3,8,2,-1),(bu,6,8,4,-1),(ts,7,8,3),(tr,8,8),(dh,9,8,7,-1,1),(tr,10,8),(dh,11,8,8,-1,0),(ro,12,8),(td,13,8,3),(tr,20,8),(td,0,9,6),(td,0,5,5),(ro,1,9),(f1,2,9),(tr,4,9),(el,5,9,2,-1,0),(tr,18,9),(tr,20,9),(dv,4,10,4,-1,0),(f2,9,10),(f1,11,10),(tr,1,11),(ro,2,11),(tr,4,11),(tr,5,11),(td,6,11,1),(fo,9,11),(tr,19,11),(tr,20,11),(ts,0,12,5),(ts,1,12,5),(ts,2,12,6),(sw,6,12),(tr,7,12),(f2,8,12),(tr,13,12),(tr,14,12),(cr,18,12),(ro,19,12),(tr,3,13),(tr,8,13),(ro,10,13),(tr,11,13),(tr,12,13),(tr,19,13),(si,1,14,"Kcor.|Nemak."),(f2,4,14),(tr,18,14),(f2,20,14),(tr,4,15),(tr,8,15),(ts,12,15,1),(ro,20,15),(ro,1,16),(tr,4,16),(tr,9,16),(tr,12,16),(tr,16,16),(tr,2,17),(f1,4,17),(tr,8,17),(el,10,17,10,-1,0),(f1,12,17),(tr,18,17),(ro,19,17),(tr,1,18),(tr,2,18),(ro,6,18),(tr,8,18),(el,9,18,10,-1,1),(cr,9,18),(tr,11,18),(tr,18,18),(ro,0,19),(tr,8,19),(tr,10,19),(tr,11,19),(tr,12,19),(tr,13,19),(f2,14,19),(bu,2,20,10,-1),(tr,4,20),(tr,5,20),(tr,7,20),(ro,20,20),(tr,1,21),(f1,3,21),(tr,4,21),(tr,5,21),(si,10,21,"Evil Grove.|Zly les."),(tr,13,21),(tr,14,21),(bo,18,15),(bo,3,14),(bo,7,9)
+monsters:(tr,0,6,s,1,e,2,n,2,w,2,s,1),(tr,2,7,n,2,w,1,s,1,w,1,s,1,e,2,s,1,n,1),(gh,5,13,e,2,s,1,e,6,n,1,e,2,s,3,w,2,n,2,w,6,s,2,w,2,n,3),(tr,18,13,w,1,s,6,e,3,n,3,w,1,n,1,w,3,n,2,e,2)

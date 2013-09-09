@@ -1,0 +1,14 @@
+description:There appears to be something that looks like a frozen lake.|Zda se ze je zde neco jako zamrzle jezero.
+mia_x:
+mia_y:
+metodej_x:6
+metodej_y:0
+starovous_x:
+starovous_y:
+environment:snow
+width:22
+height:18
+heightmap:111111100001100000000112111100000110000000011210000000000012220201111000000000001112010110100000000000000000011000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000110000000000000000000110000000000000000000000121000000000000000011002110000000000000211100111110000000001121111111111111111111112111
+typemap:nnnnnnniiiinnnnnnnnnnnnnnnnniiiiinnnnnnnnnnnnnniiiiiiiiiwwnnnnnnnnnnniiiiiiiiiiwnnnnnnnnnnniiiiiiiiiiiiinnnnnnniiiiiiiiiwiiiiiinnnniiiiiiiiiiiwiiiiiiiiiiiiiiiiiiiiiwwiiiiiiiiiiiiiiiiiiiwnwiiiiiiiiiiiiiiiiiiiwnwiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiinniiiiiiiiiiiiiiiiiiinniiiiiiiiiiiiiiiiiiinnnnnniiiiiiiiiiiiiiiinnnnnnniiiiiiiiiiiiinnnnnnnnnnniiiiiiiiinnnnnnnnnnnnnnnnnnnnnnnnnnnn
+objects:(ts,11,0,3),(tw,14,0),(si,5,1,"A frozen lake. Mind your eyes as it's shiny as a mirror.|Zamrzle jezero. Chrante si oci, protoze zari jako zrcadlo."),(bu,18,1,1,-1),(tw,21,1),(td,17,2,2),(cr,17,2),(cr,18,2),(cr,18,2),(tw,21,2),(sn,15,3),(se,16,3),(el,18,3,1,-1,1),(sn,19,3),(sw,20,3),(sn,1,4),(ts,19,4,2),(fo,18,5),(ro,20,5),(td,10,8,3),(ga,0,12),(ro,0,13),(ro,8,13),(ss,21,13),(tw,3,14),(ro,10,14),(el,0,15,4,-1,0),(cr,0,15),(el,1,15,5,-1,0),(cr,1,15),(bu,0,14,8,-1),(dh,1,14,8,-1,0),(sw,19,15),(el,0,16,6,-1,0),(el,1,16,7,-1,0),(cr,0,16),(cr,1,16),(ro,5,16),(tw,6,16),(se,17,16),(bu,19,16,4,5),(cr,20,16),(bu,21,16,6,7),(tw,0,17),(ic,4,17),(ic,7,17),(ic,9,17),(ic,10,17),(ic,11,17),(ic,13,17),(se,17,17),(bu,19,17,4,6),(cr,20,17),(bu,21,17,5,7)
+monsters:(tr,0,3,e,2,n,3,w,2,s,3,e,2,n,2,s,2,w,2,n,3,-,2,s,3)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                
