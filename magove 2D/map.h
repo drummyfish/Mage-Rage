@@ -92,6 +92,7 @@ class c_map: public c_graphic_object
 	  string description;                                              /** map text description displayed during the intro */
 	  bool oren_destroyed;                                             /** keeps information about whether the oren was destroyed */
 	  double change_flame_state;                                       /** time when to change flames states (from active to non active and vice versa) */
+	  string music_name;                                               /** name of the music that should be playing in the map */
 
 	  char text_lines[MAX_TEXT_LINES][MAX_TEXT_CHARACTERS_PER_LINE];   /** lines of text being displayed on screen */
 	  bool text_is_displayed;                                          /** whether the text is to be displayed */
@@ -720,6 +721,15 @@ class c_map: public c_graphic_object
 		  Returns the map text description.
 
 		  @return the text description
+		*/
+
+	  string get_music_name();
+
+	    /**
+		  Gets the name of the music that should
+		  be playing in the map.
+
+		  @return music name
 		*/
   };
 

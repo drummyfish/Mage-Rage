@@ -193,6 +193,15 @@ c_map::c_map(string filename, t_input_output_state *input_output_state, long int
 
 	this->succesfully_loaded = this->load_from_file(filename);
 
+	// center the map1:
+
+	this->screen_square_position[0] = (this->width - this->screen_square_resolution[0]) / 2;
+	this->screen_square_position[1] = (this->height - this->screen_square_resolution[1]) / 2;;
+	this->screen_pixel_position[0] = this->screen_square_position[0] * SQUARE_WIDTH;
+	this->screen_pixel_position[1] = this->screen_square_position[1] * SQUARE_HEIGHT;
+	this->screen_square_end[0] = this->screen_square_position[0] + this->screen_square_resolution[0];
+	this->screen_square_end[1] = this->screen_square_position[1] + this->screen_square_resolution[1];
+
 	this->update_screen_position();
 
 	this->check_buttons();
@@ -614,6 +623,8 @@ bool c_map::load_from_file(string filename)
 		}
 
 	next_player = 0;
+
+	this->music_name = associative_array->get_text("music");
 
 	if (associative_array->get_text("mia_x").compare("") == 0) // set players
 	  this->player_characters[next_player] = NULL;
@@ -2770,5 +2781,12 @@ void c_map::check_teleport()
 
 	  return true;
    }
+
+//-----------------------------------------------
+
+string c_map::get_music_name()
+  {
+	return this->music_name;
+  }
 
 //-----------------------------------------------

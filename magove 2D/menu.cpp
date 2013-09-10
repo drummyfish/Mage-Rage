@@ -158,6 +158,7 @@ int c_menu::update()
   {
 	int x, y, i, alpha_value, return_value, border1_x, border2_x, border_y, red, green, blue, highlight_offset_x, highlight_offset_y;
 	double time_difference;
+	bool end;
 
 	return_value = -1;
 
@@ -306,7 +307,7 @@ int c_menu::update()
 
 		  // the fade in effect:
 
-		  if (fading_in)
+		  if (this->fading_in)
 		    {
 			  time_difference = this->effect_time - al_current_time();
 		    
@@ -319,21 +320,32 @@ int c_menu::update()
 			      else if (alpha_value < 0)
 				    alpha_value = 0;
 
-		          al_draw_filled_rectangle(0,0,this->io->screen_x - 1,this->io->screen_y - 1,al_map_rgba(0,0,0,alpha_value));
+		          al_draw_filled_rectangle(0,0,this->io->screen_x,this->io->screen_y,al_map_rgba(0,0,0,alpha_value));
 		        }
 			  else
-				fading_in = false;
+				this->fading_in = false;
 		    }
-		  else if (fading_out)
+		  
+		  if (this->fading_out)
 		    {
 			  time_difference = al_current_time() - this->effect_time;
 
 			  alpha_value = time_difference * 255;
 
-			  if (alpha_value > 255)
-				return 1;
+			  end = false;
 
-			  al_draw_filled_rectangle(0,0,this->io->screen_x - 1,this->io->screen_y - 1,al_map_rgba(0,0,0,alpha_value));
+			  if (alpha_value > 255)
+			    {
+				  alpha_value = 255;
+				  end = true;
+			    }
+			  else if (alpha_value < 0)
+				alpha_value = 0;
+
+			  al_draw_filled_rectangle(0,0,this->io->screen_x,this->io->screen_y,al_map_rgba(0,0,0,alpha_value));
+		    
+		      if (end)
+				return 1;
 		    }
 
 		  break;

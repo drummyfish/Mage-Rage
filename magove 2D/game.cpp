@@ -128,6 +128,7 @@ c_game::c_game()
 	this->input_output_state.mouse_1 = false; 
 	this->input_output_state.key_map_explore = false;
 	this->input_output_state.key_back = false;
+	this->music = NULL;
 
 	this->map = NULL;
   }
@@ -278,6 +279,7 @@ c_game::~c_game()
 	al_destroy_event_queue(this->event_queue);
 	al_destroy_sample(this->win_sound);
 	al_destroy_sample(this->lose_sound);
+	al_destroy_sample(this->music);
 	al_uninstall_audio();
   }
 
@@ -374,8 +376,8 @@ void c_game::run()
 	
 	this->menu = new c_menu(&this->input_output_state);
 
-	this->menu_state = MENU_STATE_FIRST_SCREEN;                        // CHANGE TIMEOUT TO 5.0 !!!!
-	this->menu->set_menu_info_screen("resources/introduction.png",NULL,0,1.0,255,255,255); 
+	this->menu_state = MENU_STATE_FIRST_SCREEN; 
+	this->menu->set_menu_info_screen("resources/introduction.png",NULL,0,5.0,255,255,255); 
 
 	al_start_timer(this->global_timer);
 
@@ -418,6 +420,7 @@ void c_game::run()
 
                     if (this->current_level == 22) // last level - the game is won
 					  {
+						this->play_music("university of magic");
 					    this->menu_state = MENU_STATE_OUTRO;
 						this->menu->set_menu_info_screen("resources/characters.png",this->outro_lines,10,-1.0,255,255,255);
 					  }
@@ -450,6 +453,7 @@ void c_game::run()
 			  if (menu_return_value >= 0)
 			    {
 				  this->menu_state = MENU_STATE_PLAYING;
+				  this->play_music(this->map->get_music_name());
 				  this->initialise_new_game(this->current_level);
 			    }
 
@@ -462,17 +466,21 @@ void c_game::run()
 			    {
 			      case 0:   // resume
 					this->menu_state = MENU_STATE_PLAYING;
+					this->play_music(this->map->get_music_name());
 					break;
 
 				  case 1:   // restart the game
 					this->initialise_new_game(this->current_level);
+					this->play_music(this->map->get_music_name());
 					help_string_array[0] = this->local_texts->get_text("level") + " " + to_string((long long) this->current_level);
 				    help_string_array[1] = this->map->get_description();
+					this->menu->set_menu_info_screen("",help_string_array,2,-1,255,255,255);
 					this->menu_state = MENU_STATE_LEVEL_INTRO;
 					break;
 
 				  case 2:   // back to menu
 					this->menu_state = MENU_STATE_MAIN_MENU;
+					this->play_music("university of magic");
 				    this->menu->set_menu_items(this->main_menu_items,5,this->main_menu_title,false);
 					break;
 			    }
@@ -486,6 +494,9 @@ void c_game::run()
 
 			  if (menu_return_value > 0)
 			    {
+				  if (this->menu_state == MENU_STATE_FIRST_SCREEN)
+                    this->play_music("university of magic");
+
 				  this->menu_state = MENU_STATE_MAIN_MENU;
 				  this->menu->set_menu_items(this->main_menu_items,5,this->main_menu_title,false);
 			    }
@@ -554,6 +565,7 @@ void c_game::run()
 			    {
 				  this->current_level = menu_return_value + 1;
 				  this->initialise_new_game(this->current_level);
+				  this->play_music(this->map->get_music_name());
 				  help_string_array[0] = this->local_texts->get_text("level") + " " + to_string((long long) this->current_level);
 				  help_string_array[1] = this->map->get_description();
 				  this->menu->set_menu_info_screen("",help_string_array,2,-1,255,255,255);
@@ -624,7 +636,8 @@ void c_game::run()
 				    break;
 
 				  case 1: // music on/off
-					this->settings.music_on = !this->settings.music_on;
+					this->settings.music_on = !this->settings.music_on;				
+                    this->play_music("university of magic");
 					this->update_settings_menu_items();
 					this->menu->set_menu_items(this->settings_menu_items_done,5,this->settings_menu_title,true);
 					break;
@@ -756,7 +769,12 @@ void c_game::run()
 						   this->cheat_buffer[2] == 'm' && this->cheat_buffer[3] == 'n' &&
 						   this->cheat_buffer[4] == 'o' && this->cheat_buffer[5] == 'o' &&
 						   this->cheat_buffer[6] == 'b')
-						   this->cheat_used = true;
+						   {
+						     if (this->menu_state == MENU_STATE_PLAYING)
+						       this->cheat_used = true;
+							 else
+                               this->cheat_buffer[0] = '-';
+						   }
 					   }
 				  }
 				
@@ -797,6 +815,30 @@ void c_game::run()
 
 		if (quit_program)
 		  break; 
+	  }
+  }
+
+//-----------------------------------------------
+
+void c_game::play_music(string name)
+  {
+	al_stop_samples();
+
+	if (this->settings.music_on)
+	  {		
+		al_destroy_sample(this->music);
+		this->music = al_load_sample(("resources/" + name + ".wav").c_str());
+		al_play_sample(this->music,1.0,0.0,1.0,ALLEGRO_PLAYMODE_LOOP,&this->music_id);
+	  }
+  }
+
+//-----------------------------------------------
+
+void c_game::stop_music()
+  {
+	if (this->settings.music_on)
+	  {
+		al_stop_sample(&this->music_id);
 	  }
   }
 

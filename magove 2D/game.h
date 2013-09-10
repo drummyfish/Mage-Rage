@@ -99,6 +99,9 @@ class c_game
 	  ALLEGRO_SAMPLE *win_sound;                /** sound played when the map is won */
 	  ALLEGRO_SAMPLE *lose_sound;               /** sound played when the game is lost */
 
+	  ALLEGRO_SAMPLE *music;                    /** currently played music sample */
+	  ALLEGRO_SAMPLE_ID music_id;               /** id of music sample playing */
+
       void update_settings_menu_items();
 
 	    /**
@@ -146,6 +149,24 @@ class c_game
 		  number.
 
 		  @param level_number level number
+		*/
+
+	  void play_music(string name);
+
+	    /**
+		  Plays music with given name. If the
+		  music is turned off in the game
+		  settings, nothing happens.
+
+		  @param name name of the music file
+		    without path and extension (the
+			resource folder is searched)
+		*/
+
+	  void stop_music();
+
+	    /**
+		  Stops the currently playing music.
 		*/
 
     public:
