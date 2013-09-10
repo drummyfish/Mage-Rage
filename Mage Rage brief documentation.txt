@@ -4,6 +4,8 @@ The source code is documented with Doxygen comments, so automatic documentation
 can be generated easily. This file mentions notes to game implementation that
 explains things not mentioned in the source code.
 
+The project is written in MS Visual C++ 2010 using Allegro 5.1 library.
+
 --------------------------------------------------------------------------------
 
 Map file format:

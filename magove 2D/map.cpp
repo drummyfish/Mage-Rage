@@ -1401,11 +1401,11 @@ void c_map::draw(int x, int y)
 					        
 							if (i == 0)   // cut part of the cliff so it appears like it's in fog
 							  {
-                                al_draw_filled_rectangle(help_x - 10,help_y,help_x + 8,help_y + 30,al_map_rgb(0,0,0));
+                                al_draw_filled_rectangle(help_x - 10,help_y,help_x + 10,help_y + 30,al_map_rgb(0,0,0));
 							  }
 							else if (i == this->width - 1)
 							  {
-								al_draw_filled_rectangle(help_x + 57,help_y,help_x + 90,help_y + 30,al_map_rgb(0,0,0));
+								al_draw_filled_rectangle(help_x + 55,help_y,help_x + 90,help_y + 30,al_map_rgb(0,0,0));
 							  }
 						  }
 				        else if (this->get_terrain_height(i,j - 1) == help_height + 2)
@@ -1423,11 +1423,11 @@ void c_map::draw(int x, int y)
 					      
 						    if (i == 0)   // cut part of the cliff so it appears like it's in the fog
 							  {
-                                al_draw_filled_rectangle(help_x - 10,help_y,help_x + 8,help_y + 60,al_map_rgb(0,0,0));
+                                al_draw_filled_rectangle(help_x - 10,help_y,help_x + 10,help_y + 60,al_map_rgb(0,0,0));
 							  }
 							else if (i == this->width - 1)
 							  {
-								al_draw_filled_rectangle(help_x + 57,help_y,help_x + 90,help_y + 60,al_map_rgb(0,0,0));
+								al_draw_filled_rectangle(help_x + 55,help_y,help_x + 90,help_y + 60,al_map_rgb(0,0,0));
 							  } 
 						  }
 				      }

@@ -34,7 +34,7 @@ c_game::c_game()
         cerr << "ERROR: failed to initialize audio." << endl;
       }
  
-	if (!al_reserve_samples(10))                   // reserve audio samples
+	if (!al_reserve_samples(20))                   // reserve audio samples
 	  {
         cerr << "ERROR: failed to reserve samples." << endl;
       }
@@ -184,6 +184,7 @@ void c_game::set_keys()
 	this->key_switch2 = ALLEGRO_KEY_2;
 	this->key_switch3  = ALLEGRO_KEY_3;
 	this->key_use = ALLEGRO_KEY_ENTER;
+	this->key_use_alt = ALLEGRO_KEY_F;
 	this->key_back = ALLEGRO_KEY_ESCAPE;
 	this->key_map = ALLEGRO_KEY_SPACE;
   }
@@ -713,7 +714,8 @@ void c_game::run()
 				  this->input_output_state.key_cast_2 = true;
 				else if (program_event.keyboard.keycode == this->key_cast3)
 				  this->input_output_state.key_cast_3 = true;
-				else if (program_event.keyboard.keycode == this->key_use)
+				else if (program_event.keyboard.keycode == this->key_use ||
+				  program_event.keyboard.keycode == this->key_use_alt)
 				  this->input_output_state.key_use = true;
 				else if (program_event.keyboard.keycode == this->key_map)
 				  this->input_output_state.key_map_explore = true;
@@ -801,7 +803,8 @@ void c_game::run()
 				  this->input_output_state.key_cast_2 = false;
 				else if (program_event.keyboard.keycode == this->key_cast3)
 				  this->input_output_state.key_cast_3 = false;
-				else if (program_event.keyboard.keycode == this->key_use)
+				else if (program_event.keyboard.keycode == this->key_use ||
+				  program_event.keyboard.keycode == this->key_use_alt)
 				  this->input_output_state.key_use = false;
 				else if (program_event.keyboard.keycode == this->key_map)
 				  this->input_output_state.key_map_explore = false;

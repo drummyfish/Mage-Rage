@@ -146,7 +146,7 @@ void c_menu::set_menu_info_screen(string image_path, string text_lines[], int nu
 
 void c_menu::set_menu_choose_level(int number_of_levels)
   {
-	this->current_item = 0;
+	this->current_item = number_of_levels - 1;  // select the last level
 	this->menu_type = MENU_TYPE_LEVEL_CHOOSE;
 	this->number_of_levels = number_of_levels;
 	this->info_background = al_load_bitmap("resources/castle.png");

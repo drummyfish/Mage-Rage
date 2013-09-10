@@ -80,6 +80,7 @@ class c_game
 	  int key_switch2;                          /** keycode for key switch to player 2 */
 	  int key_switch3;                          /** keycode for key switch to player 3 */
 	  int key_use;                              /** keycode for key used to use items and confirm things */
+	  int key_use_alt;                          /** alternative keykode for using items */
 	  int key_back;                             /** keycode for key back */
 	  int key_map;                              /** keycode for key that manipulates the camera */
 
