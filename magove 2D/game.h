@@ -161,7 +161,8 @@ class c_game
 
 		  @param name name of the music file
 		    without path and extension (the
-			resource folder is searched)
+			resource folder is searched and
+			.ogg is considered)
 		*/
 
 	  void stop_music();

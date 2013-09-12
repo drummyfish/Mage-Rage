@@ -830,7 +830,7 @@ void c_game::play_music(string name)
 	if (this->settings.music_on)
 	  {		
 		al_destroy_sample(this->music);
-		this->music = al_load_sample(("resources/" + name + ".wav").c_str());
+		this->music = al_load_sample(("resources/" + name + ".ogg").c_str());
 		al_play_sample(this->music,1.0,0.0,1.0,ALLEGRO_PLAYMODE_LOOP,&this->music_id);
 	  }
   }
