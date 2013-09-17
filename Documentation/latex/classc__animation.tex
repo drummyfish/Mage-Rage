@@ -1,0 +1,117 @@
+\hypertarget{classc__animation}{\section{c\-\_\-animation Class Reference}
+\label{classc__animation}\index{c\-\_\-animation@{c\-\_\-animation}}
+}
+Inheritance diagram for c\-\_\-animation\-:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classc__animation}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classc__animation_af98386490424ee6265da7edd9bf6436f}{c\-\_\-animation} (long int $\ast$\hyperlink{classc__graphic__object_a9ff91aa7a60272a8f713ff011a0cc0bb}{global\-\_\-time}, string file\-\_\-prefix, int number\-\_\-of\-\_\-frames, int \hyperlink{classc__animation_a94a4d0e669cf48082e293c8d811e5ca4}{offset\-\_\-x}, int \hyperlink{classc__animation_acb05e62189bcbac633c9290016c25415}{offset\-\_\-y}, int \hyperlink{classc__animation_acbb0e4a3a678ecf74b91e23c22eaa29a}{speed}, bool has\-\_\-sound, string sound\-\_\-path, double \hyperlink{classc__graphic__object_a8274f6e9f1221b91be61ca923e1dc03c}{sound\-\_\-gain})
+\item 
+\hyperlink{classc__animation_a1b4c0a7b17edb2ac92daa6fbd8afcd93}{$\sim$c\-\_\-animation} ()
+\item 
+virtual void \hyperlink{classc__animation_a36d69237de6781450680a38717385721}{draw} (int x, int y)
+\end{DoxyCompactItemize}
+\subsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+int \hyperlink{classc__animation_acbb0e4a3a678ecf74b91e23c22eaa29a}{speed}
+\item 
+int \hyperlink{classc__animation_a94a4d0e669cf48082e293c8d811e5ca4}{offset\-\_\-x}
+\item 
+int \hyperlink{classc__animation_acb05e62189bcbac633c9290016c25415}{offset\-\_\-y}
+\item 
+A\-L\-L\-E\-G\-R\-O\-\_\-\-B\-I\-T\-M\-A\-P $\ast$ \hyperlink{classc__animation_ad881d6653de035e33a8b0ad3e0c178a5}{frames} \mbox{[}M\-A\-X\-\_\-\-A\-N\-I\-M\-A\-T\-I\-O\-N\-\_\-\-F\-R\-A\-M\-E\-S\mbox{]}
+\end{DoxyCompactItemize}
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classc__animation_af98386490424ee6265da7edd9bf6436f}{\index{c\-\_\-animation@{c\-\_\-animation}!c\-\_\-animation@{c\-\_\-animation}}
+\index{c\-\_\-animation@{c\-\_\-animation}!c_animation@{c\-\_\-animation}}
+\subsubsection[{c\-\_\-animation}]{\setlength{\rightskip}{0pt plus 5cm}c\-\_\-animation\-::c\-\_\-animation (
+\begin{DoxyParamCaption}
+\item[{long int $\ast$}]{global\-\_\-time, }
+\item[{string}]{file\-\_\-prefix, }
+\item[{int}]{number\-\_\-of\-\_\-frames, }
+\item[{int}]{offset\-\_\-x, }
+\item[{int}]{offset\-\_\-y, }
+\item[{int}]{speed, }
+\item[{bool}]{has\-\_\-sound, }
+\item[{string}]{sound\-\_\-path, }
+\item[{double}]{sound\-\_\-gain}
+\end{DoxyParamCaption}
+)}}\label{classc__animation_af98386490424ee6265da7edd9bf6436f}
+bitmaps-\/ animation frames
+
+Animation object class implementation.
+
+authors\-: Miloslav Číž year\-: 2013 \hypertarget{classc__animation_a1b4c0a7b17edb2ac92daa6fbd8afcd93}{\index{c\-\_\-animation@{c\-\_\-animation}!$\sim$c\-\_\-animation@{$\sim$c\-\_\-animation}}
+\index{$\sim$c\-\_\-animation@{$\sim$c\-\_\-animation}!c_animation@{c\-\_\-animation}}
+\subsubsection[{$\sim$c\-\_\-animation}]{\setlength{\rightskip}{0pt plus 5cm}c\-\_\-animation\-::$\sim$c\-\_\-animation (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classc__animation_a1b4c0a7b17edb2ac92daa6fbd8afcd93}
+Class constructor, initialises a new object.
+
+
+\begin{DoxyParams}{Parameters}
+{\em global\-\_\-time} & reference to a global time counter \\
+\hline
+{\em file\-\_\-prefix} & string prefix of file names, that contain the animation frames -\/ for example if \char`\"{}a\char`\"{} is specified and number of frames is 3, then this method will search for files \char`\"{}a\-\_\-1.\-png\char`\"{}, \char`\"{}a\-\_\-2.\-png\char`\"{} and \char`\"{}a\-\_\-3.\-png\char`\"{} \\
+\hline
+{\em number\-\_\-of\-\_\-frames} & number of animation frames (there must be corresponding number of png files) \\
+\hline
+{\em offset\-\_\-x} & x offset for drawing in pixels (can be negative) \\
+\hline
+{\em offset\-\_\-y} & y offset for drawing in pixels (can be negative) \\
+\hline
+{\em speed} & speed of the animation, 1 is normal, 2 is twice as slow and so on \\
+\hline
+{\em has\-\_\-sound} & set this to true if sound should be loaded for this animation, otherwise false \\
+\hline
+{\em sound\-\_\-path} & if the previous parameter is true, this specifies the path to the sound file \\
+\hline
+{\em sound\-\_\-gain} & sound gain (volume), 1.\-0 is normal \\
+\hline
+\end{DoxyParams}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classc__animation_a36d69237de6781450680a38717385721}{\index{c\-\_\-animation@{c\-\_\-animation}!draw@{draw}}
+\index{draw@{draw}!c_animation@{c\-\_\-animation}}
+\subsubsection[{draw}]{\setlength{\rightskip}{0pt plus 5cm}void c\-\_\-animation\-::draw (
+\begin{DoxyParamCaption}
+\item[{int}]{x, }
+\item[{int}]{y}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}}\label{classc__animation_a36d69237de6781450680a38717385721}
+Class destructor, frees all it's memory. 
+
+Reimplemented from \hyperlink{classc__graphic__object_a94ef8137eed9ce1ae7adf366fefb51cf}{c\-\_\-graphic\-\_\-object}.
+
+
+
+\subsection{Member Data Documentation}
+\hypertarget{classc__animation_ad881d6653de035e33a8b0ad3e0c178a5}{\index{c\-\_\-animation@{c\-\_\-animation}!frames@{frames}}
+\index{frames@{frames}!c_animation@{c\-\_\-animation}}
+\subsubsection[{frames}]{\setlength{\rightskip}{0pt plus 5cm}A\-L\-L\-E\-G\-R\-O\-\_\-\-B\-I\-T\-M\-A\-P$\ast$ c\-\_\-animation\-::frames\mbox{[}M\-A\-X\-\_\-\-A\-N\-I\-M\-A\-T\-I\-O\-N\-\_\-\-F\-R\-A\-M\-E\-S\mbox{]}\hspace{0.3cm}{\ttfamily [protected]}}}\label{classc__animation_ad881d6653de035e33a8b0ad3e0c178a5}
+y offset for drawing in pixels \hypertarget{classc__animation_a94a4d0e669cf48082e293c8d811e5ca4}{\index{c\-\_\-animation@{c\-\_\-animation}!offset\-\_\-x@{offset\-\_\-x}}
+\index{offset\-\_\-x@{offset\-\_\-x}!c_animation@{c\-\_\-animation}}
+\subsubsection[{offset\-\_\-x}]{\setlength{\rightskip}{0pt plus 5cm}int c\-\_\-animation\-::offset\-\_\-x\hspace{0.3cm}{\ttfamily [protected]}}}\label{classc__animation_a94a4d0e669cf48082e293c8d811e5ca4}
+animation speed, 1 is normal, 2 is twice as slow and so on \hypertarget{classc__animation_acb05e62189bcbac633c9290016c25415}{\index{c\-\_\-animation@{c\-\_\-animation}!offset\-\_\-y@{offset\-\_\-y}}
+\index{offset\-\_\-y@{offset\-\_\-y}!c_animation@{c\-\_\-animation}}
+\subsubsection[{offset\-\_\-y}]{\setlength{\rightskip}{0pt plus 5cm}int c\-\_\-animation\-::offset\-\_\-y\hspace{0.3cm}{\ttfamily [protected]}}}\label{classc__animation_acb05e62189bcbac633c9290016c25415}
+x offset for drawing in pixels \hypertarget{classc__animation_acbb0e4a3a678ecf74b91e23c22eaa29a}{\index{c\-\_\-animation@{c\-\_\-animation}!speed@{speed}}
+\index{speed@{speed}!c_animation@{c\-\_\-animation}}
+\subsubsection[{speed}]{\setlength{\rightskip}{0pt plus 5cm}int c\-\_\-animation\-::speed\hspace{0.3cm}{\ttfamily [protected]}}}\label{classc__animation_acbb0e4a3a678ecf74b91e23c22eaa29a}
+This class represents an animation object. It contains one animation, that can be played on the screen. It does not affect the game itself, only makes it look nicer. 
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+magerage/animation.\-h\item 
+magerage/animation.\-cpp\end{DoxyCompactItemize}

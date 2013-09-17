@@ -15,8 +15,8 @@ settings_menu_1:MUSIC ON
 settings_menu_2:VOLUME
 settings_menu_3:LANGUAGE
 settings_menu_4:BACK
-about_0:Mage Rage, 2013, version 
-about_1:Miloslav Ciz - concept, script, programming, graphics, sounds
+about_0:Mage Rage, 2013, GPL license, version 
+about_1:Miloslav Ciz - concept, script, programming, graphics, sounds, music, testing
 about_2:Martin Gabriel - music, testing, ideas
 option_on:YES
 option_off:NO

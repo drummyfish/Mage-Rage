@@ -1,0 +1,222 @@
+\hypertarget{classc__graphic__object}{\section{c\-\_\-graphic\-\_\-object Class Reference}
+\label{classc__graphic__object}\index{c\-\_\-graphic\-\_\-object@{c\-\_\-graphic\-\_\-object}}
+}
+Inheritance diagram for c\-\_\-graphic\-\_\-object\-:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{classc__graphic__object}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+virtual void \hyperlink{classc__graphic__object_a94ef8137eed9ce1ae7adf366fefb51cf}{draw} (int x, int y)
+\item 
+virtual void \hyperlink{classc__graphic__object_aa87323c0df1b2e79cef78573b6096512}{play\-\_\-animation} (t\-\_\-animation\-\_\-type animation)
+\item 
+virtual void \hyperlink{classc__graphic__object_ac60b00df5a7edefe4c61e6a59802473f}{loop\-\_\-animation} (t\-\_\-animation\-\_\-type animation)
+\item 
+virtual void \hyperlink{classc__graphic__object_a32cdba2150d09d903f6e95f2509b9283}{stop\-\_\-animation} ()
+\item 
+bool \hyperlink{classc__graphic__object_af5f3b289e5f0f4501ee5b5a36fb4aad8}{is\-\_\-animating} ()
+\item 
+virtual void \hyperlink{classc__graphic__object_a20fa3f61532b73f64f3307fd14b7dba6}{update\-\_\-animation\-\_\-period} ()
+\item 
+t\-\_\-animation\-\_\-type \hyperlink{classc__graphic__object_a3028097b164e7d88fbde871af2bcc679}{get\-\_\-playing\-\_\-animation} ()
+\item 
+bool \hyperlink{classc__graphic__object_aef3311c6cff7e455867882eba8b34e84}{is\-\_\-succesfully\-\_\-loaded} ()
+\item 
+int \hyperlink{classc__graphic__object_a8e692d099d44b9d367d197bc2a582d16}{get\-\_\-animation\-\_\-frame} ()
+\end{DoxyCompactItemize}
+\subsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+t\-\_\-animation\-\_\-type \hyperlink{classc__graphic__object_a3633db416c2709f2f65a858de7a2d9ae}{playing\-\_\-animation}
+\item 
+long int \hyperlink{classc__graphic__object_a48b5ab1a193f296ead7119461a4e425e}{started\-\_\-playing}
+\item 
+long int $\ast$ \hyperlink{classc__graphic__object_a9ff91aa7a60272a8f713ff011a0cc0bb}{global\-\_\-time}
+\item 
+long int \hyperlink{classc__graphic__object_a327008d33c50fe3665514770eaaaeb11}{animation\-\_\-frame}
+\item 
+bool \hyperlink{classc__graphic__object_a9b4e51cd726799f6d6902e1759719bbc}{looping\-\_\-animation}
+\item 
+int \hyperlink{classc__graphic__object_a20a3a703402913137adead51faa53e79}{animation\-\_\-period}
+\item 
+bool \hyperlink{classc__graphic__object_ad1d6ffa4b597a667995ec1e8c930a9f9}{succesfully\-\_\-loaded}
+\item 
+bool \hyperlink{classc__graphic__object_a3994cab2b5b4fe62ca0c5b1bc2e03460}{playing\-\_\-sound}
+\item 
+double \hyperlink{classc__graphic__object_a8274f6e9f1221b91be61ca923e1dc03c}{sound\-\_\-gain}
+\item 
+A\-L\-L\-E\-G\-R\-O\-\_\-\-S\-A\-M\-P\-L\-E\-\_\-\-I\-D \hyperlink{classc__graphic__object_abf8bc08bd583d2fd1209eba2ae0fdebf}{playing\-\_\-sound\-\_\-id}
+\item 
+A\-L\-L\-E\-G\-R\-O\-\_\-\-S\-A\-M\-P\-L\-E $\ast$ \hyperlink{classc__graphic__object_a4076fe5b3cd2e8bcb249f54fb86d662f}{sound}
+\end{DoxyCompactItemize}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classc__graphic__object_a94ef8137eed9ce1ae7adf366fefb51cf}{\index{c\-\_\-graphic\-\_\-object@{c\-\_\-graphic\-\_\-object}!draw@{draw}}
+\index{draw@{draw}!c_graphic_object@{c\-\_\-graphic\-\_\-object}}
+\subsubsection[{draw}]{\setlength{\rightskip}{0pt plus 5cm}void c\-\_\-graphic\-\_\-object\-::draw (
+\begin{DoxyParamCaption}
+\item[{int}]{x, }
+\item[{int}]{y}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}}\label{classc__graphic__object_a94ef8137eed9ce1ae7adf366fefb51cf}
+sound played during animation
+
+Graphic object class implementation.
+
+authors\-: Miloslav Číž year\-: 2013 
+
+Reimplemented in \hyperlink{classc__map_a46afcfac9b83f37a28a5cf3e1da91ef6}{c\-\_\-map}, \hyperlink{classc__map__object_add8a45bcf4f77ba65716095c05483f4f}{c\-\_\-map\-\_\-object}, \hyperlink{classc__monster__character_ac400987c335adde2454cab352a63d3d2}{c\-\_\-monster\-\_\-character}, \hyperlink{classc__animation_a36d69237de6781450680a38717385721}{c\-\_\-animation}, and \hyperlink{classc__player__character_a75d0ecbf8d1892422766f4f46ace576e}{c\-\_\-player\-\_\-character}.
+
+\hypertarget{classc__graphic__object_a8e692d099d44b9d367d197bc2a582d16}{\index{c\-\_\-graphic\-\_\-object@{c\-\_\-graphic\-\_\-object}!get\-\_\-animation\-\_\-frame@{get\-\_\-animation\-\_\-frame}}
+\index{get\-\_\-animation\-\_\-frame@{get\-\_\-animation\-\_\-frame}!c_graphic_object@{c\-\_\-graphic\-\_\-object}}
+\subsubsection[{get\-\_\-animation\-\_\-frame}]{\setlength{\rightskip}{0pt plus 5cm}int c\-\_\-graphic\-\_\-object\-::get\-\_\-animation\-\_\-frame (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classc__graphic__object_a8e692d099d44b9d367d197bc2a582d16}
+Checks if the map has been loaded succesfully.
+
+\begin{DoxyReturn}{Returns}
+true if the map is loaded succesfully, false otherwise 
+\end{DoxyReturn}
+\hypertarget{classc__graphic__object_a3028097b164e7d88fbde871af2bcc679}{\index{c\-\_\-graphic\-\_\-object@{c\-\_\-graphic\-\_\-object}!get\-\_\-playing\-\_\-animation@{get\-\_\-playing\-\_\-animation}}
+\index{get\-\_\-playing\-\_\-animation@{get\-\_\-playing\-\_\-animation}!c_graphic_object@{c\-\_\-graphic\-\_\-object}}
+\subsubsection[{get\-\_\-playing\-\_\-animation}]{\setlength{\rightskip}{0pt plus 5cm}t\-\_\-animation\-\_\-type c\-\_\-graphic\-\_\-object\-::get\-\_\-playing\-\_\-animation (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classc__graphic__object_a3028097b164e7d88fbde871af2bcc679}
+Depending on current animation sets the animation period attribute. \hypertarget{classc__graphic__object_af5f3b289e5f0f4501ee5b5a36fb4aad8}{\index{c\-\_\-graphic\-\_\-object@{c\-\_\-graphic\-\_\-object}!is\-\_\-animating@{is\-\_\-animating}}
+\index{is\-\_\-animating@{is\-\_\-animating}!c_graphic_object@{c\-\_\-graphic\-\_\-object}}
+\subsubsection[{is\-\_\-animating}]{\setlength{\rightskip}{0pt plus 5cm}bool c\-\_\-graphic\-\_\-object\-::is\-\_\-animating (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classc__graphic__object_af5f3b289e5f0f4501ee5b5a36fb4aad8}
+Stops playing the current animation. \hypertarget{classc__graphic__object_aef3311c6cff7e455867882eba8b34e84}{\index{c\-\_\-graphic\-\_\-object@{c\-\_\-graphic\-\_\-object}!is\-\_\-succesfully\-\_\-loaded@{is\-\_\-succesfully\-\_\-loaded}}
+\index{is\-\_\-succesfully\-\_\-loaded@{is\-\_\-succesfully\-\_\-loaded}!c_graphic_object@{c\-\_\-graphic\-\_\-object}}
+\subsubsection[{is\-\_\-succesfully\-\_\-loaded}]{\setlength{\rightskip}{0pt plus 5cm}bool c\-\_\-graphic\-\_\-object\-::is\-\_\-succesfully\-\_\-loaded (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classc__graphic__object_aef3311c6cff7e455867882eba8b34e84}
+Returns a type of animation being played or looped.
+
+\begin{DoxyReturn}{Returns}
+type of animation 
+\end{DoxyReturn}
+\hypertarget{classc__graphic__object_ac60b00df5a7edefe4c61e6a59802473f}{\index{c\-\_\-graphic\-\_\-object@{c\-\_\-graphic\-\_\-object}!loop\-\_\-animation@{loop\-\_\-animation}}
+\index{loop\-\_\-animation@{loop\-\_\-animation}!c_graphic_object@{c\-\_\-graphic\-\_\-object}}
+\subsubsection[{loop\-\_\-animation}]{\setlength{\rightskip}{0pt plus 5cm}void c\-\_\-graphic\-\_\-object\-::loop\-\_\-animation (
+\begin{DoxyParamCaption}
+\item[{t\-\_\-animation\-\_\-type}]{animation}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}}\label{classc__graphic__object_ac60b00df5a7edefe4c61e6a59802473f}
+Plays given animation.
+
+
+\begin{DoxyParams}{Parameters}
+{\em animation} & animation to be played \\
+\hline
+\end{DoxyParams}
+
+
+Reimplemented in \hyperlink{classc__character_a323dd6b7cf6635a0b61e4351178d7518}{c\-\_\-character}.
+
+\hypertarget{classc__graphic__object_aa87323c0df1b2e79cef78573b6096512}{\index{c\-\_\-graphic\-\_\-object@{c\-\_\-graphic\-\_\-object}!play\-\_\-animation@{play\-\_\-animation}}
+\index{play\-\_\-animation@{play\-\_\-animation}!c_graphic_object@{c\-\_\-graphic\-\_\-object}}
+\subsubsection[{play\-\_\-animation}]{\setlength{\rightskip}{0pt plus 5cm}void c\-\_\-graphic\-\_\-object\-::play\-\_\-animation (
+\begin{DoxyParamCaption}
+\item[{t\-\_\-animation\-\_\-type}]{animation}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}}\label{classc__graphic__object_aa87323c0df1b2e79cef78573b6096512}
+Tells the object to draw itself at given coordinations on the screen.
+
+
+\begin{DoxyParams}{Parameters}
+{\em x} & x coordination of the screen \\
+\hline
+{\em y} & y coordination of the screen \\
+\hline
+\end{DoxyParams}
+
+
+Reimplemented in \hyperlink{classc__player__character_a6fd0d6503cd56998a4e2c8eb8695767b}{c\-\_\-player\-\_\-character}.
+
+\hypertarget{classc__graphic__object_a32cdba2150d09d903f6e95f2509b9283}{\index{c\-\_\-graphic\-\_\-object@{c\-\_\-graphic\-\_\-object}!stop\-\_\-animation@{stop\-\_\-animation}}
+\index{stop\-\_\-animation@{stop\-\_\-animation}!c_graphic_object@{c\-\_\-graphic\-\_\-object}}
+\subsubsection[{stop\-\_\-animation}]{\setlength{\rightskip}{0pt plus 5cm}void c\-\_\-graphic\-\_\-object\-::stop\-\_\-animation (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}}\label{classc__graphic__object_a32cdba2150d09d903f6e95f2509b9283}
+Loops the given animation untill it's stopped by \hyperlink{classc__graphic__object_a32cdba2150d09d903f6e95f2509b9283}{stop\-\_\-animation()}.
+
+
+\begin{DoxyParams}{Parameters}
+{\em animation} & animation to be looped \\
+\hline
+\end{DoxyParams}
+\hypertarget{classc__graphic__object_a20fa3f61532b73f64f3307fd14b7dba6}{\index{c\-\_\-graphic\-\_\-object@{c\-\_\-graphic\-\_\-object}!update\-\_\-animation\-\_\-period@{update\-\_\-animation\-\_\-period}}
+\index{update\-\_\-animation\-\_\-period@{update\-\_\-animation\-\_\-period}!c_graphic_object@{c\-\_\-graphic\-\_\-object}}
+\subsubsection[{update\-\_\-animation\-\_\-period}]{\setlength{\rightskip}{0pt plus 5cm}void c\-\_\-graphic\-\_\-object\-::update\-\_\-animation\-\_\-period (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}}\label{classc__graphic__object_a20fa3f61532b73f64f3307fd14b7dba6}
+Checks if any animation is playing.
+
+\begin{DoxyReturn}{Returns}
+true if any animation is playing or looping, false otherwise 
+\end{DoxyReturn}
+
+
+Reimplemented in \hyperlink{classc__map__object_a2df801781fdad9a4b42a78ff5b9c8558}{c\-\_\-map\-\_\-object}, and \hyperlink{classc__player__character_aa5d59edcb370d29b83ac0b2659ab0385}{c\-\_\-player\-\_\-character}.
+
+
+
+\subsection{Member Data Documentation}
+\hypertarget{classc__graphic__object_a327008d33c50fe3665514770eaaaeb11}{\index{c\-\_\-graphic\-\_\-object@{c\-\_\-graphic\-\_\-object}!animation\-\_\-frame@{animation\-\_\-frame}}
+\index{animation\-\_\-frame@{animation\-\_\-frame}!c_graphic_object@{c\-\_\-graphic\-\_\-object}}
+\subsubsection[{animation\-\_\-frame}]{\setlength{\rightskip}{0pt plus 5cm}long int c\-\_\-graphic\-\_\-object\-::animation\-\_\-frame\hspace{0.3cm}{\ttfamily [protected]}}}\label{classc__graphic__object_a327008d33c50fe3665514770eaaaeb11}
+reference to a global time counter variable (for animations) \hypertarget{classc__graphic__object_a20a3a703402913137adead51faa53e79}{\index{c\-\_\-graphic\-\_\-object@{c\-\_\-graphic\-\_\-object}!animation\-\_\-period@{animation\-\_\-period}}
+\index{animation\-\_\-period@{animation\-\_\-period}!c_graphic_object@{c\-\_\-graphic\-\_\-object}}
+\subsubsection[{animation\-\_\-period}]{\setlength{\rightskip}{0pt plus 5cm}int c\-\_\-graphic\-\_\-object\-::animation\-\_\-period\hspace{0.3cm}{\ttfamily [protected]}}}\label{classc__graphic__object_a20a3a703402913137adead51faa53e79}
+true if the animation is looping, false otherwise \hypertarget{classc__graphic__object_a9ff91aa7a60272a8f713ff011a0cc0bb}{\index{c\-\_\-graphic\-\_\-object@{c\-\_\-graphic\-\_\-object}!global\-\_\-time@{global\-\_\-time}}
+\index{global\-\_\-time@{global\-\_\-time}!c_graphic_object@{c\-\_\-graphic\-\_\-object}}
+\subsubsection[{global\-\_\-time}]{\setlength{\rightskip}{0pt plus 5cm}long int$\ast$ c\-\_\-graphic\-\_\-object\-::global\-\_\-time\hspace{0.3cm}{\ttfamily [protected]}}}\label{classc__graphic__object_a9ff91aa7a60272a8f713ff011a0cc0bb}
+time when the animation started playing to count the animation frame \hypertarget{classc__graphic__object_a9b4e51cd726799f6d6902e1759719bbc}{\index{c\-\_\-graphic\-\_\-object@{c\-\_\-graphic\-\_\-object}!looping\-\_\-animation@{looping\-\_\-animation}}
+\index{looping\-\_\-animation@{looping\-\_\-animation}!c_graphic_object@{c\-\_\-graphic\-\_\-object}}
+\subsubsection[{looping\-\_\-animation}]{\setlength{\rightskip}{0pt plus 5cm}bool c\-\_\-graphic\-\_\-object\-::looping\-\_\-animation\hspace{0.3cm}{\ttfamily [protected]}}}\label{classc__graphic__object_a9b4e51cd726799f6d6902e1759719bbc}
+current animation frame \hypertarget{classc__graphic__object_a3633db416c2709f2f65a858de7a2d9ae}{\index{c\-\_\-graphic\-\_\-object@{c\-\_\-graphic\-\_\-object}!playing\-\_\-animation@{playing\-\_\-animation}}
+\index{playing\-\_\-animation@{playing\-\_\-animation}!c_graphic_object@{c\-\_\-graphic\-\_\-object}}
+\subsubsection[{playing\-\_\-animation}]{\setlength{\rightskip}{0pt plus 5cm}t\-\_\-animation\-\_\-type c\-\_\-graphic\-\_\-object\-::playing\-\_\-animation\hspace{0.3cm}{\ttfamily [protected]}}}\label{classc__graphic__object_a3633db416c2709f2f65a858de7a2d9ae}
+This class represents an object that is able to draw itself on the screen. It can also play animations. \hypertarget{classc__graphic__object_a3994cab2b5b4fe62ca0c5b1bc2e03460}{\index{c\-\_\-graphic\-\_\-object@{c\-\_\-graphic\-\_\-object}!playing\-\_\-sound@{playing\-\_\-sound}}
+\index{playing\-\_\-sound@{playing\-\_\-sound}!c_graphic_object@{c\-\_\-graphic\-\_\-object}}
+\subsubsection[{playing\-\_\-sound}]{\setlength{\rightskip}{0pt plus 5cm}bool c\-\_\-graphic\-\_\-object\-::playing\-\_\-sound\hspace{0.3cm}{\ttfamily [protected]}}}\label{classc__graphic__object_a3994cab2b5b4fe62ca0c5b1bc2e03460}
+stores information about errors \hypertarget{classc__graphic__object_abf8bc08bd583d2fd1209eba2ae0fdebf}{\index{c\-\_\-graphic\-\_\-object@{c\-\_\-graphic\-\_\-object}!playing\-\_\-sound\-\_\-id@{playing\-\_\-sound\-\_\-id}}
+\index{playing\-\_\-sound\-\_\-id@{playing\-\_\-sound\-\_\-id}!c_graphic_object@{c\-\_\-graphic\-\_\-object}}
+\subsubsection[{playing\-\_\-sound\-\_\-id}]{\setlength{\rightskip}{0pt plus 5cm}A\-L\-L\-E\-G\-R\-O\-\_\-\-S\-A\-M\-P\-L\-E\-\_\-\-I\-D c\-\_\-graphic\-\_\-object\-::playing\-\_\-sound\-\_\-id\hspace{0.3cm}{\ttfamily [protected]}}}\label{classc__graphic__object_abf8bc08bd583d2fd1209eba2ae0fdebf}
+sound gain \hypertarget{classc__graphic__object_a4076fe5b3cd2e8bcb249f54fb86d662f}{\index{c\-\_\-graphic\-\_\-object@{c\-\_\-graphic\-\_\-object}!sound@{sound}}
+\index{sound@{sound}!c_graphic_object@{c\-\_\-graphic\-\_\-object}}
+\subsubsection[{sound}]{\setlength{\rightskip}{0pt plus 5cm}A\-L\-L\-E\-G\-R\-O\-\_\-\-S\-A\-M\-P\-L\-E$\ast$ c\-\_\-graphic\-\_\-object\-::sound\hspace{0.3cm}{\ttfamily [protected]}}}\label{classc__graphic__object_a4076fe5b3cd2e8bcb249f54fb86d662f}
+an I\-D of the sound being played \hypertarget{classc__graphic__object_a8274f6e9f1221b91be61ca923e1dc03c}{\index{c\-\_\-graphic\-\_\-object@{c\-\_\-graphic\-\_\-object}!sound\-\_\-gain@{sound\-\_\-gain}}
+\index{sound\-\_\-gain@{sound\-\_\-gain}!c_graphic_object@{c\-\_\-graphic\-\_\-object}}
+\subsubsection[{sound\-\_\-gain}]{\setlength{\rightskip}{0pt plus 5cm}double c\-\_\-graphic\-\_\-object\-::sound\-\_\-gain\hspace{0.3cm}{\ttfamily [protected]}}}\label{classc__graphic__object_a8274f6e9f1221b91be61ca923e1dc03c}
+whether a sound is playing for this object \hypertarget{classc__graphic__object_a48b5ab1a193f296ead7119461a4e425e}{\index{c\-\_\-graphic\-\_\-object@{c\-\_\-graphic\-\_\-object}!started\-\_\-playing@{started\-\_\-playing}}
+\index{started\-\_\-playing@{started\-\_\-playing}!c_graphic_object@{c\-\_\-graphic\-\_\-object}}
+\subsubsection[{started\-\_\-playing}]{\setlength{\rightskip}{0pt plus 5cm}long int c\-\_\-graphic\-\_\-object\-::started\-\_\-playing\hspace{0.3cm}{\ttfamily [protected]}}}\label{classc__graphic__object_a48b5ab1a193f296ead7119461a4e425e}
+type of animation being played or looped \hypertarget{classc__graphic__object_ad1d6ffa4b597a667995ec1e8c930a9f9}{\index{c\-\_\-graphic\-\_\-object@{c\-\_\-graphic\-\_\-object}!succesfully\-\_\-loaded@{succesfully\-\_\-loaded}}
+\index{succesfully\-\_\-loaded@{succesfully\-\_\-loaded}!c_graphic_object@{c\-\_\-graphic\-\_\-object}}
+\subsubsection[{succesfully\-\_\-loaded}]{\setlength{\rightskip}{0pt plus 5cm}bool c\-\_\-graphic\-\_\-object\-::succesfully\-\_\-loaded\hspace{0.3cm}{\ttfamily [protected]}}}\label{classc__graphic__object_ad1d6ffa4b597a667995ec1e8c930a9f9}
+number of frames of the current animation 
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+magerage/graphic\-\_\-object.\-h\item 
+magerage/graphic\-\_\-object.\-cpp\end{DoxyCompactItemize}

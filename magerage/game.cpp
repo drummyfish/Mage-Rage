@@ -1,8 +1,22 @@
 ﻿/**
  * Game class implementation file.
  *
- * authors: Miloslav Číž
- * year: 2013
+ * Copyright 2013 Miloslav Číž
+ *
+ * This file is part of Mage Rage.
+ *
+ * Mage Rage is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * Mage Rage is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with Foobar. If not, see <http://www.gnu.org/licenses/>.
  */
 
 #include "game.h"
@@ -50,7 +64,11 @@ c_game::c_game()
 	  }
 
 	al_init_font_addon();                          // initialise the font addon
-    al_init_ttf_addon();                           // initialise the ttf addon
+	
+	if (!al_init_ttf_addon())                      // initialise the ttf addon
+	  {
+		cerr << "ERROR: failed to initialize ttf addon." << endl;
+	  }
 
 	if(!al_install_mouse())
 	  {
@@ -59,6 +77,11 @@ c_game::c_game()
 	
 	this->win_sound = al_load_sample("resources/win.wav");
 	this->lose_sound = al_load_sample("resources/lose.wav");
+
+	if (this->win_sound == NULL || this->lose_sound == NULL)
+	  {
+        cerr << "ERROR: failed to load game sounds." << endl;
+      }
 
 	this->load();                                  // load the progress and settings from the data file
 
@@ -75,7 +98,7 @@ c_game::c_game()
 		this->input_output_state.screen_y = 600;
 	  }
 
-    display = al_create_display(this->input_output_state.screen_x,this->input_output_state.screen_y);  // initialise screen
+    this->display = al_create_display(this->input_output_state.screen_x,this->input_output_state.screen_y);  // initialise screen
 
 	if(!this->display)
 	  {
@@ -831,6 +854,12 @@ void c_game::play_music(string name)
 	  {		
 		al_destroy_sample(this->music);
 		this->music = al_load_sample(("resources/" + name + ".ogg").c_str());
+		
+		if (this->music == NULL)
+		  {
+			cerr << "ERROR: failed to load game music." << endl;
+		  }
+		
 		al_play_sample(this->music,1.0,0.0,1.0,ALLEGRO_PLAYMODE_LOOP,&this->music_id);
 	  }
   }

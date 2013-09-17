@@ -1,0 +1,271 @@
+\hypertarget{classc__menu}{\section{c\-\_\-menu Class Reference}
+\label{classc__menu}\index{c\-\_\-menu@{c\-\_\-menu}}
+}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classc__menu_a56fe0346fcf0fcc7c351f52cfcf5adea}{c\-\_\-menu} (\hyperlink{structt__input__output__state}{t\-\_\-input\-\_\-output\-\_\-state} $\ast$input\-\_\-output\-\_\-state)
+\item 
+\hyperlink{classc__menu_ac8a06810d4e60f8cb2f74a82f8863759}{$\sim$c\-\_\-menu} ()
+\item 
+void \hyperlink{classc__menu_a35b817db8d2fa0d78dee6696846524c2}{set\-\_\-menu\-\_\-items} (string items\mbox{[}$\,$\mbox{]}, int number\-\_\-of\-\_\-items, string \hyperlink{classc__menu_a04174390379e68ec20a0ec5945748570}{title}, bool keep\-\_\-cursor)
+\item 
+void \hyperlink{classc__menu_afcaeabf86dfb9d715548bd8277d4bce8}{display\-\_\-easter\-\_\-egg} ()
+\item 
+void \hyperlink{classc__menu_ae609e23056e45e3da00fbd763d31c6fe}{set\-\_\-menu\-\_\-info\-\_\-screen} (string image\-\_\-path, string \hyperlink{classc__menu_ade57856309857147f055d82f1e7d839e}{text\-\_\-lines}\mbox{[}$\,$\mbox{]}, int number\-\_\-of\-\_\-lines, double duration, unsigned char bg\-\_\-red, unsigned char bg\-\_\-green, unsigned char bg\-\_\-blue)
+\item 
+void \hyperlink{classc__menu_afe00a1ae7c5f70012e3e4c510cbb2bbe}{set\-\_\-menu\-\_\-choose\-\_\-level} (int \hyperlink{classc__menu_a3fe87a5b76e64557af759a180b0bb0ae}{number\-\_\-of\-\_\-levels})
+\item 
+int \hyperlink{classc__menu_a13affcab2aced75886f74ff70d17b509}{update} ()
+\end{DoxyCompactItemize}
+\subsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+t\-\_\-menu\-\_\-type \hyperlink{classc__menu_a1e0be6c7749c393b11b4a1f8330588f8}{menu\-\_\-type}
+\item 
+int \hyperlink{classc__menu_a5ccfb7e7c08dd3b70b7ddf5fd1f00308}{current\-\_\-item}
+\item 
+int \hyperlink{classc__menu_a4000a7ae156999a6e2ea273ab328a0f1}{number\-\_\-of\-\_\-text\-\_\-lines}
+\item 
+string \hyperlink{classc__menu_ade57856309857147f055d82f1e7d839e}{text\-\_\-lines} \mbox{[}10\mbox{]}
+\item 
+int \hyperlink{classc__menu_a3fe87a5b76e64557af759a180b0bb0ae}{number\-\_\-of\-\_\-levels}
+\item 
+\hyperlink{structt__input__output__state}{t\-\_\-input\-\_\-output\-\_\-state} $\ast$ \hyperlink{classc__menu_ae21342c5213a9d1f75932af186f65327}{io}
+\item 
+boolean \hyperlink{classc__menu_a3181439816433cf8a2b42dcaf7fbfea7}{pressed}
+\item 
+double \hyperlink{classc__menu_ae035b1a97b2334a285e3db7e00b0bdac}{effect\-\_\-time}
+\item 
+double \hyperlink{classc__menu_a55a8c30640f0cd40b1ac7db29644d050}{screen\-\_\-end\-\_\-time}
+\item 
+bool \hyperlink{classc__menu_ae983a894c3afee8671ed9f0fefd1b6a9}{fading\-\_\-in}
+\item 
+bool \hyperlink{classc__menu_a72afb1bd10e583b642922b2a3b1d799b}{fading\-\_\-out}
+\item 
+string \hyperlink{classc__menu_a04174390379e68ec20a0ec5945748570}{title}
+\item 
+unsigned char \hyperlink{classc__menu_a24f640c1886fdf22053a50f8700d559f}{bg\-\_\-color} \mbox{[}3\mbox{]}
+\item 
+double \hyperlink{classc__menu_af9c750db5db9b548d4d936e30dfe314f}{easter\-\_\-egg\-\_\-started}
+\item 
+int \hyperlink{classc__menu_a39f79196e63fb1e14ac437c2d88c8c7d}{level\-\_\-number\-\_\-positions\-\_\-x} \mbox{[}22\mbox{]}
+\item 
+int \hyperlink{classc__menu_ac4f208edba8bee1d6184db03e3a89e41}{level\-\_\-number\-\_\-positions\-\_\-y} \mbox{[}22\mbox{]}
+\item 
+A\-L\-L\-E\-G\-R\-O\-\_\-\-B\-I\-T\-M\-A\-P $\ast$ \hyperlink{classc__menu_a0f70bbd0314bd3da93df8ab3f1df3a70}{menu\-\_\-top}
+\item 
+A\-L\-L\-E\-G\-R\-O\-\_\-\-B\-I\-T\-M\-A\-P $\ast$ \hyperlink{classc__menu_a2c6c75c1a53e6f375cadbda437cb99f5}{menu\-\_\-middle}
+\item 
+A\-L\-L\-E\-G\-R\-O\-\_\-\-B\-I\-T\-M\-A\-P $\ast$ \hyperlink{classc__menu_a74ca4baf7d4dbe8c0b6a4d2e52142ba4}{menu\-\_\-bottom}
+\item 
+A\-L\-L\-E\-G\-R\-O\-\_\-\-B\-I\-T\-M\-A\-P $\ast$ \hyperlink{classc__menu_a7704ebdcc1c29c16e0b400ce9be6b933}{menu\-\_\-selection}
+\item 
+A\-L\-L\-E\-G\-R\-O\-\_\-\-B\-I\-T\-M\-A\-P $\ast$ \hyperlink{classc__menu_a2898c943cc19bc36d9cb3763b9dc3c03}{info\-\_\-background}
+\item 
+A\-L\-L\-E\-G\-R\-O\-\_\-\-B\-I\-T\-M\-A\-P $\ast$ \hyperlink{classc__menu_af61b3585bbce811355a9522f4d4e5ee1}{menu\-\_\-border}
+\item 
+A\-L\-L\-E\-G\-R\-O\-\_\-\-B\-I\-T\-M\-A\-P $\ast$ \hyperlink{classc__menu_a823fbb421af347ddd1c891fec53c242d}{easter\-\_\-egg}
+\item 
+A\-L\-L\-E\-G\-R\-O\-\_\-\-F\-O\-N\-T $\ast$ \hyperlink{classc__menu_a51aa6761c97638a2d3d3e34213a0fc25}{text\-\_\-font}
+\item 
+A\-L\-L\-E\-G\-R\-O\-\_\-\-S\-A\-M\-P\-L\-E $\ast$ \hyperlink{classc__menu_a697e104d6bb5ac42a46a0a8076a82444}{click\-\_\-sound}
+\end{DoxyCompactItemize}
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classc__menu_a56fe0346fcf0fcc7c351f52cfcf5adea}{\index{c\-\_\-menu@{c\-\_\-menu}!c\-\_\-menu@{c\-\_\-menu}}
+\index{c\-\_\-menu@{c\-\_\-menu}!c_menu@{c\-\_\-menu}}
+\subsubsection[{c\-\_\-menu}]{\setlength{\rightskip}{0pt plus 5cm}c\-\_\-menu\-::c\-\_\-menu (
+\begin{DoxyParamCaption}
+\item[{{\bf t\-\_\-input\-\_\-output\-\_\-state} $\ast$}]{input\-\_\-output\-\_\-state}
+\end{DoxyParamCaption}
+)}}\label{classc__menu_a56fe0346fcf0fcc7c351f52cfcf5adea}
+click sound for the menu
+
+Menu class implementation.
+
+authors\-: Miloslav Číž year\-: 2013 \hypertarget{classc__menu_ac8a06810d4e60f8cb2f74a82f8863759}{\index{c\-\_\-menu@{c\-\_\-menu}!$\sim$c\-\_\-menu@{$\sim$c\-\_\-menu}}
+\index{$\sim$c\-\_\-menu@{$\sim$c\-\_\-menu}!c_menu@{c\-\_\-menu}}
+\subsubsection[{$\sim$c\-\_\-menu}]{\setlength{\rightskip}{0pt plus 5cm}c\-\_\-menu\-::$\sim$c\-\_\-menu (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classc__menu_ac8a06810d4e60f8cb2f74a82f8863759}
+Class constructor, initialises a new object.
+
+
+\begin{DoxyParams}{Parameters}
+{\em input\-\_\-output\-\_\-state} & pointer to input output state structure which stores info about keys pressed etc. \\
+\hline
+\end{DoxyParams}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classc__menu_afcaeabf86dfb9d715548bd8277d4bce8}{\index{c\-\_\-menu@{c\-\_\-menu}!display\-\_\-easter\-\_\-egg@{display\-\_\-easter\-\_\-egg}}
+\index{display\-\_\-easter\-\_\-egg@{display\-\_\-easter\-\_\-egg}!c_menu@{c\-\_\-menu}}
+\subsubsection[{display\-\_\-easter\-\_\-egg}]{\setlength{\rightskip}{0pt plus 5cm}void c\-\_\-menu\-::display\-\_\-easter\-\_\-egg (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classc__menu_afcaeabf86dfb9d715548bd8277d4bce8}
+Sets the menu type to normal menu where player can select from number of choices and specifies those choices.
+
+
+\begin{DoxyParams}{Parameters}
+{\em items} & menu items \\
+\hline
+{\em number\-\_\-of\-\_\-items} & length of items array \\
+\hline
+{\em title} & title of the menu \\
+\hline
+{\em keep\-\_\-cursor} & if true, the menu highlight cursor will stay on its position, otherwise it will move to the first item \\
+\hline
+\end{DoxyParams}
+\hypertarget{classc__menu_afe00a1ae7c5f70012e3e4c510cbb2bbe}{\index{c\-\_\-menu@{c\-\_\-menu}!set\-\_\-menu\-\_\-choose\-\_\-level@{set\-\_\-menu\-\_\-choose\-\_\-level}}
+\index{set\-\_\-menu\-\_\-choose\-\_\-level@{set\-\_\-menu\-\_\-choose\-\_\-level}!c_menu@{c\-\_\-menu}}
+\subsubsection[{set\-\_\-menu\-\_\-choose\-\_\-level}]{\setlength{\rightskip}{0pt plus 5cm}void c\-\_\-menu\-::set\-\_\-menu\-\_\-choose\-\_\-level (
+\begin{DoxyParamCaption}
+\item[{int}]{number\-\_\-of\-\_\-levels}
+\end{DoxyParamCaption}
+)}}\label{classc__menu_afe00a1ae7c5f70012e3e4c510cbb2bbe}
+Sets the menu type to info screen which is a screen that displays a text and an optional image. It can be skipped by player with any key.
+
+
+\begin{DoxyParams}{Parameters}
+{\em image\-\_\-path} & image to be displayed, if zero length string is provided, no image displays \\
+\hline
+{\em text\-\_\-lines} & lines of text to be displayed \\
+\hline
+{\em number\-\_\-of\-\_\-lines} & length of text\-\_\-lines array, maximum is 10 \\
+\hline
+{\em duration} & if negative, the screen will be waiting for the user to press a key to disappear, othervise this value is a number of seconds in which the screen will disappear on it's own \\
+\hline
+{\em bg\-\_\-red} & amount of red for the background color \\
+\hline
+{\em bg\-\_\-green} & amount of green for the background color \\
+\hline
+{\em bg\-\_\-blue} & amount of blue for the background color \\
+\hline
+\end{DoxyParams}
+\hypertarget{classc__menu_ae609e23056e45e3da00fbd763d31c6fe}{\index{c\-\_\-menu@{c\-\_\-menu}!set\-\_\-menu\-\_\-info\-\_\-screen@{set\-\_\-menu\-\_\-info\-\_\-screen}}
+\index{set\-\_\-menu\-\_\-info\-\_\-screen@{set\-\_\-menu\-\_\-info\-\_\-screen}!c_menu@{c\-\_\-menu}}
+\subsubsection[{set\-\_\-menu\-\_\-info\-\_\-screen}]{\setlength{\rightskip}{0pt plus 5cm}void c\-\_\-menu\-::set\-\_\-menu\-\_\-info\-\_\-screen (
+\begin{DoxyParamCaption}
+\item[{string}]{image\-\_\-path, }
+\item[{string}]{text\-\_\-lines\mbox{[}$\,$\mbox{]}, }
+\item[{int}]{number\-\_\-of\-\_\-lines, }
+\item[{double}]{duration, }
+\item[{unsigned char}]{bg\-\_\-red, }
+\item[{unsigned char}]{bg\-\_\-green, }
+\item[{unsigned char}]{bg\-\_\-blue}
+\end{DoxyParamCaption}
+)}}\label{classc__menu_ae609e23056e45e3da00fbd763d31c6fe}
+Displays the easter egg for a little while no matter what menu type is set. \hypertarget{classc__menu_a35b817db8d2fa0d78dee6696846524c2}{\index{c\-\_\-menu@{c\-\_\-menu}!set\-\_\-menu\-\_\-items@{set\-\_\-menu\-\_\-items}}
+\index{set\-\_\-menu\-\_\-items@{set\-\_\-menu\-\_\-items}!c_menu@{c\-\_\-menu}}
+\subsubsection[{set\-\_\-menu\-\_\-items}]{\setlength{\rightskip}{0pt plus 5cm}void c\-\_\-menu\-::set\-\_\-menu\-\_\-items (
+\begin{DoxyParamCaption}
+\item[{string}]{items\mbox{[}$\,$\mbox{]}, }
+\item[{int}]{number\-\_\-of\-\_\-items, }
+\item[{string}]{title, }
+\item[{bool}]{keep\-\_\-cursor}
+\end{DoxyParamCaption}
+)}}\label{classc__menu_a35b817db8d2fa0d78dee6696846524c2}
+Class destructor, frees all object's memory. \hypertarget{classc__menu_a13affcab2aced75886f74ff70d17b509}{\index{c\-\_\-menu@{c\-\_\-menu}!update@{update}}
+\index{update@{update}!c_menu@{c\-\_\-menu}}
+\subsubsection[{update}]{\setlength{\rightskip}{0pt plus 5cm}int c\-\_\-menu\-::update (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classc__menu_a13affcab2aced75886f74ff70d17b509}
+Sets the menu type to level choosing screen.
+
+
+\begin{DoxyParams}{Parameters}
+{\em number\-\_\-of\-\_\-levels} & number of levels from which the player can choose, for example 3 lets the player choose levels 1, 2 or 3. \\
+\hline
+\end{DoxyParams}
+
+
+\subsection{Member Data Documentation}
+\hypertarget{classc__menu_a24f640c1886fdf22053a50f8700d559f}{\index{c\-\_\-menu@{c\-\_\-menu}!bg\-\_\-color@{bg\-\_\-color}}
+\index{bg\-\_\-color@{bg\-\_\-color}!c_menu@{c\-\_\-menu}}
+\subsubsection[{bg\-\_\-color}]{\setlength{\rightskip}{0pt plus 5cm}unsigned char c\-\_\-menu\-::bg\-\_\-color\mbox{[}3\mbox{]}\hspace{0.3cm}{\ttfamily [protected]}}}\label{classc__menu_a24f640c1886fdf22053a50f8700d559f}
+menu title \hypertarget{classc__menu_a697e104d6bb5ac42a46a0a8076a82444}{\index{c\-\_\-menu@{c\-\_\-menu}!click\-\_\-sound@{click\-\_\-sound}}
+\index{click\-\_\-sound@{click\-\_\-sound}!c_menu@{c\-\_\-menu}}
+\subsubsection[{click\-\_\-sound}]{\setlength{\rightskip}{0pt plus 5cm}A\-L\-L\-E\-G\-R\-O\-\_\-\-S\-A\-M\-P\-L\-E$\ast$ c\-\_\-menu\-::click\-\_\-sound\hspace{0.3cm}{\ttfamily [protected]}}}\label{classc__menu_a697e104d6bb5ac42a46a0a8076a82444}
+font to display the text \hypertarget{classc__menu_a5ccfb7e7c08dd3b70b7ddf5fd1f00308}{\index{c\-\_\-menu@{c\-\_\-menu}!current\-\_\-item@{current\-\_\-item}}
+\index{current\-\_\-item@{current\-\_\-item}!c_menu@{c\-\_\-menu}}
+\subsubsection[{current\-\_\-item}]{\setlength{\rightskip}{0pt plus 5cm}int c\-\_\-menu\-::current\-\_\-item\hspace{0.3cm}{\ttfamily [protected]}}}\label{classc__menu_a5ccfb7e7c08dd3b70b7ddf5fd1f00308}
+menu type \hypertarget{classc__menu_a823fbb421af347ddd1c891fec53c242d}{\index{c\-\_\-menu@{c\-\_\-menu}!easter\-\_\-egg@{easter\-\_\-egg}}
+\index{easter\-\_\-egg@{easter\-\_\-egg}!c_menu@{c\-\_\-menu}}
+\subsubsection[{easter\-\_\-egg}]{\setlength{\rightskip}{0pt plus 5cm}A\-L\-L\-E\-G\-R\-O\-\_\-\-B\-I\-T\-M\-A\-P$\ast$ c\-\_\-menu\-::easter\-\_\-egg\hspace{0.3cm}{\ttfamily [protected]}}}\label{classc__menu_a823fbb421af347ddd1c891fec53c242d}
+bitmap -\/ menu decorative border \hypertarget{classc__menu_af9c750db5db9b548d4d936e30dfe314f}{\index{c\-\_\-menu@{c\-\_\-menu}!easter\-\_\-egg\-\_\-started@{easter\-\_\-egg\-\_\-started}}
+\index{easter\-\_\-egg\-\_\-started@{easter\-\_\-egg\-\_\-started}!c_menu@{c\-\_\-menu}}
+\subsubsection[{easter\-\_\-egg\-\_\-started}]{\setlength{\rightskip}{0pt plus 5cm}double c\-\_\-menu\-::easter\-\_\-egg\-\_\-started\hspace{0.3cm}{\ttfamily [protected]}}}\label{classc__menu_af9c750db5db9b548d4d936e30dfe314f}
+background color for the info screen \hypertarget{classc__menu_ae035b1a97b2334a285e3db7e00b0bdac}{\index{c\-\_\-menu@{c\-\_\-menu}!effect\-\_\-time@{effect\-\_\-time}}
+\index{effect\-\_\-time@{effect\-\_\-time}!c_menu@{c\-\_\-menu}}
+\subsubsection[{effect\-\_\-time}]{\setlength{\rightskip}{0pt plus 5cm}double c\-\_\-menu\-::effect\-\_\-time\hspace{0.3cm}{\ttfamily [protected]}}}\label{classc__menu_ae035b1a97b2334a285e3db7e00b0bdac}
+to capture key down only once \hypertarget{classc__menu_ae983a894c3afee8671ed9f0fefd1b6a9}{\index{c\-\_\-menu@{c\-\_\-menu}!fading\-\_\-in@{fading\-\_\-in}}
+\index{fading\-\_\-in@{fading\-\_\-in}!c_menu@{c\-\_\-menu}}
+\subsubsection[{fading\-\_\-in}]{\setlength{\rightskip}{0pt plus 5cm}bool c\-\_\-menu\-::fading\-\_\-in\hspace{0.3cm}{\ttfamily [protected]}}}\label{classc__menu_ae983a894c3afee8671ed9f0fefd1b6a9}
+time when the info screen will disappear \hypertarget{classc__menu_a72afb1bd10e583b642922b2a3b1d799b}{\index{c\-\_\-menu@{c\-\_\-menu}!fading\-\_\-out@{fading\-\_\-out}}
+\index{fading\-\_\-out@{fading\-\_\-out}!c_menu@{c\-\_\-menu}}
+\subsubsection[{fading\-\_\-out}]{\setlength{\rightskip}{0pt plus 5cm}bool c\-\_\-menu\-::fading\-\_\-out\hspace{0.3cm}{\ttfamily [protected]}}}\label{classc__menu_a72afb1bd10e583b642922b2a3b1d799b}
+whether the fade in effect is active \hypertarget{classc__menu_a2898c943cc19bc36d9cb3763b9dc3c03}{\index{c\-\_\-menu@{c\-\_\-menu}!info\-\_\-background@{info\-\_\-background}}
+\index{info\-\_\-background@{info\-\_\-background}!c_menu@{c\-\_\-menu}}
+\subsubsection[{info\-\_\-background}]{\setlength{\rightskip}{0pt plus 5cm}A\-L\-L\-E\-G\-R\-O\-\_\-\-B\-I\-T\-M\-A\-P$\ast$ c\-\_\-menu\-::info\-\_\-background\hspace{0.3cm}{\ttfamily [protected]}}}\label{classc__menu_a2898c943cc19bc36d9cb3763b9dc3c03}
+bitmap -\/ highlight for menu items \hypertarget{classc__menu_ae21342c5213a9d1f75932af186f65327}{\index{c\-\_\-menu@{c\-\_\-menu}!io@{io}}
+\index{io@{io}!c_menu@{c\-\_\-menu}}
+\subsubsection[{io}]{\setlength{\rightskip}{0pt plus 5cm}{\bf t\-\_\-input\-\_\-output\-\_\-state}$\ast$ c\-\_\-menu\-::io\hspace{0.3cm}{\ttfamily [protected]}}}\label{classc__menu_ae21342c5213a9d1f75932af186f65327}
+number of available levels on the level selection screen \hypertarget{classc__menu_a39f79196e63fb1e14ac437c2d88c8c7d}{\index{c\-\_\-menu@{c\-\_\-menu}!level\-\_\-number\-\_\-positions\-\_\-x@{level\-\_\-number\-\_\-positions\-\_\-x}}
+\index{level\-\_\-number\-\_\-positions\-\_\-x@{level\-\_\-number\-\_\-positions\-\_\-x}!c_menu@{c\-\_\-menu}}
+\subsubsection[{level\-\_\-number\-\_\-positions\-\_\-x}]{\setlength{\rightskip}{0pt plus 5cm}int c\-\_\-menu\-::level\-\_\-number\-\_\-positions\-\_\-x\mbox{[}22\mbox{]}\hspace{0.3cm}{\ttfamily [protected]}}}\label{classc__menu_a39f79196e63fb1e14ac437c2d88c8c7d}
+easter egg start time \hypertarget{classc__menu_ac4f208edba8bee1d6184db03e3a89e41}{\index{c\-\_\-menu@{c\-\_\-menu}!level\-\_\-number\-\_\-positions\-\_\-y@{level\-\_\-number\-\_\-positions\-\_\-y}}
+\index{level\-\_\-number\-\_\-positions\-\_\-y@{level\-\_\-number\-\_\-positions\-\_\-y}!c_menu@{c\-\_\-menu}}
+\subsubsection[{level\-\_\-number\-\_\-positions\-\_\-y}]{\setlength{\rightskip}{0pt plus 5cm}int c\-\_\-menu\-::level\-\_\-number\-\_\-positions\-\_\-y\mbox{[}22\mbox{]}\hspace{0.3cm}{\ttfamily [protected]}}}\label{classc__menu_ac4f208edba8bee1d6184db03e3a89e41}
+x poxel positions of level numbers at level choosing screen \hypertarget{classc__menu_af61b3585bbce811355a9522f4d4e5ee1}{\index{c\-\_\-menu@{c\-\_\-menu}!menu\-\_\-border@{menu\-\_\-border}}
+\index{menu\-\_\-border@{menu\-\_\-border}!c_menu@{c\-\_\-menu}}
+\subsubsection[{menu\-\_\-border}]{\setlength{\rightskip}{0pt plus 5cm}A\-L\-L\-E\-G\-R\-O\-\_\-\-B\-I\-T\-M\-A\-P$\ast$ c\-\_\-menu\-::menu\-\_\-border\hspace{0.3cm}{\ttfamily [protected]}}}\label{classc__menu_af61b3585bbce811355a9522f4d4e5ee1}
+bitmap -\/ info screen image \hypertarget{classc__menu_a74ca4baf7d4dbe8c0b6a4d2e52142ba4}{\index{c\-\_\-menu@{c\-\_\-menu}!menu\-\_\-bottom@{menu\-\_\-bottom}}
+\index{menu\-\_\-bottom@{menu\-\_\-bottom}!c_menu@{c\-\_\-menu}}
+\subsubsection[{menu\-\_\-bottom}]{\setlength{\rightskip}{0pt plus 5cm}A\-L\-L\-E\-G\-R\-O\-\_\-\-B\-I\-T\-M\-A\-P$\ast$ c\-\_\-menu\-::menu\-\_\-bottom\hspace{0.3cm}{\ttfamily [protected]}}}\label{classc__menu_a74ca4baf7d4dbe8c0b6a4d2e52142ba4}
+bitmap -\/ middle part part of the menu \hypertarget{classc__menu_a2c6c75c1a53e6f375cadbda437cb99f5}{\index{c\-\_\-menu@{c\-\_\-menu}!menu\-\_\-middle@{menu\-\_\-middle}}
+\index{menu\-\_\-middle@{menu\-\_\-middle}!c_menu@{c\-\_\-menu}}
+\subsubsection[{menu\-\_\-middle}]{\setlength{\rightskip}{0pt plus 5cm}A\-L\-L\-E\-G\-R\-O\-\_\-\-B\-I\-T\-M\-A\-P$\ast$ c\-\_\-menu\-::menu\-\_\-middle\hspace{0.3cm}{\ttfamily [protected]}}}\label{classc__menu_a2c6c75c1a53e6f375cadbda437cb99f5}
+bitmap -\/ top part of the menu \hypertarget{classc__menu_a7704ebdcc1c29c16e0b400ce9be6b933}{\index{c\-\_\-menu@{c\-\_\-menu}!menu\-\_\-selection@{menu\-\_\-selection}}
+\index{menu\-\_\-selection@{menu\-\_\-selection}!c_menu@{c\-\_\-menu}}
+\subsubsection[{menu\-\_\-selection}]{\setlength{\rightskip}{0pt plus 5cm}A\-L\-L\-E\-G\-R\-O\-\_\-\-B\-I\-T\-M\-A\-P$\ast$ c\-\_\-menu\-::menu\-\_\-selection\hspace{0.3cm}{\ttfamily [protected]}}}\label{classc__menu_a7704ebdcc1c29c16e0b400ce9be6b933}
+bitmap -\/ bottom part of the menu \hypertarget{classc__menu_a0f70bbd0314bd3da93df8ab3f1df3a70}{\index{c\-\_\-menu@{c\-\_\-menu}!menu\-\_\-top@{menu\-\_\-top}}
+\index{menu\-\_\-top@{menu\-\_\-top}!c_menu@{c\-\_\-menu}}
+\subsubsection[{menu\-\_\-top}]{\setlength{\rightskip}{0pt plus 5cm}A\-L\-L\-E\-G\-R\-O\-\_\-\-B\-I\-T\-M\-A\-P$\ast$ c\-\_\-menu\-::menu\-\_\-top\hspace{0.3cm}{\ttfamily [protected]}}}\label{classc__menu_a0f70bbd0314bd3da93df8ab3f1df3a70}
+same as above but with y coordinations \hypertarget{classc__menu_a1e0be6c7749c393b11b4a1f8330588f8}{\index{c\-\_\-menu@{c\-\_\-menu}!menu\-\_\-type@{menu\-\_\-type}}
+\index{menu\-\_\-type@{menu\-\_\-type}!c_menu@{c\-\_\-menu}}
+\subsubsection[{menu\-\_\-type}]{\setlength{\rightskip}{0pt plus 5cm}t\-\_\-menu\-\_\-type c\-\_\-menu\-::menu\-\_\-type\hspace{0.3cm}{\ttfamily [protected]}}}\label{classc__menu_a1e0be6c7749c393b11b4a1f8330588f8}
+This class is capable of displaying and handling different kinds of menus and dialogs for the player. \hypertarget{classc__menu_a3fe87a5b76e64557af759a180b0bb0ae}{\index{c\-\_\-menu@{c\-\_\-menu}!number\-\_\-of\-\_\-levels@{number\-\_\-of\-\_\-levels}}
+\index{number\-\_\-of\-\_\-levels@{number\-\_\-of\-\_\-levels}!c_menu@{c\-\_\-menu}}
+\subsubsection[{number\-\_\-of\-\_\-levels}]{\setlength{\rightskip}{0pt plus 5cm}int c\-\_\-menu\-::number\-\_\-of\-\_\-levels\hspace{0.3cm}{\ttfamily [protected]}}}\label{classc__menu_a3fe87a5b76e64557af759a180b0bb0ae}
+text displayed on info screen or items displayed in the menu \hypertarget{classc__menu_a4000a7ae156999a6e2ea273ab328a0f1}{\index{c\-\_\-menu@{c\-\_\-menu}!number\-\_\-of\-\_\-text\-\_\-lines@{number\-\_\-of\-\_\-text\-\_\-lines}}
+\index{number\-\_\-of\-\_\-text\-\_\-lines@{number\-\_\-of\-\_\-text\-\_\-lines}!c_menu@{c\-\_\-menu}}
+\subsubsection[{number\-\_\-of\-\_\-text\-\_\-lines}]{\setlength{\rightskip}{0pt plus 5cm}int c\-\_\-menu\-::number\-\_\-of\-\_\-text\-\_\-lines\hspace{0.3cm}{\ttfamily [protected]}}}\label{classc__menu_a4000a7ae156999a6e2ea273ab328a0f1}
+currently highlighted menu item \hypertarget{classc__menu_a3181439816433cf8a2b42dcaf7fbfea7}{\index{c\-\_\-menu@{c\-\_\-menu}!pressed@{pressed}}
+\index{pressed@{pressed}!c_menu@{c\-\_\-menu}}
+\subsubsection[{pressed}]{\setlength{\rightskip}{0pt plus 5cm}boolean c\-\_\-menu\-::pressed\hspace{0.3cm}{\ttfamily [protected]}}}\label{classc__menu_a3181439816433cf8a2b42dcaf7fbfea7}
+information about keys pressed etc. \hypertarget{classc__menu_a55a8c30640f0cd40b1ac7db29644d050}{\index{c\-\_\-menu@{c\-\_\-menu}!screen\-\_\-end\-\_\-time@{screen\-\_\-end\-\_\-time}}
+\index{screen\-\_\-end\-\_\-time@{screen\-\_\-end\-\_\-time}!c_menu@{c\-\_\-menu}}
+\subsubsection[{screen\-\_\-end\-\_\-time}]{\setlength{\rightskip}{0pt plus 5cm}double c\-\_\-menu\-::screen\-\_\-end\-\_\-time\hspace{0.3cm}{\ttfamily [protected]}}}\label{classc__menu_a55a8c30640f0cd40b1ac7db29644d050}
+this is used to display effects such as fade in etc. \hypertarget{classc__menu_a51aa6761c97638a2d3d3e34213a0fc25}{\index{c\-\_\-menu@{c\-\_\-menu}!text\-\_\-font@{text\-\_\-font}}
+\index{text\-\_\-font@{text\-\_\-font}!c_menu@{c\-\_\-menu}}
+\subsubsection[{text\-\_\-font}]{\setlength{\rightskip}{0pt plus 5cm}A\-L\-L\-E\-G\-R\-O\-\_\-\-F\-O\-N\-T$\ast$ c\-\_\-menu\-::text\-\_\-font\hspace{0.3cm}{\ttfamily [protected]}}}\label{classc__menu_a51aa6761c97638a2d3d3e34213a0fc25}
+bitmap -\/ easter egg \hypertarget{classc__menu_ade57856309857147f055d82f1e7d839e}{\index{c\-\_\-menu@{c\-\_\-menu}!text\-\_\-lines@{text\-\_\-lines}}
+\index{text\-\_\-lines@{text\-\_\-lines}!c_menu@{c\-\_\-menu}}
+\subsubsection[{text\-\_\-lines}]{\setlength{\rightskip}{0pt plus 5cm}string c\-\_\-menu\-::text\-\_\-lines\mbox{[}10\mbox{]}\hspace{0.3cm}{\ttfamily [protected]}}}\label{classc__menu_ade57856309857147f055d82f1e7d839e}
+number of text lines or items displayed on info screen \hypertarget{classc__menu_a04174390379e68ec20a0ec5945748570}{\index{c\-\_\-menu@{c\-\_\-menu}!title@{title}}
+\index{title@{title}!c_menu@{c\-\_\-menu}}
+\subsubsection[{title}]{\setlength{\rightskip}{0pt plus 5cm}string c\-\_\-menu\-::title\hspace{0.3cm}{\ttfamily [protected]}}}\label{classc__menu_a04174390379e68ec20a0ec5945748570}
+whether the fade out effect is active 
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+magerage/menu.\-h\item 
+magerage/menu.\-cpp\end{DoxyCompactItemize}

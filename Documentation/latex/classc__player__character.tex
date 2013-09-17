@@ -1,0 +1,191 @@
+\hypertarget{classc__player__character}{\section{c\-\_\-player\-\_\-character Class Reference}
+\label{classc__player__character}\index{c\-\_\-player\-\_\-character@{c\-\_\-player\-\_\-character}}
+}
+
+
+{\ttfamily \#include $<$player\-\_\-character.\-h$>$}
+
+Inheritance diagram for c\-\_\-player\-\_\-character\-:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{classc__player__character}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classc__player__character_a3779dab4cf22d1a5b9620ddae7fc11ef}{c\-\_\-player\-\_\-character} (t\-\_\-player\-\_\-type player\-\_\-type, long int $\ast$\hyperlink{classc__graphic__object_a9ff91aa7a60272a8f713ff011a0cc0bb}{global\-\_\-time})
+\item 
+\hyperlink{classc__player__character_a76c1d10523b82cc1683f435c10b4df60}{$\sim$c\-\_\-player\-\_\-character} ()
+\item 
+virtual void \hyperlink{classc__player__character_aa5d59edcb370d29b83ac0b2659ab0385}{update\-\_\-animation\-\_\-period} ()
+\item 
+virtual void \hyperlink{classc__player__character_a75d0ecbf8d1892422766f4f46ace576e}{draw} (int x, int y)
+\item 
+t\-\_\-player\-\_\-type \hyperlink{classc__player__character_ab284e034563a966f084a131de4472dbf}{get\-\_\-player\-\_\-type} ()
+\item 
+virtual void \hyperlink{classc__player__character_a6fd0d6503cd56998a4e2c8eb8695767b}{play\-\_\-animation} (t\-\_\-animation\-\_\-type animation)
+\item 
+void \hyperlink{classc__player__character_a84bc0fbb1f70bd2fa62edf89030cd070}{change\-\_\-magic\-\_\-energy} (int amount)
+\item 
+int \hyperlink{classc__player__character_a755e1fdb47029e1fc282a7cc2a5e0e88}{get\-\_\-magic\-\_\-energy} ()
+\item 
+void \hyperlink{classc__player__character_afe8f9b4f4a05e9c9c10df32988610cca}{set\-\_\-fire\-\_\-cloak} (bool state)
+\item 
+bool \hyperlink{classc__player__character_a10eeb77b1630c15fe16c36b244805430}{fire\-\_\-cloak\-\_\-is\-\_\-on} ()
+\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
+
+
+\subsection{Detailed Description}
+Player character class header file.
+
+authors\-: Miloslav Číž year\-: 2013 
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classc__player__character_a3779dab4cf22d1a5b9620ddae7fc11ef}{\index{c\-\_\-player\-\_\-character@{c\-\_\-player\-\_\-character}!c\-\_\-player\-\_\-character@{c\-\_\-player\-\_\-character}}
+\index{c\-\_\-player\-\_\-character@{c\-\_\-player\-\_\-character}!c_player_character@{c\-\_\-player\-\_\-character}}
+\subsubsection[{c\-\_\-player\-\_\-character}]{\setlength{\rightskip}{0pt plus 5cm}c\-\_\-player\-\_\-character\-::c\-\_\-player\-\_\-character (
+\begin{DoxyParamCaption}
+\item[{t\-\_\-player\-\_\-type}]{player\-\_\-type, }
+\item[{long int $\ast$}]{global\-\_\-time}
+\end{DoxyParamCaption}
+)}}\label{classc__player__character_a3779dab4cf22d1a5b9620ddae7fc11ef}
+id to stop looping sound
+
+Player character class implementation file.
+
+authors\-: Miloslav Číž year\-: 2013 \hypertarget{classc__player__character_a76c1d10523b82cc1683f435c10b4df60}{\index{c\-\_\-player\-\_\-character@{c\-\_\-player\-\_\-character}!$\sim$c\-\_\-player\-\_\-character@{$\sim$c\-\_\-player\-\_\-character}}
+\index{$\sim$c\-\_\-player\-\_\-character@{$\sim$c\-\_\-player\-\_\-character}!c_player_character@{c\-\_\-player\-\_\-character}}
+\subsubsection[{$\sim$c\-\_\-player\-\_\-character}]{\setlength{\rightskip}{0pt plus 5cm}c\-\_\-player\-\_\-character\-::$\sim$c\-\_\-player\-\_\-character (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classc__player__character_a76c1d10523b82cc1683f435c10b4df60}
+Class constructor, initialises new player character.
+
+
+\begin{DoxyParams}{Parameters}
+{\em player\-\_\-type} & type of player character \\
+\hline
+{\em global\-\_\-time} & reference to a global time counter which is needed for animations \\
+\hline
+\end{DoxyParams}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classc__player__character_a84bc0fbb1f70bd2fa62edf89030cd070}{\index{c\-\_\-player\-\_\-character@{c\-\_\-player\-\_\-character}!change\-\_\-magic\-\_\-energy@{change\-\_\-magic\-\_\-energy}}
+\index{change\-\_\-magic\-\_\-energy@{change\-\_\-magic\-\_\-energy}!c_player_character@{c\-\_\-player\-\_\-character}}
+\subsubsection[{change\-\_\-magic\-\_\-energy}]{\setlength{\rightskip}{0pt plus 5cm}void c\-\_\-player\-\_\-character\-::change\-\_\-magic\-\_\-energy (
+\begin{DoxyParamCaption}
+\item[{int}]{amount}
+\end{DoxyParamCaption}
+)}}\label{classc__player__character_a84bc0fbb1f70bd2fa62edf89030cd070}
+Plays given animation.
+
+
+\begin{DoxyParams}{Parameters}
+{\em animation} & animation to be played \\
+\hline
+\end{DoxyParams}
+\hypertarget{classc__player__character_a75d0ecbf8d1892422766f4f46ace576e}{\index{c\-\_\-player\-\_\-character@{c\-\_\-player\-\_\-character}!draw@{draw}}
+\index{draw@{draw}!c_player_character@{c\-\_\-player\-\_\-character}}
+\subsubsection[{draw}]{\setlength{\rightskip}{0pt plus 5cm}void c\-\_\-player\-\_\-character\-::draw (
+\begin{DoxyParamCaption}
+\item[{int}]{x, }
+\item[{int}]{y}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}}\label{classc__player__character_a75d0ecbf8d1892422766f4f46ace576e}
+Depending on current animation sets the animation period attribute. 
+
+Reimplemented from \hyperlink{classc__graphic__object_a94ef8137eed9ce1ae7adf366fefb51cf}{c\-\_\-graphic\-\_\-object}.
+
+\hypertarget{classc__player__character_a10eeb77b1630c15fe16c36b244805430}{\index{c\-\_\-player\-\_\-character@{c\-\_\-player\-\_\-character}!fire\-\_\-cloak\-\_\-is\-\_\-on@{fire\-\_\-cloak\-\_\-is\-\_\-on}}
+\index{fire\-\_\-cloak\-\_\-is\-\_\-on@{fire\-\_\-cloak\-\_\-is\-\_\-on}!c_player_character@{c\-\_\-player\-\_\-character}}
+\subsubsection[{fire\-\_\-cloak\-\_\-is\-\_\-on}]{\setlength{\rightskip}{0pt plus 5cm}bool c\-\_\-player\-\_\-character\-::fire\-\_\-cloak\-\_\-is\-\_\-on (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classc__player__character_a10eeb77b1630c15fe16c36b244805430}
+Sets the fire cloak on or off for this player. Only works for Metodej.
+
+
+\begin{DoxyParams}{Parameters}
+{\em state} & if true, the fire cload will be set on, otherwise it will be set off \\
+\hline
+\end{DoxyParams}
+\hypertarget{classc__player__character_a755e1fdb47029e1fc282a7cc2a5e0e88}{\index{c\-\_\-player\-\_\-character@{c\-\_\-player\-\_\-character}!get\-\_\-magic\-\_\-energy@{get\-\_\-magic\-\_\-energy}}
+\index{get\-\_\-magic\-\_\-energy@{get\-\_\-magic\-\_\-energy}!c_player_character@{c\-\_\-player\-\_\-character}}
+\subsubsection[{get\-\_\-magic\-\_\-energy}]{\setlength{\rightskip}{0pt plus 5cm}int c\-\_\-player\-\_\-character\-::get\-\_\-magic\-\_\-energy (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classc__player__character_a755e1fdb47029e1fc282a7cc2a5e0e88}
+Takes or gives an amount of magic energy from or to the player.
+
+
+\begin{DoxyParams}{Parameters}
+{\em amount} & amount of energy to be added, this can be also a negative number -\/ if the player already has full amount of energy or zero energy, no overflow will occur \\
+\hline
+\end{DoxyParams}
+\hypertarget{classc__player__character_ab284e034563a966f084a131de4472dbf}{\index{c\-\_\-player\-\_\-character@{c\-\_\-player\-\_\-character}!get\-\_\-player\-\_\-type@{get\-\_\-player\-\_\-type}}
+\index{get\-\_\-player\-\_\-type@{get\-\_\-player\-\_\-type}!c_player_character@{c\-\_\-player\-\_\-character}}
+\subsubsection[{get\-\_\-player\-\_\-type}]{\setlength{\rightskip}{0pt plus 5cm}t\-\_\-player\-\_\-type c\-\_\-player\-\_\-character\-::get\-\_\-player\-\_\-type (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classc__player__character_ab284e034563a966f084a131de4472dbf}
+Draws player character at given position.
+
+
+\begin{DoxyParams}{Parameters}
+{\em x} & x position on the scrren \\
+\hline
+{\em y} & y position on the screen \\
+\hline
+\end{DoxyParams}
+\hypertarget{classc__player__character_a6fd0d6503cd56998a4e2c8eb8695767b}{\index{c\-\_\-player\-\_\-character@{c\-\_\-player\-\_\-character}!play\-\_\-animation@{play\-\_\-animation}}
+\index{play\-\_\-animation@{play\-\_\-animation}!c_player_character@{c\-\_\-player\-\_\-character}}
+\subsubsection[{play\-\_\-animation}]{\setlength{\rightskip}{0pt plus 5cm}void c\-\_\-player\-\_\-character\-::play\-\_\-animation (
+\begin{DoxyParamCaption}
+\item[{t\-\_\-animation\-\_\-type}]{animation}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}}\label{classc__player__character_a6fd0d6503cd56998a4e2c8eb8695767b}
+Returns type of this character.
+
+\begin{DoxyReturn}{Returns}
+character type 
+\end{DoxyReturn}
+
+
+Reimplemented from \hyperlink{classc__graphic__object_aa87323c0df1b2e79cef78573b6096512}{c\-\_\-graphic\-\_\-object}.
+
+\hypertarget{classc__player__character_afe8f9b4f4a05e9c9c10df32988610cca}{\index{c\-\_\-player\-\_\-character@{c\-\_\-player\-\_\-character}!set\-\_\-fire\-\_\-cloak@{set\-\_\-fire\-\_\-cloak}}
+\index{set\-\_\-fire\-\_\-cloak@{set\-\_\-fire\-\_\-cloak}!c_player_character@{c\-\_\-player\-\_\-character}}
+\subsubsection[{set\-\_\-fire\-\_\-cloak}]{\setlength{\rightskip}{0pt plus 5cm}void c\-\_\-player\-\_\-character\-::set\-\_\-fire\-\_\-cloak (
+\begin{DoxyParamCaption}
+\item[{bool}]{state}
+\end{DoxyParamCaption}
+)}}\label{classc__player__character_afe8f9b4f4a05e9c9c10df32988610cca}
+Returns amount of the player's magic energy.
+
+\begin{DoxyReturn}{Returns}
+player's magic energy 
+\end{DoxyReturn}
+\hypertarget{classc__player__character_aa5d59edcb370d29b83ac0b2659ab0385}{\index{c\-\_\-player\-\_\-character@{c\-\_\-player\-\_\-character}!update\-\_\-animation\-\_\-period@{update\-\_\-animation\-\_\-period}}
+\index{update\-\_\-animation\-\_\-period@{update\-\_\-animation\-\_\-period}!c_player_character@{c\-\_\-player\-\_\-character}}
+\subsubsection[{update\-\_\-animation\-\_\-period}]{\setlength{\rightskip}{0pt plus 5cm}void c\-\_\-player\-\_\-character\-::update\-\_\-animation\-\_\-period (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}}\label{classc__player__character_aa5d59edcb370d29b83ac0b2659ab0385}
+Class destructor, frees it's memory. 
+
+Reimplemented from \hyperlink{classc__graphic__object_a20fa3f61532b73f64f3307fd14b7dba6}{c\-\_\-graphic\-\_\-object}.
+
+
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+magerage/player\-\_\-character.\-h\item 
+magerage/player\-\_\-character.\-cpp\end{DoxyCompactItemize}

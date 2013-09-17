@@ -1,0 +1,198 @@
+\hypertarget{classc__monster__character}{\section{c\-\_\-monster\-\_\-character Class Reference}
+\label{classc__monster__character}\index{c\-\_\-monster\-\_\-character@{c\-\_\-monster\-\_\-character}}
+}
+
+
+{\ttfamily \#include $<$monster\-\_\-character.\-h$>$}
+
+Inheritance diagram for c\-\_\-monster\-\_\-character\-:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{classc__monster__character}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classc__monster__character_aa2c75305c0f964c08d92bbf9af37d055}{c\-\_\-monster\-\_\-character} (t\-\_\-monster\-\_\-type type, int square\-\_\-x, int square\-\_\-y, long $\ast$\hyperlink{classc__graphic__object_a9ff91aa7a60272a8f713ff011a0cc0bb}{global\-\_\-time})
+\item 
+\hyperlink{classc__monster__character_ae71c6e9894ba46d21f14730e018aa0a9}{$\sim$c\-\_\-monster\-\_\-character} ()
+\item 
+t\-\_\-monster\-\_\-type \hyperlink{classc__monster__character_a1e60ad834fcdb5cf8c5dc68b708116a4}{get\-\_\-monster\-\_\-type} ()
+\item 
+void \hyperlink{classc__monster__character_a41087457a2b7222423fb6b222cc650bf}{add\-\_\-path\-\_\-instruction} (t\-\_\-direction \hyperlink{classc__character_a571f1ae6115d7e9fee3159c41fcf27e8}{direction}, int number\-\_\-of\-\_\-steps)
+\item 
+t\-\_\-direction \hyperlink{classc__monster__character_a07f29e8aae5420c20a706c5449bd22ae}{get\-\_\-next\-\_\-move} ()
+\item 
+void \hyperlink{classc__monster__character_ad70a99a00e0c7cd66955815a0eb2634b}{start\-\_\-moving} ()
+\item 
+virtual void \hyperlink{classc__monster__character_ac400987c335adde2454cab352a63d3d2}{draw} (int x, int y)
+\end{DoxyCompactItemize}
+\subsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{classc__monster__character_a7e18086daeeb6d96c0993ce2edf84f00}{next\-\_\-instruction} ()
+\end{DoxyCompactItemize}
+\subsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classc__monster__character_a40b514f9d091ee513c10e2d9b57bb3e5}{t\-\_\-monster\-\_\-type {\bfseries type}}\label{classc__monster__character_a40b514f9d091ee513c10e2d9b57bb3e5}
+
+\item 
+int \hyperlink{classc__monster__character_a2ccaf3ff00ff2370eac007960bd01d7b}{path\-\_\-length}
+\item 
+int \hyperlink{classc__monster__character_a26c7d28a5741c7b99caf7ec9acb80872}{current\-\_\-path\-\_\-instruction}
+\item 
+double \hyperlink{classc__monster__character_a4918cf31bdf7a308f57cc924fd48cd49}{goes\-\_\-to}
+\item 
+t\-\_\-direction \hyperlink{classc__monster__character_a6182d1b0f70221c2fdde578cdee0d6e2}{path\-\_\-directions} \mbox{[}M\-A\-X\-\_\-\-M\-O\-N\-S\-T\-E\-R\-\_\-\-P\-A\-T\-H\-\_\-\-L\-E\-N\-G\-T\-H\mbox{]}
+\item 
+int \hyperlink{classc__monster__character_ab4531ab1220b9a52fd07b290350bba05}{path\-\_\-steps} \mbox{[}M\-A\-X\-\_\-\-M\-O\-N\-S\-T\-E\-R\-\_\-\-P\-A\-T\-H\-\_\-\-L\-E\-N\-G\-T\-H\mbox{]}
+\item 
+bool \hyperlink{classc__monster__character_abea3e334122c075498889efb7a476b58}{is\-\_\-dead}
+\item 
+bool \hyperlink{classc__monster__character_ad751b3e9f92c8b0496bd936c66a7598c}{waiting}
+\item 
+double \hyperlink{classc__monster__character_a944e8c78c13e1ec2169b59287ea5ef1c}{waiting\-\_\-end}
+\end{DoxyCompactItemize}
+\subsection*{Additional Inherited Members}
+
+
+\subsection{Detailed Description}
+Monster character class header file.
+
+authors\-: Miloslav Číž year\-: 2013 
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classc__monster__character_aa2c75305c0f964c08d92bbf9af37d055}{\index{c\-\_\-monster\-\_\-character@{c\-\_\-monster\-\_\-character}!c\-\_\-monster\-\_\-character@{c\-\_\-monster\-\_\-character}}
+\index{c\-\_\-monster\-\_\-character@{c\-\_\-monster\-\_\-character}!c_monster_character@{c\-\_\-monster\-\_\-character}}
+\subsubsection[{c\-\_\-monster\-\_\-character}]{\setlength{\rightskip}{0pt plus 5cm}c\-\_\-monster\-\_\-character\-::c\-\_\-monster\-\_\-character (
+\begin{DoxyParamCaption}
+\item[{t\-\_\-monster\-\_\-type}]{type, }
+\item[{int}]{square\-\_\-x, }
+\item[{int}]{square\-\_\-y, }
+\item[{long $\ast$}]{global\-\_\-time}
+\end{DoxyParamCaption}
+)}}\label{classc__monster__character_aa2c75305c0f964c08d92bbf9af37d055}
+Switches to the next path instruction.
+
+Monster character class implementation file.
+
+authors\-: Miloslav Číž year\-: 2013 \hypertarget{classc__monster__character_ae71c6e9894ba46d21f14730e018aa0a9}{\index{c\-\_\-monster\-\_\-character@{c\-\_\-monster\-\_\-character}!$\sim$c\-\_\-monster\-\_\-character@{$\sim$c\-\_\-monster\-\_\-character}}
+\index{$\sim$c\-\_\-monster\-\_\-character@{$\sim$c\-\_\-monster\-\_\-character}!c_monster_character@{c\-\_\-monster\-\_\-character}}
+\subsubsection[{$\sim$c\-\_\-monster\-\_\-character}]{\setlength{\rightskip}{0pt plus 5cm}c\-\_\-monster\-\_\-character\-::$\sim$c\-\_\-monster\-\_\-character (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classc__monster__character_ae71c6e9894ba46d21f14730e018aa0a9}
+Class constructor, creates a new object.
+
+
+\begin{DoxyParams}{Parameters}
+{\em type} & monster type to be set \\
+\hline
+{\em square\-\_\-x} & initial x position \\
+\hline
+{\em square\-\_\-y} & initial y position \\
+\hline
+{\em global\-\_\-time} & pointer to global time counter \\
+\hline
+\end{DoxyParams}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classc__monster__character_a41087457a2b7222423fb6b222cc650bf}{\index{c\-\_\-monster\-\_\-character@{c\-\_\-monster\-\_\-character}!add\-\_\-path\-\_\-instruction@{add\-\_\-path\-\_\-instruction}}
+\index{add\-\_\-path\-\_\-instruction@{add\-\_\-path\-\_\-instruction}!c_monster_character@{c\-\_\-monster\-\_\-character}}
+\subsubsection[{add\-\_\-path\-\_\-instruction}]{\setlength{\rightskip}{0pt plus 5cm}void c\-\_\-monster\-\_\-character\-::add\-\_\-path\-\_\-instruction (
+\begin{DoxyParamCaption}
+\item[{t\-\_\-direction}]{direction, }
+\item[{int}]{number\-\_\-of\-\_\-steps}
+\end{DoxyParamCaption}
+)}}\label{classc__monster__character_a41087457a2b7222423fb6b222cc650bf}
+Returns the monster's type. \hypertarget{classc__monster__character_ac400987c335adde2454cab352a63d3d2}{\index{c\-\_\-monster\-\_\-character@{c\-\_\-monster\-\_\-character}!draw@{draw}}
+\index{draw@{draw}!c_monster_character@{c\-\_\-monster\-\_\-character}}
+\subsubsection[{draw}]{\setlength{\rightskip}{0pt plus 5cm}void c\-\_\-monster\-\_\-character\-::draw (
+\begin{DoxyParamCaption}
+\item[{int}]{x, }
+\item[{int}]{y}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}}\label{classc__monster__character_ac400987c335adde2454cab352a63d3d2}
+Starts the monster's movement, it's position and path should be set by the time this method is called. 
+
+Reimplemented from \hyperlink{classc__graphic__object_a94ef8137eed9ce1ae7adf366fefb51cf}{c\-\_\-graphic\-\_\-object}.
+
+\hypertarget{classc__monster__character_a1e60ad834fcdb5cf8c5dc68b708116a4}{\index{c\-\_\-monster\-\_\-character@{c\-\_\-monster\-\_\-character}!get\-\_\-monster\-\_\-type@{get\-\_\-monster\-\_\-type}}
+\index{get\-\_\-monster\-\_\-type@{get\-\_\-monster\-\_\-type}!c_monster_character@{c\-\_\-monster\-\_\-character}}
+\subsubsection[{get\-\_\-monster\-\_\-type}]{\setlength{\rightskip}{0pt plus 5cm}t\-\_\-monster\-\_\-type c\-\_\-monster\-\_\-character\-::get\-\_\-monster\-\_\-type (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classc__monster__character_a1e60ad834fcdb5cf8c5dc68b708116a4}
+Class destructor, frees it's memory. \hypertarget{classc__monster__character_a07f29e8aae5420c20a706c5449bd22ae}{\index{c\-\_\-monster\-\_\-character@{c\-\_\-monster\-\_\-character}!get\-\_\-next\-\_\-move@{get\-\_\-next\-\_\-move}}
+\index{get\-\_\-next\-\_\-move@{get\-\_\-next\-\_\-move}!c_monster_character@{c\-\_\-monster\-\_\-character}}
+\subsubsection[{get\-\_\-next\-\_\-move}]{\setlength{\rightskip}{0pt plus 5cm}t\-\_\-direction c\-\_\-monster\-\_\-character\-::get\-\_\-next\-\_\-move (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classc__monster__character_a07f29e8aae5420c20a706c5449bd22ae}
+Adds a path instruction for the monster. There is a maximum of M\-A\-X\-\_\-\-M\-O\-N\-S\-T\-E\-R\-\_\-\-P\-A\-T\-H\-\_\-\-L\-E\-N\-G\-T\-H that can be added. Those are instructions for monster to make it's movement.
+
+
+\begin{DoxyParams}{Parameters}
+{\em direction} & direction in which to move \\
+\hline
+{\em number\-\_\-of\-\_\-steps} & number of steps to make in provided direction \\
+\hline
+\end{DoxyParams}
+\hypertarget{classc__monster__character_a7e18086daeeb6d96c0993ce2edf84f00}{\index{c\-\_\-monster\-\_\-character@{c\-\_\-monster\-\_\-character}!next\-\_\-instruction@{next\-\_\-instruction}}
+\index{next\-\_\-instruction@{next\-\_\-instruction}!c_monster_character@{c\-\_\-monster\-\_\-character}}
+\subsubsection[{next\-\_\-instruction}]{\setlength{\rightskip}{0pt plus 5cm}void c\-\_\-monster\-\_\-character\-::next\-\_\-instruction (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}}}\label{classc__monster__character_a7e18086daeeb6d96c0993ce2edf84f00}
+end time of waiting \hypertarget{classc__monster__character_ad70a99a00e0c7cd66955815a0eb2634b}{\index{c\-\_\-monster\-\_\-character@{c\-\_\-monster\-\_\-character}!start\-\_\-moving@{start\-\_\-moving}}
+\index{start\-\_\-moving@{start\-\_\-moving}!c_monster_character@{c\-\_\-monster\-\_\-character}}
+\subsubsection[{start\-\_\-moving}]{\setlength{\rightskip}{0pt plus 5cm}void c\-\_\-monster\-\_\-character\-::start\-\_\-moving (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classc__monster__character_ad70a99a00e0c7cd66955815a0eb2634b}
+Returns the direction in which the monster should move next;
+
+\begin{DoxyReturn}{Returns}
+direction in which monster should move (can be D\-I\-R\-E\-C\-T\-I\-O\-N\-\_\-\-N\-O\-N\-E which means it should wait) 
+\end{DoxyReturn}
+
+
+\subsection{Member Data Documentation}
+\hypertarget{classc__monster__character_a26c7d28a5741c7b99caf7ec9acb80872}{\index{c\-\_\-monster\-\_\-character@{c\-\_\-monster\-\_\-character}!current\-\_\-path\-\_\-instruction@{current\-\_\-path\-\_\-instruction}}
+\index{current\-\_\-path\-\_\-instruction@{current\-\_\-path\-\_\-instruction}!c_monster_character@{c\-\_\-monster\-\_\-character}}
+\subsubsection[{current\-\_\-path\-\_\-instruction}]{\setlength{\rightskip}{0pt plus 5cm}int c\-\_\-monster\-\_\-character\-::current\-\_\-path\-\_\-instruction\hspace{0.3cm}{\ttfamily [protected]}}}\label{classc__monster__character_a26c7d28a5741c7b99caf7ec9acb80872}
+length of path directions and path steps arrays \hypertarget{classc__monster__character_a4918cf31bdf7a308f57cc924fd48cd49}{\index{c\-\_\-monster\-\_\-character@{c\-\_\-monster\-\_\-character}!goes\-\_\-to@{goes\-\_\-to}}
+\index{goes\-\_\-to@{goes\-\_\-to}!c_monster_character@{c\-\_\-monster\-\_\-character}}
+\subsubsection[{goes\-\_\-to}]{\setlength{\rightskip}{0pt plus 5cm}double c\-\_\-monster\-\_\-character\-::goes\-\_\-to\hspace{0.3cm}{\ttfamily [protected]}}}\label{classc__monster__character_a4918cf31bdf7a308f57cc924fd48cd49}
+current position in path arrays \hypertarget{classc__monster__character_abea3e334122c075498889efb7a476b58}{\index{c\-\_\-monster\-\_\-character@{c\-\_\-monster\-\_\-character}!is\-\_\-dead@{is\-\_\-dead}}
+\index{is\-\_\-dead@{is\-\_\-dead}!c_monster_character@{c\-\_\-monster\-\_\-character}}
+\subsubsection[{is\-\_\-dead}]{\setlength{\rightskip}{0pt plus 5cm}bool c\-\_\-monster\-\_\-character\-::is\-\_\-dead\hspace{0.3cm}{\ttfamily [protected]}}}\label{classc__monster__character_abea3e334122c075498889efb7a476b58}
+contains sequence of number of steps that will be made in given directions \hypertarget{classc__monster__character_a6182d1b0f70221c2fdde578cdee0d6e2}{\index{c\-\_\-monster\-\_\-character@{c\-\_\-monster\-\_\-character}!path\-\_\-directions@{path\-\_\-directions}}
+\index{path\-\_\-directions@{path\-\_\-directions}!c_monster_character@{c\-\_\-monster\-\_\-character}}
+\subsubsection[{path\-\_\-directions}]{\setlength{\rightskip}{0pt plus 5cm}t\-\_\-direction c\-\_\-monster\-\_\-character\-::path\-\_\-directions\mbox{[}M\-A\-X\-\_\-\-M\-O\-N\-S\-T\-E\-R\-\_\-\-P\-A\-T\-H\-\_\-\-L\-E\-N\-G\-T\-H\mbox{]}\hspace{0.3cm}{\ttfamily [protected]}}}\label{classc__monster__character_a6182d1b0f70221c2fdde578cdee0d6e2}
+x or y coordination (depending on direction) to which the character is headed by the current path instruction \hypertarget{classc__monster__character_a2ccaf3ff00ff2370eac007960bd01d7b}{\index{c\-\_\-monster\-\_\-character@{c\-\_\-monster\-\_\-character}!path\-\_\-length@{path\-\_\-length}}
+\index{path\-\_\-length@{path\-\_\-length}!c_monster_character@{c\-\_\-monster\-\_\-character}}
+\subsubsection[{path\-\_\-length}]{\setlength{\rightskip}{0pt plus 5cm}int c\-\_\-monster\-\_\-character\-::path\-\_\-length\hspace{0.3cm}{\ttfamily [protected]}}}\label{classc__monster__character_a2ccaf3ff00ff2370eac007960bd01d7b}
+monster type \hypertarget{classc__monster__character_ab4531ab1220b9a52fd07b290350bba05}{\index{c\-\_\-monster\-\_\-character@{c\-\_\-monster\-\_\-character}!path\-\_\-steps@{path\-\_\-steps}}
+\index{path\-\_\-steps@{path\-\_\-steps}!c_monster_character@{c\-\_\-monster\-\_\-character}}
+\subsubsection[{path\-\_\-steps}]{\setlength{\rightskip}{0pt plus 5cm}int c\-\_\-monster\-\_\-character\-::path\-\_\-steps\mbox{[}M\-A\-X\-\_\-\-M\-O\-N\-S\-T\-E\-R\-\_\-\-P\-A\-T\-H\-\_\-\-L\-E\-N\-G\-T\-H\mbox{]}\hspace{0.3cm}{\ttfamily [protected]}}}\label{classc__monster__character_ab4531ab1220b9a52fd07b290350bba05}
+contains sequence of directions in which steps are made \hypertarget{classc__monster__character_ad751b3e9f92c8b0496bd936c66a7598c}{\index{c\-\_\-monster\-\_\-character@{c\-\_\-monster\-\_\-character}!waiting@{waiting}}
+\index{waiting@{waiting}!c_monster_character@{c\-\_\-monster\-\_\-character}}
+\subsubsection[{waiting}]{\setlength{\rightskip}{0pt plus 5cm}bool c\-\_\-monster\-\_\-character\-::waiting\hspace{0.3cm}{\ttfamily [protected]}}}\label{classc__monster__character_ad751b3e9f92c8b0496bd936c66a7598c}
+whether the monster is dead \hypertarget{classc__monster__character_a944e8c78c13e1ec2169b59287ea5ef1c}{\index{c\-\_\-monster\-\_\-character@{c\-\_\-monster\-\_\-character}!waiting\-\_\-end@{waiting\-\_\-end}}
+\index{waiting\-\_\-end@{waiting\-\_\-end}!c_monster_character@{c\-\_\-monster\-\_\-character}}
+\subsubsection[{waiting\-\_\-end}]{\setlength{\rightskip}{0pt plus 5cm}double c\-\_\-monster\-\_\-character\-::waiting\-\_\-end\hspace{0.3cm}{\ttfamily [protected]}}}\label{classc__monster__character_a944e8c78c13e1ec2169b59287ea5ef1c}
+whether the monster is waiting and not moving 
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+magerage/monster\-\_\-character.\-h\item 
+magerage/monster\-\_\-character.\-cpp\end{DoxyCompactItemize}

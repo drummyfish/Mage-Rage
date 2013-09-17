@@ -1,0 +1,148 @@
+\hypertarget{classc__associative__array}{\section{c\-\_\-associative\-\_\-array Class Reference}
+\label{classc__associative__array}\index{c\-\_\-associative\-\_\-array@{c\-\_\-associative\-\_\-array}}
+}
+
+
+{\ttfamily \#include $<$associative\-\_\-array.\-h$>$}
+
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classc__associative__array_a81ad1750fa1d2c1f48ca77a9c335435f}{c\-\_\-associative\-\_\-array} ()
+\item 
+\hyperlink{classc__associative__array_a44db0ff9cf78c954d5d8e6645bc3f432}{$\sim$c\-\_\-associative\-\_\-array} ()
+\item 
+bool \hyperlink{classc__associative__array_a62c94b9c3b92e52885027d77d10d4f0f}{load\-\_\-from\-\_\-file} (string file\-\_\-name)
+\item 
+bool \hyperlink{classc__associative__array_af01617371af63735362b2a5d2c376ea6}{save\-\_\-to\-\_\-file} (string file\-\_\-name)
+\item 
+string \hyperlink{classc__associative__array_abc77748614083307465a001ec789ea16}{get\-\_\-text} (string identifier)
+\item 
+void \hyperlink{classc__associative__array_ab23eae554f876688eead4f6608baa33d}{set\-\_\-text} (string identifier, string value)
+\item 
+void \hyperlink{classc__associative__array_a32415722135f5d204d77ed739d51f23b}{delete\-\_\-text} (string identifier)
+\end{DoxyCompactItemize}
+\subsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classc__associative__array_a954d95789ca9af971d05509b2c679527}{vector$<$ string $>$ $\ast$ {\bfseries keys}}\label{classc__associative__array_a954d95789ca9af971d05509b2c679527}
+
+\item 
+vector$<$ string $>$ $\ast$ \hyperlink{classc__associative__array_a16874608ab16ecb8ef8c9a577c86aa52}{values}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Associative array class header file.
+
+authors\-: Miloslav Číž, Martin Gabriel year\-: 2013 
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classc__associative__array_a81ad1750fa1d2c1f48ca77a9c335435f}{\index{c\-\_\-associative\-\_\-array@{c\-\_\-associative\-\_\-array}!c\-\_\-associative\-\_\-array@{c\-\_\-associative\-\_\-array}}
+\index{c\-\_\-associative\-\_\-array@{c\-\_\-associative\-\_\-array}!c_associative_array@{c\-\_\-associative\-\_\-array}}
+\subsubsection[{c\-\_\-associative\-\_\-array}]{\setlength{\rightskip}{0pt plus 5cm}c\-\_\-associative\-\_\-array\-::c\-\_\-associative\-\_\-array (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classc__associative__array_a81ad1750fa1d2c1f48ca77a9c335435f}
+list of values
+
+Associative array class implementation.
+
+authors\-: Miloslav Číž, Martin Gabriel year\-: 2013 \hypertarget{classc__associative__array_a44db0ff9cf78c954d5d8e6645bc3f432}{\index{c\-\_\-associative\-\_\-array@{c\-\_\-associative\-\_\-array}!$\sim$c\-\_\-associative\-\_\-array@{$\sim$c\-\_\-associative\-\_\-array}}
+\index{$\sim$c\-\_\-associative\-\_\-array@{$\sim$c\-\_\-associative\-\_\-array}!c_associative_array@{c\-\_\-associative\-\_\-array}}
+\subsubsection[{$\sim$c\-\_\-associative\-\_\-array}]{\setlength{\rightskip}{0pt plus 5cm}c\-\_\-associative\-\_\-array\-::$\sim$c\-\_\-associative\-\_\-array (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classc__associative__array_a44db0ff9cf78c954d5d8e6645bc3f432}
+Class constructor, initialises a new object. 
+
+\subsection{Member Function Documentation}
+\hypertarget{classc__associative__array_a32415722135f5d204d77ed739d51f23b}{\index{c\-\_\-associative\-\_\-array@{c\-\_\-associative\-\_\-array}!delete\-\_\-text@{delete\-\_\-text}}
+\index{delete\-\_\-text@{delete\-\_\-text}!c_associative_array@{c\-\_\-associative\-\_\-array}}
+\subsubsection[{delete\-\_\-text}]{\setlength{\rightskip}{0pt plus 5cm}void c\-\_\-associative\-\_\-array\-::delete\-\_\-text (
+\begin{DoxyParamCaption}
+\item[{string}]{identifier}
+\end{DoxyParamCaption}
+)}}\label{classc__associative__array_a32415722135f5d204d77ed739d51f23b}
+Sets the value for given identifier. If the identifier already exists, it's current value will be overwritten, otherwise a new key is created with this value.
+
+
+\begin{DoxyParams}{Parameters}
+{\em identifier} & identifier of the text to be returned \\
+\hline
+{\em value} & value for the identifier \\
+\hline
+\end{DoxyParams}
+\hypertarget{classc__associative__array_abc77748614083307465a001ec789ea16}{\index{c\-\_\-associative\-\_\-array@{c\-\_\-associative\-\_\-array}!get\-\_\-text@{get\-\_\-text}}
+\index{get\-\_\-text@{get\-\_\-text}!c_associative_array@{c\-\_\-associative\-\_\-array}}
+\subsubsection[{get\-\_\-text}]{\setlength{\rightskip}{0pt plus 5cm}string c\-\_\-associative\-\_\-array\-::get\-\_\-text (
+\begin{DoxyParamCaption}
+\item[{string}]{identifier}
+\end{DoxyParamCaption}
+)}}\label{classc__associative__array_abc77748614083307465a001ec789ea16}
+Saves the array to given file.
+
+
+\begin{DoxyParams}{Parameters}
+{\em file\-\_\-name} & path to the file \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if the file was saved succesfully, false otherwise 
+\end{DoxyReturn}
+\hypertarget{classc__associative__array_a62c94b9c3b92e52885027d77d10d4f0f}{\index{c\-\_\-associative\-\_\-array@{c\-\_\-associative\-\_\-array}!load\-\_\-from\-\_\-file@{load\-\_\-from\-\_\-file}}
+\index{load\-\_\-from\-\_\-file@{load\-\_\-from\-\_\-file}!c_associative_array@{c\-\_\-associative\-\_\-array}}
+\subsubsection[{load\-\_\-from\-\_\-file}]{\setlength{\rightskip}{0pt plus 5cm}bool c\-\_\-associative\-\_\-array\-::load\-\_\-from\-\_\-file (
+\begin{DoxyParamCaption}
+\item[{string}]{file\-\_\-name}
+\end{DoxyParamCaption}
+)}}\label{classc__associative__array_a62c94b9c3b92e52885027d77d10d4f0f}
+Class destructor, frees all it's memory. \hypertarget{classc__associative__array_af01617371af63735362b2a5d2c376ea6}{\index{c\-\_\-associative\-\_\-array@{c\-\_\-associative\-\_\-array}!save\-\_\-to\-\_\-file@{save\-\_\-to\-\_\-file}}
+\index{save\-\_\-to\-\_\-file@{save\-\_\-to\-\_\-file}!c_associative_array@{c\-\_\-associative\-\_\-array}}
+\subsubsection[{save\-\_\-to\-\_\-file}]{\setlength{\rightskip}{0pt plus 5cm}bool c\-\_\-associative\-\_\-array\-::save\-\_\-to\-\_\-file (
+\begin{DoxyParamCaption}
+\item[{string}]{file\-\_\-name}
+\end{DoxyParamCaption}
+)}}\label{classc__associative__array_af01617371af63735362b2a5d2c376ea6}
+Loads the array from given file. The file contains texts separated by newlines, each line in format\-: identifier\-:text
+
+
+\begin{DoxyParams}{Parameters}
+{\em file\-\_\-name} & path to the file \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if the file was loaded succesfully, false otherwise 
+\end{DoxyReturn}
+\hypertarget{classc__associative__array_ab23eae554f876688eead4f6608baa33d}{\index{c\-\_\-associative\-\_\-array@{c\-\_\-associative\-\_\-array}!set\-\_\-text@{set\-\_\-text}}
+\index{set\-\_\-text@{set\-\_\-text}!c_associative_array@{c\-\_\-associative\-\_\-array}}
+\subsubsection[{set\-\_\-text}]{\setlength{\rightskip}{0pt plus 5cm}void c\-\_\-associative\-\_\-array\-::set\-\_\-text (
+\begin{DoxyParamCaption}
+\item[{string}]{identifier, }
+\item[{string}]{value}
+\end{DoxyParamCaption}
+)}}\label{classc__associative__array_ab23eae554f876688eead4f6608baa33d}
+Returns text with given identifier.
+
+
+\begin{DoxyParams}{Parameters}
+{\em identifier} & identifier of the text to be returned \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+text with given identifier, or (if the text was not found) returns an empty string 
+\end{DoxyReturn}
+
+
+\subsection{Member Data Documentation}
+\hypertarget{classc__associative__array_a16874608ab16ecb8ef8c9a577c86aa52}{\index{c\-\_\-associative\-\_\-array@{c\-\_\-associative\-\_\-array}!values@{values}}
+\index{values@{values}!c_associative_array@{c\-\_\-associative\-\_\-array}}
+\subsubsection[{values}]{\setlength{\rightskip}{0pt plus 5cm}vector$<$string$>$$\ast$ c\-\_\-associative\-\_\-array\-::values\hspace{0.3cm}{\ttfamily [protected]}}}\label{classc__associative__array_a16874608ab16ecb8ef8c9a577c86aa52}
+list of keys 
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+magerage/associative\-\_\-array.\-h\item 
+magerage/associative\-\_\-array.\-cpp\end{DoxyCompactItemize}

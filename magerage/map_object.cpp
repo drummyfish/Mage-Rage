@@ -1,8 +1,22 @@
 ﻿/**
  * Map object class implementation file.
  *
- * authors: Miloslav Číž
- * year: 2013
+ * Copyright 2013 Miloslav Číž
+ *
+ * This file is part of Mage Rage.
+ *
+ * Mage Rage is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * Mage Rage is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with Foobar. If not, see <http://www.gnu.org/licenses/>.
  */
 
 #include "map_object.h"
@@ -361,7 +375,7 @@ void c_map_object::draw(int x, int y)
 		this->animation_frame = *this->global_time - this->started_playing;
 
 	    if (this->looping_animation)
-			this->animation_frame = this->animation_frame % this->animation_period;
+		  this->animation_frame = this->animation_frame % this->animation_period;
 
 		if (this->animation_frame < 0) // handle overflow
 		  this->animation_frame = 0;
@@ -422,7 +436,6 @@ void c_map_object::draw(int x, int y)
 		  break;  
 
 	    case OBJECT_LEVER:
-
 		  switch (this->playing_animation)
 		    {
 		      case ANIMATION_NONE:
@@ -459,7 +472,7 @@ void c_map_object::draw(int x, int y)
 
 		case OBJECT_DOOR_HORIZONTAL:
 		case OBJECT_DOOR_VERTICAL:
-		case OBJECT_ELEVATOR:  
+		case OBJECT_ELEVATOR: 
 		  switch (this->playing_animation)
 		    {
 		      case ANIMATION_NONE:

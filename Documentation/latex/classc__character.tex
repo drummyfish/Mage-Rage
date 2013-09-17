@@ -1,0 +1,371 @@
+\hypertarget{classc__character}{\section{c\-\_\-character Class Reference}
+\label{classc__character}\index{c\-\_\-character@{c\-\_\-character}}
+}
+
+
+{\ttfamily \#include $<$character.\-h$>$}
+
+Inheritance diagram for c\-\_\-character\-:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{classc__character}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{classc__character_a75c54e9c7283064a4064c6f369d4f45e}{set\-\_\-position} (double x, double y)
+\item 
+void \hyperlink{classc__character_ace2ad2a0175d52648347a01446d7cc75}{set\-\_\-square\-\_\-position} (int x, int y)
+\item 
+void \hyperlink{classc__character_a21828380cb11fded91a99dbbc9df9848}{set\-\_\-direction} (t\-\_\-direction \hyperlink{classc__character_a571f1ae6115d7e9fee3159c41fcf27e8}{direction})
+\item 
+void \hyperlink{classc__character_a4379e618f98e6be9cdf74c4cb723cd4e}{move\-\_\-by} (double x, double y)
+\item 
+double \hyperlink{classc__character_a74dead1895f81f7e40dc854edcf66ea7}{get\-\_\-position\-\_\-x} ()
+\item 
+double \hyperlink{classc__character_a1998f04f49c42ca29acb2decdcdcab31}{get\-\_\-position\-\_\-y} ()
+\item 
+int \hyperlink{classc__character_a00780360179b7b58334bbae046c0a6e6}{get\-\_\-square\-\_\-x} ()
+\item 
+int \hyperlink{classc__character_ac99f93abd4f6a9dc436ca96a4ff3f856}{get\-\_\-square\-\_\-y} ()
+\item 
+double \hyperlink{classc__character_a5ffab5363aa4f8661d6c59ccc4e82038}{get\-\_\-fraction\-\_\-x} ()
+\item 
+double \hyperlink{classc__character_aa2efb20e603bfe0a5b3e63c3ffc86719}{get\-\_\-fraction\-\_\-y} ()
+\item 
+virtual void \hyperlink{classc__character_a323dd6b7cf6635a0b61e4351178d7518}{loop\-\_\-animation} (t\-\_\-animation\-\_\-type animation)
+\item 
+t\-\_\-direction \hyperlink{classc__character_af5421aaa7b9ddb2b17e7994419f93c42}{get\-\_\-direction} ()
+\end{DoxyCompactItemize}
+\subsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static int \hyperlink{classc__character_ae5c54984450cd668f8caff08bab773b9}{position\-\_\-to\-\_\-square} (double position, bool take\-\_\-x)
+\item 
+static double \hyperlink{classc__character_aef52e1c8a40484d9441867d10aa05b5f}{square\-\_\-to\-\_\-position} (int square\-\_\-position, bool take\-\_\-x)
+\end{DoxyCompactItemize}
+\subsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+double \hyperlink{classc__character_a09bb0a2dd9eb4a0c7e791706fe51bddc}{position\-\_\-x}
+\item 
+double \hyperlink{classc__character_a9d37196174588bc6ee1593a2f6c98244}{position\-\_\-y}
+\item 
+t\-\_\-direction \hyperlink{classc__character_a571f1ae6115d7e9fee3159c41fcf27e8}{direction}
+\item 
+double \hyperlink{classc__character_a4b50e02f88351baf6dc1542ef97fd413}{footsteps\-\_\-gain}
+\item 
+double \hyperlink{classc__character_addf8133a5a8cf4ce83405e5a1335fdfd}{skate\-\_\-gain}
+\item 
+A\-L\-L\-E\-G\-R\-O\-\_\-\-B\-I\-T\-M\-A\-P $\ast$ \hyperlink{classc__character_a7bddca76d4c38008b127fa0d3ea36738}{shadow}
+\item 
+A\-L\-L\-E\-G\-R\-O\-\_\-\-B\-I\-T\-M\-A\-P $\ast$ \hyperlink{classc__character_a97b679f81ebff4c53933a278a05a11c6}{sprite\-\_\-north}
+\item 
+A\-L\-L\-E\-G\-R\-O\-\_\-\-B\-I\-T\-M\-A\-P $\ast$ \hyperlink{classc__character_adb3cfdb7715791d21a0ac917b4443b47}{sprite\-\_\-north\-\_\-running\-\_\-1}
+\item 
+A\-L\-L\-E\-G\-R\-O\-\_\-\-B\-I\-T\-M\-A\-P $\ast$ \hyperlink{classc__character_a009fa720b3902c4517edea6e1195daf5}{sprite\-\_\-north\-\_\-running\-\_\-2}
+\item 
+A\-L\-L\-E\-G\-R\-O\-\_\-\-B\-I\-T\-M\-A\-P $\ast$ \hyperlink{classc__character_afabf5a5d776707387be05162e7389aa1}{sprite\-\_\-east}
+\item 
+A\-L\-L\-E\-G\-R\-O\-\_\-\-B\-I\-T\-M\-A\-P $\ast$ \hyperlink{classc__character_ae6f68b43b39ceac377631aa406b43a0b}{sprite\-\_\-east\-\_\-running\-\_\-1}
+\item 
+A\-L\-L\-E\-G\-R\-O\-\_\-\-B\-I\-T\-M\-A\-P $\ast$ \hyperlink{classc__character_a563e59c84f1cf673bcd1d4b5179727c1}{sprite\-\_\-east\-\_\-running\-\_\-2}
+\item 
+A\-L\-L\-E\-G\-R\-O\-\_\-\-B\-I\-T\-M\-A\-P $\ast$ \hyperlink{classc__character_a3ca4db7645eb80c31738f5c5dae337a9}{sprite\-\_\-south}
+\item 
+A\-L\-L\-E\-G\-R\-O\-\_\-\-B\-I\-T\-M\-A\-P $\ast$ \hyperlink{classc__character_af5df98de273f4561fcdc2a51f209ffec}{sprite\-\_\-south\-\_\-running\-\_\-1}
+\item 
+A\-L\-L\-E\-G\-R\-O\-\_\-\-B\-I\-T\-M\-A\-P $\ast$ \hyperlink{classc__character_a5d3bd19c0e6ebe9e6bf656c33ace7577}{sprite\-\_\-south\-\_\-running\-\_\-2}
+\item 
+A\-L\-L\-E\-G\-R\-O\-\_\-\-B\-I\-T\-M\-A\-P $\ast$ \hyperlink{classc__character_a2f6f83ee5580e3d89e2170072353001e}{sprite\-\_\-west}
+\item 
+A\-L\-L\-E\-G\-R\-O\-\_\-\-B\-I\-T\-M\-A\-P $\ast$ \hyperlink{classc__character_a3429225d2f84f44e9f3af4236e6dd731}{sprite\-\_\-west\-\_\-running\-\_\-1}
+\item 
+A\-L\-L\-E\-G\-R\-O\-\_\-\-B\-I\-T\-M\-A\-P $\ast$ \hyperlink{classc__character_aef269ee1bc3fb08b89a8b254c20e8262}{sprite\-\_\-west\-\_\-running\-\_\-2}
+\item 
+A\-L\-L\-E\-G\-R\-O\-\_\-\-S\-A\-M\-P\-L\-E $\ast$ \hyperlink{classc__character_af944a0456aa0fdb9720b1dd2b9b4e235}{sound\-\_\-footsteps}
+\item 
+A\-L\-L\-E\-G\-R\-O\-\_\-\-S\-A\-M\-P\-L\-E $\ast$ \hyperlink{classc__character_a728e0633d8f62df9f08bcce7bea03cee}{sound\-\_\-skate}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Character class header file.
+
+authors\-: Miloslav Číž year\-: 2013 
+
+\subsection{Member Function Documentation}
+\hypertarget{classc__character_af5421aaa7b9ddb2b17e7994419f93c42}{\index{c\-\_\-character@{c\-\_\-character}!get\-\_\-direction@{get\-\_\-direction}}
+\index{get\-\_\-direction@{get\-\_\-direction}!c_character@{c\-\_\-character}}
+\subsubsection[{get\-\_\-direction}]{\setlength{\rightskip}{0pt plus 5cm}t\-\_\-direction c\-\_\-character\-::get\-\_\-direction (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classc__character_af5421aaa7b9ddb2b17e7994419f93c42}
+Loops the given animation untill it's stopped by \hyperlink{classc__graphic__object_a32cdba2150d09d903f6e95f2509b9283}{stop\-\_\-animation()}.
+
+
+\begin{DoxyParams}{Parameters}
+{\em animation} & animation to be looped \\
+\hline
+\end{DoxyParams}
+\hypertarget{classc__character_a5ffab5363aa4f8661d6c59ccc4e82038}{\index{c\-\_\-character@{c\-\_\-character}!get\-\_\-fraction\-\_\-x@{get\-\_\-fraction\-\_\-x}}
+\index{get\-\_\-fraction\-\_\-x@{get\-\_\-fraction\-\_\-x}!c_character@{c\-\_\-character}}
+\subsubsection[{get\-\_\-fraction\-\_\-x}]{\setlength{\rightskip}{0pt plus 5cm}double c\-\_\-character\-::get\-\_\-fraction\-\_\-x (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classc__character_a5ffab5363aa4f8661d6c59ccc4e82038}
+Returns y coordination of the square at which the character is standing.
+
+\begin{DoxyReturn}{Returns}
+y coordination of the character's square 
+\end{DoxyReturn}
+\hypertarget{classc__character_aa2efb20e603bfe0a5b3e63c3ffc86719}{\index{c\-\_\-character@{c\-\_\-character}!get\-\_\-fraction\-\_\-y@{get\-\_\-fraction\-\_\-y}}
+\index{get\-\_\-fraction\-\_\-y@{get\-\_\-fraction\-\_\-y}!c_character@{c\-\_\-character}}
+\subsubsection[{get\-\_\-fraction\-\_\-y}]{\setlength{\rightskip}{0pt plus 5cm}double c\-\_\-character\-::get\-\_\-fraction\-\_\-y (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classc__character_aa2efb20e603bfe0a5b3e63c3ffc86719}
+Returns fraction part of the position, which is position within current square.
+
+\begin{DoxyReturn}{Returns}
+x position within current square (value in range $<$0;1$>$) 
+\end{DoxyReturn}
+\hypertarget{classc__character_a74dead1895f81f7e40dc854edcf66ea7}{\index{c\-\_\-character@{c\-\_\-character}!get\-\_\-position\-\_\-x@{get\-\_\-position\-\_\-x}}
+\index{get\-\_\-position\-\_\-x@{get\-\_\-position\-\_\-x}!c_character@{c\-\_\-character}}
+\subsubsection[{get\-\_\-position\-\_\-x}]{\setlength{\rightskip}{0pt plus 5cm}double c\-\_\-character\-::get\-\_\-position\-\_\-x (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classc__character_a74dead1895f81f7e40dc854edcf66ea7}
+Sets the character's position relatively to current position.
+
+
+\begin{DoxyParams}{Parameters}
+{\em x} & value to be added to x position \\
+\hline
+{\em y} & value to be added to y position \\
+\hline
+\end{DoxyParams}
+\hypertarget{classc__character_a1998f04f49c42ca29acb2decdcdcab31}{\index{c\-\_\-character@{c\-\_\-character}!get\-\_\-position\-\_\-y@{get\-\_\-position\-\_\-y}}
+\index{get\-\_\-position\-\_\-y@{get\-\_\-position\-\_\-y}!c_character@{c\-\_\-character}}
+\subsubsection[{get\-\_\-position\-\_\-y}]{\setlength{\rightskip}{0pt plus 5cm}double c\-\_\-character\-::get\-\_\-position\-\_\-y (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classc__character_a1998f04f49c42ca29acb2decdcdcab31}
+Returns x position of the character.
+
+\begin{DoxyReturn}{Returns}
+x position 
+\end{DoxyReturn}
+\hypertarget{classc__character_a00780360179b7b58334bbae046c0a6e6}{\index{c\-\_\-character@{c\-\_\-character}!get\-\_\-square\-\_\-x@{get\-\_\-square\-\_\-x}}
+\index{get\-\_\-square\-\_\-x@{get\-\_\-square\-\_\-x}!c_character@{c\-\_\-character}}
+\subsubsection[{get\-\_\-square\-\_\-x}]{\setlength{\rightskip}{0pt plus 5cm}int c\-\_\-character\-::get\-\_\-square\-\_\-x (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classc__character_a00780360179b7b58334bbae046c0a6e6}
+Returns y position of the character.
+
+\begin{DoxyReturn}{Returns}
+y position 
+\end{DoxyReturn}
+\hypertarget{classc__character_ac99f93abd4f6a9dc436ca96a4ff3f856}{\index{c\-\_\-character@{c\-\_\-character}!get\-\_\-square\-\_\-y@{get\-\_\-square\-\_\-y}}
+\index{get\-\_\-square\-\_\-y@{get\-\_\-square\-\_\-y}!c_character@{c\-\_\-character}}
+\subsubsection[{get\-\_\-square\-\_\-y}]{\setlength{\rightskip}{0pt plus 5cm}int c\-\_\-character\-::get\-\_\-square\-\_\-y (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classc__character_ac99f93abd4f6a9dc436ca96a4ff3f856}
+Returns x coordination of the square at which the character is standing.
+
+\begin{DoxyReturn}{Returns}
+x coordination of the character's square 
+\end{DoxyReturn}
+\hypertarget{classc__character_a323dd6b7cf6635a0b61e4351178d7518}{\index{c\-\_\-character@{c\-\_\-character}!loop\-\_\-animation@{loop\-\_\-animation}}
+\index{loop\-\_\-animation@{loop\-\_\-animation}!c_character@{c\-\_\-character}}
+\subsubsection[{loop\-\_\-animation}]{\setlength{\rightskip}{0pt plus 5cm}void c\-\_\-character\-::loop\-\_\-animation (
+\begin{DoxyParamCaption}
+\item[{t\-\_\-animation\-\_\-type}]{animation}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}}\label{classc__character_a323dd6b7cf6635a0b61e4351178d7518}
+Returns fraction part of the position, which is position within current square.
+
+\begin{DoxyReturn}{Returns}
+y position within current square (value in range $<$0;1$>$) 
+\end{DoxyReturn}
+
+
+Reimplemented from \hyperlink{classc__graphic__object_ac60b00df5a7edefe4c61e6a59802473f}{c\-\_\-graphic\-\_\-object}.
+
+\hypertarget{classc__character_a4379e618f98e6be9cdf74c4cb723cd4e}{\index{c\-\_\-character@{c\-\_\-character}!move\-\_\-by@{move\-\_\-by}}
+\index{move\-\_\-by@{move\-\_\-by}!c_character@{c\-\_\-character}}
+\subsubsection[{move\-\_\-by}]{\setlength{\rightskip}{0pt plus 5cm}void c\-\_\-character\-::move\-\_\-by (
+\begin{DoxyParamCaption}
+\item[{double}]{x, }
+\item[{double}]{y}
+\end{DoxyParamCaption}
+)}}\label{classc__character_a4379e618f98e6be9cdf74c4cb723cd4e}
+Sets the character's facing direction.
+
+
+\begin{DoxyParams}{Parameters}
+{\em direction} & new direction\\
+\hline
+\end{DoxyParams}
+Character class implementation file.
+
+authors\-: Miloslav Číž year\-: 2013 \hypertarget{classc__character_ae5c54984450cd668f8caff08bab773b9}{\index{c\-\_\-character@{c\-\_\-character}!position\-\_\-to\-\_\-square@{position\-\_\-to\-\_\-square}}
+\index{position\-\_\-to\-\_\-square@{position\-\_\-to\-\_\-square}!c_character@{c\-\_\-character}}
+\subsubsection[{position\-\_\-to\-\_\-square}]{\setlength{\rightskip}{0pt plus 5cm}int c\-\_\-character\-::position\-\_\-to\-\_\-square (
+\begin{DoxyParamCaption}
+\item[{double}]{position, }
+\item[{bool}]{take\-\_\-x}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}}\label{classc__character_ae5c54984450cd668f8caff08bab773b9}
+sound -\/ skate \hypertarget{classc__character_a21828380cb11fded91a99dbbc9df9848}{\index{c\-\_\-character@{c\-\_\-character}!set\-\_\-direction@{set\-\_\-direction}}
+\index{set\-\_\-direction@{set\-\_\-direction}!c_character@{c\-\_\-character}}
+\subsubsection[{set\-\_\-direction}]{\setlength{\rightskip}{0pt plus 5cm}void c\-\_\-character\-::set\-\_\-direction (
+\begin{DoxyParamCaption}
+\item[{t\-\_\-direction}]{direction}
+\end{DoxyParamCaption}
+)}}\label{classc__character_a21828380cb11fded91a99dbbc9df9848}
+Sets the player's position given in map squares.
+
+
+\begin{DoxyParams}{Parameters}
+{\em x} & \\
+\hline
+{\em y} & \\
+\hline
+\end{DoxyParams}
+\hypertarget{classc__character_a75c54e9c7283064a4064c6f369d4f45e}{\index{c\-\_\-character@{c\-\_\-character}!set\-\_\-position@{set\-\_\-position}}
+\index{set\-\_\-position@{set\-\_\-position}!c_character@{c\-\_\-character}}
+\subsubsection[{set\-\_\-position}]{\setlength{\rightskip}{0pt plus 5cm}void c\-\_\-character\-::set\-\_\-position (
+\begin{DoxyParamCaption}
+\item[{double}]{x, }
+\item[{double}]{y}
+\end{DoxyParamCaption}
+)}}\label{classc__character_a75c54e9c7283064a4064c6f369d4f45e}
+Converts position in map squares to double position.
+
+
+\begin{DoxyParams}{Parameters}
+{\em square\-\_\-position} & position in map squares to be converted \\
+\hline
+{\em take\-\_\-x} & if true, the position is considered as x position, otherwise y position \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+double position 
+\end{DoxyReturn}
+\hypertarget{classc__character_ace2ad2a0175d52648347a01446d7cc75}{\index{c\-\_\-character@{c\-\_\-character}!set\-\_\-square\-\_\-position@{set\-\_\-square\-\_\-position}}
+\index{set\-\_\-square\-\_\-position@{set\-\_\-square\-\_\-position}!c_character@{c\-\_\-character}}
+\subsubsection[{set\-\_\-square\-\_\-position}]{\setlength{\rightskip}{0pt plus 5cm}void c\-\_\-character\-::set\-\_\-square\-\_\-position (
+\begin{DoxyParamCaption}
+\item[{int}]{x, }
+\item[{int}]{y}
+\end{DoxyParamCaption}
+)}}\label{classc__character_ace2ad2a0175d52648347a01446d7cc75}
+Sets the character's new position.
+
+
+\begin{DoxyParams}{Parameters}
+{\em x} & new position x \\
+\hline
+{\em y} & new position y \\
+\hline
+\end{DoxyParams}
+\hypertarget{classc__character_aef52e1c8a40484d9441867d10aa05b5f}{\index{c\-\_\-character@{c\-\_\-character}!square\-\_\-to\-\_\-position@{square\-\_\-to\-\_\-position}}
+\index{square\-\_\-to\-\_\-position@{square\-\_\-to\-\_\-position}!c_character@{c\-\_\-character}}
+\subsubsection[{square\-\_\-to\-\_\-position}]{\setlength{\rightskip}{0pt plus 5cm}double c\-\_\-character\-::square\-\_\-to\-\_\-position (
+\begin{DoxyParamCaption}
+\item[{int}]{square\-\_\-position, }
+\item[{bool}]{take\-\_\-x}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}}}\label{classc__character_aef52e1c8a40484d9441867d10aa05b5f}
+Converts either x or y double position to integer position in map squares.
+
+
+\begin{DoxyParams}{Parameters}
+{\em position} & position to be converted \\
+\hline
+{\em take\-\_\-x} & if true, the position is considered as x position, otherwise y position \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+position in map squares 
+\end{DoxyReturn}
+
+
+\subsection{Member Data Documentation}
+\hypertarget{classc__character_a571f1ae6115d7e9fee3159c41fcf27e8}{\index{c\-\_\-character@{c\-\_\-character}!direction@{direction}}
+\index{direction@{direction}!c_character@{c\-\_\-character}}
+\subsubsection[{direction}]{\setlength{\rightskip}{0pt plus 5cm}t\-\_\-direction c\-\_\-character\-::direction\hspace{0.3cm}{\ttfamily [protected]}}}\label{classc__character_a571f1ae6115d7e9fee3159c41fcf27e8}
+y position on the map \hypertarget{classc__character_a4b50e02f88351baf6dc1542ef97fd413}{\index{c\-\_\-character@{c\-\_\-character}!footsteps\-\_\-gain@{footsteps\-\_\-gain}}
+\index{footsteps\-\_\-gain@{footsteps\-\_\-gain}!c_character@{c\-\_\-character}}
+\subsubsection[{footsteps\-\_\-gain}]{\setlength{\rightskip}{0pt plus 5cm}double c\-\_\-character\-::footsteps\-\_\-gain\hspace{0.3cm}{\ttfamily [protected]}}}\label{classc__character_a4b50e02f88351baf6dc1542ef97fd413}
+direction, in which the character is facing \hypertarget{classc__character_a09bb0a2dd9eb4a0c7e791706fe51bddc}{\index{c\-\_\-character@{c\-\_\-character}!position\-\_\-x@{position\-\_\-x}}
+\index{position\-\_\-x@{position\-\_\-x}!c_character@{c\-\_\-character}}
+\subsubsection[{position\-\_\-x}]{\setlength{\rightskip}{0pt plus 5cm}double c\-\_\-character\-::position\-\_\-x\hspace{0.3cm}{\ttfamily [protected]}}}\label{classc__character_a09bb0a2dd9eb4a0c7e791706fe51bddc}
+This abstract class represents an ingame character. \hypertarget{classc__character_a9d37196174588bc6ee1593a2f6c98244}{\index{c\-\_\-character@{c\-\_\-character}!position\-\_\-y@{position\-\_\-y}}
+\index{position\-\_\-y@{position\-\_\-y}!c_character@{c\-\_\-character}}
+\subsubsection[{position\-\_\-y}]{\setlength{\rightskip}{0pt plus 5cm}double c\-\_\-character\-::position\-\_\-y\hspace{0.3cm}{\ttfamily [protected]}}}\label{classc__character_a9d37196174588bc6ee1593a2f6c98244}
+x position on the map \hypertarget{classc__character_a7bddca76d4c38008b127fa0d3ea36738}{\index{c\-\_\-character@{c\-\_\-character}!shadow@{shadow}}
+\index{shadow@{shadow}!c_character@{c\-\_\-character}}
+\subsubsection[{shadow}]{\setlength{\rightskip}{0pt plus 5cm}A\-L\-L\-E\-G\-R\-O\-\_\-\-B\-I\-T\-M\-A\-P$\ast$ c\-\_\-character\-::shadow\hspace{0.3cm}{\ttfamily [protected]}}}\label{classc__character_a7bddca76d4c38008b127fa0d3ea36738}
+skate sound gain \hypertarget{classc__character_addf8133a5a8cf4ce83405e5a1335fdfd}{\index{c\-\_\-character@{c\-\_\-character}!skate\-\_\-gain@{skate\-\_\-gain}}
+\index{skate\-\_\-gain@{skate\-\_\-gain}!c_character@{c\-\_\-character}}
+\subsubsection[{skate\-\_\-gain}]{\setlength{\rightskip}{0pt plus 5cm}double c\-\_\-character\-::skate\-\_\-gain\hspace{0.3cm}{\ttfamily [protected]}}}\label{classc__character_addf8133a5a8cf4ce83405e5a1335fdfd}
+footstep sound gain \hypertarget{classc__character_af944a0456aa0fdb9720b1dd2b9b4e235}{\index{c\-\_\-character@{c\-\_\-character}!sound\-\_\-footsteps@{sound\-\_\-footsteps}}
+\index{sound\-\_\-footsteps@{sound\-\_\-footsteps}!c_character@{c\-\_\-character}}
+\subsubsection[{sound\-\_\-footsteps}]{\setlength{\rightskip}{0pt plus 5cm}A\-L\-L\-E\-G\-R\-O\-\_\-\-S\-A\-M\-P\-L\-E$\ast$ c\-\_\-character\-::sound\-\_\-footsteps\hspace{0.3cm}{\ttfamily [protected]}}}\label{classc__character_af944a0456aa0fdb9720b1dd2b9b4e235}
+character running west, frame 2 \hypertarget{classc__character_a728e0633d8f62df9f08bcce7bea03cee}{\index{c\-\_\-character@{c\-\_\-character}!sound\-\_\-skate@{sound\-\_\-skate}}
+\index{sound\-\_\-skate@{sound\-\_\-skate}!c_character@{c\-\_\-character}}
+\subsubsection[{sound\-\_\-skate}]{\setlength{\rightskip}{0pt plus 5cm}A\-L\-L\-E\-G\-R\-O\-\_\-\-S\-A\-M\-P\-L\-E$\ast$ c\-\_\-character\-::sound\-\_\-skate\hspace{0.3cm}{\ttfamily [protected]}}}\label{classc__character_a728e0633d8f62df9f08bcce7bea03cee}
+sound -\/ footsteps \hypertarget{classc__character_afabf5a5d776707387be05162e7389aa1}{\index{c\-\_\-character@{c\-\_\-character}!sprite\-\_\-east@{sprite\-\_\-east}}
+\index{sprite\-\_\-east@{sprite\-\_\-east}!c_character@{c\-\_\-character}}
+\subsubsection[{sprite\-\_\-east}]{\setlength{\rightskip}{0pt plus 5cm}A\-L\-L\-E\-G\-R\-O\-\_\-\-B\-I\-T\-M\-A\-P$\ast$ c\-\_\-character\-::sprite\-\_\-east\hspace{0.3cm}{\ttfamily [protected]}}}\label{classc__character_afabf5a5d776707387be05162e7389aa1}
+character running north, frame 2 \hypertarget{classc__character_ae6f68b43b39ceac377631aa406b43a0b}{\index{c\-\_\-character@{c\-\_\-character}!sprite\-\_\-east\-\_\-running\-\_\-1@{sprite\-\_\-east\-\_\-running\-\_\-1}}
+\index{sprite\-\_\-east\-\_\-running\-\_\-1@{sprite\-\_\-east\-\_\-running\-\_\-1}!c_character@{c\-\_\-character}}
+\subsubsection[{sprite\-\_\-east\-\_\-running\-\_\-1}]{\setlength{\rightskip}{0pt plus 5cm}A\-L\-L\-E\-G\-R\-O\-\_\-\-B\-I\-T\-M\-A\-P$\ast$ c\-\_\-character\-::sprite\-\_\-east\-\_\-running\-\_\-1\hspace{0.3cm}{\ttfamily [protected]}}}\label{classc__character_ae6f68b43b39ceac377631aa406b43a0b}
+character facing east \hypertarget{classc__character_a563e59c84f1cf673bcd1d4b5179727c1}{\index{c\-\_\-character@{c\-\_\-character}!sprite\-\_\-east\-\_\-running\-\_\-2@{sprite\-\_\-east\-\_\-running\-\_\-2}}
+\index{sprite\-\_\-east\-\_\-running\-\_\-2@{sprite\-\_\-east\-\_\-running\-\_\-2}!c_character@{c\-\_\-character}}
+\subsubsection[{sprite\-\_\-east\-\_\-running\-\_\-2}]{\setlength{\rightskip}{0pt plus 5cm}A\-L\-L\-E\-G\-R\-O\-\_\-\-B\-I\-T\-M\-A\-P$\ast$ c\-\_\-character\-::sprite\-\_\-east\-\_\-running\-\_\-2\hspace{0.3cm}{\ttfamily [protected]}}}\label{classc__character_a563e59c84f1cf673bcd1d4b5179727c1}
+character running east, frame 1 \hypertarget{classc__character_a97b679f81ebff4c53933a278a05a11c6}{\index{c\-\_\-character@{c\-\_\-character}!sprite\-\_\-north@{sprite\-\_\-north}}
+\index{sprite\-\_\-north@{sprite\-\_\-north}!c_character@{c\-\_\-character}}
+\subsubsection[{sprite\-\_\-north}]{\setlength{\rightskip}{0pt plus 5cm}A\-L\-L\-E\-G\-R\-O\-\_\-\-B\-I\-T\-M\-A\-P$\ast$ c\-\_\-character\-::sprite\-\_\-north\hspace{0.3cm}{\ttfamily [protected]}}}\label{classc__character_a97b679f81ebff4c53933a278a05a11c6}
+shadow bitmap \hypertarget{classc__character_adb3cfdb7715791d21a0ac917b4443b47}{\index{c\-\_\-character@{c\-\_\-character}!sprite\-\_\-north\-\_\-running\-\_\-1@{sprite\-\_\-north\-\_\-running\-\_\-1}}
+\index{sprite\-\_\-north\-\_\-running\-\_\-1@{sprite\-\_\-north\-\_\-running\-\_\-1}!c_character@{c\-\_\-character}}
+\subsubsection[{sprite\-\_\-north\-\_\-running\-\_\-1}]{\setlength{\rightskip}{0pt plus 5cm}A\-L\-L\-E\-G\-R\-O\-\_\-\-B\-I\-T\-M\-A\-P$\ast$ c\-\_\-character\-::sprite\-\_\-north\-\_\-running\-\_\-1\hspace{0.3cm}{\ttfamily [protected]}}}\label{classc__character_adb3cfdb7715791d21a0ac917b4443b47}
+character facing north \hypertarget{classc__character_a009fa720b3902c4517edea6e1195daf5}{\index{c\-\_\-character@{c\-\_\-character}!sprite\-\_\-north\-\_\-running\-\_\-2@{sprite\-\_\-north\-\_\-running\-\_\-2}}
+\index{sprite\-\_\-north\-\_\-running\-\_\-2@{sprite\-\_\-north\-\_\-running\-\_\-2}!c_character@{c\-\_\-character}}
+\subsubsection[{sprite\-\_\-north\-\_\-running\-\_\-2}]{\setlength{\rightskip}{0pt plus 5cm}A\-L\-L\-E\-G\-R\-O\-\_\-\-B\-I\-T\-M\-A\-P$\ast$ c\-\_\-character\-::sprite\-\_\-north\-\_\-running\-\_\-2\hspace{0.3cm}{\ttfamily [protected]}}}\label{classc__character_a009fa720b3902c4517edea6e1195daf5}
+character running north, frame 1 \hypertarget{classc__character_a3ca4db7645eb80c31738f5c5dae337a9}{\index{c\-\_\-character@{c\-\_\-character}!sprite\-\_\-south@{sprite\-\_\-south}}
+\index{sprite\-\_\-south@{sprite\-\_\-south}!c_character@{c\-\_\-character}}
+\subsubsection[{sprite\-\_\-south}]{\setlength{\rightskip}{0pt plus 5cm}A\-L\-L\-E\-G\-R\-O\-\_\-\-B\-I\-T\-M\-A\-P$\ast$ c\-\_\-character\-::sprite\-\_\-south\hspace{0.3cm}{\ttfamily [protected]}}}\label{classc__character_a3ca4db7645eb80c31738f5c5dae337a9}
+character running east, frame 2 \hypertarget{classc__character_af5df98de273f4561fcdc2a51f209ffec}{\index{c\-\_\-character@{c\-\_\-character}!sprite\-\_\-south\-\_\-running\-\_\-1@{sprite\-\_\-south\-\_\-running\-\_\-1}}
+\index{sprite\-\_\-south\-\_\-running\-\_\-1@{sprite\-\_\-south\-\_\-running\-\_\-1}!c_character@{c\-\_\-character}}
+\subsubsection[{sprite\-\_\-south\-\_\-running\-\_\-1}]{\setlength{\rightskip}{0pt plus 5cm}A\-L\-L\-E\-G\-R\-O\-\_\-\-B\-I\-T\-M\-A\-P$\ast$ c\-\_\-character\-::sprite\-\_\-south\-\_\-running\-\_\-1\hspace{0.3cm}{\ttfamily [protected]}}}\label{classc__character_af5df98de273f4561fcdc2a51f209ffec}
+character facing south \hypertarget{classc__character_a5d3bd19c0e6ebe9e6bf656c33ace7577}{\index{c\-\_\-character@{c\-\_\-character}!sprite\-\_\-south\-\_\-running\-\_\-2@{sprite\-\_\-south\-\_\-running\-\_\-2}}
+\index{sprite\-\_\-south\-\_\-running\-\_\-2@{sprite\-\_\-south\-\_\-running\-\_\-2}!c_character@{c\-\_\-character}}
+\subsubsection[{sprite\-\_\-south\-\_\-running\-\_\-2}]{\setlength{\rightskip}{0pt plus 5cm}A\-L\-L\-E\-G\-R\-O\-\_\-\-B\-I\-T\-M\-A\-P$\ast$ c\-\_\-character\-::sprite\-\_\-south\-\_\-running\-\_\-2\hspace{0.3cm}{\ttfamily [protected]}}}\label{classc__character_a5d3bd19c0e6ebe9e6bf656c33ace7577}
+character running south. frame 1 \hypertarget{classc__character_a2f6f83ee5580e3d89e2170072353001e}{\index{c\-\_\-character@{c\-\_\-character}!sprite\-\_\-west@{sprite\-\_\-west}}
+\index{sprite\-\_\-west@{sprite\-\_\-west}!c_character@{c\-\_\-character}}
+\subsubsection[{sprite\-\_\-west}]{\setlength{\rightskip}{0pt plus 5cm}A\-L\-L\-E\-G\-R\-O\-\_\-\-B\-I\-T\-M\-A\-P$\ast$ c\-\_\-character\-::sprite\-\_\-west\hspace{0.3cm}{\ttfamily [protected]}}}\label{classc__character_a2f6f83ee5580e3d89e2170072353001e}
+character running south, frame 2 \hypertarget{classc__character_a3429225d2f84f44e9f3af4236e6dd731}{\index{c\-\_\-character@{c\-\_\-character}!sprite\-\_\-west\-\_\-running\-\_\-1@{sprite\-\_\-west\-\_\-running\-\_\-1}}
+\index{sprite\-\_\-west\-\_\-running\-\_\-1@{sprite\-\_\-west\-\_\-running\-\_\-1}!c_character@{c\-\_\-character}}
+\subsubsection[{sprite\-\_\-west\-\_\-running\-\_\-1}]{\setlength{\rightskip}{0pt plus 5cm}A\-L\-L\-E\-G\-R\-O\-\_\-\-B\-I\-T\-M\-A\-P$\ast$ c\-\_\-character\-::sprite\-\_\-west\-\_\-running\-\_\-1\hspace{0.3cm}{\ttfamily [protected]}}}\label{classc__character_a3429225d2f84f44e9f3af4236e6dd731}
+character facing west \hypertarget{classc__character_aef269ee1bc3fb08b89a8b254c20e8262}{\index{c\-\_\-character@{c\-\_\-character}!sprite\-\_\-west\-\_\-running\-\_\-2@{sprite\-\_\-west\-\_\-running\-\_\-2}}
+\index{sprite\-\_\-west\-\_\-running\-\_\-2@{sprite\-\_\-west\-\_\-running\-\_\-2}!c_character@{c\-\_\-character}}
+\subsubsection[{sprite\-\_\-west\-\_\-running\-\_\-2}]{\setlength{\rightskip}{0pt plus 5cm}A\-L\-L\-E\-G\-R\-O\-\_\-\-B\-I\-T\-M\-A\-P$\ast$ c\-\_\-character\-::sprite\-\_\-west\-\_\-running\-\_\-2\hspace{0.3cm}{\ttfamily [protected]}}}\label{classc__character_aef269ee1bc3fb08b89a8b254c20e8262}
+character running west, frame 1 
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+magerage/character.\-h\item 
+magerage/character.\-cpp\end{DoxyCompactItemize}

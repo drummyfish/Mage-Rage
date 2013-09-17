@@ -1,0 +1,1323 @@
+\hypertarget{classc__map}{\section{c\-\_\-map Class Reference}
+\label{classc__map}\index{c\-\_\-map@{c\-\_\-map}}
+}
+Inheritance diagram for c\-\_\-map\-:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classc__map}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classc__map_a93f9dfae5ef4afdb1b37ee4d31dab1ce}{c\-\_\-map} (string filename, \hyperlink{structt__input__output__state}{t\-\_\-input\-\_\-output\-\_\-state} $\ast$\hyperlink{classc__map_a548cfcecd3a9981dc3c4dd950ceaeab4}{input\-\_\-output\-\_\-state}, long int $\ast$\hyperlink{classc__graphic__object_a9ff91aa7a60272a8f713ff011a0cc0bb}{global\-\_\-time}, int \hyperlink{classc__map_af60c23046dcafb3b9c4a3e097f9e586e}{language})
+\item 
+\hyperlink{classc__map_a44b7baccc0fafd64c0ff922d127dfb7a}{$\sim$c\-\_\-map} ()
+\item 
+t\-\_\-game\-\_\-state \hyperlink{classc__map_afcdeaf89863b1c4c758dbb32d2020a25}{update} ()
+\item 
+virtual void \hyperlink{classc__map_a46afcfac9b83f37a28a5cf3e1da91ef6}{draw} (int x, int y)
+\item 
+string \hyperlink{classc__map_add3edd9d671e1e62e66baaed5e98a9e9}{get\-\_\-description} ()
+\item 
+string \hyperlink{classc__map_a2e4546cf04d6149b7d55664f62779f71}{get\-\_\-music\-\_\-name} ()
+\end{DoxyCompactItemize}
+\subsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{classc__map_a56abddfd11fc1bc9fd9067ad449f21af}{move\-\_\-character} (\hyperlink{classc__character}{c\-\_\-character} $\ast$character, t\-\_\-direction direction)
+\item 
+void \hyperlink{classc__map_a405354857d0db95dcaf5d4f7371148cb}{add\-\_\-map\-\_\-object} (\hyperlink{classc__map__object}{c\-\_\-map\-\_\-object} $\ast$map\-\_\-object, int x, int y)
+\item 
+void \hyperlink{classc__map_aeff67cce172a9d464917ccccd03eab47}{use\-\_\-key\-\_\-press} ()
+\item 
+void \hyperlink{classc__map_a3ea565ef763bd3aaa610d1ab21f72068}{cast\-\_\-key\-\_\-press} (int spell\-\_\-number)
+\item 
+bool \hyperlink{classc__map_a97ea01c33b55d2e3d1d706f39aa24588}{load\-\_\-from\-\_\-file} (string filename)
+\item 
+bool \hyperlink{classc__map_a37968729cca9219336b7f31265f3fc40}{character\-\_\-can\-\_\-move\-\_\-to\-\_\-square} (\hyperlink{classc__character}{c\-\_\-character} $\ast$character, t\-\_\-direction direction)
+\item 
+bool \hyperlink{classc__map_aab9ab7a3336fd65506e5c842a2d217f1}{square\-\_\-has\-\_\-object} (int x, int y, t\-\_\-object\-\_\-type object\-\_\-type)
+\item 
+bool \hyperlink{classc__map_af4970a07daeff76db0cc32b6b69a93c9}{square\-\_\-is\-\_\-stepable} (int x, int y)
+\item 
+int \hyperlink{classc__map_a790027eaa0b60bcd2a11801e961a5232}{get\-\_\-elevation\-\_\-for\-\_\-character} (\hyperlink{classc__character}{c\-\_\-character} $\ast$character)
+\item 
+bool \hyperlink{classc__map_a24ac92070725adc1c295246887df88a1}{set\-\_\-environment} (t\-\_\-environment new\-\_\-environment)
+\item 
+int \hyperlink{classc__map_a250c11079b911dc753bc5dcb9521813e}{get\-\_\-height} (int x, int y)
+\item 
+int \hyperlink{classc__map_a273cb97d6d816e839a42460af56152f6}{get\-\_\-terrain\-\_\-height} (int x, int y)
+\item 
+void \hyperlink{classc__map_af929a9ab4f0d6cd50e58ac8956afa846}{shift\-\_\-crate} (int x, int y, t\-\_\-direction direction)
+\item 
+bool \hyperlink{classc__map_a7ed031ff3dbd23f042273180f5f0abfb}{crate\-\_\-can\-\_\-be\-\_\-shifted} (int x, int y, int \hyperlink{classc__map_af30ddc07f94cbc2e9c91cbdfd3f68cc5}{height}, t\-\_\-direction direction)
+\item 
+t\-\_\-square\-\_\-type \hyperlink{classc__map_a876a3d275b3d88e3106d7af62c823774}{get\-\_\-square\-\_\-type} (int x, int y)
+\item 
+void \hyperlink{classc__map_a2d6baf17ed853fc872da4adafe956426}{set\-\_\-square\-\_\-type} (int x, int y, t\-\_\-square\-\_\-type type)
+\item 
+void \hyperlink{classc__map_a3c30d1f9254e0aeb71e2859d7e879e72}{update\-\_\-map\-\_\-object\-\_\-states} ()
+\item 
+void \hyperlink{classc__map_a4033258ab06d0867efb3cf534cf8b93f}{remove\-\_\-object} (int x, int y, int index)
+\item 
+void \hyperlink{classc__map_ae840e8935d33f10baf479a4ff7f10c27}{link\-\_\-objects} ()
+\item 
+void \hyperlink{classc__map_ad0732462db74b1bc531196b2d1247809}{check\-\_\-buttons} ()
+\item 
+void \hyperlink{classc__map_a64d2a8dd8dd79eb92c6ff2d087907369}{draw\-\_\-borders} (int x, int y, int plus\-\_\-x, int plus\-\_\-y)
+\item 
+bool \hyperlink{classc__map_a798709905b72d00d95940b78e5c7cabc}{must\-\_\-have\-\_\-border} (t\-\_\-square\-\_\-type type1, t\-\_\-square\-\_\-type type2)
+\item 
+bool \hyperlink{classc__map_a0a382a09197490bc1557bf64745db261}{square\-\_\-has\-\_\-character} (int x, int y)
+\item 
+void \hyperlink{classc__map_a1a60a7de987db9e2dd88672f19890cb3}{display\-\_\-animation} (t\-\_\-display\-\_\-animation animation, int x, int y)
+\item 
+void \hyperlink{classc__map_a706ea8f6dffb4881bee80f97e12d611b}{update\-\_\-screen\-\_\-position} ()
+\item 
+void \hyperlink{classc__map_ac589863287ad3ab09d3766f39da6fd09}{fire\-\_\-missile} (int spell\-\_\-number)
+\item 
+void \hyperlink{classc__map_a0a72be4c098a468e7c3737230027eb4d}{update\-\_\-missiles} ()
+\item 
+void \hyperlink{classc__map_afd7f4e6c58a622b83580d236397530a3}{switch\-\_\-player} (int player\-\_\-number)
+\item 
+void \hyperlink{classc__map_a0f0fdbcf0a83552527eae22a098b6fd4}{update\-\_\-flames} ()
+\item 
+bool \hyperlink{classc__map_a0ed756d1637812842f65138042333d50}{object\-\_\-can\-\_\-be\-\_\-used} (\hyperlink{classc__map__object}{c\-\_\-map\-\_\-object} $\ast$what)
+\item 
+void \hyperlink{classc__map_a1f90f7d0ebe3228203f68bb3af4be5f0}{get\-\_\-object\-\_\-position} (\hyperlink{classc__map__object}{c\-\_\-map\-\_\-object} $\ast$what, int $\ast$x, int $\ast$y)
+\item 
+void \hyperlink{classc__map_a4abaca91d31f0eb0fea80c48533f578e}{display\-\_\-text} (string text, double duration)
+\item 
+void \hyperlink{classc__map_a3a2279cfc3ee5a721073b5b29fcf8e56}{check\-\_\-teleport} ()
+\item 
+bool \hyperlink{classc__map_ac53831c7f1f8fe285f6dbbc3968ede9c}{door\-\_\-can\-\_\-be\-\_\-passed} (int x, int y, t\-\_\-direction direction)
+\item 
+void \hyperlink{classc__map_a8cec3eb1eb4d72536aa2c1d9209ca23b}{update\-\_\-monsters} ()
+\item 
+void \hyperlink{classc__map_aae5774997458b6cd01bebf5ba7578716}{shift\-\_\-screen} (int x, int y)
+\item 
+void \hyperlink{classc__map_a42f4ffc135ca44bf92e93d3915bee769}{check\-\_\-ice} ()
+\item 
+void \hyperlink{classc__map_ad1f16a723dfbc854557827b207f7f44a}{set\-\_\-map\-\_\-objects} (string object\-\_\-string)
+\item 
+void \hyperlink{classc__map_afbef00c25eed696050c8e0fc11c770d5}{set\-\_\-monsters} (string monster\-\_\-string)
+\item 
+void \hyperlink{classc__map_a1caec6390a6a85a5d98bbb0c89e3ff31}{record\-\_\-buttons} ()
+\item 
+t\-\_\-game\-\_\-state \hyperlink{classc__map_a6fe5b03607efeac17bca71a27f1767c3}{check\-\_\-game\-\_\-state} ()
+\end{DoxyCompactItemize}
+\subsection*{Static Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+static void \hyperlink{classc__map_a882c99e5b3a1ce62f68b65dc74be5c62}{next\-\_\-square} (int x, int y, t\-\_\-direction direction, int $\ast$next\-\_\-x, int $\ast$next\-\_\-y)
+\item 
+static string \hyperlink{classc__map_a1cae0c68558c2830c8775528d7cb0425}{get\-\_\-nth\-\_\-substring} (string from\-\_\-what, int n)
+\end{DoxyCompactItemize}
+\subsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+int \hyperlink{classc__map_a24f23160d66e61d5f6943cd4f51aa06f}{width}
+\item 
+int \hyperlink{classc__map_af30ddc07f94cbc2e9c91cbdfd3f68cc5}{height}
+\item 
+int $\ast$ \hyperlink{classc__map_a4d9edbbf1f0e9465f7e04307af02afab}{button\-\_\-positions\-\_\-x}
+\item 
+int $\ast$ \hyperlink{classc__map_a6be0ac983d8dfd2aa801face76908dff}{button\-\_\-positions\-\_\-y}
+\item 
+int \hyperlink{classc__map_af36d349e1b651e72551f361b88cb9a76}{number\-\_\-of\-\_\-buttons}
+\item 
+int \hyperlink{classc__map_aee9ff4ca6cc941590f843b7c88b50067}{current\-\_\-player}
+\item 
+int \hyperlink{classc__map_a1fb9429d0318c721540dbe6337615cff}{screen\-\_\-center\-\_\-x}
+\item 
+int \hyperlink{classc__map_a060e812813124210995493d10bc873d0}{screen\-\_\-center\-\_\-y}
+\item 
+t\-\_\-environment \hyperlink{classc__map_a7717281184aa1c3eca2d1b2377a16d9d}{environment}
+\item 
+\hyperlink{structt__map__square}{t\-\_\-map\-\_\-square} \hyperlink{classc__map_ad2884dc5a43ee568bad98b47f8eebef5}{squares} \mbox{[}M\-A\-P\-\_\-\-M\-A\-X\-\_\-\-W\-I\-D\-T\-H\mbox{]}\mbox{[}M\-A\-P\-\_\-\-M\-A\-X\-\_\-\-H\-E\-I\-G\-H\-T\mbox{]}
+\item 
+\hyperlink{classc__player__character}{c\-\_\-player\-\_\-character} $\ast$ \hyperlink{classc__map_a54131ed05249666c5ba32558a1df7d3e}{player\-\_\-characters} \mbox{[}3\mbox{]}
+\item 
+\hyperlink{classc__monster__character}{c\-\_\-monster\-\_\-character} $\ast$ \hyperlink{classc__map_af0168711e28d3671a9ef69003f3f0dc6}{monster\-\_\-characters} \mbox{[}M\-A\-X\-\_\-\-M\-O\-N\-S\-T\-E\-R\-S\-\_\-\-O\-N\-\_\-\-M\-A\-P\mbox{]}
+\item 
+int \hyperlink{classc__map_aab102e2ce55754d739b6679740f97a7c}{number\-\_\-of\-\_\-monsters}
+\item 
+\hyperlink{structt__input__output__state}{t\-\_\-input\-\_\-output\-\_\-state} $\ast$ \hyperlink{classc__map_a548cfcecd3a9981dc3c4dd950ceaeab4}{input\-\_\-output\-\_\-state}
+\item 
+double \hyperlink{classc__map_ab59ec9afe1f17edc59308fe5392b99bd}{time\-\_\-before}
+\item 
+double \hyperlink{classc__map_a7a1d7aaf2dafa841ec84f9b6aa256b5b}{time\-\_\-difference}
+\item 
+int \hyperlink{classc__map_aeb595cd9e54fd327225d36119f128496}{portrait\-\_\-x\-\_\-positions} \mbox{[}3\mbox{]}
+\item 
+int \hyperlink{classc__map_abd86f152d66885aa67f8ec22ac4b3bca}{portrait\-\_\-y\-\_\-position}
+\item 
+bool \hyperlink{classc__map_a05a4919684f8a4d6c10342f4e8231124}{pressed\-\_\-1}
+\item 
+bool \hyperlink{classc__map_a0d69618264aff3f1b167d4fc3bb5ceb3}{pressed\-\_\-2}
+\item 
+\hypertarget{classc__map_abdf89ab0f7c6595c01f70276dbaefc32}{bool {\bfseries pressed\-\_\-3}}\label{classc__map_abdf89ab0f7c6595c01f70276dbaefc32}
+
+\item 
+\hypertarget{classc__map_af7479a56bab6a7b49c8c89bae2871605}{bool {\bfseries mouse\-\_\-pressed}}\label{classc__map_af7479a56bab6a7b49c8c89bae2871605}
+
+\item 
+\hypertarget{classc__map_ae3e456c5c75e2a280eb56d9a473b82b0}{bool {\bfseries check\-\_\-firecloak}}\label{classc__map_ae3e456c5c75e2a280eb56d9a473b82b0}
+
+\item 
+double \hyperlink{classc__map_a38c8548138806d350a13fc6ace496d14}{fire\-\_\-cloak\-\_\-end\-\_\-time}
+\item 
+int \hyperlink{classc__map_af60c23046dcafb3b9c4a3e097f9e586e}{language}
+\item 
+int \hyperlink{classc__map_a2c290e7b1d47f8c846fc77aa4464c8e7}{textbox\-\_\-size} \mbox{[}2\mbox{]}
+\item 
+string \hyperlink{classc__map_ad1b2ee98d03858d529bf35854473ecc6}{description}
+\item 
+bool \hyperlink{classc__map_af471bb004fc765a15293604a0830bca2}{oren\-\_\-destroyed}
+\item 
+double \hyperlink{classc__map_af7ac20f46aab8dde2b4459642fd5d3de}{change\-\_\-flame\-\_\-state}
+\item 
+string \hyperlink{classc__map_aeab133fe9c418a16af900492f8bf49a4}{music\-\_\-name}
+\item 
+char \hyperlink{classc__map_a97c58015fb3e1e4764d6a522880c5ccf}{text\-\_\-lines} \mbox{[}M\-A\-X\-\_\-\-T\-E\-X\-T\-\_\-\-L\-I\-N\-E\-S\mbox{]}\mbox{[}M\-A\-X\-\_\-\-T\-E\-X\-T\-\_\-\-C\-H\-A\-R\-A\-C\-T\-E\-R\-S\-\_\-\-P\-E\-R\-\_\-\-L\-I\-N\-E\mbox{]}
+\item 
+bool \hyperlink{classc__map_a6273cd823e9d08f0b277e6407b468ff3}{text\-\_\-is\-\_\-displayed}
+\item 
+double \hyperlink{classc__map_ad911699c6d1ad83868e75551d138b4e7}{text\-\_\-end\-\_\-time}
+\item 
+bool \hyperlink{classc__map_a42c18f1bd057c4dcd88ec2de95c854fe}{flames\-\_\-on}
+\item 
+int \hyperlink{classc__map_ae7f6ee0b7e9f43cf0344d55480595803}{frame\-\_\-count}
+\item 
+\hyperlink{structt__missile}{t\-\_\-missile} \hyperlink{classc__map_a7a421fc457cc901876cc7e8d0fbc13e8}{missiles} \mbox{[}M\-A\-X\-\_\-\-M\-I\-S\-S\-I\-L\-E\-S\-\_\-\-O\-N\-\_\-\-M\-A\-P\mbox{]}
+\item 
+int \hyperlink{classc__map_a83302b5feea5bc2e3e9bc10efa23396f}{number\-\_\-of\-\_\-missiles}
+\item 
+int \hyperlink{classc__map_af760f25a8a9a58ce904ac0f0b3ee6887}{screen\-\_\-square\-\_\-resolution} \mbox{[}2\mbox{]}
+\item 
+int \hyperlink{classc__map_a2b6fac3ee312a52883ab9ff692dbaf0b}{screen\-\_\-square\-\_\-position} \mbox{[}2\mbox{]}
+\item 
+int \hyperlink{classc__map_afa78589723b061e99ecfe9f7ae9a5fdd}{screen\-\_\-pixel\-\_\-position} \mbox{[}2\mbox{]}
+\item 
+int \hyperlink{classc__map_a4fd1b68220337cb514fed398fe79b7ab}{screen\-\_\-square\-\_\-end} \mbox{[}2\mbox{]}
+\item 
+\hyperlink{classc__animation}{c\-\_\-animation} $\ast$ \hyperlink{classc__map_a777d0b0ec7a0a14c1ccae809cb09f4b1}{animation\-\_\-water\-\_\-splash}
+\item 
+\hyperlink{classc__animation}{c\-\_\-animation} $\ast$ \hyperlink{classc__map_a27650c86dc14f11dff3d582f3ffd540e}{animation\-\_\-refresh}
+\item 
+\hyperlink{classc__animation}{c\-\_\-animation} $\ast$ \hyperlink{classc__map_ab18a6618eae74007423595aaa606b15c}{animation\-\_\-crate\-\_\-shift\-\_\-north}
+\item 
+\hyperlink{classc__animation}{c\-\_\-animation} $\ast$ \hyperlink{classc__map_af34abe429db8bba11ccc582a5c2b0b29}{animation\-\_\-collapse}
+\item 
+\hyperlink{classc__animation}{c\-\_\-animation} $\ast$ \hyperlink{classc__map_a23a9d2c692bc90f9b78f1274f24378e7}{animation\-\_\-melt}
+\item 
+\hyperlink{classc__animation}{c\-\_\-animation} $\ast$ \hyperlink{classc__map_a812ca3ddb1f4ff364861a4a4f3318caf}{animation\-\_\-teleport}
+\item 
+\hyperlink{classc__animation}{c\-\_\-animation} $\ast$ \hyperlink{classc__map_a1be7994a019936dccdf711ca8bfcaba3}{animation\-\_\-explosion}
+\item 
+\hyperlink{classc__animation}{c\-\_\-animation} $\ast$ \hyperlink{classc__map_ad52da3cd4cd1e0c88ce8170314b09f78}{animation\-\_\-shadow\-\_\-explosion}
+\item 
+A\-L\-L\-E\-G\-R\-O\-\_\-\-B\-I\-T\-M\-A\-P $\ast$ \hyperlink{classc__map_a297d97b704636559a28596af02cf9f79}{portrait\-\_\-selection}
+\item 
+A\-L\-L\-E\-G\-R\-O\-\_\-\-B\-I\-T\-M\-A\-P $\ast$ \hyperlink{classc__map_a9816fa208514e89a87693508fa5606ae}{portrait\-\_\-mia}
+\item 
+A\-L\-L\-E\-G\-R\-O\-\_\-\-B\-I\-T\-M\-A\-P $\ast$ \hyperlink{classc__map_af599cccfc6f1260aa5c1b0a236dca397}{portrait\-\_\-metodej}
+\item 
+A\-L\-L\-E\-G\-R\-O\-\_\-\-B\-I\-T\-M\-A\-P $\ast$ \hyperlink{classc__map_a9801a871513ce172735eb4afe070f184}{portrait\-\_\-starovous}
+\item 
+A\-L\-L\-E\-G\-R\-O\-\_\-\-B\-I\-T\-M\-A\-P $\ast$ \hyperlink{classc__map_a928e809cafb17cee55193944f6aafe24}{tile}
+\item 
+A\-L\-L\-E\-G\-R\-O\-\_\-\-B\-I\-T\-M\-A\-P $\ast$ \hyperlink{classc__map_ab84679456c3df51222049c4fb80d66a9}{tile\-\_\-cliff\-\_\-south\-\_\-1}
+\item 
+A\-L\-L\-E\-G\-R\-O\-\_\-\-B\-I\-T\-M\-A\-P $\ast$ \hyperlink{classc__map_ae725ccf9eb9daefefdb9b58b00388913}{tile\-\_\-cliff\-\_\-south\-\_\-2}
+\item 
+A\-L\-L\-E\-G\-R\-O\-\_\-\-B\-I\-T\-M\-A\-P $\ast$ \hyperlink{classc__map_abecd9b0a1aab4c4e02cbe698ddb487ee}{tile\-\_\-cliff\-\_\-southwest\-\_\-1}
+\item 
+A\-L\-L\-E\-G\-R\-O\-\_\-\-B\-I\-T\-M\-A\-P $\ast$ \hyperlink{classc__map_ae1b595833e6967f8d27fd5a2252d12b3}{tile\-\_\-cliff\-\_\-southwest\-\_\-2}
+\item 
+A\-L\-L\-E\-G\-R\-O\-\_\-\-B\-I\-T\-M\-A\-P $\ast$ \hyperlink{classc__map_a9d5707e014681a6d16044d483688c081}{tile\-\_\-cliff\-\_\-southeast\-\_\-1}
+\item 
+A\-L\-L\-E\-G\-R\-O\-\_\-\-B\-I\-T\-M\-A\-P $\ast$ \hyperlink{classc__map_a1aefdb38df373482aff57b9243ec9d67}{tile\-\_\-cliff\-\_\-southeast\-\_\-2}
+\item 
+A\-L\-L\-E\-G\-R\-O\-\_\-\-B\-I\-T\-M\-A\-P $\ast$ \hyperlink{classc__map_aa40008668fa55a28089cd20c03563926}{tile\-\_\-cliff\-\_\-west}
+\item 
+A\-L\-L\-E\-G\-R\-O\-\_\-\-B\-I\-T\-M\-A\-P $\ast$ \hyperlink{classc__map_a105d6f1355ca490246a8a5bf56bbe844}{tile\-\_\-cliff\-\_\-east}
+\item 
+A\-L\-L\-E\-G\-R\-O\-\_\-\-B\-I\-T\-M\-A\-P $\ast$ \hyperlink{classc__map_aa8892af60c621c949f8f46485bd6f8b8}{tile\-\_\-cliff\-\_\-north}
+\item 
+A\-L\-L\-E\-G\-R\-O\-\_\-\-B\-I\-T\-M\-A\-P $\ast$ \hyperlink{classc__map_aec73bf9c12354078037cc6d1b4de6025}{tile\-\_\-cliff\-\_\-northwest}
+\item 
+A\-L\-L\-E\-G\-R\-O\-\_\-\-B\-I\-T\-M\-A\-P $\ast$ \hyperlink{classc__map_a1dd3e087030dad02e1329416daaf58bc}{tile\-\_\-cliff\-\_\-northeast}
+\item 
+A\-L\-L\-E\-G\-R\-O\-\_\-\-B\-I\-T\-M\-A\-P $\ast$ \hyperlink{classc__map_a0ba260cfc9fd354f0b05900b90367cfa}{tile\-\_\-edge}
+\item 
+A\-L\-L\-E\-G\-R\-O\-\_\-\-B\-I\-T\-M\-A\-P $\ast$ \hyperlink{classc__map_a1d7fc093a6e24ba1ea66b66505ad8581}{tile\-\_\-water} \mbox{[}5\mbox{]}
+\item 
+A\-L\-L\-E\-G\-R\-O\-\_\-\-B\-I\-T\-M\-A\-P $\ast$ \hyperlink{classc__map_a12e5d9ac851eba093b98998593b7f3a9}{tile\-\_\-ice}
+\item 
+A\-L\-L\-E\-G\-R\-O\-\_\-\-B\-I\-T\-M\-A\-P $\ast$ \hyperlink{classc__map_ae13539d062f5a9eb89ebf72d7e3890be}{tile\-\_\-collapse}
+\item 
+A\-L\-L\-E\-G\-R\-O\-\_\-\-B\-I\-T\-M\-A\-P $\ast$ \hyperlink{classc__map_a539c61c09b1a762ef657139f22ebd7c1}{tile\-\_\-hole}
+\item 
+A\-L\-L\-E\-G\-R\-O\-\_\-\-B\-I\-T\-M\-A\-P $\ast$ \hyperlink{classc__map_a9b6b2ac643bd82db8acf37753e86482b}{bitmap\-\_\-crate\-\_\-water}
+\item 
+A\-L\-L\-E\-G\-R\-O\-\_\-\-B\-I\-T\-M\-A\-P $\ast$ \hyperlink{classc__map_a6191d8333fa50a672d1cb02957182b7e}{spell\-\_\-mia\-\_\-1} \mbox{[}3\mbox{]}
+\item 
+A\-L\-L\-E\-G\-R\-O\-\_\-\-B\-I\-T\-M\-A\-P $\ast$ \hyperlink{classc__map_abea93f3e180070e80bb0dc7f061969cb}{spell\-\_\-mia\-\_\-2} \mbox{[}3\mbox{]}
+\item 
+A\-L\-L\-E\-G\-R\-O\-\_\-\-B\-I\-T\-M\-A\-P $\ast$ \hyperlink{classc__map_a7299ee552482b6917b4aae7f24263392}{spell\-\_\-metodej\-\_\-1} \mbox{[}3\mbox{]}
+\item 
+A\-L\-L\-E\-G\-R\-O\-\_\-\-B\-I\-T\-M\-A\-P $\ast$ \hyperlink{classc__map_aaa728703ee5b40637e354f26dcb4f136}{spell\-\_\-starovous\-\_\-1} \mbox{[}3\mbox{]}
+\item 
+A\-L\-L\-E\-G\-R\-O\-\_\-\-B\-I\-T\-M\-A\-P $\ast$ \hyperlink{classc__map_af8e66f5af3e07acfbcf780e21669b1e0}{spell\-\_\-starovous\-\_\-2} \mbox{[}3\mbox{]}
+\item 
+A\-L\-L\-E\-G\-R\-O\-\_\-\-B\-I\-T\-M\-A\-P $\ast$ \hyperlink{classc__map_afe0fe7415fc6ab78e753dbb95901dee7}{spell\-\_\-icons} \mbox{[}7\mbox{]}
+\item 
+A\-L\-L\-E\-G\-R\-O\-\_\-\-B\-I\-T\-M\-A\-P $\ast$ \hyperlink{classc__map_a5bf782d167ce72e2a115c4817954b3db}{map\-\_\-shadow\-\_\-north}
+\item 
+A\-L\-L\-E\-G\-R\-O\-\_\-\-B\-I\-T\-M\-A\-P $\ast$ \hyperlink{classc__map_a0309d1046d20db4eb0bb065d0d4a6201}{map\-\_\-shadow\-\_\-south}
+\item 
+A\-L\-L\-E\-G\-R\-O\-\_\-\-B\-I\-T\-M\-A\-P $\ast$ \hyperlink{classc__map_aa388806f4a767a2b6732b0ea3cf12e0d}{map\-\_\-shadow\-\_\-east}
+\item 
+A\-L\-L\-E\-G\-R\-O\-\_\-\-B\-I\-T\-M\-A\-P $\ast$ \hyperlink{classc__map_ad49b7ca28467f986d4b8a2e69ed1e15e}{map\-\_\-shadow\-\_\-west}
+\item 
+A\-L\-L\-E\-G\-R\-O\-\_\-\-S\-A\-M\-P\-L\-E $\ast$ \hyperlink{classc__map_abb19c6e3c47f8d1182fe746f1e6ccc40}{spell\-\_\-sounds\-\_\-mia} \mbox{[}2\mbox{]}
+\item 
+A\-L\-L\-E\-G\-R\-O\-\_\-\-S\-A\-M\-P\-L\-E $\ast$ \hyperlink{classc__map_aec438098bd5ded52ab9c831cd19eb629}{spell\-\_\-sounds\-\_\-metodej} \mbox{[}2\mbox{]}
+\item 
+A\-L\-L\-E\-G\-R\-O\-\_\-\-S\-A\-M\-P\-L\-E $\ast$ \hyperlink{classc__map_ae7b220711fb2815dc1ac925b39fa81ca}{spell\-\_\-sounds\-\_\-starovous} \mbox{[}2\mbox{]}
+\item 
+A\-L\-L\-E\-G\-R\-O\-\_\-\-S\-A\-M\-P\-L\-E $\ast$ \hyperlink{classc__map_a046d71e73934bf557644cd207facccdf}{change\-\_\-player\-\_\-sound}
+\item 
+A\-L\-L\-E\-G\-R\-O\-\_\-\-F\-O\-N\-T $\ast$ \hyperlink{classc__map_ada9b97f91338614f93a9a95fdfd7157b}{text\-\_\-font}
+\end{DoxyCompactItemize}
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classc__map_a93f9dfae5ef4afdb1b37ee4d31dab1ce}{\index{c\-\_\-map@{c\-\_\-map}!c\-\_\-map@{c\-\_\-map}}
+\index{c\-\_\-map@{c\-\_\-map}!c_map@{c\-\_\-map}}
+\subsubsection[{c\-\_\-map}]{\setlength{\rightskip}{0pt plus 5cm}c\-\_\-map\-::c\-\_\-map (
+\begin{DoxyParamCaption}
+\item[{string}]{filename, }
+\item[{{\bf t\-\_\-input\-\_\-output\-\_\-state} $\ast$}]{input\-\_\-output\-\_\-state, }
+\item[{long int $\ast$}]{global\-\_\-time, }
+\item[{int}]{language}
+\end{DoxyParamCaption}
+)}}\label{classc__map_a93f9dfae5ef4afdb1b37ee4d31dab1ce}
+Checks the game state. That means if nothing happens or if the player lost because he's encountered a monster etc.
+
+\begin{DoxyReturn}{Returns}
+current game state 
+\end{DoxyReturn}
+\hypertarget{classc__map_a44b7baccc0fafd64c0ff922d127dfb7a}{\index{c\-\_\-map@{c\-\_\-map}!$\sim$c\-\_\-map@{$\sim$c\-\_\-map}}
+\index{$\sim$c\-\_\-map@{$\sim$c\-\_\-map}!c_map@{c\-\_\-map}}
+\subsubsection[{$\sim$c\-\_\-map}]{\setlength{\rightskip}{0pt plus 5cm}c\-\_\-map\-::$\sim$c\-\_\-map (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classc__map_a44b7baccc0fafd64c0ff922d127dfb7a}
+Class constructor, loads new map from given file.
+
+
+\begin{DoxyParams}{Parameters}
+{\em filename} & path to the map file \\
+\hline
+{\em input\-\_\-output\-\_\-state} & pointer to structure, which will be used to pass information about keyboard and mouse to this object. \\
+\hline
+{\em global\-\_\-time} & reference to a global time counter variable which is needed for animations \\
+\hline
+{\em language} & language number, 0 = english, 1 = czech \\
+\hline
+\end{DoxyParams}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classc__map_a405354857d0db95dcaf5d4f7371148cb}{\index{c\-\_\-map@{c\-\_\-map}!add\-\_\-map\-\_\-object@{add\-\_\-map\-\_\-object}}
+\index{add\-\_\-map\-\_\-object@{add\-\_\-map\-\_\-object}!c_map@{c\-\_\-map}}
+\subsubsection[{add\-\_\-map\-\_\-object}]{\setlength{\rightskip}{0pt plus 5cm}void c\-\_\-map\-::add\-\_\-map\-\_\-object (
+\begin{DoxyParamCaption}
+\item[{{\bf c\-\_\-map\-\_\-object} $\ast$}]{map\-\_\-object, }
+\item[{int}]{x, }
+\item[{int}]{y}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}}}\label{classc__map_a405354857d0db95dcaf5d4f7371148cb}
+Updates character's movement in given direction and handles colisions and interaction with map objects.
+
+
+\begin{DoxyParams}{Parameters}
+{\em character} & character to be moved \\
+\hline
+{\em direction} & direction in which the player is moving \\
+\hline
+\end{DoxyParams}
+\hypertarget{classc__map_a3ea565ef763bd3aaa610d1ab21f72068}{\index{c\-\_\-map@{c\-\_\-map}!cast\-\_\-key\-\_\-press@{cast\-\_\-key\-\_\-press}}
+\index{cast\-\_\-key\-\_\-press@{cast\-\_\-key\-\_\-press}!c_map@{c\-\_\-map}}
+\subsubsection[{cast\-\_\-key\-\_\-press}]{\setlength{\rightskip}{0pt plus 5cm}void c\-\_\-map\-::cast\-\_\-key\-\_\-press (
+\begin{DoxyParamCaption}
+\item[{int}]{spell\-\_\-number}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}}}\label{classc__map_a3ea565ef763bd3aaa610d1ab21f72068}
+Handles use key press. \hypertarget{classc__map_a37968729cca9219336b7f31265f3fc40}{\index{c\-\_\-map@{c\-\_\-map}!character\-\_\-can\-\_\-move\-\_\-to\-\_\-square@{character\-\_\-can\-\_\-move\-\_\-to\-\_\-square}}
+\index{character\-\_\-can\-\_\-move\-\_\-to\-\_\-square@{character\-\_\-can\-\_\-move\-\_\-to\-\_\-square}!c_map@{c\-\_\-map}}
+\subsubsection[{character\-\_\-can\-\_\-move\-\_\-to\-\_\-square}]{\setlength{\rightskip}{0pt plus 5cm}bool c\-\_\-map\-::character\-\_\-can\-\_\-move\-\_\-to\-\_\-square (
+\begin{DoxyParamCaption}
+\item[{{\bf c\-\_\-character} $\ast$}]{character, }
+\item[{t\-\_\-direction}]{direction}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}}}\label{classc__map_a37968729cca9219336b7f31265f3fc40}
+Loads the map from given file. Also loads all other things from files like fonts, sounds etc.
+
+
+\begin{DoxyParams}{Parameters}
+{\em filename} & path to the file \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if the map was loaded succesfully, otherwise false 
+\end{DoxyReturn}
+\hypertarget{classc__map_ad0732462db74b1bc531196b2d1247809}{\index{c\-\_\-map@{c\-\_\-map}!check\-\_\-buttons@{check\-\_\-buttons}}
+\index{check\-\_\-buttons@{check\-\_\-buttons}!c_map@{c\-\_\-map}}
+\subsubsection[{check\-\_\-buttons}]{\setlength{\rightskip}{0pt plus 5cm}void c\-\_\-map\-::check\-\_\-buttons (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}}}\label{classc__map_ad0732462db74b1bc531196b2d1247809}
+Establishes pointer connections between map objects depending on their link ids. \hypertarget{classc__map_a6fe5b03607efeac17bca71a27f1767c3}{\index{c\-\_\-map@{c\-\_\-map}!check\-\_\-game\-\_\-state@{check\-\_\-game\-\_\-state}}
+\index{check\-\_\-game\-\_\-state@{check\-\_\-game\-\_\-state}!c_map@{c\-\_\-map}}
+\subsubsection[{check\-\_\-game\-\_\-state}]{\setlength{\rightskip}{0pt plus 5cm}t\-\_\-game\-\_\-state c\-\_\-map\-::check\-\_\-game\-\_\-state (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}}}\label{classc__map_a6fe5b03607efeac17bca71a27f1767c3}
+Records all buttons on the map into special data structure so that the checking of them will be faster. This must be called in order for buttons to work. \hypertarget{classc__map_a42f4ffc135ca44bf92e93d3915bee769}{\index{c\-\_\-map@{c\-\_\-map}!check\-\_\-ice@{check\-\_\-ice}}
+\index{check\-\_\-ice@{check\-\_\-ice}!c_map@{c\-\_\-map}}
+\subsubsection[{check\-\_\-ice}]{\setlength{\rightskip}{0pt plus 5cm}void c\-\_\-map\-::check\-\_\-ice (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}}}\label{classc__map_a42f4ffc135ca44bf92e93d3915bee769}
+Shifts the screen by given values. Checks borders and doesn't allow the screen to be shifted too far.
+
+
+\begin{DoxyParams}{Parameters}
+{\em x} & possibly negative x offset in pixels \\
+\hline
+{\em y} & possibly negative y offset in pixels \\
+\hline
+\end{DoxyParams}
+\hypertarget{classc__map_a3a2279cfc3ee5a721073b5b29fcf8e56}{\index{c\-\_\-map@{c\-\_\-map}!check\-\_\-teleport@{check\-\_\-teleport}}
+\index{check\-\_\-teleport@{check\-\_\-teleport}!c_map@{c\-\_\-map}}
+\subsubsection[{check\-\_\-teleport}]{\setlength{\rightskip}{0pt plus 5cm}void c\-\_\-map\-::check\-\_\-teleport (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}}}\label{classc__map_a3a2279cfc3ee5a721073b5b29fcf8e56}
+Displays given text on the screen for given time.
+
+
+\begin{DoxyParams}{Parameters}
+{\em text} & text to be displayed \\
+\hline
+{\em duration} & duration in seconds \\
+\hline
+\end{DoxyParams}
+\hypertarget{classc__map_a7ed031ff3dbd23f042273180f5f0abfb}{\index{c\-\_\-map@{c\-\_\-map}!crate\-\_\-can\-\_\-be\-\_\-shifted@{crate\-\_\-can\-\_\-be\-\_\-shifted}}
+\index{crate\-\_\-can\-\_\-be\-\_\-shifted@{crate\-\_\-can\-\_\-be\-\_\-shifted}!c_map@{c\-\_\-map}}
+\subsubsection[{crate\-\_\-can\-\_\-be\-\_\-shifted}]{\setlength{\rightskip}{0pt plus 5cm}bool c\-\_\-map\-::crate\-\_\-can\-\_\-be\-\_\-shifted (
+\begin{DoxyParamCaption}
+\item[{int}]{x, }
+\item[{int}]{y, }
+\item[{int}]{height, }
+\item[{t\-\_\-direction}]{direction}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}}}\label{classc__map_a7ed031ff3dbd23f042273180f5f0abfb}
+Shift a crate at given square in given direction. It must be checked that it is possible to shift the crate.
+
+
+\begin{DoxyParams}{Parameters}
+{\em x} & x coordination of the square \\
+\hline
+{\em y} & y coordination of the square \\
+\hline
+{\em direction} & direction in which to shift the crate \\
+\hline
+\end{DoxyParams}
+\hypertarget{classc__map_a1a60a7de987db9e2dd88672f19890cb3}{\index{c\-\_\-map@{c\-\_\-map}!display\-\_\-animation@{display\-\_\-animation}}
+\index{display\-\_\-animation@{display\-\_\-animation}!c_map@{c\-\_\-map}}
+\subsubsection[{display\-\_\-animation}]{\setlength{\rightskip}{0pt plus 5cm}void c\-\_\-map\-::display\-\_\-animation (
+\begin{DoxyParamCaption}
+\item[{t\-\_\-display\-\_\-animation}]{animation, }
+\item[{int}]{x, }
+\item[{int}]{y}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}}}\label{classc__map_a1a60a7de987db9e2dd88672f19890cb3}
+Checks if there is a character on given square.
+
+
+\begin{DoxyParams}{Parameters}
+{\em x} & x coordination of the square \\
+\hline
+{\em y} & y coordination of the square \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if there is at least one character on the square, otherwise false 
+\end{DoxyReturn}
+\hypertarget{classc__map_a4abaca91d31f0eb0fea80c48533f578e}{\index{c\-\_\-map@{c\-\_\-map}!display\-\_\-text@{display\-\_\-text}}
+\index{display\-\_\-text@{display\-\_\-text}!c_map@{c\-\_\-map}}
+\subsubsection[{display\-\_\-text}]{\setlength{\rightskip}{0pt plus 5cm}void c\-\_\-map\-::display\-\_\-text (
+\begin{DoxyParamCaption}
+\item[{string}]{text, }
+\item[{double}]{duration}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}}}\label{classc__map_a4abaca91d31f0eb0fea80c48533f578e}
+Returns object's position on the map.
+
+
+\begin{DoxyParams}{Parameters}
+{\em what} & object of which the position will be found out \\
+\hline
+{\em x} & in this variable the x coordination will be returned \\
+\hline
+{\em y} & in this variable the y coordination will be returned \\
+\hline
+\end{DoxyParams}
+\hypertarget{classc__map_ac53831c7f1f8fe285f6dbbc3968ede9c}{\index{c\-\_\-map@{c\-\_\-map}!door\-\_\-can\-\_\-be\-\_\-passed@{door\-\_\-can\-\_\-be\-\_\-passed}}
+\index{door\-\_\-can\-\_\-be\-\_\-passed@{door\-\_\-can\-\_\-be\-\_\-passed}!c_map@{c\-\_\-map}}
+\subsubsection[{door\-\_\-can\-\_\-be\-\_\-passed}]{\setlength{\rightskip}{0pt plus 5cm}bool c\-\_\-map\-::door\-\_\-can\-\_\-be\-\_\-passed (
+\begin{DoxyParamCaption}
+\item[{int}]{x, }
+\item[{int}]{y, }
+\item[{t\-\_\-direction}]{direction}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}}}\label{classc__map_ac53831c7f1f8fe285f6dbbc3968ede9c}
+Checks if the current player is standing on a teleport and if so, teleports him in matching output teleport. \hypertarget{classc__map_a46afcfac9b83f37a28a5cf3e1da91ef6}{\index{c\-\_\-map@{c\-\_\-map}!draw@{draw}}
+\index{draw@{draw}!c_map@{c\-\_\-map}}
+\subsubsection[{draw}]{\setlength{\rightskip}{0pt plus 5cm}void c\-\_\-map\-::draw (
+\begin{DoxyParamCaption}
+\item[{int}]{x, }
+\item[{int}]{y}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}}\label{classc__map_a46afcfac9b83f37a28a5cf3e1da91ef6}
+Updates the map, which means it handles it's another frame, including drawing it and handling events.
+
+\begin{DoxyReturn}{Returns}
+current game state (i.\-e playing, lost, ...) 
+\end{DoxyReturn}
+
+
+Reimplemented from \hyperlink{classc__graphic__object_a94ef8137eed9ce1ae7adf366fefb51cf}{c\-\_\-graphic\-\_\-object}.
+
+\hypertarget{classc__map_a64d2a8dd8dd79eb92c6ff2d087907369}{\index{c\-\_\-map@{c\-\_\-map}!draw\-\_\-borders@{draw\-\_\-borders}}
+\index{draw\-\_\-borders@{draw\-\_\-borders}!c_map@{c\-\_\-map}}
+\subsubsection[{draw\-\_\-borders}]{\setlength{\rightskip}{0pt plus 5cm}void c\-\_\-map\-::draw\-\_\-borders (
+\begin{DoxyParamCaption}
+\item[{int}]{x, }
+\item[{int}]{y, }
+\item[{int}]{plus\-\_\-x, }
+\item[{int}]{plus\-\_\-y}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}}}\label{classc__map_a64d2a8dd8dd79eb92c6ff2d087907369}
+Tests all the button objects on the map and performs appropriate actions. \hypertarget{classc__map_ac589863287ad3ab09d3766f39da6fd09}{\index{c\-\_\-map@{c\-\_\-map}!fire\-\_\-missile@{fire\-\_\-missile}}
+\index{fire\-\_\-missile@{fire\-\_\-missile}!c_map@{c\-\_\-map}}
+\subsubsection[{fire\-\_\-missile}]{\setlength{\rightskip}{0pt plus 5cm}void c\-\_\-map\-::fire\-\_\-missile (
+\begin{DoxyParamCaption}
+\item[{int}]{spell\-\_\-number}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}}}\label{classc__map_ac589863287ad3ab09d3766f39da6fd09}
+Updates the screen position depending on current player's position on the map and the screen resolution. \hypertarget{classc__map_add3edd9d671e1e62e66baaed5e98a9e9}{\index{c\-\_\-map@{c\-\_\-map}!get\-\_\-description@{get\-\_\-description}}
+\index{get\-\_\-description@{get\-\_\-description}!c_map@{c\-\_\-map}}
+\subsubsection[{get\-\_\-description}]{\setlength{\rightskip}{0pt plus 5cm}string c\-\_\-map\-::get\-\_\-description (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classc__map_add3edd9d671e1e62e66baaed5e98a9e9}
+Draws the map at given position on the screen.
+
+
+\begin{DoxyParams}{Parameters}
+{\em x} & x position of the screen \\
+\hline
+{\em y} & y position of the screen \\
+\hline
+\end{DoxyParams}
+\hypertarget{classc__map_a790027eaa0b60bcd2a11801e961a5232}{\index{c\-\_\-map@{c\-\_\-map}!get\-\_\-elevation\-\_\-for\-\_\-character@{get\-\_\-elevation\-\_\-for\-\_\-character}}
+\index{get\-\_\-elevation\-\_\-for\-\_\-character@{get\-\_\-elevation\-\_\-for\-\_\-character}!c_map@{c\-\_\-map}}
+\subsubsection[{get\-\_\-elevation\-\_\-for\-\_\-character}]{\setlength{\rightskip}{0pt plus 5cm}int c\-\_\-map\-::get\-\_\-elevation\-\_\-for\-\_\-character (
+\begin{DoxyParamCaption}
+\item[{{\bf c\-\_\-character} $\ast$}]{character}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}}}\label{classc__map_a790027eaa0b60bcd2a11801e961a5232}
+Checks whether given position can be moved to by a character.
+
+
+\begin{DoxyParams}{Parameters}
+{\em x} & x coordination of the square \\
+\hline
+{\em y} & y coordination of the square \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if the square at given position is stepable, otherwise false, for coordinations outside the map false is returned 
+\end{DoxyReturn}
+\hypertarget{classc__map_a250c11079b911dc753bc5dcb9521813e}{\index{c\-\_\-map@{c\-\_\-map}!get\-\_\-height@{get\-\_\-height}}
+\index{get\-\_\-height@{get\-\_\-height}!c_map@{c\-\_\-map}}
+\subsubsection[{get\-\_\-height}]{\setlength{\rightskip}{0pt plus 5cm}int c\-\_\-map\-::get\-\_\-height (
+\begin{DoxyParamCaption}
+\item[{int}]{x, }
+\item[{int}]{y}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}}}\label{classc__map_a250c11079b911dc753bc5dcb9521813e}
+Sets the map environment, which affects it's tileset (it's look). This should only be called once for the object because the method doesn't free any previously allocated memory.
+
+
+\begin{DoxyParams}{Parameters}
+{\em new\-\_\-environment} & new environment to be set \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true, if the environment was succesfully set, otherwise false 
+\end{DoxyReturn}
+\hypertarget{classc__map_a2e4546cf04d6149b7d55664f62779f71}{\index{c\-\_\-map@{c\-\_\-map}!get\-\_\-music\-\_\-name@{get\-\_\-music\-\_\-name}}
+\index{get\-\_\-music\-\_\-name@{get\-\_\-music\-\_\-name}!c_map@{c\-\_\-map}}
+\subsubsection[{get\-\_\-music\-\_\-name}]{\setlength{\rightskip}{0pt plus 5cm}string c\-\_\-map\-::get\-\_\-music\-\_\-name (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classc__map_a2e4546cf04d6149b7d55664f62779f71}
+Returns the map text description.
+
+\begin{DoxyReturn}{Returns}
+the text description 
+\end{DoxyReturn}
+\hypertarget{classc__map_a1cae0c68558c2830c8775528d7cb0425}{\index{c\-\_\-map@{c\-\_\-map}!get\-\_\-nth\-\_\-substring@{get\-\_\-nth\-\_\-substring}}
+\index{get\-\_\-nth\-\_\-substring@{get\-\_\-nth\-\_\-substring}!c_map@{c\-\_\-map}}
+\subsubsection[{get\-\_\-nth\-\_\-substring}]{\setlength{\rightskip}{0pt plus 5cm}string c\-\_\-map\-::get\-\_\-nth\-\_\-substring (
+\begin{DoxyParamCaption}
+\item[{string}]{from\-\_\-what, }
+\item[{int}]{n}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [protected]}}}\label{classc__map_a1cae0c68558c2830c8775528d7cb0425}
+Computes the next square coordination depending on a position and direction.
+
+
+\begin{DoxyParams}{Parameters}
+{\em x} & x coordination of the square \\
+\hline
+{\em y} & y coordination of the square \\
+\hline
+{\em direction} & direction of the next square \\
+\hline
+{\em next\-\_\-x} & in this variable will be the x coordination of the next square returned \\
+\hline
+{\em next\-\_\-y} & in this variable will be the y coordination of the next square returned \\
+\hline
+\end{DoxyParams}
+\hypertarget{classc__map_a1f90f7d0ebe3228203f68bb3af4be5f0}{\index{c\-\_\-map@{c\-\_\-map}!get\-\_\-object\-\_\-position@{get\-\_\-object\-\_\-position}}
+\index{get\-\_\-object\-\_\-position@{get\-\_\-object\-\_\-position}!c_map@{c\-\_\-map}}
+\subsubsection[{get\-\_\-object\-\_\-position}]{\setlength{\rightskip}{0pt plus 5cm}void c\-\_\-map\-::get\-\_\-object\-\_\-position (
+\begin{DoxyParamCaption}
+\item[{{\bf c\-\_\-map\-\_\-object} $\ast$}]{what, }
+\item[{int $\ast$}]{x, }
+\item[{int $\ast$}]{y}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}}}\label{classc__map_a1f90f7d0ebe3228203f68bb3af4be5f0}
+Checks if given object can be used (i.\-e. nothing prevents using it, like player standing in a door etc.)
+
+
+\begin{DoxyParams}{Parameters}
+{\em what} & object to be tested \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if the object can be used, false otherwise 
+\end{DoxyReturn}
+\hypertarget{classc__map_a876a3d275b3d88e3106d7af62c823774}{\index{c\-\_\-map@{c\-\_\-map}!get\-\_\-square\-\_\-type@{get\-\_\-square\-\_\-type}}
+\index{get\-\_\-square\-\_\-type@{get\-\_\-square\-\_\-type}!c_map@{c\-\_\-map}}
+\subsubsection[{get\-\_\-square\-\_\-type}]{\setlength{\rightskip}{0pt plus 5cm}t\-\_\-square\-\_\-type c\-\_\-map\-::get\-\_\-square\-\_\-type (
+\begin{DoxyParamCaption}
+\item[{int}]{x, }
+\item[{int}]{y}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}}}\label{classc__map_a876a3d275b3d88e3106d7af62c823774}
+Checks if a crate at given square can be shifted in given direction. It is assumed that the square given really holds a crate object.
+
+
+\begin{DoxyParams}{Parameters}
+{\em x} & x coordination of the square \\
+\hline
+{\em y} & y coordination of the square \\
+\hline
+{\em height} & height from which the crate is being pushed \\
+\hline
+{\em direction} & direction in which the crate is to be shifted \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if the crate can be shifted, otherwise false 
+\end{DoxyReturn}
+\hypertarget{classc__map_a273cb97d6d816e839a42460af56152f6}{\index{c\-\_\-map@{c\-\_\-map}!get\-\_\-terrain\-\_\-height@{get\-\_\-terrain\-\_\-height}}
+\index{get\-\_\-terrain\-\_\-height@{get\-\_\-terrain\-\_\-height}!c_map@{c\-\_\-map}}
+\subsubsection[{get\-\_\-terrain\-\_\-height}]{\setlength{\rightskip}{0pt plus 5cm}int c\-\_\-map\-::get\-\_\-terrain\-\_\-height (
+\begin{DoxyParamCaption}
+\item[{int}]{x, }
+\item[{int}]{y}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}}}\label{classc__map_a273cb97d6d816e839a42460af56152f6}
+Returns map height at given position. If the position is outside the map, 0 is returned. The height is calculated as terrain height + height of objects (crates, elevators etc.).
+
+
+\begin{DoxyParams}{Parameters}
+{\em x} & x position \\
+\hline
+{\em y} & y position \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+map height at given position including object heights 
+\end{DoxyReturn}
+\hypertarget{classc__map_ae840e8935d33f10baf479a4ff7f10c27}{\index{c\-\_\-map@{c\-\_\-map}!link\-\_\-objects@{link\-\_\-objects}}
+\index{link\-\_\-objects@{link\-\_\-objects}!c_map@{c\-\_\-map}}
+\subsubsection[{link\-\_\-objects}]{\setlength{\rightskip}{0pt plus 5cm}void c\-\_\-map\-::link\-\_\-objects (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}}}\label{classc__map_ae840e8935d33f10baf479a4ff7f10c27}
+Removes nth object from given square and shifts all remaining to the left so the object array stays consistent. The object's memory is not freed.
+
+
+\begin{DoxyParams}{Parameters}
+{\em x} & x coordination of the square \\
+\hline
+{\em y} & y coordination of the square \\
+\hline
+{\em n} & index of the object to be removed \\
+\hline
+\end{DoxyParams}
+\hypertarget{classc__map_a97ea01c33b55d2e3d1d706f39aa24588}{\index{c\-\_\-map@{c\-\_\-map}!load\-\_\-from\-\_\-file@{load\-\_\-from\-\_\-file}}
+\index{load\-\_\-from\-\_\-file@{load\-\_\-from\-\_\-file}!c_map@{c\-\_\-map}}
+\subsubsection[{load\-\_\-from\-\_\-file}]{\setlength{\rightskip}{0pt plus 5cm}bool c\-\_\-map\-::load\-\_\-from\-\_\-file (
+\begin{DoxyParamCaption}
+\item[{string}]{filename}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}}}\label{classc__map_a97ea01c33b55d2e3d1d706f39aa24588}
+Handles cast keys press.
+
+
+\begin{DoxyParams}{Parameters}
+{\em spell\-\_\-number} & number of spell cast (0, 1 or 2) \\
+\hline
+\end{DoxyParams}
+\hypertarget{classc__map_a56abddfd11fc1bc9fd9067ad449f21af}{\index{c\-\_\-map@{c\-\_\-map}!move\-\_\-character@{move\-\_\-character}}
+\index{move\-\_\-character@{move\-\_\-character}!c_map@{c\-\_\-map}}
+\subsubsection[{move\-\_\-character}]{\setlength{\rightskip}{0pt plus 5cm}void c\-\_\-map\-::move\-\_\-character (
+\begin{DoxyParamCaption}
+\item[{{\bf c\-\_\-character} $\ast$}]{character, }
+\item[{t\-\_\-direction}]{direction}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}}}\label{classc__map_a56abddfd11fc1bc9fd9067ad449f21af}
+Returns nth substring from string in format \char`\"{}part1$|$part2$|$...\char`\"{} If for example n equals 0, then \char`\"{}part1\char`\"{} is returned.
+
+
+\begin{DoxyParams}{Parameters}
+{\em from\-\_\-what} & string to be parsed \\
+\hline
+{\em n} & number of substring to return \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+nth substring of from\-\_\-what string, without the '$|$' separators 
+\end{DoxyReturn}
+\hypertarget{classc__map_a798709905b72d00d95940b78e5c7cabc}{\index{c\-\_\-map@{c\-\_\-map}!must\-\_\-have\-\_\-border@{must\-\_\-have\-\_\-border}}
+\index{must\-\_\-have\-\_\-border@{must\-\_\-have\-\_\-border}!c_map@{c\-\_\-map}}
+\subsubsection[{must\-\_\-have\-\_\-border}]{\setlength{\rightskip}{0pt plus 5cm}bool c\-\_\-map\-::must\-\_\-have\-\_\-border (
+\begin{DoxyParamCaption}
+\item[{t\-\_\-square\-\_\-type}]{type1, }
+\item[{t\-\_\-square\-\_\-type}]{type2}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}}}\label{classc__map_a798709905b72d00d95940b78e5c7cabc}
+Draws borders for given square depending on neighbour squares (for example if there is water-\/grass, there must be a border drawn between them). This can't be used for cliffs.
+
+
+\begin{DoxyParams}{Parameters}
+{\em x} & x coordination of the square \\
+\hline
+{\em y} & y coordination of the square \\
+\hline
+{\em plus\-\_\-x} & x offset in pixels \\
+\hline
+{\em plus\-\_\-y} & y offset in pixels \\
+\hline
+\end{DoxyParams}
+\hypertarget{classc__map_a882c99e5b3a1ce62f68b65dc74be5c62}{\index{c\-\_\-map@{c\-\_\-map}!next\-\_\-square@{next\-\_\-square}}
+\index{next\-\_\-square@{next\-\_\-square}!c_map@{c\-\_\-map}}
+\subsubsection[{next\-\_\-square}]{\setlength{\rightskip}{0pt plus 5cm}void c\-\_\-map\-::next\-\_\-square (
+\begin{DoxyParamCaption}
+\item[{int}]{x, }
+\item[{int}]{y, }
+\item[{t\-\_\-direction}]{direction, }
+\item[{int $\ast$}]{next\-\_\-x, }
+\item[{int $\ast$}]{next\-\_\-y}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [static]}, {\ttfamily [protected]}}}\label{classc__map_a882c99e5b3a1ce62f68b65dc74be5c62}
+font for displaying texts
+
+Map class implementation.
+
+authors\-: Miloslav Číž year\-: 2013 \hypertarget{classc__map_a0ed756d1637812842f65138042333d50}{\index{c\-\_\-map@{c\-\_\-map}!object\-\_\-can\-\_\-be\-\_\-used@{object\-\_\-can\-\_\-be\-\_\-used}}
+\index{object\-\_\-can\-\_\-be\-\_\-used@{object\-\_\-can\-\_\-be\-\_\-used}!c_map@{c\-\_\-map}}
+\subsubsection[{object\-\_\-can\-\_\-be\-\_\-used}]{\setlength{\rightskip}{0pt plus 5cm}bool c\-\_\-map\-::object\-\_\-can\-\_\-be\-\_\-used (
+\begin{DoxyParamCaption}
+\item[{{\bf c\-\_\-map\-\_\-object} $\ast$}]{what}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}}}\label{classc__map_a0ed756d1637812842f65138042333d50}
+Switches all flames that are set on to opposite state (i.\-e. bursting flames or not). Flames set to off are not affected by this. \hypertarget{classc__map_a1caec6390a6a85a5d98bbb0c89e3ff31}{\index{c\-\_\-map@{c\-\_\-map}!record\-\_\-buttons@{record\-\_\-buttons}}
+\index{record\-\_\-buttons@{record\-\_\-buttons}!c_map@{c\-\_\-map}}
+\subsubsection[{record\-\_\-buttons}]{\setlength{\rightskip}{0pt plus 5cm}void c\-\_\-map\-::record\-\_\-buttons (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}}}\label{classc__map_a1caec6390a6a85a5d98bbb0c89e3ff31}
+Accoording to given special monster string sets the monsters specified by it at the map.
+
+
+\begin{DoxyParams}{Parameters}
+{\em monster\-\_\-string} & string describing monsters to be put on the map, for the string format see the documentation \\
+\hline
+\end{DoxyParams}
+\hypertarget{classc__map_a4033258ab06d0867efb3cf534cf8b93f}{\index{c\-\_\-map@{c\-\_\-map}!remove\-\_\-object@{remove\-\_\-object}}
+\index{remove\-\_\-object@{remove\-\_\-object}!c_map@{c\-\_\-map}}
+\subsubsection[{remove\-\_\-object}]{\setlength{\rightskip}{0pt plus 5cm}void c\-\_\-map\-::remove\-\_\-object (
+\begin{DoxyParamCaption}
+\item[{int}]{x, }
+\item[{int}]{y, }
+\item[{int}]{index}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}}}\label{classc__map_a4033258ab06d0867efb3cf534cf8b93f}
+Updates object states depending on links between them. \hypertarget{classc__map_a24ac92070725adc1c295246887df88a1}{\index{c\-\_\-map@{c\-\_\-map}!set\-\_\-environment@{set\-\_\-environment}}
+\index{set\-\_\-environment@{set\-\_\-environment}!c_map@{c\-\_\-map}}
+\subsubsection[{set\-\_\-environment}]{\setlength{\rightskip}{0pt plus 5cm}bool c\-\_\-map\-::set\-\_\-environment (
+\begin{DoxyParamCaption}
+\item[{t\-\_\-environment}]{new\-\_\-environment}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}}}\label{classc__map_a24ac92070725adc1c295246887df88a1}
+Gets elevation in pixels for given character depending on their position on the map, objects they're standing on etc.
+
+
+\begin{DoxyParams}{Parameters}
+{\em character} & character to be checked \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+height offset in pixels 
+\end{DoxyReturn}
+\hypertarget{classc__map_ad1f16a723dfbc854557827b207f7f44a}{\index{c\-\_\-map@{c\-\_\-map}!set\-\_\-map\-\_\-objects@{set\-\_\-map\-\_\-objects}}
+\index{set\-\_\-map\-\_\-objects@{set\-\_\-map\-\_\-objects}!c_map@{c\-\_\-map}}
+\subsubsection[{set\-\_\-map\-\_\-objects}]{\setlength{\rightskip}{0pt plus 5cm}void c\-\_\-map\-::set\-\_\-map\-\_\-objects (
+\begin{DoxyParamCaption}
+\item[{string}]{object\-\_\-string}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}}}\label{classc__map_ad1f16a723dfbc854557827b207f7f44a}
+Checks all player characters if they are on ice and moving and keeps them in movement. \hypertarget{classc__map_afbef00c25eed696050c8e0fc11c770d5}{\index{c\-\_\-map@{c\-\_\-map}!set\-\_\-monsters@{set\-\_\-monsters}}
+\index{set\-\_\-monsters@{set\-\_\-monsters}!c_map@{c\-\_\-map}}
+\subsubsection[{set\-\_\-monsters}]{\setlength{\rightskip}{0pt plus 5cm}void c\-\_\-map\-::set\-\_\-monsters (
+\begin{DoxyParamCaption}
+\item[{string}]{monster\-\_\-string}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}}}\label{classc__map_afbef00c25eed696050c8e0fc11c770d5}
+Accoording to given special object string sets the objects specified by it at the map.
+
+
+\begin{DoxyParams}{Parameters}
+{\em object\-\_\-string} & string describing objects to be put on the map, for the string format see the documentation \\
+\hline
+\end{DoxyParams}
+\hypertarget{classc__map_a2d6baf17ed853fc872da4adafe956426}{\index{c\-\_\-map@{c\-\_\-map}!set\-\_\-square\-\_\-type@{set\-\_\-square\-\_\-type}}
+\index{set\-\_\-square\-\_\-type@{set\-\_\-square\-\_\-type}!c_map@{c\-\_\-map}}
+\subsubsection[{set\-\_\-square\-\_\-type}]{\setlength{\rightskip}{0pt plus 5cm}void c\-\_\-map\-::set\-\_\-square\-\_\-type (
+\begin{DoxyParamCaption}
+\item[{int}]{x, }
+\item[{int}]{y, }
+\item[{t\-\_\-square\-\_\-type}]{type}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}}}\label{classc__map_a2d6baf17ed853fc872da4adafe956426}
+Returns type of square at given position of the map. If the position is outside the map, S\-Q\-U\-A\-R\-E\-\_\-\-N\-O\-R\-M\-A\-L is returned.
+
+
+\begin{DoxyParams}{Parameters}
+{\em x} & x position \\
+\hline
+{\em y} & y position \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+square type at given position 
+\end{DoxyReturn}
+\hypertarget{classc__map_af929a9ab4f0d6cd50e58ac8956afa846}{\index{c\-\_\-map@{c\-\_\-map}!shift\-\_\-crate@{shift\-\_\-crate}}
+\index{shift\-\_\-crate@{shift\-\_\-crate}!c_map@{c\-\_\-map}}
+\subsubsection[{shift\-\_\-crate}]{\setlength{\rightskip}{0pt plus 5cm}void c\-\_\-map\-::shift\-\_\-crate (
+\begin{DoxyParamCaption}
+\item[{int}]{x, }
+\item[{int}]{y, }
+\item[{t\-\_\-direction}]{direction}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}}}\label{classc__map_af929a9ab4f0d6cd50e58ac8956afa846}
+Returns map height at given position. If the position is outside the map, 0 is returned. Only the height of the terrain is returned.
+
+
+\begin{DoxyParams}{Parameters}
+{\em x} & x position \\
+\hline
+{\em y} & y position \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+map height at given position 
+\end{DoxyReturn}
+\hypertarget{classc__map_aae5774997458b6cd01bebf5ba7578716}{\index{c\-\_\-map@{c\-\_\-map}!shift\-\_\-screen@{shift\-\_\-screen}}
+\index{shift\-\_\-screen@{shift\-\_\-screen}!c_map@{c\-\_\-map}}
+\subsubsection[{shift\-\_\-screen}]{\setlength{\rightskip}{0pt plus 5cm}void c\-\_\-map\-::shift\-\_\-screen (
+\begin{DoxyParamCaption}
+\item[{int}]{x, }
+\item[{int}]{y}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}}}\label{classc__map_aae5774997458b6cd01bebf5ba7578716}
+Updates all monsters on the map (their positions etc.) \hypertarget{classc__map_a0a382a09197490bc1557bf64745db261}{\index{c\-\_\-map@{c\-\_\-map}!square\-\_\-has\-\_\-character@{square\-\_\-has\-\_\-character}}
+\index{square\-\_\-has\-\_\-character@{square\-\_\-has\-\_\-character}!c_map@{c\-\_\-map}}
+\subsubsection[{square\-\_\-has\-\_\-character}]{\setlength{\rightskip}{0pt plus 5cm}bool c\-\_\-map\-::square\-\_\-has\-\_\-character (
+\begin{DoxyParamCaption}
+\item[{int}]{x, }
+\item[{int}]{y}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}}}\label{classc__map_a0a382a09197490bc1557bf64745db261}
+Checks if two given square types must have border drawn between them.
+
+
+\begin{DoxyParams}{Parameters}
+{\em type1} & type of the first square \\
+\hline
+{\em type2} & type of the seconf square \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if the border should be drawn, otherwise false 
+\end{DoxyReturn}
+\hypertarget{classc__map_aab9ab7a3336fd65506e5c842a2d217f1}{\index{c\-\_\-map@{c\-\_\-map}!square\-\_\-has\-\_\-object@{square\-\_\-has\-\_\-object}}
+\index{square\-\_\-has\-\_\-object@{square\-\_\-has\-\_\-object}!c_map@{c\-\_\-map}}
+\subsubsection[{square\-\_\-has\-\_\-object}]{\setlength{\rightskip}{0pt plus 5cm}bool c\-\_\-map\-::square\-\_\-has\-\_\-object (
+\begin{DoxyParamCaption}
+\item[{int}]{x, }
+\item[{int}]{y, }
+\item[{t\-\_\-object\-\_\-type}]{object\-\_\-type}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}}}\label{classc__map_aab9ab7a3336fd65506e5c842a2d217f1}
+Checks if given character can move to the next square in given direction.
+
+
+\begin{DoxyParams}{Parameters}
+{\em character} & character to be checked \\
+\hline
+{\em direction} & direction of the next square relative to character's current square \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if the character can move to the next square in that direction, otherwise false 
+\end{DoxyReturn}
+\hypertarget{classc__map_af4970a07daeff76db0cc32b6b69a93c9}{\index{c\-\_\-map@{c\-\_\-map}!square\-\_\-is\-\_\-stepable@{square\-\_\-is\-\_\-stepable}}
+\index{square\-\_\-is\-\_\-stepable@{square\-\_\-is\-\_\-stepable}!c_map@{c\-\_\-map}}
+\subsubsection[{square\-\_\-is\-\_\-stepable}]{\setlength{\rightskip}{0pt plus 5cm}bool c\-\_\-map\-::square\-\_\-is\-\_\-stepable (
+\begin{DoxyParamCaption}
+\item[{int}]{x, }
+\item[{int}]{y}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}}}\label{classc__map_af4970a07daeff76db0cc32b6b69a93c9}
+Checks if there is object of given type at given square.
+
+
+\begin{DoxyParams}{Parameters}
+{\em x} & x coordination of the square \\
+\hline
+{\em y} & y coordination of the square \\
+\hline
+{\em object\-\_\-type} & type of object to check \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if there is object of given type on given square, otherwise false 
+\end{DoxyReturn}
+\hypertarget{classc__map_afd7f4e6c58a622b83580d236397530a3}{\index{c\-\_\-map@{c\-\_\-map}!switch\-\_\-player@{switch\-\_\-player}}
+\index{switch\-\_\-player@{switch\-\_\-player}!c_map@{c\-\_\-map}}
+\subsubsection[{switch\-\_\-player}]{\setlength{\rightskip}{0pt plus 5cm}void c\-\_\-map\-::switch\-\_\-player (
+\begin{DoxyParamCaption}
+\item[{int}]{player\-\_\-number}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}}}\label{classc__map_afd7f4e6c58a622b83580d236397530a3}
+This should be called every update frame to update missile movement and events associated with them. \hypertarget{classc__map_afcdeaf89863b1c4c758dbb32d2020a25}{\index{c\-\_\-map@{c\-\_\-map}!update@{update}}
+\index{update@{update}!c_map@{c\-\_\-map}}
+\subsubsection[{update}]{\setlength{\rightskip}{0pt plus 5cm}t\-\_\-game\-\_\-state c\-\_\-map\-::update (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classc__map_afcdeaf89863b1c4c758dbb32d2020a25}
+Class destructor, frees all it's memory. \hypertarget{classc__map_a0f0fdbcf0a83552527eae22a098b6fd4}{\index{c\-\_\-map@{c\-\_\-map}!update\-\_\-flames@{update\-\_\-flames}}
+\index{update\-\_\-flames@{update\-\_\-flames}!c_map@{c\-\_\-map}}
+\subsubsection[{update\-\_\-flames}]{\setlength{\rightskip}{0pt plus 5cm}void c\-\_\-map\-::update\-\_\-flames (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}}}\label{classc__map_a0f0fdbcf0a83552527eae22a098b6fd4}
+Sqitches active player.
+
+
+\begin{DoxyParams}{Parameters}
+{\em player\-\_\-number} & number of player to be made active, if the player is not available on the map, nothing happens \\
+\hline
+\end{DoxyParams}
+\hypertarget{classc__map_a3c30d1f9254e0aeb71e2859d7e879e72}{\index{c\-\_\-map@{c\-\_\-map}!update\-\_\-map\-\_\-object\-\_\-states@{update\-\_\-map\-\_\-object\-\_\-states}}
+\index{update\-\_\-map\-\_\-object\-\_\-states@{update\-\_\-map\-\_\-object\-\_\-states}!c_map@{c\-\_\-map}}
+\subsubsection[{update\-\_\-map\-\_\-object\-\_\-states}]{\setlength{\rightskip}{0pt plus 5cm}void c\-\_\-map\-::update\-\_\-map\-\_\-object\-\_\-states (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}}}\label{classc__map_a3c30d1f9254e0aeb71e2859d7e879e72}
+Sets the square type. If the coordinations are outside the map, nothing happens.
+
+
+\begin{DoxyParams}{Parameters}
+{\em x} & x position \\
+\hline
+{\em y} & y position \\
+\hline
+{\em type} & square typ to be set \\
+\hline
+\end{DoxyParams}
+\hypertarget{classc__map_a0a72be4c098a468e7c3737230027eb4d}{\index{c\-\_\-map@{c\-\_\-map}!update\-\_\-missiles@{update\-\_\-missiles}}
+\index{update\-\_\-missiles@{update\-\_\-missiles}!c_map@{c\-\_\-map}}
+\subsubsection[{update\-\_\-missiles}]{\setlength{\rightskip}{0pt plus 5cm}void c\-\_\-map\-::update\-\_\-missiles (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}}}\label{classc__map_a0a72be4c098a468e7c3737230027eb4d}
+Creates a spell missile depending on player type selected and given spell number.
+
+
+\begin{DoxyParams}{Parameters}
+{\em spell\-\_\-number} & number of spell cast (0 or 1) \\
+\hline
+\end{DoxyParams}
+\hypertarget{classc__map_a8cec3eb1eb4d72536aa2c1d9209ca23b}{\index{c\-\_\-map@{c\-\_\-map}!update\-\_\-monsters@{update\-\_\-monsters}}
+\index{update\-\_\-monsters@{update\-\_\-monsters}!c_map@{c\-\_\-map}}
+\subsubsection[{update\-\_\-monsters}]{\setlength{\rightskip}{0pt plus 5cm}void c\-\_\-map\-::update\-\_\-monsters (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}}}\label{classc__map_a8cec3eb1eb4d72536aa2c1d9209ca23b}
+Checks if a door at given position can be passed in given direction. If there is no door at the square, true is returned.
+
+
+\begin{DoxyParams}{Parameters}
+{\em x} & x coordination of the square \\
+\hline
+{\em y} & y coordination of the square \\
+\hline
+{\em direction} & direction to be tested \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if the door at given square can be passed in given direction 
+\end{DoxyReturn}
+\hypertarget{classc__map_a706ea8f6dffb4881bee80f97e12d611b}{\index{c\-\_\-map@{c\-\_\-map}!update\-\_\-screen\-\_\-position@{update\-\_\-screen\-\_\-position}}
+\index{update\-\_\-screen\-\_\-position@{update\-\_\-screen\-\_\-position}!c_map@{c\-\_\-map}}
+\subsubsection[{update\-\_\-screen\-\_\-position}]{\setlength{\rightskip}{0pt plus 5cm}void c\-\_\-map\-::update\-\_\-screen\-\_\-position (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}}}\label{classc__map_a706ea8f6dffb4881bee80f97e12d611b}
+Displays animation on the map square.
+
+
+\begin{DoxyParams}{Parameters}
+{\em animation} & the animation to be displayed \\
+\hline
+{\em x} & x coordination of the square \\
+\hline
+{\em y} & y coordination of the square \\
+\hline
+\end{DoxyParams}
+\hypertarget{classc__map_aeff67cce172a9d464917ccccd03eab47}{\index{c\-\_\-map@{c\-\_\-map}!use\-\_\-key\-\_\-press@{use\-\_\-key\-\_\-press}}
+\index{use\-\_\-key\-\_\-press@{use\-\_\-key\-\_\-press}!c_map@{c\-\_\-map}}
+\subsubsection[{use\-\_\-key\-\_\-press}]{\setlength{\rightskip}{0pt plus 5cm}void c\-\_\-map\-::use\-\_\-key\-\_\-press (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}}}\label{classc__map_aeff67cce172a9d464917ccccd03eab47}
+Places an object on the map square. The map must be loaded.
+
+
+\begin{DoxyParams}{Parameters}
+{\em map\-\_\-object} & map object to be put onto map \\
+\hline
+{\em x} & x coordination of the square \\
+\hline
+{\em y} & y coordination of the square \\
+\hline
+\end{DoxyParams}
+
+
+\subsection{Member Data Documentation}
+\hypertarget{classc__map_af34abe429db8bba11ccc582a5c2b0b29}{\index{c\-\_\-map@{c\-\_\-map}!animation\-\_\-collapse@{animation\-\_\-collapse}}
+\index{animation\-\_\-collapse@{animation\-\_\-collapse}!c_map@{c\-\_\-map}}
+\subsubsection[{animation\-\_\-collapse}]{\setlength{\rightskip}{0pt plus 5cm}{\bf c\-\_\-animation}$\ast$ c\-\_\-map\-::animation\-\_\-collapse\hspace{0.3cm}{\ttfamily [protected]}}}\label{classc__map_af34abe429db8bba11ccc582a5c2b0b29}
+animation of crate shifting north (other directions are done animating the crate itself) \hypertarget{classc__map_ab18a6618eae74007423595aaa606b15c}{\index{c\-\_\-map@{c\-\_\-map}!animation\-\_\-crate\-\_\-shift\-\_\-north@{animation\-\_\-crate\-\_\-shift\-\_\-north}}
+\index{animation\-\_\-crate\-\_\-shift\-\_\-north@{animation\-\_\-crate\-\_\-shift\-\_\-north}!c_map@{c\-\_\-map}}
+\subsubsection[{animation\-\_\-crate\-\_\-shift\-\_\-north}]{\setlength{\rightskip}{0pt plus 5cm}{\bf c\-\_\-animation}$\ast$ c\-\_\-map\-::animation\-\_\-crate\-\_\-shift\-\_\-north\hspace{0.3cm}{\ttfamily [protected]}}}\label{classc__map_ab18a6618eae74007423595aaa606b15c}
+animation for refresh \hypertarget{classc__map_a1be7994a019936dccdf711ca8bfcaba3}{\index{c\-\_\-map@{c\-\_\-map}!animation\-\_\-explosion@{animation\-\_\-explosion}}
+\index{animation\-\_\-explosion@{animation\-\_\-explosion}!c_map@{c\-\_\-map}}
+\subsubsection[{animation\-\_\-explosion}]{\setlength{\rightskip}{0pt plus 5cm}{\bf c\-\_\-animation}$\ast$ c\-\_\-map\-::animation\-\_\-explosion\hspace{0.3cm}{\ttfamily [protected]}}}\label{classc__map_a1be7994a019936dccdf711ca8bfcaba3}
+teleport animation \hypertarget{classc__map_a23a9d2c692bc90f9b78f1274f24378e7}{\index{c\-\_\-map@{c\-\_\-map}!animation\-\_\-melt@{animation\-\_\-melt}}
+\index{animation\-\_\-melt@{animation\-\_\-melt}!c_map@{c\-\_\-map}}
+\subsubsection[{animation\-\_\-melt}]{\setlength{\rightskip}{0pt plus 5cm}{\bf c\-\_\-animation}$\ast$ c\-\_\-map\-::animation\-\_\-melt\hspace{0.3cm}{\ttfamily [protected]}}}\label{classc__map_a23a9d2c692bc90f9b78f1274f24378e7}
+animation for collapsing square \hypertarget{classc__map_a27650c86dc14f11dff3d582f3ffd540e}{\index{c\-\_\-map@{c\-\_\-map}!animation\-\_\-refresh@{animation\-\_\-refresh}}
+\index{animation\-\_\-refresh@{animation\-\_\-refresh}!c_map@{c\-\_\-map}}
+\subsubsection[{animation\-\_\-refresh}]{\setlength{\rightskip}{0pt plus 5cm}{\bf c\-\_\-animation}$\ast$ c\-\_\-map\-::animation\-\_\-refresh\hspace{0.3cm}{\ttfamily [protected]}}}\label{classc__map_a27650c86dc14f11dff3d582f3ffd540e}
+animation for water splash \hypertarget{classc__map_ad52da3cd4cd1e0c88ce8170314b09f78}{\index{c\-\_\-map@{c\-\_\-map}!animation\-\_\-shadow\-\_\-explosion@{animation\-\_\-shadow\-\_\-explosion}}
+\index{animation\-\_\-shadow\-\_\-explosion@{animation\-\_\-shadow\-\_\-explosion}!c_map@{c\-\_\-map}}
+\subsubsection[{animation\-\_\-shadow\-\_\-explosion}]{\setlength{\rightskip}{0pt plus 5cm}{\bf c\-\_\-animation}$\ast$ c\-\_\-map\-::animation\-\_\-shadow\-\_\-explosion\hspace{0.3cm}{\ttfamily [protected]}}}\label{classc__map_ad52da3cd4cd1e0c88ce8170314b09f78}
+explosion animation \hypertarget{classc__map_a812ca3ddb1f4ff364861a4a4f3318caf}{\index{c\-\_\-map@{c\-\_\-map}!animation\-\_\-teleport@{animation\-\_\-teleport}}
+\index{animation\-\_\-teleport@{animation\-\_\-teleport}!c_map@{c\-\_\-map}}
+\subsubsection[{animation\-\_\-teleport}]{\setlength{\rightskip}{0pt plus 5cm}{\bf c\-\_\-animation}$\ast$ c\-\_\-map\-::animation\-\_\-teleport\hspace{0.3cm}{\ttfamily [protected]}}}\label{classc__map_a812ca3ddb1f4ff364861a4a4f3318caf}
+animation of melting ice \hypertarget{classc__map_a777d0b0ec7a0a14c1ccae809cb09f4b1}{\index{c\-\_\-map@{c\-\_\-map}!animation\-\_\-water\-\_\-splash@{animation\-\_\-water\-\_\-splash}}
+\index{animation\-\_\-water\-\_\-splash@{animation\-\_\-water\-\_\-splash}!c_map@{c\-\_\-map}}
+\subsubsection[{animation\-\_\-water\-\_\-splash}]{\setlength{\rightskip}{0pt plus 5cm}{\bf c\-\_\-animation}$\ast$ c\-\_\-map\-::animation\-\_\-water\-\_\-splash\hspace{0.3cm}{\ttfamily [protected]}}}\label{classc__map_a777d0b0ec7a0a14c1ccae809cb09f4b1}
+position of the lower right corner of the screen in game squares \hypertarget{classc__map_a9b6b2ac643bd82db8acf37753e86482b}{\index{c\-\_\-map@{c\-\_\-map}!bitmap\-\_\-crate\-\_\-water@{bitmap\-\_\-crate\-\_\-water}}
+\index{bitmap\-\_\-crate\-\_\-water@{bitmap\-\_\-crate\-\_\-water}!c_map@{c\-\_\-map}}
+\subsubsection[{bitmap\-\_\-crate\-\_\-water}]{\setlength{\rightskip}{0pt plus 5cm}A\-L\-L\-E\-G\-R\-O\-\_\-\-B\-I\-T\-M\-A\-P$\ast$ c\-\_\-map\-::bitmap\-\_\-crate\-\_\-water\hspace{0.3cm}{\ttfamily [protected]}}}\label{classc__map_a9b6b2ac643bd82db8acf37753e86482b}
+bitmap -\/ hole square \hypertarget{classc__map_a4d9edbbf1f0e9465f7e04307af02afab}{\index{c\-\_\-map@{c\-\_\-map}!button\-\_\-positions\-\_\-x@{button\-\_\-positions\-\_\-x}}
+\index{button\-\_\-positions\-\_\-x@{button\-\_\-positions\-\_\-x}!c_map@{c\-\_\-map}}
+\subsubsection[{button\-\_\-positions\-\_\-x}]{\setlength{\rightskip}{0pt plus 5cm}int$\ast$ c\-\_\-map\-::button\-\_\-positions\-\_\-x\hspace{0.3cm}{\ttfamily [protected]}}}\label{classc__map_a4d9edbbf1f0e9465f7e04307af02afab}
+map height in squares \hypertarget{classc__map_a6be0ac983d8dfd2aa801face76908dff}{\index{c\-\_\-map@{c\-\_\-map}!button\-\_\-positions\-\_\-y@{button\-\_\-positions\-\_\-y}}
+\index{button\-\_\-positions\-\_\-y@{button\-\_\-positions\-\_\-y}!c_map@{c\-\_\-map}}
+\subsubsection[{button\-\_\-positions\-\_\-y}]{\setlength{\rightskip}{0pt plus 5cm}int$\ast$ c\-\_\-map\-::button\-\_\-positions\-\_\-y\hspace{0.3cm}{\ttfamily [protected]}}}\label{classc__map_a6be0ac983d8dfd2aa801face76908dff}
+an array containing x coordinations of all button objects on the map for faster browsing \hypertarget{classc__map_af7ac20f46aab8dde2b4459642fd5d3de}{\index{c\-\_\-map@{c\-\_\-map}!change\-\_\-flame\-\_\-state@{change\-\_\-flame\-\_\-state}}
+\index{change\-\_\-flame\-\_\-state@{change\-\_\-flame\-\_\-state}!c_map@{c\-\_\-map}}
+\subsubsection[{change\-\_\-flame\-\_\-state}]{\setlength{\rightskip}{0pt plus 5cm}double c\-\_\-map\-::change\-\_\-flame\-\_\-state\hspace{0.3cm}{\ttfamily [protected]}}}\label{classc__map_af7ac20f46aab8dde2b4459642fd5d3de}
+keeps information about whether the oren was destroyed \hypertarget{classc__map_a046d71e73934bf557644cd207facccdf}{\index{c\-\_\-map@{c\-\_\-map}!change\-\_\-player\-\_\-sound@{change\-\_\-player\-\_\-sound}}
+\index{change\-\_\-player\-\_\-sound@{change\-\_\-player\-\_\-sound}!c_map@{c\-\_\-map}}
+\subsubsection[{change\-\_\-player\-\_\-sound}]{\setlength{\rightskip}{0pt plus 5cm}A\-L\-L\-E\-G\-R\-O\-\_\-\-S\-A\-M\-P\-L\-E$\ast$ c\-\_\-map\-::change\-\_\-player\-\_\-sound\hspace{0.3cm}{\ttfamily [protected]}}}\label{classc__map_a046d71e73934bf557644cd207facccdf}
+Starovous' cast sounds \hypertarget{classc__map_aee9ff4ca6cc941590f843b7c88b50067}{\index{c\-\_\-map@{c\-\_\-map}!current\-\_\-player@{current\-\_\-player}}
+\index{current\-\_\-player@{current\-\_\-player}!c_map@{c\-\_\-map}}
+\subsubsection[{current\-\_\-player}]{\setlength{\rightskip}{0pt plus 5cm}int c\-\_\-map\-::current\-\_\-player\hspace{0.3cm}{\ttfamily [protected]}}}\label{classc__map_aee9ff4ca6cc941590f843b7c88b50067}
+number of buttons on the map \hypertarget{classc__map_ad1b2ee98d03858d529bf35854473ecc6}{\index{c\-\_\-map@{c\-\_\-map}!description@{description}}
+\index{description@{description}!c_map@{c\-\_\-map}}
+\subsubsection[{description}]{\setlength{\rightskip}{0pt plus 5cm}string c\-\_\-map\-::description\hspace{0.3cm}{\ttfamily [protected]}}}\label{classc__map_ad1b2ee98d03858d529bf35854473ecc6}
+width and height of the textbox for displayed message \hypertarget{classc__map_a7717281184aa1c3eca2d1b2377a16d9d}{\index{c\-\_\-map@{c\-\_\-map}!environment@{environment}}
+\index{environment@{environment}!c_map@{c\-\_\-map}}
+\subsubsection[{environment}]{\setlength{\rightskip}{0pt plus 5cm}t\-\_\-environment c\-\_\-map\-::environment\hspace{0.3cm}{\ttfamily [protected]}}}\label{classc__map_a7717281184aa1c3eca2d1b2377a16d9d}
+center point of the screen (y) \hypertarget{classc__map_a38c8548138806d350a13fc6ace496d14}{\index{c\-\_\-map@{c\-\_\-map}!fire\-\_\-cloak\-\_\-end\-\_\-time@{fire\-\_\-cloak\-\_\-end\-\_\-time}}
+\index{fire\-\_\-cloak\-\_\-end\-\_\-time@{fire\-\_\-cloak\-\_\-end\-\_\-time}!c_map@{c\-\_\-map}}
+\subsubsection[{fire\-\_\-cloak\-\_\-end\-\_\-time}]{\setlength{\rightskip}{0pt plus 5cm}double c\-\_\-map\-::fire\-\_\-cloak\-\_\-end\-\_\-time\hspace{0.3cm}{\ttfamily [protected]}}}\label{classc__map_a38c8548138806d350a13fc6ace496d14}
+says if fire cloak spell time should be being checked \hypertarget{classc__map_a42c18f1bd057c4dcd88ec2de95c854fe}{\index{c\-\_\-map@{c\-\_\-map}!flames\-\_\-on@{flames\-\_\-on}}
+\index{flames\-\_\-on@{flames\-\_\-on}!c_map@{c\-\_\-map}}
+\subsubsection[{flames\-\_\-on}]{\setlength{\rightskip}{0pt plus 5cm}bool c\-\_\-map\-::flames\-\_\-on\hspace{0.3cm}{\ttfamily [protected]}}}\label{classc__map_a42c18f1bd057c4dcd88ec2de95c854fe}
+time when the text will stop being displayed \hypertarget{classc__map_ae7f6ee0b7e9f43cf0344d55480595803}{\index{c\-\_\-map@{c\-\_\-map}!frame\-\_\-count@{frame\-\_\-count}}
+\index{frame\-\_\-count@{frame\-\_\-count}!c_map@{c\-\_\-map}}
+\subsubsection[{frame\-\_\-count}]{\setlength{\rightskip}{0pt plus 5cm}int c\-\_\-map\-::frame\-\_\-count\hspace{0.3cm}{\ttfamily [protected]}}}\label{classc__map_ae7f6ee0b7e9f43cf0344d55480595803}
+turns on or off bursting flames of flame objects switched on \hypertarget{classc__map_af30ddc07f94cbc2e9c91cbdfd3f68cc5}{\index{c\-\_\-map@{c\-\_\-map}!height@{height}}
+\index{height@{height}!c_map@{c\-\_\-map}}
+\subsubsection[{height}]{\setlength{\rightskip}{0pt plus 5cm}int c\-\_\-map\-::height\hspace{0.3cm}{\ttfamily [protected]}}}\label{classc__map_af30ddc07f94cbc2e9c91cbdfd3f68cc5}
+map width in squares \hypertarget{classc__map_a548cfcecd3a9981dc3c4dd950ceaeab4}{\index{c\-\_\-map@{c\-\_\-map}!input\-\_\-output\-\_\-state@{input\-\_\-output\-\_\-state}}
+\index{input\-\_\-output\-\_\-state@{input\-\_\-output\-\_\-state}!c_map@{c\-\_\-map}}
+\subsubsection[{input\-\_\-output\-\_\-state}]{\setlength{\rightskip}{0pt plus 5cm}{\bf t\-\_\-input\-\_\-output\-\_\-state}$\ast$ c\-\_\-map\-::input\-\_\-output\-\_\-state\hspace{0.3cm}{\ttfamily [protected]}}}\label{classc__map_a548cfcecd3a9981dc3c4dd950ceaeab4}
+number of monsters on the map \hypertarget{classc__map_af60c23046dcafb3b9c4a3e097f9e586e}{\index{c\-\_\-map@{c\-\_\-map}!language@{language}}
+\index{language@{language}!c_map@{c\-\_\-map}}
+\subsubsection[{language}]{\setlength{\rightskip}{0pt plus 5cm}int c\-\_\-map\-::language\hspace{0.3cm}{\ttfamily [protected]}}}\label{classc__map_af60c23046dcafb3b9c4a3e097f9e586e}
+stores the end time for the fire cloak spell \hypertarget{classc__map_aa388806f4a767a2b6732b0ea3cf12e0d}{\index{c\-\_\-map@{c\-\_\-map}!map\-\_\-shadow\-\_\-east@{map\-\_\-shadow\-\_\-east}}
+\index{map\-\_\-shadow\-\_\-east@{map\-\_\-shadow\-\_\-east}!c_map@{c\-\_\-map}}
+\subsubsection[{map\-\_\-shadow\-\_\-east}]{\setlength{\rightskip}{0pt plus 5cm}A\-L\-L\-E\-G\-R\-O\-\_\-\-B\-I\-T\-M\-A\-P$\ast$ c\-\_\-map\-::map\-\_\-shadow\-\_\-east\hspace{0.3cm}{\ttfamily [protected]}}}\label{classc__map_aa388806f4a767a2b6732b0ea3cf12e0d}
+bitmap -\/ map transition to dark background on south edge \hypertarget{classc__map_a5bf782d167ce72e2a115c4817954b3db}{\index{c\-\_\-map@{c\-\_\-map}!map\-\_\-shadow\-\_\-north@{map\-\_\-shadow\-\_\-north}}
+\index{map\-\_\-shadow\-\_\-north@{map\-\_\-shadow\-\_\-north}!c_map@{c\-\_\-map}}
+\subsubsection[{map\-\_\-shadow\-\_\-north}]{\setlength{\rightskip}{0pt plus 5cm}A\-L\-L\-E\-G\-R\-O\-\_\-\-B\-I\-T\-M\-A\-P$\ast$ c\-\_\-map\-::map\-\_\-shadow\-\_\-north\hspace{0.3cm}{\ttfamily [protected]}}}\label{classc__map_a5bf782d167ce72e2a115c4817954b3db}
+bitmaps -\/ spell icons \hypertarget{classc__map_a0309d1046d20db4eb0bb065d0d4a6201}{\index{c\-\_\-map@{c\-\_\-map}!map\-\_\-shadow\-\_\-south@{map\-\_\-shadow\-\_\-south}}
+\index{map\-\_\-shadow\-\_\-south@{map\-\_\-shadow\-\_\-south}!c_map@{c\-\_\-map}}
+\subsubsection[{map\-\_\-shadow\-\_\-south}]{\setlength{\rightskip}{0pt plus 5cm}A\-L\-L\-E\-G\-R\-O\-\_\-\-B\-I\-T\-M\-A\-P$\ast$ c\-\_\-map\-::map\-\_\-shadow\-\_\-south\hspace{0.3cm}{\ttfamily [protected]}}}\label{classc__map_a0309d1046d20db4eb0bb065d0d4a6201}
+bitmap -\/ map transition to dark background on north edge \hypertarget{classc__map_ad49b7ca28467f986d4b8a2e69ed1e15e}{\index{c\-\_\-map@{c\-\_\-map}!map\-\_\-shadow\-\_\-west@{map\-\_\-shadow\-\_\-west}}
+\index{map\-\_\-shadow\-\_\-west@{map\-\_\-shadow\-\_\-west}!c_map@{c\-\_\-map}}
+\subsubsection[{map\-\_\-shadow\-\_\-west}]{\setlength{\rightskip}{0pt plus 5cm}A\-L\-L\-E\-G\-R\-O\-\_\-\-B\-I\-T\-M\-A\-P$\ast$ c\-\_\-map\-::map\-\_\-shadow\-\_\-west\hspace{0.3cm}{\ttfamily [protected]}}}\label{classc__map_ad49b7ca28467f986d4b8a2e69ed1e15e}
+bitmap -\/ map transition to dark background on east edge \hypertarget{classc__map_a7a421fc457cc901876cc7e8d0fbc13e8}{\index{c\-\_\-map@{c\-\_\-map}!missiles@{missiles}}
+\index{missiles@{missiles}!c_map@{c\-\_\-map}}
+\subsubsection[{missiles}]{\setlength{\rightskip}{0pt plus 5cm}{\bf t\-\_\-missile} c\-\_\-map\-::missiles\mbox{[}M\-A\-X\-\_\-\-M\-I\-S\-S\-I\-L\-E\-S\-\_\-\-O\-N\-\_\-\-M\-A\-P\mbox{]}\hspace{0.3cm}{\ttfamily [protected]}}}\label{classc__map_a7a421fc457cc901876cc7e8d0fbc13e8}
+counts frames \hypertarget{classc__map_af0168711e28d3671a9ef69003f3f0dc6}{\index{c\-\_\-map@{c\-\_\-map}!monster\-\_\-characters@{monster\-\_\-characters}}
+\index{monster\-\_\-characters@{monster\-\_\-characters}!c_map@{c\-\_\-map}}
+\subsubsection[{monster\-\_\-characters}]{\setlength{\rightskip}{0pt plus 5cm}{\bf c\-\_\-monster\-\_\-character}$\ast$ c\-\_\-map\-::monster\-\_\-characters\mbox{[}M\-A\-X\-\_\-\-M\-O\-N\-S\-T\-E\-R\-S\-\_\-\-O\-N\-\_\-\-M\-A\-P\mbox{]}\hspace{0.3cm}{\ttfamily [protected]}}}\label{classc__map_af0168711e28d3671a9ef69003f3f0dc6}
+player characters, N\-U\-L\-L means no character \hypertarget{classc__map_aeab133fe9c418a16af900492f8bf49a4}{\index{c\-\_\-map@{c\-\_\-map}!music\-\_\-name@{music\-\_\-name}}
+\index{music\-\_\-name@{music\-\_\-name}!c_map@{c\-\_\-map}}
+\subsubsection[{music\-\_\-name}]{\setlength{\rightskip}{0pt plus 5cm}string c\-\_\-map\-::music\-\_\-name\hspace{0.3cm}{\ttfamily [protected]}}}\label{classc__map_aeab133fe9c418a16af900492f8bf49a4}
+time when to change flames states (from active to non active and vice versa) \hypertarget{classc__map_af36d349e1b651e72551f361b88cb9a76}{\index{c\-\_\-map@{c\-\_\-map}!number\-\_\-of\-\_\-buttons@{number\-\_\-of\-\_\-buttons}}
+\index{number\-\_\-of\-\_\-buttons@{number\-\_\-of\-\_\-buttons}!c_map@{c\-\_\-map}}
+\subsubsection[{number\-\_\-of\-\_\-buttons}]{\setlength{\rightskip}{0pt plus 5cm}int c\-\_\-map\-::number\-\_\-of\-\_\-buttons\hspace{0.3cm}{\ttfamily [protected]}}}\label{classc__map_af36d349e1b651e72551f361b88cb9a76}
+an array containing y coordinations of all buttons \hypertarget{classc__map_a83302b5feea5bc2e3e9bc10efa23396f}{\index{c\-\_\-map@{c\-\_\-map}!number\-\_\-of\-\_\-missiles@{number\-\_\-of\-\_\-missiles}}
+\index{number\-\_\-of\-\_\-missiles@{number\-\_\-of\-\_\-missiles}!c_map@{c\-\_\-map}}
+\subsubsection[{number\-\_\-of\-\_\-missiles}]{\setlength{\rightskip}{0pt plus 5cm}int c\-\_\-map\-::number\-\_\-of\-\_\-missiles\hspace{0.3cm}{\ttfamily [protected]}}}\label{classc__map_a83302b5feea5bc2e3e9bc10efa23396f}
+array of missiles that are currently at the map \hypertarget{classc__map_aab102e2ce55754d739b6679740f97a7c}{\index{c\-\_\-map@{c\-\_\-map}!number\-\_\-of\-\_\-monsters@{number\-\_\-of\-\_\-monsters}}
+\index{number\-\_\-of\-\_\-monsters@{number\-\_\-of\-\_\-monsters}!c_map@{c\-\_\-map}}
+\subsubsection[{number\-\_\-of\-\_\-monsters}]{\setlength{\rightskip}{0pt plus 5cm}int c\-\_\-map\-::number\-\_\-of\-\_\-monsters\hspace{0.3cm}{\ttfamily [protected]}}}\label{classc__map_aab102e2ce55754d739b6679740f97a7c}
+monster characters, N\-U\-L\-L means no character \hypertarget{classc__map_af471bb004fc765a15293604a0830bca2}{\index{c\-\_\-map@{c\-\_\-map}!oren\-\_\-destroyed@{oren\-\_\-destroyed}}
+\index{oren\-\_\-destroyed@{oren\-\_\-destroyed}!c_map@{c\-\_\-map}}
+\subsubsection[{oren\-\_\-destroyed}]{\setlength{\rightskip}{0pt plus 5cm}bool c\-\_\-map\-::oren\-\_\-destroyed\hspace{0.3cm}{\ttfamily [protected]}}}\label{classc__map_af471bb004fc765a15293604a0830bca2}
+map text description displayed during the intro \hypertarget{classc__map_a54131ed05249666c5ba32558a1df7d3e}{\index{c\-\_\-map@{c\-\_\-map}!player\-\_\-characters@{player\-\_\-characters}}
+\index{player\-\_\-characters@{player\-\_\-characters}!c_map@{c\-\_\-map}}
+\subsubsection[{player\-\_\-characters}]{\setlength{\rightskip}{0pt plus 5cm}{\bf c\-\_\-player\-\_\-character}$\ast$ c\-\_\-map\-::player\-\_\-characters\mbox{[}3\mbox{]}\hspace{0.3cm}{\ttfamily [protected]}}}\label{classc__map_a54131ed05249666c5ba32558a1df7d3e}
+map squares \hypertarget{classc__map_af599cccfc6f1260aa5c1b0a236dca397}{\index{c\-\_\-map@{c\-\_\-map}!portrait\-\_\-metodej@{portrait\-\_\-metodej}}
+\index{portrait\-\_\-metodej@{portrait\-\_\-metodej}!c_map@{c\-\_\-map}}
+\subsubsection[{portrait\-\_\-metodej}]{\setlength{\rightskip}{0pt plus 5cm}A\-L\-L\-E\-G\-R\-O\-\_\-\-B\-I\-T\-M\-A\-P$\ast$ c\-\_\-map\-::portrait\-\_\-metodej\hspace{0.3cm}{\ttfamily [protected]}}}\label{classc__map_af599cccfc6f1260aa5c1b0a236dca397}
+bitmap -\/ G\-U\-I portrait of Mia \hypertarget{classc__map_a9816fa208514e89a87693508fa5606ae}{\index{c\-\_\-map@{c\-\_\-map}!portrait\-\_\-mia@{portrait\-\_\-mia}}
+\index{portrait\-\_\-mia@{portrait\-\_\-mia}!c_map@{c\-\_\-map}}
+\subsubsection[{portrait\-\_\-mia}]{\setlength{\rightskip}{0pt plus 5cm}A\-L\-L\-E\-G\-R\-O\-\_\-\-B\-I\-T\-M\-A\-P$\ast$ c\-\_\-map\-::portrait\-\_\-mia\hspace{0.3cm}{\ttfamily [protected]}}}\label{classc__map_a9816fa208514e89a87693508fa5606ae}
+bitmap -\/ G\-U\-I selection behind the portrait \hypertarget{classc__map_a297d97b704636559a28596af02cf9f79}{\index{c\-\_\-map@{c\-\_\-map}!portrait\-\_\-selection@{portrait\-\_\-selection}}
+\index{portrait\-\_\-selection@{portrait\-\_\-selection}!c_map@{c\-\_\-map}}
+\subsubsection[{portrait\-\_\-selection}]{\setlength{\rightskip}{0pt plus 5cm}A\-L\-L\-E\-G\-R\-O\-\_\-\-B\-I\-T\-M\-A\-P$\ast$ c\-\_\-map\-::portrait\-\_\-selection\hspace{0.3cm}{\ttfamily [protected]}}}\label{classc__map_a297d97b704636559a28596af02cf9f79}
+shadow explosion animation \hypertarget{classc__map_a9801a871513ce172735eb4afe070f184}{\index{c\-\_\-map@{c\-\_\-map}!portrait\-\_\-starovous@{portrait\-\_\-starovous}}
+\index{portrait\-\_\-starovous@{portrait\-\_\-starovous}!c_map@{c\-\_\-map}}
+\subsubsection[{portrait\-\_\-starovous}]{\setlength{\rightskip}{0pt plus 5cm}A\-L\-L\-E\-G\-R\-O\-\_\-\-B\-I\-T\-M\-A\-P$\ast$ c\-\_\-map\-::portrait\-\_\-starovous\hspace{0.3cm}{\ttfamily [protected]}}}\label{classc__map_a9801a871513ce172735eb4afe070f184}
+bitmap -\/ G\-U\-I portrait of Metodej \hypertarget{classc__map_aeb595cd9e54fd327225d36119f128496}{\index{c\-\_\-map@{c\-\_\-map}!portrait\-\_\-x\-\_\-positions@{portrait\-\_\-x\-\_\-positions}}
+\index{portrait\-\_\-x\-\_\-positions@{portrait\-\_\-x\-\_\-positions}!c_map@{c\-\_\-map}}
+\subsubsection[{portrait\-\_\-x\-\_\-positions}]{\setlength{\rightskip}{0pt plus 5cm}int c\-\_\-map\-::portrait\-\_\-x\-\_\-positions\mbox{[}3\mbox{]}\hspace{0.3cm}{\ttfamily [protected]}}}\label{classc__map_aeb595cd9e54fd327225d36119f128496}
+stores time between two frames to calculate step length etc. \hypertarget{classc__map_abd86f152d66885aa67f8ec22ac4b3bca}{\index{c\-\_\-map@{c\-\_\-map}!portrait\-\_\-y\-\_\-position@{portrait\-\_\-y\-\_\-position}}
+\index{portrait\-\_\-y\-\_\-position@{portrait\-\_\-y\-\_\-position}!c_map@{c\-\_\-map}}
+\subsubsection[{portrait\-\_\-y\-\_\-position}]{\setlength{\rightskip}{0pt plus 5cm}int c\-\_\-map\-::portrait\-\_\-y\-\_\-position\hspace{0.3cm}{\ttfamily [protected]}}}\label{classc__map_abd86f152d66885aa67f8ec22ac4b3bca}
+a helper array containing portrait x positions so they don't have to be counted each frame \hypertarget{classc__map_a05a4919684f8a4d6c10342f4e8231124}{\index{c\-\_\-map@{c\-\_\-map}!pressed\-\_\-1@{pressed\-\_\-1}}
+\index{pressed\-\_\-1@{pressed\-\_\-1}!c_map@{c\-\_\-map}}
+\subsubsection[{pressed\-\_\-1}]{\setlength{\rightskip}{0pt plus 5cm}bool c\-\_\-map\-::pressed\-\_\-1\hspace{0.3cm}{\ttfamily [protected]}}}\label{classc__map_a05a4919684f8a4d6c10342f4e8231124}
+y position of portraits in pixels \hypertarget{classc__map_a0d69618264aff3f1b167d4fc3bb5ceb3}{\index{c\-\_\-map@{c\-\_\-map}!pressed\-\_\-2@{pressed\-\_\-2}}
+\index{pressed\-\_\-2@{pressed\-\_\-2}!c_map@{c\-\_\-map}}
+\subsubsection[{pressed\-\_\-2}]{\setlength{\rightskip}{0pt plus 5cm}bool c\-\_\-map\-::pressed\-\_\-2\hspace{0.3cm}{\ttfamily [protected]}}}\label{classc__map_a0d69618264aff3f1b167d4fc3bb5ceb3}
+to handle events only once per keypressed, not each frame \hypertarget{classc__map_a1fb9429d0318c721540dbe6337615cff}{\index{c\-\_\-map@{c\-\_\-map}!screen\-\_\-center\-\_\-x@{screen\-\_\-center\-\_\-x}}
+\index{screen\-\_\-center\-\_\-x@{screen\-\_\-center\-\_\-x}!c_map@{c\-\_\-map}}
+\subsubsection[{screen\-\_\-center\-\_\-x}]{\setlength{\rightskip}{0pt plus 5cm}int c\-\_\-map\-::screen\-\_\-center\-\_\-x\hspace{0.3cm}{\ttfamily [protected]}}}\label{classc__map_a1fb9429d0318c721540dbe6337615cff}
+current player number \hypertarget{classc__map_a060e812813124210995493d10bc873d0}{\index{c\-\_\-map@{c\-\_\-map}!screen\-\_\-center\-\_\-y@{screen\-\_\-center\-\_\-y}}
+\index{screen\-\_\-center\-\_\-y@{screen\-\_\-center\-\_\-y}!c_map@{c\-\_\-map}}
+\subsubsection[{screen\-\_\-center\-\_\-y}]{\setlength{\rightskip}{0pt plus 5cm}int c\-\_\-map\-::screen\-\_\-center\-\_\-y\hspace{0.3cm}{\ttfamily [protected]}}}\label{classc__map_a060e812813124210995493d10bc873d0}
+center point of the screen (x) \hypertarget{classc__map_afa78589723b061e99ecfe9f7ae9a5fdd}{\index{c\-\_\-map@{c\-\_\-map}!screen\-\_\-pixel\-\_\-position@{screen\-\_\-pixel\-\_\-position}}
+\index{screen\-\_\-pixel\-\_\-position@{screen\-\_\-pixel\-\_\-position}!c_map@{c\-\_\-map}}
+\subsubsection[{screen\-\_\-pixel\-\_\-position}]{\setlength{\rightskip}{0pt plus 5cm}int c\-\_\-map\-::screen\-\_\-pixel\-\_\-position\mbox{[}2\mbox{]}\hspace{0.3cm}{\ttfamily [protected]}}}\label{classc__map_afa78589723b061e99ecfe9f7ae9a5fdd}
+position of the upper left screen corner aat the game map \hypertarget{classc__map_a4fd1b68220337cb514fed398fe79b7ab}{\index{c\-\_\-map@{c\-\_\-map}!screen\-\_\-square\-\_\-end@{screen\-\_\-square\-\_\-end}}
+\index{screen\-\_\-square\-\_\-end@{screen\-\_\-square\-\_\-end}!c_map@{c\-\_\-map}}
+\subsubsection[{screen\-\_\-square\-\_\-end}]{\setlength{\rightskip}{0pt plus 5cm}int c\-\_\-map\-::screen\-\_\-square\-\_\-end\mbox{[}2\mbox{]}\hspace{0.3cm}{\ttfamily [protected]}}}\label{classc__map_a4fd1b68220337cb514fed398fe79b7ab}
+screen square position converted to pixels \hypertarget{classc__map_a2b6fac3ee312a52883ab9ff692dbaf0b}{\index{c\-\_\-map@{c\-\_\-map}!screen\-\_\-square\-\_\-position@{screen\-\_\-square\-\_\-position}}
+\index{screen\-\_\-square\-\_\-position@{screen\-\_\-square\-\_\-position}!c_map@{c\-\_\-map}}
+\subsubsection[{screen\-\_\-square\-\_\-position}]{\setlength{\rightskip}{0pt plus 5cm}int c\-\_\-map\-::screen\-\_\-square\-\_\-position\mbox{[}2\mbox{]}\hspace{0.3cm}{\ttfamily [protected]}}}\label{classc__map_a2b6fac3ee312a52883ab9ff692dbaf0b}
+depending on screen resolution, this will contain screen resolution in game squares \hypertarget{classc__map_af760f25a8a9a58ce904ac0f0b3ee6887}{\index{c\-\_\-map@{c\-\_\-map}!screen\-\_\-square\-\_\-resolution@{screen\-\_\-square\-\_\-resolution}}
+\index{screen\-\_\-square\-\_\-resolution@{screen\-\_\-square\-\_\-resolution}!c_map@{c\-\_\-map}}
+\subsubsection[{screen\-\_\-square\-\_\-resolution}]{\setlength{\rightskip}{0pt plus 5cm}int c\-\_\-map\-::screen\-\_\-square\-\_\-resolution\mbox{[}2\mbox{]}\hspace{0.3cm}{\ttfamily [protected]}}}\label{classc__map_af760f25a8a9a58ce904ac0f0b3ee6887}
+length of the missiles array \hypertarget{classc__map_afe0fe7415fc6ab78e753dbb95901dee7}{\index{c\-\_\-map@{c\-\_\-map}!spell\-\_\-icons@{spell\-\_\-icons}}
+\index{spell\-\_\-icons@{spell\-\_\-icons}!c_map@{c\-\_\-map}}
+\subsubsection[{spell\-\_\-icons}]{\setlength{\rightskip}{0pt plus 5cm}A\-L\-L\-E\-G\-R\-O\-\_\-\-B\-I\-T\-M\-A\-P$\ast$ c\-\_\-map\-::spell\-\_\-icons\mbox{[}7\mbox{]}\hspace{0.3cm}{\ttfamily [protected]}}}\label{classc__map_afe0fe7415fc6ab78e753dbb95901dee7}
+bitmap -\/ Starovous' second spell missile \hypertarget{classc__map_a7299ee552482b6917b4aae7f24263392}{\index{c\-\_\-map@{c\-\_\-map}!spell\-\_\-metodej\-\_\-1@{spell\-\_\-metodej\-\_\-1}}
+\index{spell\-\_\-metodej\-\_\-1@{spell\-\_\-metodej\-\_\-1}!c_map@{c\-\_\-map}}
+\subsubsection[{spell\-\_\-metodej\-\_\-1}]{\setlength{\rightskip}{0pt plus 5cm}A\-L\-L\-E\-G\-R\-O\-\_\-\-B\-I\-T\-M\-A\-P$\ast$ c\-\_\-map\-::spell\-\_\-metodej\-\_\-1\mbox{[}3\mbox{]}\hspace{0.3cm}{\ttfamily [protected]}}}\label{classc__map_a7299ee552482b6917b4aae7f24263392}
+bitmap -\/ Mia's second spell missile \hypertarget{classc__map_a6191d8333fa50a672d1cb02957182b7e}{\index{c\-\_\-map@{c\-\_\-map}!spell\-\_\-mia\-\_\-1@{spell\-\_\-mia\-\_\-1}}
+\index{spell\-\_\-mia\-\_\-1@{spell\-\_\-mia\-\_\-1}!c_map@{c\-\_\-map}}
+\subsubsection[{spell\-\_\-mia\-\_\-1}]{\setlength{\rightskip}{0pt plus 5cm}A\-L\-L\-E\-G\-R\-O\-\_\-\-B\-I\-T\-M\-A\-P$\ast$ c\-\_\-map\-::spell\-\_\-mia\-\_\-1\mbox{[}3\mbox{]}\hspace{0.3cm}{\ttfamily [protected]}}}\label{classc__map_a6191d8333fa50a672d1cb02957182b7e}
+bitmap -\/ crate in water \hypertarget{classc__map_abea93f3e180070e80bb0dc7f061969cb}{\index{c\-\_\-map@{c\-\_\-map}!spell\-\_\-mia\-\_\-2@{spell\-\_\-mia\-\_\-2}}
+\index{spell\-\_\-mia\-\_\-2@{spell\-\_\-mia\-\_\-2}!c_map@{c\-\_\-map}}
+\subsubsection[{spell\-\_\-mia\-\_\-2}]{\setlength{\rightskip}{0pt plus 5cm}A\-L\-L\-E\-G\-R\-O\-\_\-\-B\-I\-T\-M\-A\-P$\ast$ c\-\_\-map\-::spell\-\_\-mia\-\_\-2\mbox{[}3\mbox{]}\hspace{0.3cm}{\ttfamily [protected]}}}\label{classc__map_abea93f3e180070e80bb0dc7f061969cb}
+bitmap -\/ Mia's first spell missile \hypertarget{classc__map_aec438098bd5ded52ab9c831cd19eb629}{\index{c\-\_\-map@{c\-\_\-map}!spell\-\_\-sounds\-\_\-metodej@{spell\-\_\-sounds\-\_\-metodej}}
+\index{spell\-\_\-sounds\-\_\-metodej@{spell\-\_\-sounds\-\_\-metodej}!c_map@{c\-\_\-map}}
+\subsubsection[{spell\-\_\-sounds\-\_\-metodej}]{\setlength{\rightskip}{0pt plus 5cm}A\-L\-L\-E\-G\-R\-O\-\_\-\-S\-A\-M\-P\-L\-E$\ast$ c\-\_\-map\-::spell\-\_\-sounds\-\_\-metodej\mbox{[}2\mbox{]}\hspace{0.3cm}{\ttfamily [protected]}}}\label{classc__map_aec438098bd5ded52ab9c831cd19eb629}
+Mia's cast sounds \hypertarget{classc__map_abb19c6e3c47f8d1182fe746f1e6ccc40}{\index{c\-\_\-map@{c\-\_\-map}!spell\-\_\-sounds\-\_\-mia@{spell\-\_\-sounds\-\_\-mia}}
+\index{spell\-\_\-sounds\-\_\-mia@{spell\-\_\-sounds\-\_\-mia}!c_map@{c\-\_\-map}}
+\subsubsection[{spell\-\_\-sounds\-\_\-mia}]{\setlength{\rightskip}{0pt plus 5cm}A\-L\-L\-E\-G\-R\-O\-\_\-\-S\-A\-M\-P\-L\-E$\ast$ c\-\_\-map\-::spell\-\_\-sounds\-\_\-mia\mbox{[}2\mbox{]}\hspace{0.3cm}{\ttfamily [protected]}}}\label{classc__map_abb19c6e3c47f8d1182fe746f1e6ccc40}
+bitmap -\/ map transition to dark background on west edge \hypertarget{classc__map_ae7b220711fb2815dc1ac925b39fa81ca}{\index{c\-\_\-map@{c\-\_\-map}!spell\-\_\-sounds\-\_\-starovous@{spell\-\_\-sounds\-\_\-starovous}}
+\index{spell\-\_\-sounds\-\_\-starovous@{spell\-\_\-sounds\-\_\-starovous}!c_map@{c\-\_\-map}}
+\subsubsection[{spell\-\_\-sounds\-\_\-starovous}]{\setlength{\rightskip}{0pt plus 5cm}A\-L\-L\-E\-G\-R\-O\-\_\-\-S\-A\-M\-P\-L\-E$\ast$ c\-\_\-map\-::spell\-\_\-sounds\-\_\-starovous\mbox{[}2\mbox{]}\hspace{0.3cm}{\ttfamily [protected]}}}\label{classc__map_ae7b220711fb2815dc1ac925b39fa81ca}
+Metodej's cast sounds \hypertarget{classc__map_aaa728703ee5b40637e354f26dcb4f136}{\index{c\-\_\-map@{c\-\_\-map}!spell\-\_\-starovous\-\_\-1@{spell\-\_\-starovous\-\_\-1}}
+\index{spell\-\_\-starovous\-\_\-1@{spell\-\_\-starovous\-\_\-1}!c_map@{c\-\_\-map}}
+\subsubsection[{spell\-\_\-starovous\-\_\-1}]{\setlength{\rightskip}{0pt plus 5cm}A\-L\-L\-E\-G\-R\-O\-\_\-\-B\-I\-T\-M\-A\-P$\ast$ c\-\_\-map\-::spell\-\_\-starovous\-\_\-1\mbox{[}3\mbox{]}\hspace{0.3cm}{\ttfamily [protected]}}}\label{classc__map_aaa728703ee5b40637e354f26dcb4f136}
+bitmap -\/ Metodej's first spell missile \hypertarget{classc__map_af8e66f5af3e07acfbcf780e21669b1e0}{\index{c\-\_\-map@{c\-\_\-map}!spell\-\_\-starovous\-\_\-2@{spell\-\_\-starovous\-\_\-2}}
+\index{spell\-\_\-starovous\-\_\-2@{spell\-\_\-starovous\-\_\-2}!c_map@{c\-\_\-map}}
+\subsubsection[{spell\-\_\-starovous\-\_\-2}]{\setlength{\rightskip}{0pt plus 5cm}A\-L\-L\-E\-G\-R\-O\-\_\-\-B\-I\-T\-M\-A\-P$\ast$ c\-\_\-map\-::spell\-\_\-starovous\-\_\-2\mbox{[}3\mbox{]}\hspace{0.3cm}{\ttfamily [protected]}}}\label{classc__map_af8e66f5af3e07acfbcf780e21669b1e0}
+bitmap -\/ Starovous' first spell missile \hypertarget{classc__map_ad2884dc5a43ee568bad98b47f8eebef5}{\index{c\-\_\-map@{c\-\_\-map}!squares@{squares}}
+\index{squares@{squares}!c_map@{c\-\_\-map}}
+\subsubsection[{squares}]{\setlength{\rightskip}{0pt plus 5cm}{\bf t\-\_\-map\-\_\-square} c\-\_\-map\-::squares\mbox{[}M\-A\-P\-\_\-\-M\-A\-X\-\_\-\-W\-I\-D\-T\-H\mbox{]}\mbox{[}M\-A\-P\-\_\-\-M\-A\-X\-\_\-\-H\-E\-I\-G\-H\-T\mbox{]}\hspace{0.3cm}{\ttfamily [protected]}}}\label{classc__map_ad2884dc5a43ee568bad98b47f8eebef5}
+map environment \hypertarget{classc__map_ad911699c6d1ad83868e75551d138b4e7}{\index{c\-\_\-map@{c\-\_\-map}!text\-\_\-end\-\_\-time@{text\-\_\-end\-\_\-time}}
+\index{text\-\_\-end\-\_\-time@{text\-\_\-end\-\_\-time}!c_map@{c\-\_\-map}}
+\subsubsection[{text\-\_\-end\-\_\-time}]{\setlength{\rightskip}{0pt plus 5cm}double c\-\_\-map\-::text\-\_\-end\-\_\-time\hspace{0.3cm}{\ttfamily [protected]}}}\label{classc__map_ad911699c6d1ad83868e75551d138b4e7}
+whether the text is to be displayed \hypertarget{classc__map_ada9b97f91338614f93a9a95fdfd7157b}{\index{c\-\_\-map@{c\-\_\-map}!text\-\_\-font@{text\-\_\-font}}
+\index{text\-\_\-font@{text\-\_\-font}!c_map@{c\-\_\-map}}
+\subsubsection[{text\-\_\-font}]{\setlength{\rightskip}{0pt plus 5cm}A\-L\-L\-E\-G\-R\-O\-\_\-\-F\-O\-N\-T$\ast$ c\-\_\-map\-::text\-\_\-font\hspace{0.3cm}{\ttfamily [protected]}}}\label{classc__map_ada9b97f91338614f93a9a95fdfd7157b}
+sound played when player is changed \hypertarget{classc__map_a6273cd823e9d08f0b277e6407b468ff3}{\index{c\-\_\-map@{c\-\_\-map}!text\-\_\-is\-\_\-displayed@{text\-\_\-is\-\_\-displayed}}
+\index{text\-\_\-is\-\_\-displayed@{text\-\_\-is\-\_\-displayed}!c_map@{c\-\_\-map}}
+\subsubsection[{text\-\_\-is\-\_\-displayed}]{\setlength{\rightskip}{0pt plus 5cm}bool c\-\_\-map\-::text\-\_\-is\-\_\-displayed\hspace{0.3cm}{\ttfamily [protected]}}}\label{classc__map_a6273cd823e9d08f0b277e6407b468ff3}
+lines of text being displayed on screen \hypertarget{classc__map_a97c58015fb3e1e4764d6a522880c5ccf}{\index{c\-\_\-map@{c\-\_\-map}!text\-\_\-lines@{text\-\_\-lines}}
+\index{text\-\_\-lines@{text\-\_\-lines}!c_map@{c\-\_\-map}}
+\subsubsection[{text\-\_\-lines}]{\setlength{\rightskip}{0pt plus 5cm}char c\-\_\-map\-::text\-\_\-lines\mbox{[}M\-A\-X\-\_\-\-T\-E\-X\-T\-\_\-\-L\-I\-N\-E\-S\mbox{]}\mbox{[}M\-A\-X\-\_\-\-T\-E\-X\-T\-\_\-\-C\-H\-A\-R\-A\-C\-T\-E\-R\-S\-\_\-\-P\-E\-R\-\_\-\-L\-I\-N\-E\mbox{]}\hspace{0.3cm}{\ttfamily [protected]}}}\label{classc__map_a97c58015fb3e1e4764d6a522880c5ccf}
+name of the music that should be playing in the map \hypertarget{classc__map_a2c290e7b1d47f8c846fc77aa4464c8e7}{\index{c\-\_\-map@{c\-\_\-map}!textbox\-\_\-size@{textbox\-\_\-size}}
+\index{textbox\-\_\-size@{textbox\-\_\-size}!c_map@{c\-\_\-map}}
+\subsubsection[{textbox\-\_\-size}]{\setlength{\rightskip}{0pt plus 5cm}int c\-\_\-map\-::textbox\-\_\-size\mbox{[}2\mbox{]}\hspace{0.3cm}{\ttfamily [protected]}}}\label{classc__map_a2c290e7b1d47f8c846fc77aa4464c8e7}
+number of language, it must be know in order to set right sign texts etc. \hypertarget{classc__map_a928e809cafb17cee55193944f6aafe24}{\index{c\-\_\-map@{c\-\_\-map}!tile@{tile}}
+\index{tile@{tile}!c_map@{c\-\_\-map}}
+\subsubsection[{tile}]{\setlength{\rightskip}{0pt plus 5cm}A\-L\-L\-E\-G\-R\-O\-\_\-\-B\-I\-T\-M\-A\-P$\ast$ c\-\_\-map\-::tile\hspace{0.3cm}{\ttfamily [protected]}}}\label{classc__map_a928e809cafb17cee55193944f6aafe24}
+bitmap -\/ G\-U\-I portrait of Starovous \hypertarget{classc__map_a105d6f1355ca490246a8a5bf56bbe844}{\index{c\-\_\-map@{c\-\_\-map}!tile\-\_\-cliff\-\_\-east@{tile\-\_\-cliff\-\_\-east}}
+\index{tile\-\_\-cliff\-\_\-east@{tile\-\_\-cliff\-\_\-east}!c_map@{c\-\_\-map}}
+\subsubsection[{tile\-\_\-cliff\-\_\-east}]{\setlength{\rightskip}{0pt plus 5cm}A\-L\-L\-E\-G\-R\-O\-\_\-\-B\-I\-T\-M\-A\-P$\ast$ c\-\_\-map\-::tile\-\_\-cliff\-\_\-east\hspace{0.3cm}{\ttfamily [protected]}}}\label{classc__map_a105d6f1355ca490246a8a5bf56bbe844}
+bitmap -\/ west cliff (any height) \hypertarget{classc__map_aa8892af60c621c949f8f46485bd6f8b8}{\index{c\-\_\-map@{c\-\_\-map}!tile\-\_\-cliff\-\_\-north@{tile\-\_\-cliff\-\_\-north}}
+\index{tile\-\_\-cliff\-\_\-north@{tile\-\_\-cliff\-\_\-north}!c_map@{c\-\_\-map}}
+\subsubsection[{tile\-\_\-cliff\-\_\-north}]{\setlength{\rightskip}{0pt plus 5cm}A\-L\-L\-E\-G\-R\-O\-\_\-\-B\-I\-T\-M\-A\-P$\ast$ c\-\_\-map\-::tile\-\_\-cliff\-\_\-north\hspace{0.3cm}{\ttfamily [protected]}}}\label{classc__map_aa8892af60c621c949f8f46485bd6f8b8}
+bitmap -\/ east cliff (any height) \hypertarget{classc__map_a1dd3e087030dad02e1329416daaf58bc}{\index{c\-\_\-map@{c\-\_\-map}!tile\-\_\-cliff\-\_\-northeast@{tile\-\_\-cliff\-\_\-northeast}}
+\index{tile\-\_\-cliff\-\_\-northeast@{tile\-\_\-cliff\-\_\-northeast}!c_map@{c\-\_\-map}}
+\subsubsection[{tile\-\_\-cliff\-\_\-northeast}]{\setlength{\rightskip}{0pt plus 5cm}A\-L\-L\-E\-G\-R\-O\-\_\-\-B\-I\-T\-M\-A\-P$\ast$ c\-\_\-map\-::tile\-\_\-cliff\-\_\-northeast\hspace{0.3cm}{\ttfamily [protected]}}}\label{classc__map_a1dd3e087030dad02e1329416daaf58bc}
+bitmap -\/ northwest cliff (any height) \hypertarget{classc__map_aec73bf9c12354078037cc6d1b4de6025}{\index{c\-\_\-map@{c\-\_\-map}!tile\-\_\-cliff\-\_\-northwest@{tile\-\_\-cliff\-\_\-northwest}}
+\index{tile\-\_\-cliff\-\_\-northwest@{tile\-\_\-cliff\-\_\-northwest}!c_map@{c\-\_\-map}}
+\subsubsection[{tile\-\_\-cliff\-\_\-northwest}]{\setlength{\rightskip}{0pt plus 5cm}A\-L\-L\-E\-G\-R\-O\-\_\-\-B\-I\-T\-M\-A\-P$\ast$ c\-\_\-map\-::tile\-\_\-cliff\-\_\-northwest\hspace{0.3cm}{\ttfamily [protected]}}}\label{classc__map_aec73bf9c12354078037cc6d1b4de6025}
+bitmap -\/ north cliff (any height) \hypertarget{classc__map_ab84679456c3df51222049c4fb80d66a9}{\index{c\-\_\-map@{c\-\_\-map}!tile\-\_\-cliff\-\_\-south\-\_\-1@{tile\-\_\-cliff\-\_\-south\-\_\-1}}
+\index{tile\-\_\-cliff\-\_\-south\-\_\-1@{tile\-\_\-cliff\-\_\-south\-\_\-1}!c_map@{c\-\_\-map}}
+\subsubsection[{tile\-\_\-cliff\-\_\-south\-\_\-1}]{\setlength{\rightskip}{0pt plus 5cm}A\-L\-L\-E\-G\-R\-O\-\_\-\-B\-I\-T\-M\-A\-P$\ast$ c\-\_\-map\-::tile\-\_\-cliff\-\_\-south\-\_\-1\hspace{0.3cm}{\ttfamily [protected]}}}\label{classc__map_ab84679456c3df51222049c4fb80d66a9}
+bitmap -\/ normal tile \hypertarget{classc__map_ae725ccf9eb9daefefdb9b58b00388913}{\index{c\-\_\-map@{c\-\_\-map}!tile\-\_\-cliff\-\_\-south\-\_\-2@{tile\-\_\-cliff\-\_\-south\-\_\-2}}
+\index{tile\-\_\-cliff\-\_\-south\-\_\-2@{tile\-\_\-cliff\-\_\-south\-\_\-2}!c_map@{c\-\_\-map}}
+\subsubsection[{tile\-\_\-cliff\-\_\-south\-\_\-2}]{\setlength{\rightskip}{0pt plus 5cm}A\-L\-L\-E\-G\-R\-O\-\_\-\-B\-I\-T\-M\-A\-P$\ast$ c\-\_\-map\-::tile\-\_\-cliff\-\_\-south\-\_\-2\hspace{0.3cm}{\ttfamily [protected]}}}\label{classc__map_ae725ccf9eb9daefefdb9b58b00388913}
+bitmap -\/ south cliff, height 1 \hypertarget{classc__map_a9d5707e014681a6d16044d483688c081}{\index{c\-\_\-map@{c\-\_\-map}!tile\-\_\-cliff\-\_\-southeast\-\_\-1@{tile\-\_\-cliff\-\_\-southeast\-\_\-1}}
+\index{tile\-\_\-cliff\-\_\-southeast\-\_\-1@{tile\-\_\-cliff\-\_\-southeast\-\_\-1}!c_map@{c\-\_\-map}}
+\subsubsection[{tile\-\_\-cliff\-\_\-southeast\-\_\-1}]{\setlength{\rightskip}{0pt plus 5cm}A\-L\-L\-E\-G\-R\-O\-\_\-\-B\-I\-T\-M\-A\-P$\ast$ c\-\_\-map\-::tile\-\_\-cliff\-\_\-southeast\-\_\-1\hspace{0.3cm}{\ttfamily [protected]}}}\label{classc__map_a9d5707e014681a6d16044d483688c081}
+bitmap -\/ southwest cliff, height 2 \hypertarget{classc__map_a1aefdb38df373482aff57b9243ec9d67}{\index{c\-\_\-map@{c\-\_\-map}!tile\-\_\-cliff\-\_\-southeast\-\_\-2@{tile\-\_\-cliff\-\_\-southeast\-\_\-2}}
+\index{tile\-\_\-cliff\-\_\-southeast\-\_\-2@{tile\-\_\-cliff\-\_\-southeast\-\_\-2}!c_map@{c\-\_\-map}}
+\subsubsection[{tile\-\_\-cliff\-\_\-southeast\-\_\-2}]{\setlength{\rightskip}{0pt plus 5cm}A\-L\-L\-E\-G\-R\-O\-\_\-\-B\-I\-T\-M\-A\-P$\ast$ c\-\_\-map\-::tile\-\_\-cliff\-\_\-southeast\-\_\-2\hspace{0.3cm}{\ttfamily [protected]}}}\label{classc__map_a1aefdb38df373482aff57b9243ec9d67}
+bitmap -\/ southeast cliff, height 1 \hypertarget{classc__map_abecd9b0a1aab4c4e02cbe698ddb487ee}{\index{c\-\_\-map@{c\-\_\-map}!tile\-\_\-cliff\-\_\-southwest\-\_\-1@{tile\-\_\-cliff\-\_\-southwest\-\_\-1}}
+\index{tile\-\_\-cliff\-\_\-southwest\-\_\-1@{tile\-\_\-cliff\-\_\-southwest\-\_\-1}!c_map@{c\-\_\-map}}
+\subsubsection[{tile\-\_\-cliff\-\_\-southwest\-\_\-1}]{\setlength{\rightskip}{0pt plus 5cm}A\-L\-L\-E\-G\-R\-O\-\_\-\-B\-I\-T\-M\-A\-P$\ast$ c\-\_\-map\-::tile\-\_\-cliff\-\_\-southwest\-\_\-1\hspace{0.3cm}{\ttfamily [protected]}}}\label{classc__map_abecd9b0a1aab4c4e02cbe698ddb487ee}
+bitmap -\/ south cliff, height 2 \hypertarget{classc__map_ae1b595833e6967f8d27fd5a2252d12b3}{\index{c\-\_\-map@{c\-\_\-map}!tile\-\_\-cliff\-\_\-southwest\-\_\-2@{tile\-\_\-cliff\-\_\-southwest\-\_\-2}}
+\index{tile\-\_\-cliff\-\_\-southwest\-\_\-2@{tile\-\_\-cliff\-\_\-southwest\-\_\-2}!c_map@{c\-\_\-map}}
+\subsubsection[{tile\-\_\-cliff\-\_\-southwest\-\_\-2}]{\setlength{\rightskip}{0pt plus 5cm}A\-L\-L\-E\-G\-R\-O\-\_\-\-B\-I\-T\-M\-A\-P$\ast$ c\-\_\-map\-::tile\-\_\-cliff\-\_\-southwest\-\_\-2\hspace{0.3cm}{\ttfamily [protected]}}}\label{classc__map_ae1b595833e6967f8d27fd5a2252d12b3}
+bitmap -\/ southwest cliff, height 1 \hypertarget{classc__map_aa40008668fa55a28089cd20c03563926}{\index{c\-\_\-map@{c\-\_\-map}!tile\-\_\-cliff\-\_\-west@{tile\-\_\-cliff\-\_\-west}}
+\index{tile\-\_\-cliff\-\_\-west@{tile\-\_\-cliff\-\_\-west}!c_map@{c\-\_\-map}}
+\subsubsection[{tile\-\_\-cliff\-\_\-west}]{\setlength{\rightskip}{0pt plus 5cm}A\-L\-L\-E\-G\-R\-O\-\_\-\-B\-I\-T\-M\-A\-P$\ast$ c\-\_\-map\-::tile\-\_\-cliff\-\_\-west\hspace{0.3cm}{\ttfamily [protected]}}}\label{classc__map_aa40008668fa55a28089cd20c03563926}
+bitmap -\/ southeast cliff, height 2 \hypertarget{classc__map_ae13539d062f5a9eb89ebf72d7e3890be}{\index{c\-\_\-map@{c\-\_\-map}!tile\-\_\-collapse@{tile\-\_\-collapse}}
+\index{tile\-\_\-collapse@{tile\-\_\-collapse}!c_map@{c\-\_\-map}}
+\subsubsection[{tile\-\_\-collapse}]{\setlength{\rightskip}{0pt plus 5cm}A\-L\-L\-E\-G\-R\-O\-\_\-\-B\-I\-T\-M\-A\-P$\ast$ c\-\_\-map\-::tile\-\_\-collapse\hspace{0.3cm}{\ttfamily [protected]}}}\label{classc__map_ae13539d062f5a9eb89ebf72d7e3890be}
+bitmap -\/ ice \hypertarget{classc__map_a0ba260cfc9fd354f0b05900b90367cfa}{\index{c\-\_\-map@{c\-\_\-map}!tile\-\_\-edge@{tile\-\_\-edge}}
+\index{tile\-\_\-edge@{tile\-\_\-edge}!c_map@{c\-\_\-map}}
+\subsubsection[{tile\-\_\-edge}]{\setlength{\rightskip}{0pt plus 5cm}A\-L\-L\-E\-G\-R\-O\-\_\-\-B\-I\-T\-M\-A\-P$\ast$ c\-\_\-map\-::tile\-\_\-edge\hspace{0.3cm}{\ttfamily [protected]}}}\label{classc__map_a0ba260cfc9fd354f0b05900b90367cfa}
+bitmap -\/ northeast cliff (any height) \hypertarget{classc__map_a539c61c09b1a762ef657139f22ebd7c1}{\index{c\-\_\-map@{c\-\_\-map}!tile\-\_\-hole@{tile\-\_\-hole}}
+\index{tile\-\_\-hole@{tile\-\_\-hole}!c_map@{c\-\_\-map}}
+\subsubsection[{tile\-\_\-hole}]{\setlength{\rightskip}{0pt plus 5cm}A\-L\-L\-E\-G\-R\-O\-\_\-\-B\-I\-T\-M\-A\-P$\ast$ c\-\_\-map\-::tile\-\_\-hole\hspace{0.3cm}{\ttfamily [protected]}}}\label{classc__map_a539c61c09b1a762ef657139f22ebd7c1}
+bitmap -\/ collapse square \hypertarget{classc__map_a12e5d9ac851eba093b98998593b7f3a9}{\index{c\-\_\-map@{c\-\_\-map}!tile\-\_\-ice@{tile\-\_\-ice}}
+\index{tile\-\_\-ice@{tile\-\_\-ice}!c_map@{c\-\_\-map}}
+\subsubsection[{tile\-\_\-ice}]{\setlength{\rightskip}{0pt plus 5cm}A\-L\-L\-E\-G\-R\-O\-\_\-\-B\-I\-T\-M\-A\-P$\ast$ c\-\_\-map\-::tile\-\_\-ice\hspace{0.3cm}{\ttfamily [protected]}}}\label{classc__map_a12e5d9ac851eba093b98998593b7f3a9}
+bitmap -\/ water, 5 animation frames \hypertarget{classc__map_a1d7fc093a6e24ba1ea66b66505ad8581}{\index{c\-\_\-map@{c\-\_\-map}!tile\-\_\-water@{tile\-\_\-water}}
+\index{tile\-\_\-water@{tile\-\_\-water}!c_map@{c\-\_\-map}}
+\subsubsection[{tile\-\_\-water}]{\setlength{\rightskip}{0pt plus 5cm}A\-L\-L\-E\-G\-R\-O\-\_\-\-B\-I\-T\-M\-A\-P$\ast$ c\-\_\-map\-::tile\-\_\-water\mbox{[}5\mbox{]}\hspace{0.3cm}{\ttfamily [protected]}}}\label{classc__map_a1d7fc093a6e24ba1ea66b66505ad8581}
+bitmap -\/ used as south border with other surface \hypertarget{classc__map_ab59ec9afe1f17edc59308fe5392b99bd}{\index{c\-\_\-map@{c\-\_\-map}!time\-\_\-before@{time\-\_\-before}}
+\index{time\-\_\-before@{time\-\_\-before}!c_map@{c\-\_\-map}}
+\subsubsection[{time\-\_\-before}]{\setlength{\rightskip}{0pt plus 5cm}double c\-\_\-map\-::time\-\_\-before\hspace{0.3cm}{\ttfamily [protected]}}}\label{classc__map_ab59ec9afe1f17edc59308fe5392b99bd}
+pointer to information about keyboard and mouse \hypertarget{classc__map_a7a1d7aaf2dafa841ec84f9b6aa256b5b}{\index{c\-\_\-map@{c\-\_\-map}!time\-\_\-difference@{time\-\_\-difference}}
+\index{time\-\_\-difference@{time\-\_\-difference}!c_map@{c\-\_\-map}}
+\subsubsection[{time\-\_\-difference}]{\setlength{\rightskip}{0pt plus 5cm}double c\-\_\-map\-::time\-\_\-difference\hspace{0.3cm}{\ttfamily [protected]}}}\label{classc__map_a7a1d7aaf2dafa841ec84f9b6aa256b5b}
+to compute time difference between frames (for movement etc.) \hypertarget{classc__map_a24f23160d66e61d5f6943cd4f51aa06f}{\index{c\-\_\-map@{c\-\_\-map}!width@{width}}
+\index{width@{width}!c_map@{c\-\_\-map}}
+\subsubsection[{width}]{\setlength{\rightskip}{0pt plus 5cm}int c\-\_\-map\-::width\hspace{0.3cm}{\ttfamily [protected]}}}\label{classc__map_a24f23160d66e61d5f6943cd4f51aa06f}
+This class represents a game map. It is able to draw it and manage playing it with help of the game class. 
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+magerage/map.\-h\item 
+magerage/map.\-cpp\end{DoxyCompactItemize}

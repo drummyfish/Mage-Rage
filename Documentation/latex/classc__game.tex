@@ -1,0 +1,380 @@
+\hypertarget{classc__game}{\section{c\-\_\-game Class Reference}
+\label{classc__game}\index{c\-\_\-game@{c\-\_\-game}}
+}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classc__game_a80ba0af58ad4a8b007ef4439a0b50202}{c\-\_\-game} ()
+\item 
+\hyperlink{classc__game_a43a65b188a13d1a8fcc5f4d9c2a6b4a2}{$\sim$c\-\_\-game} ()
+\item 
+void \hyperlink{classc__game_ab7af3afd73ab340a3619a889acab04f6}{save} ()
+\item 
+void \hyperlink{classc__game_ab57f43f89cdbed48784ede8b94d26583}{load} ()
+\item 
+void \hyperlink{classc__game_a6a385eb93282f5729e49c1c1e4c79741}{run} ()
+\end{DoxyCompactItemize}
+\subsection*{Protected Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{classc__game_a57105293613765eeb0830fe571e4b80e}{update\-\_\-settings\-\_\-menu\-\_\-items} ()
+\item 
+void \hyperlink{classc__game_ada5dc37b2335e825c6e4a6dc7fb81d98}{set\-\_\-language} (string language)
+\item 
+void \hyperlink{classc__game_af7b07bd82ee6a33a22043df2edad5c8d}{set\-\_\-keys} ()
+\item 
+void \hyperlink{classc__game_a2a93ba7b30db3d2f7b67b4bebc4490b3}{update\-\_\-volume} ()
+\item 
+void \hyperlink{classc__game_a3093e9488bace77055836984efbc68f7}{initialise\-\_\-new\-\_\-game} (int level\-\_\-number)
+\item 
+void \hyperlink{classc__game_ae09498c8ed7418d8292d539cf847d39f}{play\-\_\-music} (string name)
+\item 
+void \hyperlink{classc__game_a234499776f426ddd238a374faded61ee}{stop\-\_\-music} ()
+\end{DoxyCompactItemize}
+\subsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classc__map}{c\-\_\-map} $\ast$ \hyperlink{classc__game_a64da959df63b76ac18b0f25ad707db9f}{map}
+\item 
+\hyperlink{classc__menu}{c\-\_\-menu} $\ast$ \hyperlink{classc__game_ad4535e427b20e3fe386a0add7fa68afa}{menu}
+\item 
+A\-L\-L\-E\-G\-R\-O\-\_\-\-D\-I\-S\-P\-L\-A\-Y $\ast$ \hyperlink{classc__game_aa9c205a51cef10ec977e732c750e64b8}{display}
+\item 
+A\-L\-L\-E\-G\-R\-O\-\_\-\-E\-V\-E\-N\-T\-\_\-\-Q\-U\-E\-U\-E $\ast$ \hyperlink{classc__game_ab0ea00eb13e7bda75d2e217d98f4a289}{event\-\_\-queue}
+\item 
+A\-L\-L\-E\-G\-R\-O\-\_\-\-T\-I\-M\-E\-R $\ast$ \hyperlink{classc__game_ae2ac3ae12fba38e6626979b941406dbe}{global\-\_\-timer}
+\item 
+long int \hyperlink{classc__game_afd3e4b96f2e16848b1a81a8349ef9c85}{global\-\_\-time}
+\item 
+\hyperlink{structt__input__output__state}{t\-\_\-input\-\_\-output\-\_\-state} \hyperlink{classc__game_ad2ad5aa7d756f89bb53359d4c74db8da}{input\-\_\-output\-\_\-state}
+\item 
+\hyperlink{structt__game__settings}{t\-\_\-game\-\_\-settings} \hyperlink{classc__game_aa52e67cd5e61fd952434abd0b761136c}{settings}
+\item 
+t\-\_\-menu\-\_\-state \hyperlink{classc__game_a2d4311ca959ebad56e79e0162cf7a9c0}{menu\-\_\-state}
+\item 
+\hyperlink{classc__associative__array}{c\-\_\-associative\-\_\-array} $\ast$ \hyperlink{classc__game_ae4e944fab107e1aa58676c40684ef634}{local\-\_\-texts}
+\item 
+int \hyperlink{classc__game_a6279909358cd7d29a187ffcee9d621d8}{current\-\_\-level}
+\item 
+bool \hyperlink{classc__game_acb143b7fb56f8be0caf0826f4865aee8}{letter\-\_\-pressed}
+\item 
+char \hyperlink{classc__game_ab13d9ba9025a290671b663f4163ada9c}{cheat\-\_\-buffer} \mbox{[}7\mbox{]}
+\item 
+bool \hyperlink{classc__game_a818510abc8ca17bab74a2e9e02897015}{cheat\-\_\-used}
+\item 
+int \hyperlink{classc__game_afe75cb5007878208a9ba456438b1cd3e}{key\-\_\-up}
+\item 
+int \hyperlink{classc__game_a9b2d48164985c5c78b508d0aa8ef1c52}{key\-\_\-down}
+\item 
+int \hyperlink{classc__game_af6dab00f73f4853063cc4bab0f57d14d}{key\-\_\-right}
+\item 
+int \hyperlink{classc__game_ac7ad8ac5a68b60145bb9cddf323a5874}{key\-\_\-left}
+\item 
+int \hyperlink{classc__game_a40689f9da4ca424a96497ff916ea0c99}{key\-\_\-cast1}
+\item 
+int \hyperlink{classc__game_a2ccfddc860efc26f11a582780d5054b3}{key\-\_\-cast2}
+\item 
+int \hyperlink{classc__game_a425ae68160c7fa7447c5d4b1106e4260}{key\-\_\-cast3}
+\item 
+int \hyperlink{classc__game_ab9067838b721c66b6f85405c42d97819}{key\-\_\-switch1}
+\item 
+int \hyperlink{classc__game_a27d7c0789c4908c411476b0613a3077e}{key\-\_\-switch2}
+\item 
+int \hyperlink{classc__game_ab639463186d28277b420814ffed910e6}{key\-\_\-switch3}
+\item 
+int \hyperlink{classc__game_a43bdbd6b68af28861616fc6170be737d}{key\-\_\-use}
+\item 
+int \hyperlink{classc__game_a21fa6c7c14ef10dc9a02cc9d37142861}{key\-\_\-use\-\_\-alt}
+\item 
+int \hyperlink{classc__game_a2c57b2e7fd7e695208282a8cac2b2070}{key\-\_\-back}
+\item 
+int \hyperlink{classc__game_a8e13ca424701fcc322d110dd77a32387}{key\-\_\-map}
+\item 
+string \hyperlink{classc__game_a8cc35efdfce547a98732d6a3b56fcc92}{main\-\_\-menu\-\_\-items} \mbox{[}5\mbox{]}
+\item 
+string \hyperlink{classc__game_a5e32341c8fcd20ce470ff11765717e8d}{main\-\_\-menu\-\_\-title}
+\item 
+string \hyperlink{classc__game_ab8e77c697dcb6affc55ad8263f59afe7}{game\-\_\-menu\-\_\-items} \mbox{[}3\mbox{]}
+\item 
+string \hyperlink{classc__game_a7a1be955cd73845fcb5efd067959982e}{game\-\_\-menu\-\_\-title}
+\item 
+string \hyperlink{classc__game_a5d210224b8d881f8aa2d01d8adf981fd}{settings\-\_\-menu\-\_\-items} \mbox{[}5\mbox{]}
+\item 
+string \hyperlink{classc__game_aaa69654c55f2de1d29c769fa7045726f}{settings\-\_\-menu\-\_\-title}
+\item 
+string \hyperlink{classc__game_afc77c56ed33f68e53f9fec7ed2c17c14}{settings\-\_\-menu\-\_\-items\-\_\-done} \mbox{[}5\mbox{]}
+\item 
+string \hyperlink{classc__game_a115ab11c275a3e00df3a7c0a247f61e9}{about\-\_\-lines} \mbox{[}3\mbox{]}
+\item 
+string \hyperlink{classc__game_ab8e5b3f28029051073317880b91af20d}{intro\-\_\-lines\-\_\-1} \mbox{[}10\mbox{]}
+\item 
+string \hyperlink{classc__game_ac61cbd1ddd12e3481780d016b7fc689e}{intro\-\_\-lines\-\_\-2} \mbox{[}10\mbox{]}
+\item 
+string \hyperlink{classc__game_ab1a47c45fe34e4a5f6287d4c91d1740b}{outro\-\_\-lines} \mbox{[}10\mbox{]}
+\item 
+string \hyperlink{classc__game_a16ac36db4e4853c532bd471193a39838}{how\-\_\-to\-\_\-play\-\_\-lines} \mbox{[}10\mbox{]}
+\item 
+A\-L\-L\-E\-G\-R\-O\-\_\-\-S\-A\-M\-P\-L\-E $\ast$ \hyperlink{classc__game_a3c80191dc85a3820526afb0f97355204}{win\-\_\-sound}
+\item 
+A\-L\-L\-E\-G\-R\-O\-\_\-\-S\-A\-M\-P\-L\-E $\ast$ \hyperlink{classc__game_afcd2c8c94a4adf5ff06df97cbe7ddaea}{lose\-\_\-sound}
+\item 
+A\-L\-L\-E\-G\-R\-O\-\_\-\-S\-A\-M\-P\-L\-E $\ast$ \hyperlink{classc__game_aa242357f3a3062813163d6e088958760}{music}
+\item 
+A\-L\-L\-E\-G\-R\-O\-\_\-\-S\-A\-M\-P\-L\-E\-\_\-\-I\-D \hyperlink{classc__game_af5caa082e80f20d7def128c6f7c9469d}{music\-\_\-id}
+\end{DoxyCompactItemize}
+
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classc__game_a80ba0af58ad4a8b007ef4439a0b50202}{\index{c\-\_\-game@{c\-\_\-game}!c\-\_\-game@{c\-\_\-game}}
+\index{c\-\_\-game@{c\-\_\-game}!c_game@{c\-\_\-game}}
+\subsubsection[{c\-\_\-game}]{\setlength{\rightskip}{0pt plus 5cm}c\-\_\-game\-::c\-\_\-game (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classc__game_a80ba0af58ad4a8b007ef4439a0b50202}
+Stops the currently playing music.
+
+Game class implementation file.
+
+authors\-: Miloslav Číž year\-: 2013 \hypertarget{classc__game_a43a65b188a13d1a8fcc5f4d9c2a6b4a2}{\index{c\-\_\-game@{c\-\_\-game}!$\sim$c\-\_\-game@{$\sim$c\-\_\-game}}
+\index{$\sim$c\-\_\-game@{$\sim$c\-\_\-game}!c_game@{c\-\_\-game}}
+\subsubsection[{$\sim$c\-\_\-game}]{\setlength{\rightskip}{0pt plus 5cm}c\-\_\-game\-::$\sim$c\-\_\-game (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classc__game_a43a65b188a13d1a8fcc5f4d9c2a6b4a2}
+Class constructor, initialises new game object. 
+
+\subsection{Member Function Documentation}
+\hypertarget{classc__game_a3093e9488bace77055836984efbc68f7}{\index{c\-\_\-game@{c\-\_\-game}!initialise\-\_\-new\-\_\-game@{initialise\-\_\-new\-\_\-game}}
+\index{initialise\-\_\-new\-\_\-game@{initialise\-\_\-new\-\_\-game}!c_game@{c\-\_\-game}}
+\subsubsection[{initialise\-\_\-new\-\_\-game}]{\setlength{\rightskip}{0pt plus 5cm}void c\-\_\-game\-::initialise\-\_\-new\-\_\-game (
+\begin{DoxyParamCaption}
+\item[{int}]{level\-\_\-number}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}}}\label{classc__game_a3093e9488bace77055836984efbc68f7}
+Sets the master volume of the game to current value of volume value in game settings structure. \hypertarget{classc__game_ab57f43f89cdbed48784ede8b94d26583}{\index{c\-\_\-game@{c\-\_\-game}!load@{load}}
+\index{load@{load}!c_game@{c\-\_\-game}}
+\subsubsection[{load}]{\setlength{\rightskip}{0pt plus 5cm}void c\-\_\-game\-::load (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classc__game_ab57f43f89cdbed48784ede8b94d26583}
+Saves the game settings (including player's progress) in the configuration file. \hypertarget{classc__game_ae09498c8ed7418d8292d539cf847d39f}{\index{c\-\_\-game@{c\-\_\-game}!play\-\_\-music@{play\-\_\-music}}
+\index{play\-\_\-music@{play\-\_\-music}!c_game@{c\-\_\-game}}
+\subsubsection[{play\-\_\-music}]{\setlength{\rightskip}{0pt plus 5cm}void c\-\_\-game\-::play\-\_\-music (
+\begin{DoxyParamCaption}
+\item[{string}]{name}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}}}\label{classc__game_ae09498c8ed7418d8292d539cf847d39f}
+Initialises a new game, which means that the classes map object will be possibly deleted and newly loaded from file depending on given level number.
+
+
+\begin{DoxyParams}{Parameters}
+{\em level\-\_\-number} & level number \\
+\hline
+\end{DoxyParams}
+\hypertarget{classc__game_a6a385eb93282f5729e49c1c1e4c79741}{\index{c\-\_\-game@{c\-\_\-game}!run@{run}}
+\index{run@{run}!c_game@{c\-\_\-game}}
+\subsubsection[{run}]{\setlength{\rightskip}{0pt plus 5cm}void c\-\_\-game\-::run (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classc__game_a6a385eb93282f5729e49c1c1e4c79741}
+Loads the game settings (including player's progress) from the configuration file. \hypertarget{classc__game_ab7af3afd73ab340a3619a889acab04f6}{\index{c\-\_\-game@{c\-\_\-game}!save@{save}}
+\index{save@{save}!c_game@{c\-\_\-game}}
+\subsubsection[{save}]{\setlength{\rightskip}{0pt plus 5cm}void c\-\_\-game\-::save (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classc__game_ab7af3afd73ab340a3619a889acab04f6}
+Class destructor, frees the object's memory. \hypertarget{classc__game_af7b07bd82ee6a33a22043df2edad5c8d}{\index{c\-\_\-game@{c\-\_\-game}!set\-\_\-keys@{set\-\_\-keys}}
+\index{set\-\_\-keys@{set\-\_\-keys}!c_game@{c\-\_\-game}}
+\subsubsection[{set\-\_\-keys}]{\setlength{\rightskip}{0pt plus 5cm}void c\-\_\-game\-::set\-\_\-keys (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}}}\label{classc__game_af7b07bd82ee6a33a22043df2edad5c8d}
+Sets the game texts to given language.
+
+
+\begin{DoxyParams}{Parameters}
+{\em language} & language name like \char`\"{}english\char`\"{} or \char`\"{}czech\char`\"{} which will be loaded from the corresponding file in game resources \\
+\hline
+\end{DoxyParams}
+\hypertarget{classc__game_ada5dc37b2335e825c6e4a6dc7fb81d98}{\index{c\-\_\-game@{c\-\_\-game}!set\-\_\-language@{set\-\_\-language}}
+\index{set\-\_\-language@{set\-\_\-language}!c_game@{c\-\_\-game}}
+\subsubsection[{set\-\_\-language}]{\setlength{\rightskip}{0pt plus 5cm}void c\-\_\-game\-::set\-\_\-language (
+\begin{DoxyParamCaption}
+\item[{string}]{language}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}}}\label{classc__game_ada5dc37b2335e825c6e4a6dc7fb81d98}
+Updates the settings\-\_\-menu\-\_\-items\-\_\-done array so that it contains valid items depending on current game settings. \hypertarget{classc__game_a234499776f426ddd238a374faded61ee}{\index{c\-\_\-game@{c\-\_\-game}!stop\-\_\-music@{stop\-\_\-music}}
+\index{stop\-\_\-music@{stop\-\_\-music}!c_game@{c\-\_\-game}}
+\subsubsection[{stop\-\_\-music}]{\setlength{\rightskip}{0pt plus 5cm}void c\-\_\-game\-::stop\-\_\-music (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}}}\label{classc__game_a234499776f426ddd238a374faded61ee}
+Plays music with given name. If the music is turned off in the game settings, nothing happens.
+
+
+\begin{DoxyParams}{Parameters}
+{\em name} & name of the music file without path and extension (the resource folder is searched and .ogg is considered) \\
+\hline
+\end{DoxyParams}
+\hypertarget{classc__game_a57105293613765eeb0830fe571e4b80e}{\index{c\-\_\-game@{c\-\_\-game}!update\-\_\-settings\-\_\-menu\-\_\-items@{update\-\_\-settings\-\_\-menu\-\_\-items}}
+\index{update\-\_\-settings\-\_\-menu\-\_\-items@{update\-\_\-settings\-\_\-menu\-\_\-items}!c_game@{c\-\_\-game}}
+\subsubsection[{update\-\_\-settings\-\_\-menu\-\_\-items}]{\setlength{\rightskip}{0pt plus 5cm}void c\-\_\-game\-::update\-\_\-settings\-\_\-menu\-\_\-items (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}}}\label{classc__game_a57105293613765eeb0830fe571e4b80e}
+id of music sample playing \hypertarget{classc__game_a2a93ba7b30db3d2f7b67b4bebc4490b3}{\index{c\-\_\-game@{c\-\_\-game}!update\-\_\-volume@{update\-\_\-volume}}
+\index{update\-\_\-volume@{update\-\_\-volume}!c_game@{c\-\_\-game}}
+\subsubsection[{update\-\_\-volume}]{\setlength{\rightskip}{0pt plus 5cm}void c\-\_\-game\-::update\-\_\-volume (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [protected]}}}\label{classc__game_a2a93ba7b30db3d2f7b67b4bebc4490b3}
+Loads the keyboard layout from file and sets the classes variables for the key codes. 
+
+\subsection{Member Data Documentation}
+\hypertarget{classc__game_a115ab11c275a3e00df3a7c0a247f61e9}{\index{c\-\_\-game@{c\-\_\-game}!about\-\_\-lines@{about\-\_\-lines}}
+\index{about\-\_\-lines@{about\-\_\-lines}!c_game@{c\-\_\-game}}
+\subsubsection[{about\-\_\-lines}]{\setlength{\rightskip}{0pt plus 5cm}string c\-\_\-game\-::about\-\_\-lines\mbox{[}3\mbox{]}\hspace{0.3cm}{\ttfamily [protected]}}}\label{classc__game_a115ab11c275a3e00df3a7c0a247f61e9}
+settings menu items with values added (on/off etc.) \hypertarget{classc__game_ab13d9ba9025a290671b663f4163ada9c}{\index{c\-\_\-game@{c\-\_\-game}!cheat\-\_\-buffer@{cheat\-\_\-buffer}}
+\index{cheat\-\_\-buffer@{cheat\-\_\-buffer}!c_game@{c\-\_\-game}}
+\subsubsection[{cheat\-\_\-buffer}]{\setlength{\rightskip}{0pt plus 5cm}char c\-\_\-game\-::cheat\-\_\-buffer\mbox{[}7\mbox{]}\hspace{0.3cm}{\ttfamily [protected]}}}\label{classc__game_ab13d9ba9025a290671b663f4163ada9c}
+to catch only one keydown when writing cheat letters \hypertarget{classc__game_a818510abc8ca17bab74a2e9e02897015}{\index{c\-\_\-game@{c\-\_\-game}!cheat\-\_\-used@{cheat\-\_\-used}}
+\index{cheat\-\_\-used@{cheat\-\_\-used}!c_game@{c\-\_\-game}}
+\subsubsection[{cheat\-\_\-used}]{\setlength{\rightskip}{0pt plus 5cm}bool c\-\_\-game\-::cheat\-\_\-used\hspace{0.3cm}{\ttfamily [protected]}}}\label{classc__game_a818510abc8ca17bab74a2e9e02897015}
+holds letters typed to recognize the cheat code (\char`\"{}iamnoob\char`\"{}) \hypertarget{classc__game_a6279909358cd7d29a187ffcee9d621d8}{\index{c\-\_\-game@{c\-\_\-game}!current\-\_\-level@{current\-\_\-level}}
+\index{current\-\_\-level@{current\-\_\-level}!c_game@{c\-\_\-game}}
+\subsubsection[{current\-\_\-level}]{\setlength{\rightskip}{0pt plus 5cm}int c\-\_\-game\-::current\-\_\-level\hspace{0.3cm}{\ttfamily [protected]}}}\label{classc__game_a6279909358cd7d29a187ffcee9d621d8}
+stores game texts in local language \hypertarget{classc__game_aa9c205a51cef10ec977e732c750e64b8}{\index{c\-\_\-game@{c\-\_\-game}!display@{display}}
+\index{display@{display}!c_game@{c\-\_\-game}}
+\subsubsection[{display}]{\setlength{\rightskip}{0pt plus 5cm}A\-L\-L\-E\-G\-R\-O\-\_\-\-D\-I\-S\-P\-L\-A\-Y$\ast$ c\-\_\-game\-::display\hspace{0.3cm}{\ttfamily [protected]}}}\label{classc__game_aa9c205a51cef10ec977e732c750e64b8}
+handles menus and info screens \hypertarget{classc__game_ab0ea00eb13e7bda75d2e217d98f4a289}{\index{c\-\_\-game@{c\-\_\-game}!event\-\_\-queue@{event\-\_\-queue}}
+\index{event\-\_\-queue@{event\-\_\-queue}!c_game@{c\-\_\-game}}
+\subsubsection[{event\-\_\-queue}]{\setlength{\rightskip}{0pt plus 5cm}A\-L\-L\-E\-G\-R\-O\-\_\-\-E\-V\-E\-N\-T\-\_\-\-Q\-U\-E\-U\-E$\ast$ c\-\_\-game\-::event\-\_\-queue\hspace{0.3cm}{\ttfamily [protected]}}}\label{classc__game_ab0ea00eb13e7bda75d2e217d98f4a289}
+the game screen \hypertarget{classc__game_ab8e77c697dcb6affc55ad8263f59afe7}{\index{c\-\_\-game@{c\-\_\-game}!game\-\_\-menu\-\_\-items@{game\-\_\-menu\-\_\-items}}
+\index{game\-\_\-menu\-\_\-items@{game\-\_\-menu\-\_\-items}!c_game@{c\-\_\-game}}
+\subsubsection[{game\-\_\-menu\-\_\-items}]{\setlength{\rightskip}{0pt plus 5cm}string c\-\_\-game\-::game\-\_\-menu\-\_\-items\mbox{[}3\mbox{]}\hspace{0.3cm}{\ttfamily [protected]}}}\label{classc__game_ab8e77c697dcb6affc55ad8263f59afe7}
+main menu title \hypertarget{classc__game_a7a1be955cd73845fcb5efd067959982e}{\index{c\-\_\-game@{c\-\_\-game}!game\-\_\-menu\-\_\-title@{game\-\_\-menu\-\_\-title}}
+\index{game\-\_\-menu\-\_\-title@{game\-\_\-menu\-\_\-title}!c_game@{c\-\_\-game}}
+\subsubsection[{game\-\_\-menu\-\_\-title}]{\setlength{\rightskip}{0pt plus 5cm}string c\-\_\-game\-::game\-\_\-menu\-\_\-title\hspace{0.3cm}{\ttfamily [protected]}}}\label{classc__game_a7a1be955cd73845fcb5efd067959982e}
+game menu items \hypertarget{classc__game_afd3e4b96f2e16848b1a81a8349ef9c85}{\index{c\-\_\-game@{c\-\_\-game}!global\-\_\-time@{global\-\_\-time}}
+\index{global\-\_\-time@{global\-\_\-time}!c_game@{c\-\_\-game}}
+\subsubsection[{global\-\_\-time}]{\setlength{\rightskip}{0pt plus 5cm}long int c\-\_\-game\-::global\-\_\-time\hspace{0.3cm}{\ttfamily [protected]}}}\label{classc__game_afd3e4b96f2e16848b1a81a8349ef9c85}
+global clock \hypertarget{classc__game_ae2ac3ae12fba38e6626979b941406dbe}{\index{c\-\_\-game@{c\-\_\-game}!global\-\_\-timer@{global\-\_\-timer}}
+\index{global\-\_\-timer@{global\-\_\-timer}!c_game@{c\-\_\-game}}
+\subsubsection[{global\-\_\-timer}]{\setlength{\rightskip}{0pt plus 5cm}A\-L\-L\-E\-G\-R\-O\-\_\-\-T\-I\-M\-E\-R$\ast$ c\-\_\-game\-::global\-\_\-timer\hspace{0.3cm}{\ttfamily [protected]}}}\label{classc__game_ae2ac3ae12fba38e6626979b941406dbe}
+event queue \hypertarget{classc__game_a16ac36db4e4853c532bd471193a39838}{\index{c\-\_\-game@{c\-\_\-game}!how\-\_\-to\-\_\-play\-\_\-lines@{how\-\_\-to\-\_\-play\-\_\-lines}}
+\index{how\-\_\-to\-\_\-play\-\_\-lines@{how\-\_\-to\-\_\-play\-\_\-lines}!c_game@{c\-\_\-game}}
+\subsubsection[{how\-\_\-to\-\_\-play\-\_\-lines}]{\setlength{\rightskip}{0pt plus 5cm}string c\-\_\-game\-::how\-\_\-to\-\_\-play\-\_\-lines\mbox{[}10\mbox{]}\hspace{0.3cm}{\ttfamily [protected]}}}\label{classc__game_a16ac36db4e4853c532bd471193a39838}
+outro text \hypertarget{classc__game_ad2ad5aa7d756f89bb53359d4c74db8da}{\index{c\-\_\-game@{c\-\_\-game}!input\-\_\-output\-\_\-state@{input\-\_\-output\-\_\-state}}
+\index{input\-\_\-output\-\_\-state@{input\-\_\-output\-\_\-state}!c_game@{c\-\_\-game}}
+\subsubsection[{input\-\_\-output\-\_\-state}]{\setlength{\rightskip}{0pt plus 5cm}{\bf t\-\_\-input\-\_\-output\-\_\-state} c\-\_\-game\-::input\-\_\-output\-\_\-state\hspace{0.3cm}{\ttfamily [protected]}}}\label{classc__game_ad2ad5aa7d756f89bb53359d4c74db8da}
+global time counter \hypertarget{classc__game_ab8e5b3f28029051073317880b91af20d}{\index{c\-\_\-game@{c\-\_\-game}!intro\-\_\-lines\-\_\-1@{intro\-\_\-lines\-\_\-1}}
+\index{intro\-\_\-lines\-\_\-1@{intro\-\_\-lines\-\_\-1}!c_game@{c\-\_\-game}}
+\subsubsection[{intro\-\_\-lines\-\_\-1}]{\setlength{\rightskip}{0pt plus 5cm}string c\-\_\-game\-::intro\-\_\-lines\-\_\-1\mbox{[}10\mbox{]}\hspace{0.3cm}{\ttfamily [protected]}}}\label{classc__game_ab8e5b3f28029051073317880b91af20d}
+information about the program for the about screen \hypertarget{classc__game_ac61cbd1ddd12e3481780d016b7fc689e}{\index{c\-\_\-game@{c\-\_\-game}!intro\-\_\-lines\-\_\-2@{intro\-\_\-lines\-\_\-2}}
+\index{intro\-\_\-lines\-\_\-2@{intro\-\_\-lines\-\_\-2}!c_game@{c\-\_\-game}}
+\subsubsection[{intro\-\_\-lines\-\_\-2}]{\setlength{\rightskip}{0pt plus 5cm}string c\-\_\-game\-::intro\-\_\-lines\-\_\-2\mbox{[}10\mbox{]}\hspace{0.3cm}{\ttfamily [protected]}}}\label{classc__game_ac61cbd1ddd12e3481780d016b7fc689e}
+intro text, page one \hypertarget{classc__game_a2c57b2e7fd7e695208282a8cac2b2070}{\index{c\-\_\-game@{c\-\_\-game}!key\-\_\-back@{key\-\_\-back}}
+\index{key\-\_\-back@{key\-\_\-back}!c_game@{c\-\_\-game}}
+\subsubsection[{key\-\_\-back}]{\setlength{\rightskip}{0pt plus 5cm}int c\-\_\-game\-::key\-\_\-back\hspace{0.3cm}{\ttfamily [protected]}}}\label{classc__game_a2c57b2e7fd7e695208282a8cac2b2070}
+alternative keykode for using items \hypertarget{classc__game_a40689f9da4ca424a96497ff916ea0c99}{\index{c\-\_\-game@{c\-\_\-game}!key\-\_\-cast1@{key\-\_\-cast1}}
+\index{key\-\_\-cast1@{key\-\_\-cast1}!c_game@{c\-\_\-game}}
+\subsubsection[{key\-\_\-cast1}]{\setlength{\rightskip}{0pt plus 5cm}int c\-\_\-game\-::key\-\_\-cast1\hspace{0.3cm}{\ttfamily [protected]}}}\label{classc__game_a40689f9da4ca424a96497ff916ea0c99}
+keycode for key left \hypertarget{classc__game_a2ccfddc860efc26f11a582780d5054b3}{\index{c\-\_\-game@{c\-\_\-game}!key\-\_\-cast2@{key\-\_\-cast2}}
+\index{key\-\_\-cast2@{key\-\_\-cast2}!c_game@{c\-\_\-game}}
+\subsubsection[{key\-\_\-cast2}]{\setlength{\rightskip}{0pt plus 5cm}int c\-\_\-game\-::key\-\_\-cast2\hspace{0.3cm}{\ttfamily [protected]}}}\label{classc__game_a2ccfddc860efc26f11a582780d5054b3}
+keycode for key cast spell 1 \hypertarget{classc__game_a425ae68160c7fa7447c5d4b1106e4260}{\index{c\-\_\-game@{c\-\_\-game}!key\-\_\-cast3@{key\-\_\-cast3}}
+\index{key\-\_\-cast3@{key\-\_\-cast3}!c_game@{c\-\_\-game}}
+\subsubsection[{key\-\_\-cast3}]{\setlength{\rightskip}{0pt plus 5cm}int c\-\_\-game\-::key\-\_\-cast3\hspace{0.3cm}{\ttfamily [protected]}}}\label{classc__game_a425ae68160c7fa7447c5d4b1106e4260}
+keycode for key cast spell 2 \hypertarget{classc__game_a9b2d48164985c5c78b508d0aa8ef1c52}{\index{c\-\_\-game@{c\-\_\-game}!key\-\_\-down@{key\-\_\-down}}
+\index{key\-\_\-down@{key\-\_\-down}!c_game@{c\-\_\-game}}
+\subsubsection[{key\-\_\-down}]{\setlength{\rightskip}{0pt plus 5cm}int c\-\_\-game\-::key\-\_\-down\hspace{0.3cm}{\ttfamily [protected]}}}\label{classc__game_a9b2d48164985c5c78b508d0aa8ef1c52}
+keycode for key up \hypertarget{classc__game_ac7ad8ac5a68b60145bb9cddf323a5874}{\index{c\-\_\-game@{c\-\_\-game}!key\-\_\-left@{key\-\_\-left}}
+\index{key\-\_\-left@{key\-\_\-left}!c_game@{c\-\_\-game}}
+\subsubsection[{key\-\_\-left}]{\setlength{\rightskip}{0pt plus 5cm}int c\-\_\-game\-::key\-\_\-left\hspace{0.3cm}{\ttfamily [protected]}}}\label{classc__game_ac7ad8ac5a68b60145bb9cddf323a5874}
+keycode for key right \hypertarget{classc__game_a8e13ca424701fcc322d110dd77a32387}{\index{c\-\_\-game@{c\-\_\-game}!key\-\_\-map@{key\-\_\-map}}
+\index{key\-\_\-map@{key\-\_\-map}!c_game@{c\-\_\-game}}
+\subsubsection[{key\-\_\-map}]{\setlength{\rightskip}{0pt plus 5cm}int c\-\_\-game\-::key\-\_\-map\hspace{0.3cm}{\ttfamily [protected]}}}\label{classc__game_a8e13ca424701fcc322d110dd77a32387}
+keycode for key back \hypertarget{classc__game_af6dab00f73f4853063cc4bab0f57d14d}{\index{c\-\_\-game@{c\-\_\-game}!key\-\_\-right@{key\-\_\-right}}
+\index{key\-\_\-right@{key\-\_\-right}!c_game@{c\-\_\-game}}
+\subsubsection[{key\-\_\-right}]{\setlength{\rightskip}{0pt plus 5cm}int c\-\_\-game\-::key\-\_\-right\hspace{0.3cm}{\ttfamily [protected]}}}\label{classc__game_af6dab00f73f4853063cc4bab0f57d14d}
+keycode for key down \hypertarget{classc__game_ab9067838b721c66b6f85405c42d97819}{\index{c\-\_\-game@{c\-\_\-game}!key\-\_\-switch1@{key\-\_\-switch1}}
+\index{key\-\_\-switch1@{key\-\_\-switch1}!c_game@{c\-\_\-game}}
+\subsubsection[{key\-\_\-switch1}]{\setlength{\rightskip}{0pt plus 5cm}int c\-\_\-game\-::key\-\_\-switch1\hspace{0.3cm}{\ttfamily [protected]}}}\label{classc__game_ab9067838b721c66b6f85405c42d97819}
+keycode for key cast spell 3 \hypertarget{classc__game_a27d7c0789c4908c411476b0613a3077e}{\index{c\-\_\-game@{c\-\_\-game}!key\-\_\-switch2@{key\-\_\-switch2}}
+\index{key\-\_\-switch2@{key\-\_\-switch2}!c_game@{c\-\_\-game}}
+\subsubsection[{key\-\_\-switch2}]{\setlength{\rightskip}{0pt plus 5cm}int c\-\_\-game\-::key\-\_\-switch2\hspace{0.3cm}{\ttfamily [protected]}}}\label{classc__game_a27d7c0789c4908c411476b0613a3077e}
+keycode for key switch to player 1 \hypertarget{classc__game_ab639463186d28277b420814ffed910e6}{\index{c\-\_\-game@{c\-\_\-game}!key\-\_\-switch3@{key\-\_\-switch3}}
+\index{key\-\_\-switch3@{key\-\_\-switch3}!c_game@{c\-\_\-game}}
+\subsubsection[{key\-\_\-switch3}]{\setlength{\rightskip}{0pt plus 5cm}int c\-\_\-game\-::key\-\_\-switch3\hspace{0.3cm}{\ttfamily [protected]}}}\label{classc__game_ab639463186d28277b420814ffed910e6}
+keycode for key switch to player 2 \hypertarget{classc__game_afe75cb5007878208a9ba456438b1cd3e}{\index{c\-\_\-game@{c\-\_\-game}!key\-\_\-up@{key\-\_\-up}}
+\index{key\-\_\-up@{key\-\_\-up}!c_game@{c\-\_\-game}}
+\subsubsection[{key\-\_\-up}]{\setlength{\rightskip}{0pt plus 5cm}int c\-\_\-game\-::key\-\_\-up\hspace{0.3cm}{\ttfamily [protected]}}}\label{classc__game_afe75cb5007878208a9ba456438b1cd3e}
+a flag that turns true if the cheat has been used \hypertarget{classc__game_a43bdbd6b68af28861616fc6170be737d}{\index{c\-\_\-game@{c\-\_\-game}!key\-\_\-use@{key\-\_\-use}}
+\index{key\-\_\-use@{key\-\_\-use}!c_game@{c\-\_\-game}}
+\subsubsection[{key\-\_\-use}]{\setlength{\rightskip}{0pt plus 5cm}int c\-\_\-game\-::key\-\_\-use\hspace{0.3cm}{\ttfamily [protected]}}}\label{classc__game_a43bdbd6b68af28861616fc6170be737d}
+keycode for key switch to player 3 \hypertarget{classc__game_a21fa6c7c14ef10dc9a02cc9d37142861}{\index{c\-\_\-game@{c\-\_\-game}!key\-\_\-use\-\_\-alt@{key\-\_\-use\-\_\-alt}}
+\index{key\-\_\-use\-\_\-alt@{key\-\_\-use\-\_\-alt}!c_game@{c\-\_\-game}}
+\subsubsection[{key\-\_\-use\-\_\-alt}]{\setlength{\rightskip}{0pt plus 5cm}int c\-\_\-game\-::key\-\_\-use\-\_\-alt\hspace{0.3cm}{\ttfamily [protected]}}}\label{classc__game_a21fa6c7c14ef10dc9a02cc9d37142861}
+keycode for key used to use items and confirm things \hypertarget{classc__game_acb143b7fb56f8be0caf0826f4865aee8}{\index{c\-\_\-game@{c\-\_\-game}!letter\-\_\-pressed@{letter\-\_\-pressed}}
+\index{letter\-\_\-pressed@{letter\-\_\-pressed}!c_game@{c\-\_\-game}}
+\subsubsection[{letter\-\_\-pressed}]{\setlength{\rightskip}{0pt plus 5cm}bool c\-\_\-game\-::letter\-\_\-pressed\hspace{0.3cm}{\ttfamily [protected]}}}\label{classc__game_acb143b7fb56f8be0caf0826f4865aee8}
+current level being played \hypertarget{classc__game_ae4e944fab107e1aa58676c40684ef634}{\index{c\-\_\-game@{c\-\_\-game}!local\-\_\-texts@{local\-\_\-texts}}
+\index{local\-\_\-texts@{local\-\_\-texts}!c_game@{c\-\_\-game}}
+\subsubsection[{local\-\_\-texts}]{\setlength{\rightskip}{0pt plus 5cm}{\bf c\-\_\-associative\-\_\-array}$\ast$ c\-\_\-game\-::local\-\_\-texts\hspace{0.3cm}{\ttfamily [protected]}}}\label{classc__game_ae4e944fab107e1aa58676c40684ef634}
+stores the state of the menu system \hypertarget{classc__game_afcd2c8c94a4adf5ff06df97cbe7ddaea}{\index{c\-\_\-game@{c\-\_\-game}!lose\-\_\-sound@{lose\-\_\-sound}}
+\index{lose\-\_\-sound@{lose\-\_\-sound}!c_game@{c\-\_\-game}}
+\subsubsection[{lose\-\_\-sound}]{\setlength{\rightskip}{0pt plus 5cm}A\-L\-L\-E\-G\-R\-O\-\_\-\-S\-A\-M\-P\-L\-E$\ast$ c\-\_\-game\-::lose\-\_\-sound\hspace{0.3cm}{\ttfamily [protected]}}}\label{classc__game_afcd2c8c94a4adf5ff06df97cbe7ddaea}
+sound played when the map is won \hypertarget{classc__game_a8cc35efdfce547a98732d6a3b56fcc92}{\index{c\-\_\-game@{c\-\_\-game}!main\-\_\-menu\-\_\-items@{main\-\_\-menu\-\_\-items}}
+\index{main\-\_\-menu\-\_\-items@{main\-\_\-menu\-\_\-items}!c_game@{c\-\_\-game}}
+\subsubsection[{main\-\_\-menu\-\_\-items}]{\setlength{\rightskip}{0pt plus 5cm}string c\-\_\-game\-::main\-\_\-menu\-\_\-items\mbox{[}5\mbox{]}\hspace{0.3cm}{\ttfamily [protected]}}}\label{classc__game_a8cc35efdfce547a98732d6a3b56fcc92}
+keycode for key that manipulates the camera \hypertarget{classc__game_a5e32341c8fcd20ce470ff11765717e8d}{\index{c\-\_\-game@{c\-\_\-game}!main\-\_\-menu\-\_\-title@{main\-\_\-menu\-\_\-title}}
+\index{main\-\_\-menu\-\_\-title@{main\-\_\-menu\-\_\-title}!c_game@{c\-\_\-game}}
+\subsubsection[{main\-\_\-menu\-\_\-title}]{\setlength{\rightskip}{0pt plus 5cm}string c\-\_\-game\-::main\-\_\-menu\-\_\-title\hspace{0.3cm}{\ttfamily [protected]}}}\label{classc__game_a5e32341c8fcd20ce470ff11765717e8d}
+main menu items \hypertarget{classc__game_a64da959df63b76ac18b0f25ad707db9f}{\index{c\-\_\-game@{c\-\_\-game}!map@{map}}
+\index{map@{map}!c_game@{c\-\_\-game}}
+\subsubsection[{map}]{\setlength{\rightskip}{0pt plus 5cm}{\bf c\-\_\-map}$\ast$ c\-\_\-game\-::map\hspace{0.3cm}{\ttfamily [protected]}}}\label{classc__game_a64da959df63b76ac18b0f25ad707db9f}
+This class holds and manipulates the data of the whole game. \hypertarget{classc__game_ad4535e427b20e3fe386a0add7fa68afa}{\index{c\-\_\-game@{c\-\_\-game}!menu@{menu}}
+\index{menu@{menu}!c_game@{c\-\_\-game}}
+\subsubsection[{menu}]{\setlength{\rightskip}{0pt plus 5cm}{\bf c\-\_\-menu}$\ast$ c\-\_\-game\-::menu\hspace{0.3cm}{\ttfamily [protected]}}}\label{classc__game_ad4535e427b20e3fe386a0add7fa68afa}
+handles the map \hypertarget{classc__game_a2d4311ca959ebad56e79e0162cf7a9c0}{\index{c\-\_\-game@{c\-\_\-game}!menu\-\_\-state@{menu\-\_\-state}}
+\index{menu\-\_\-state@{menu\-\_\-state}!c_game@{c\-\_\-game}}
+\subsubsection[{menu\-\_\-state}]{\setlength{\rightskip}{0pt plus 5cm}t\-\_\-menu\-\_\-state c\-\_\-game\-::menu\-\_\-state\hspace{0.3cm}{\ttfamily [protected]}}}\label{classc__game_a2d4311ca959ebad56e79e0162cf7a9c0}
+game settings and the player's progress \hypertarget{classc__game_aa242357f3a3062813163d6e088958760}{\index{c\-\_\-game@{c\-\_\-game}!music@{music}}
+\index{music@{music}!c_game@{c\-\_\-game}}
+\subsubsection[{music}]{\setlength{\rightskip}{0pt plus 5cm}A\-L\-L\-E\-G\-R\-O\-\_\-\-S\-A\-M\-P\-L\-E$\ast$ c\-\_\-game\-::music\hspace{0.3cm}{\ttfamily [protected]}}}\label{classc__game_aa242357f3a3062813163d6e088958760}
+sound played when the game is lost \hypertarget{classc__game_af5caa082e80f20d7def128c6f7c9469d}{\index{c\-\_\-game@{c\-\_\-game}!music\-\_\-id@{music\-\_\-id}}
+\index{music\-\_\-id@{music\-\_\-id}!c_game@{c\-\_\-game}}
+\subsubsection[{music\-\_\-id}]{\setlength{\rightskip}{0pt plus 5cm}A\-L\-L\-E\-G\-R\-O\-\_\-\-S\-A\-M\-P\-L\-E\-\_\-\-I\-D c\-\_\-game\-::music\-\_\-id\hspace{0.3cm}{\ttfamily [protected]}}}\label{classc__game_af5caa082e80f20d7def128c6f7c9469d}
+currently played music sample \hypertarget{classc__game_ab1a47c45fe34e4a5f6287d4c91d1740b}{\index{c\-\_\-game@{c\-\_\-game}!outro\-\_\-lines@{outro\-\_\-lines}}
+\index{outro\-\_\-lines@{outro\-\_\-lines}!c_game@{c\-\_\-game}}
+\subsubsection[{outro\-\_\-lines}]{\setlength{\rightskip}{0pt plus 5cm}string c\-\_\-game\-::outro\-\_\-lines\mbox{[}10\mbox{]}\hspace{0.3cm}{\ttfamily [protected]}}}\label{classc__game_ab1a47c45fe34e4a5f6287d4c91d1740b}
+intro text, page two \hypertarget{classc__game_aa52e67cd5e61fd952434abd0b761136c}{\index{c\-\_\-game@{c\-\_\-game}!settings@{settings}}
+\index{settings@{settings}!c_game@{c\-\_\-game}}
+\subsubsection[{settings}]{\setlength{\rightskip}{0pt plus 5cm}{\bf t\-\_\-game\-\_\-settings} c\-\_\-game\-::settings\hspace{0.3cm}{\ttfamily [protected]}}}\label{classc__game_aa52e67cd5e61fd952434abd0b761136c}
+keyboard and mouse state \hypertarget{classc__game_a5d210224b8d881f8aa2d01d8adf981fd}{\index{c\-\_\-game@{c\-\_\-game}!settings\-\_\-menu\-\_\-items@{settings\-\_\-menu\-\_\-items}}
+\index{settings\-\_\-menu\-\_\-items@{settings\-\_\-menu\-\_\-items}!c_game@{c\-\_\-game}}
+\subsubsection[{settings\-\_\-menu\-\_\-items}]{\setlength{\rightskip}{0pt plus 5cm}string c\-\_\-game\-::settings\-\_\-menu\-\_\-items\mbox{[}5\mbox{]}\hspace{0.3cm}{\ttfamily [protected]}}}\label{classc__game_a5d210224b8d881f8aa2d01d8adf981fd}
+game menu title \hypertarget{classc__game_afc77c56ed33f68e53f9fec7ed2c17c14}{\index{c\-\_\-game@{c\-\_\-game}!settings\-\_\-menu\-\_\-items\-\_\-done@{settings\-\_\-menu\-\_\-items\-\_\-done}}
+\index{settings\-\_\-menu\-\_\-items\-\_\-done@{settings\-\_\-menu\-\_\-items\-\_\-done}!c_game@{c\-\_\-game}}
+\subsubsection[{settings\-\_\-menu\-\_\-items\-\_\-done}]{\setlength{\rightskip}{0pt plus 5cm}string c\-\_\-game\-::settings\-\_\-menu\-\_\-items\-\_\-done\mbox{[}5\mbox{]}\hspace{0.3cm}{\ttfamily [protected]}}}\label{classc__game_afc77c56ed33f68e53f9fec7ed2c17c14}
+settings menu title \hypertarget{classc__game_aaa69654c55f2de1d29c769fa7045726f}{\index{c\-\_\-game@{c\-\_\-game}!settings\-\_\-menu\-\_\-title@{settings\-\_\-menu\-\_\-title}}
+\index{settings\-\_\-menu\-\_\-title@{settings\-\_\-menu\-\_\-title}!c_game@{c\-\_\-game}}
+\subsubsection[{settings\-\_\-menu\-\_\-title}]{\setlength{\rightskip}{0pt plus 5cm}string c\-\_\-game\-::settings\-\_\-menu\-\_\-title\hspace{0.3cm}{\ttfamily [protected]}}}\label{classc__game_aaa69654c55f2de1d29c769fa7045726f}
+settings menu items \hypertarget{classc__game_a3c80191dc85a3820526afb0f97355204}{\index{c\-\_\-game@{c\-\_\-game}!win\-\_\-sound@{win\-\_\-sound}}
+\index{win\-\_\-sound@{win\-\_\-sound}!c_game@{c\-\_\-game}}
+\subsubsection[{win\-\_\-sound}]{\setlength{\rightskip}{0pt plus 5cm}A\-L\-L\-E\-G\-R\-O\-\_\-\-S\-A\-M\-P\-L\-E$\ast$ c\-\_\-game\-::win\-\_\-sound\hspace{0.3cm}{\ttfamily [protected]}}}\label{classc__game_a3c80191dc85a3820526afb0f97355204}
+text of how to play the game 
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+magerage/game.\-h\item 
+magerage/game.\-cpp\end{DoxyCompactItemize}

@@ -1,0 +1,372 @@
+\hypertarget{classc__map__object}{\section{c\-\_\-map\-\_\-object Class Reference}
+\label{classc__map__object}\index{c\-\_\-map\-\_\-object@{c\-\_\-map\-\_\-object}}
+}
+
+
+{\ttfamily \#include $<$map\-\_\-object.\-h$>$}
+
+Inheritance diagram for c\-\_\-map\-\_\-object\-:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{classc__map__object}
+\end{center}
+\end{figure}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classc__map__object_af35bc3b68a2c2f756b67cc1a5b73dde3}{c\-\_\-map\-\_\-object} (t\-\_\-object\-\_\-type object\-\_\-type, int \hyperlink{classc__map__object_a4563fd9421b83b1349e4e74559b22507}{link\-\_\-id}, int \hyperlink{classc__map__object_a95575848075ef4b407907eb8e5c48e3c}{link\-\_\-id2}, long int $\ast$\hyperlink{classc__graphic__object_a9ff91aa7a60272a8f713ff011a0cc0bb}{global\-\_\-time})
+\item 
+\hyperlink{classc__map__object_a92cf99f145db3d9b56b94571c929564d}{$\sim$c\-\_\-map\-\_\-object} ()
+\item 
+void \hyperlink{classc__map__object_a1ac16227e406d56484c55089ecbffd48}{update\-\_\-controlled\-\_\-objects} ()
+\item 
+void \hyperlink{classc__map__object_a422769b2c8cb02575457f10113ef369c}{add\-\_\-controlled\-\_\-objects} (int number\-\_\-of\-\_\-objects, \hyperlink{classc__map__object}{c\-\_\-map\-\_\-object} $\ast$objects\mbox{[}$\,$\mbox{]})
+\item 
+t\-\_\-object\-\_\-type \hyperlink{classc__map__object_a29b6c2ae995c04000f76dc1e9776e3a2}{get\-\_\-type} ()
+\item 
+int \hyperlink{classc__map__object_afb6cfb99e3c9387c2470d94f8370ec28}{get\-\_\-link\-\_\-id} ()
+\item 
+int \hyperlink{classc__map__object_a138d547da618a4a3ce5e10cdb35989fd}{get\-\_\-link\-\_\-id2} ()
+\item 
+t\-\_\-object\-\_\-state \hyperlink{classc__map__object_a7e78aa3675f4053ec9f35730a4a8d9a4}{get\-\_\-state} ()
+\item 
+bool \hyperlink{classc__map__object_ab79a3d3c7a6e4a7170d8ddb7b648c782}{is\-\_\-input} ()
+\item 
+void \hyperlink{classc__map__object_ae16327caf95e5c4eaae2abc09a57b272}{set\-\_\-state} (t\-\_\-object\-\_\-state \hyperlink{classc__map__object_a8bde4cfd4fed11a9f01389977504a10a}{object\-\_\-state})
+\item 
+void \hyperlink{classc__map__object_acf08ee03ad8b6751611800aa57b190bd}{switch\-\_\-state} ()
+\item 
+virtual void \hyperlink{classc__map__object_add8a45bcf4f77ba65716095c05483f4f}{draw} (int x, int y)
+\item 
+bool \hyperlink{classc__map__object_ad234b9747a048875128fba677136ef4f}{is\-\_\-stepable} ()
+\item 
+void \hyperlink{classc__map__object_a38d45962c3bbc6ae6f2572811be93214}{use} ()
+\item 
+void \hyperlink{classc__map__object_a2df801781fdad9a4b42a78ff5b9c8558}{update\-\_\-animation\-\_\-period} ()
+\item 
+bool \hyperlink{classc__map__object_aad8f98a195de734d0cfa94c93fc94406}{compare\-\_\-link\-\_\-ids} (\hyperlink{classc__map__object}{c\-\_\-map\-\_\-object} $\ast$another\-\_\-object)
+\item 
+\hyperlink{classc__map__object}{c\-\_\-map\-\_\-object} $\ast$ \hyperlink{classc__map__object_a63cc574e5972757e2a399a6ddc63efc3}{get\-\_\-controlled\-\_\-object} (int index)
+\item 
+void \hyperlink{classc__map__object_a577ec7d3dd41b29e6c5f554d6c3d600f}{set\-\_\-sign\-\_\-text} (string text)
+\item 
+string \hyperlink{classc__map__object_ad5c4284b4e7b5a824ae5734f33f59f35}{get\-\_\-sign\-\_\-text} ()
+\end{DoxyCompactItemize}
+\subsection*{Protected Attributes}
+\begin{DoxyCompactItemize}
+\item 
+t\-\_\-object\-\_\-type \hyperlink{classc__map__object_a9d47ec81d25e5785311adc675ea6377d}{type}
+\item 
+int \hyperlink{classc__map__object_a4563fd9421b83b1349e4e74559b22507}{link\-\_\-id}
+\item 
+int \hyperlink{classc__map__object_a95575848075ef4b407907eb8e5c48e3c}{link\-\_\-id2}
+\item 
+bool \hyperlink{classc__map__object_a67285c4371f63f7a3e31e81d89696271}{input}
+\item 
+t\-\_\-object\-\_\-state \hyperlink{classc__map__object_a8bde4cfd4fed11a9f01389977504a10a}{object\-\_\-state}
+\item 
+A\-L\-L\-E\-G\-R\-O\-\_\-\-B\-I\-T\-M\-A\-P $\ast$ \hyperlink{classc__map__object_af9e944bd38ae90bfa3f9f051ec9dd8fa}{bitmaps} \mbox{[}5\mbox{]}
+\item 
+bool \hyperlink{classc__map__object_a89b2a794cb8409e93493a99adfe2d311}{stepable}
+\item 
+\hyperlink{classc__map__object}{c\-\_\-map\-\_\-object} $\ast$$\ast$ \hyperlink{classc__map__object_af772ed08fc85de963e5cd18b403eecca}{controlling}
+\item 
+int \hyperlink{classc__map__object_ad03a55702a3f84a90bfa46700ab7124c}{number\-\_\-of\-\_\-controlled}
+\item 
+string \hyperlink{classc__map__object_a57a973ea5b89a30e3b9f9b1332197493}{sign\-\_\-text}
+\end{DoxyCompactItemize}
+
+
+\subsection{Detailed Description}
+Map object class header file.
+
+authors\-: Miloslav Číž year\-: 2013 
+
+\subsection{Constructor \& Destructor Documentation}
+\hypertarget{classc__map__object_af35bc3b68a2c2f756b67cc1a5b73dde3}{\index{c\-\_\-map\-\_\-object@{c\-\_\-map\-\_\-object}!c\-\_\-map\-\_\-object@{c\-\_\-map\-\_\-object}}
+\index{c\-\_\-map\-\_\-object@{c\-\_\-map\-\_\-object}!c_map_object@{c\-\_\-map\-\_\-object}}
+\subsubsection[{c\-\_\-map\-\_\-object}]{\setlength{\rightskip}{0pt plus 5cm}c\-\_\-map\-\_\-object\-::c\-\_\-map\-\_\-object (
+\begin{DoxyParamCaption}
+\item[{t\-\_\-object\-\_\-type}]{object\-\_\-type, }
+\item[{int}]{link\-\_\-id, }
+\item[{int}]{link\-\_\-id2, }
+\item[{long int $\ast$}]{global\-\_\-time}
+\end{DoxyParamCaption}
+)}}\label{classc__map__object_af35bc3b68a2c2f756b67cc1a5b73dde3}
+text -\/ only for sign objects
+
+Map object class implementation file.
+
+authors\-: Miloslav Číž year\-: 2013 \hypertarget{classc__map__object_a92cf99f145db3d9b56b94571c929564d}{\index{c\-\_\-map\-\_\-object@{c\-\_\-map\-\_\-object}!$\sim$c\-\_\-map\-\_\-object@{$\sim$c\-\_\-map\-\_\-object}}
+\index{$\sim$c\-\_\-map\-\_\-object@{$\sim$c\-\_\-map\-\_\-object}!c_map_object@{c\-\_\-map\-\_\-object}}
+\subsubsection[{$\sim$c\-\_\-map\-\_\-object}]{\setlength{\rightskip}{0pt plus 5cm}c\-\_\-map\-\_\-object\-::$\sim$c\-\_\-map\-\_\-object (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classc__map__object_a92cf99f145db3d9b56b94571c929564d}
+Class constructor, initialises new map object.
+
+
+\begin{DoxyParams}{Parameters}
+{\em object\-\_\-type} & object type of the new map object. \\
+\hline
+{\em link\-\_\-id} & a number identifying the connection between objects, objects with same link id will affect each other \\
+\hline
+{\em link\-\_\-id2} & another link id, negative number means this will not be used \\
+\hline
+{\em global\-\_\-time} & reference to a global time counter variable which is needed for animations \\
+\hline
+\end{DoxyParams}
+
+
+\subsection{Member Function Documentation}
+\hypertarget{classc__map__object_a422769b2c8cb02575457f10113ef369c}{\index{c\-\_\-map\-\_\-object@{c\-\_\-map\-\_\-object}!add\-\_\-controlled\-\_\-objects@{add\-\_\-controlled\-\_\-objects}}
+\index{add\-\_\-controlled\-\_\-objects@{add\-\_\-controlled\-\_\-objects}!c_map_object@{c\-\_\-map\-\_\-object}}
+\subsubsection[{add\-\_\-controlled\-\_\-objects}]{\setlength{\rightskip}{0pt plus 5cm}void c\-\_\-map\-\_\-object\-::add\-\_\-controlled\-\_\-objects (
+\begin{DoxyParamCaption}
+\item[{int}]{number\-\_\-of\-\_\-objects, }
+\item[{{\bf c\-\_\-map\-\_\-object} $\ast$}]{objects\mbox{[}$\,$\mbox{]}}
+\end{DoxyParamCaption}
+)}}\label{classc__map__object_a422769b2c8cb02575457f10113ef369c}
+Updated states of objects that are controlled by this object. \hypertarget{classc__map__object_aad8f98a195de734d0cfa94c93fc94406}{\index{c\-\_\-map\-\_\-object@{c\-\_\-map\-\_\-object}!compare\-\_\-link\-\_\-ids@{compare\-\_\-link\-\_\-ids}}
+\index{compare\-\_\-link\-\_\-ids@{compare\-\_\-link\-\_\-ids}!c_map_object@{c\-\_\-map\-\_\-object}}
+\subsubsection[{compare\-\_\-link\-\_\-ids}]{\setlength{\rightskip}{0pt plus 5cm}bool c\-\_\-map\-\_\-object\-::compare\-\_\-link\-\_\-ids (
+\begin{DoxyParamCaption}
+\item[{{\bf c\-\_\-map\-\_\-object} $\ast$}]{another\-\_\-object}
+\end{DoxyParamCaption}
+)}}\label{classc__map__object_aad8f98a195de734d0cfa94c93fc94406}
+Depending on current animation sets the animation period attribute. \hypertarget{classc__map__object_add8a45bcf4f77ba65716095c05483f4f}{\index{c\-\_\-map\-\_\-object@{c\-\_\-map\-\_\-object}!draw@{draw}}
+\index{draw@{draw}!c_map_object@{c\-\_\-map\-\_\-object}}
+\subsubsection[{draw}]{\setlength{\rightskip}{0pt plus 5cm}void c\-\_\-map\-\_\-object\-::draw (
+\begin{DoxyParamCaption}
+\item[{int}]{x, }
+\item[{int}]{y}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}}\label{classc__map__object_add8a45bcf4f77ba65716095c05483f4f}
+Switches states of the object between on and off. 
+
+Reimplemented from \hyperlink{classc__graphic__object_a94ef8137eed9ce1ae7adf366fefb51cf}{c\-\_\-graphic\-\_\-object}.
+
+\hypertarget{classc__map__object_a63cc574e5972757e2a399a6ddc63efc3}{\index{c\-\_\-map\-\_\-object@{c\-\_\-map\-\_\-object}!get\-\_\-controlled\-\_\-object@{get\-\_\-controlled\-\_\-object}}
+\index{get\-\_\-controlled\-\_\-object@{get\-\_\-controlled\-\_\-object}!c_map_object@{c\-\_\-map\-\_\-object}}
+\subsubsection[{get\-\_\-controlled\-\_\-object}]{\setlength{\rightskip}{0pt plus 5cm}{\bf c\-\_\-map\-\_\-object} $\ast$ c\-\_\-map\-\_\-object\-::get\-\_\-controlled\-\_\-object (
+\begin{DoxyParamCaption}
+\item[{int}]{index}
+\end{DoxyParamCaption}
+)}}\label{classc__map__object_a63cc574e5972757e2a399a6ddc63efc3}
+Checks if this map object and another map object are linked via their link ids.
+
+
+\begin{DoxyParams}{Parameters}
+{\em another\-\_\-object} & object to be compared to this object by link ids \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+true if this object is linked with another\-\_\-object, otherwise false 
+\end{DoxyReturn}
+\hypertarget{classc__map__object_afb6cfb99e3c9387c2470d94f8370ec28}{\index{c\-\_\-map\-\_\-object@{c\-\_\-map\-\_\-object}!get\-\_\-link\-\_\-id@{get\-\_\-link\-\_\-id}}
+\index{get\-\_\-link\-\_\-id@{get\-\_\-link\-\_\-id}!c_map_object@{c\-\_\-map\-\_\-object}}
+\subsubsection[{get\-\_\-link\-\_\-id}]{\setlength{\rightskip}{0pt plus 5cm}int c\-\_\-map\-\_\-object\-::get\-\_\-link\-\_\-id (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classc__map__object_afb6cfb99e3c9387c2470d94f8370ec28}
+Returns this object's type.
+
+\begin{DoxyReturn}{Returns}
+this object's type 
+\end{DoxyReturn}
+\hypertarget{classc__map__object_a138d547da618a4a3ce5e10cdb35989fd}{\index{c\-\_\-map\-\_\-object@{c\-\_\-map\-\_\-object}!get\-\_\-link\-\_\-id2@{get\-\_\-link\-\_\-id2}}
+\index{get\-\_\-link\-\_\-id2@{get\-\_\-link\-\_\-id2}!c_map_object@{c\-\_\-map\-\_\-object}}
+\subsubsection[{get\-\_\-link\-\_\-id2}]{\setlength{\rightskip}{0pt plus 5cm}int c\-\_\-map\-\_\-object\-::get\-\_\-link\-\_\-id2 (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classc__map__object_a138d547da618a4a3ce5e10cdb35989fd}
+Returns the object's link id.
+
+\begin{DoxyReturn}{Returns}
+object link id 
+\end{DoxyReturn}
+\hypertarget{classc__map__object_ad5c4284b4e7b5a824ae5734f33f59f35}{\index{c\-\_\-map\-\_\-object@{c\-\_\-map\-\_\-object}!get\-\_\-sign\-\_\-text@{get\-\_\-sign\-\_\-text}}
+\index{get\-\_\-sign\-\_\-text@{get\-\_\-sign\-\_\-text}!c_map_object@{c\-\_\-map\-\_\-object}}
+\subsubsection[{get\-\_\-sign\-\_\-text}]{\setlength{\rightskip}{0pt plus 5cm}string c\-\_\-map\-\_\-object\-::get\-\_\-sign\-\_\-text (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classc__map__object_ad5c4284b4e7b5a824ae5734f33f59f35}
+Sets the text for sign map object.
+
+
+\begin{DoxyParams}{Parameters}
+{\em text} & text to be set \\
+\hline
+\end{DoxyParams}
+\hypertarget{classc__map__object_a7e78aa3675f4053ec9f35730a4a8d9a4}{\index{c\-\_\-map\-\_\-object@{c\-\_\-map\-\_\-object}!get\-\_\-state@{get\-\_\-state}}
+\index{get\-\_\-state@{get\-\_\-state}!c_map_object@{c\-\_\-map\-\_\-object}}
+\subsubsection[{get\-\_\-state}]{\setlength{\rightskip}{0pt plus 5cm}t\-\_\-object\-\_\-state c\-\_\-map\-\_\-object\-::get\-\_\-state (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classc__map__object_a7e78aa3675f4053ec9f35730a4a8d9a4}
+Returns the object's secondary link id.
+
+\begin{DoxyReturn}{Returns}
+object secondary link id 
+\end{DoxyReturn}
+\hypertarget{classc__map__object_a29b6c2ae995c04000f76dc1e9776e3a2}{\index{c\-\_\-map\-\_\-object@{c\-\_\-map\-\_\-object}!get\-\_\-type@{get\-\_\-type}}
+\index{get\-\_\-type@{get\-\_\-type}!c_map_object@{c\-\_\-map\-\_\-object}}
+\subsubsection[{get\-\_\-type}]{\setlength{\rightskip}{0pt plus 5cm}t\-\_\-object\-\_\-type c\-\_\-map\-\_\-object\-::get\-\_\-type (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classc__map__object_a29b6c2ae995c04000f76dc1e9776e3a2}
+Registers objects that will be controlled by this object.
+
+
+\begin{DoxyParams}{Parameters}
+{\em number\-\_\-of\-\_\-objects} & length of objects array \\
+\hline
+{\em objects} & array of pointers to objects that will be controlled \\
+\hline
+\end{DoxyParams}
+\hypertarget{classc__map__object_ab79a3d3c7a6e4a7170d8ddb7b648c782}{\index{c\-\_\-map\-\_\-object@{c\-\_\-map\-\_\-object}!is\-\_\-input@{is\-\_\-input}}
+\index{is\-\_\-input@{is\-\_\-input}!c_map_object@{c\-\_\-map\-\_\-object}}
+\subsubsection[{is\-\_\-input}]{\setlength{\rightskip}{0pt plus 5cm}bool c\-\_\-map\-\_\-object\-::is\-\_\-input (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classc__map__object_ab79a3d3c7a6e4a7170d8ddb7b648c782}
+Returns the object's state.
+
+\begin{DoxyReturn}{Returns}
+object state 
+\end{DoxyReturn}
+\hypertarget{classc__map__object_ad234b9747a048875128fba677136ef4f}{\index{c\-\_\-map\-\_\-object@{c\-\_\-map\-\_\-object}!is\-\_\-stepable@{is\-\_\-stepable}}
+\index{is\-\_\-stepable@{is\-\_\-stepable}!c_map_object@{c\-\_\-map\-\_\-object}}
+\subsubsection[{is\-\_\-stepable}]{\setlength{\rightskip}{0pt plus 5cm}bool c\-\_\-map\-\_\-object\-::is\-\_\-stepable (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classc__map__object_ad234b9747a048875128fba677136ef4f}
+Draws the map at given position on the screen.
+
+
+\begin{DoxyParams}{Parameters}
+{\em x} & x position of the screen \\
+\hline
+{\em y} & y position of the screen \\
+\hline
+\end{DoxyParams}
+\hypertarget{classc__map__object_a577ec7d3dd41b29e6c5f554d6c3d600f}{\index{c\-\_\-map\-\_\-object@{c\-\_\-map\-\_\-object}!set\-\_\-sign\-\_\-text@{set\-\_\-sign\-\_\-text}}
+\index{set\-\_\-sign\-\_\-text@{set\-\_\-sign\-\_\-text}!c_map_object@{c\-\_\-map\-\_\-object}}
+\subsubsection[{set\-\_\-sign\-\_\-text}]{\setlength{\rightskip}{0pt plus 5cm}void c\-\_\-map\-\_\-object\-::set\-\_\-sign\-\_\-text (
+\begin{DoxyParamCaption}
+\item[{string}]{text}
+\end{DoxyParamCaption}
+)}}\label{classc__map__object_a577ec7d3dd41b29e6c5f554d6c3d600f}
+Returns one of objects controlled by this object.
+
+
+\begin{DoxyParams}{Parameters}
+{\em index} & index of the controlled objects to be returned \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Returns}
+pointer to controlled object at given index, if the index exceeds length of object list, N\-U\-L\-L is returned 
+\end{DoxyReturn}
+\hypertarget{classc__map__object_ae16327caf95e5c4eaae2abc09a57b272}{\index{c\-\_\-map\-\_\-object@{c\-\_\-map\-\_\-object}!set\-\_\-state@{set\-\_\-state}}
+\index{set\-\_\-state@{set\-\_\-state}!c_map_object@{c\-\_\-map\-\_\-object}}
+\subsubsection[{set\-\_\-state}]{\setlength{\rightskip}{0pt plus 5cm}void c\-\_\-map\-\_\-object\-::set\-\_\-state (
+\begin{DoxyParamCaption}
+\item[{t\-\_\-object\-\_\-state}]{object\-\_\-state}
+\end{DoxyParamCaption}
+)}}\label{classc__map__object_ae16327caf95e5c4eaae2abc09a57b272}
+Checks if this object is an input object.
+
+\begin{DoxyReturn}{Returns}
+true, if this object is input, otherwise false 
+\end{DoxyReturn}
+\hypertarget{classc__map__object_acf08ee03ad8b6751611800aa57b190bd}{\index{c\-\_\-map\-\_\-object@{c\-\_\-map\-\_\-object}!switch\-\_\-state@{switch\-\_\-state}}
+\index{switch\-\_\-state@{switch\-\_\-state}!c_map_object@{c\-\_\-map\-\_\-object}}
+\subsubsection[{switch\-\_\-state}]{\setlength{\rightskip}{0pt plus 5cm}void c\-\_\-map\-\_\-object\-::switch\-\_\-state (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classc__map__object_acf08ee03ad8b6751611800aa57b190bd}
+Sets the object's state (but does nothing else like updating controlled objects etc.).
+
+
+\begin{DoxyParams}{Parameters}
+{\em object\-\_\-state} & new object state \\
+\hline
+\end{DoxyParams}
+\hypertarget{classc__map__object_a2df801781fdad9a4b42a78ff5b9c8558}{\index{c\-\_\-map\-\_\-object@{c\-\_\-map\-\_\-object}!update\-\_\-animation\-\_\-period@{update\-\_\-animation\-\_\-period}}
+\index{update\-\_\-animation\-\_\-period@{update\-\_\-animation\-\_\-period}!c_map_object@{c\-\_\-map\-\_\-object}}
+\subsubsection[{update\-\_\-animation\-\_\-period}]{\setlength{\rightskip}{0pt plus 5cm}void c\-\_\-map\-\_\-object\-::update\-\_\-animation\-\_\-period (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily [virtual]}}}\label{classc__map__object_a2df801781fdad9a4b42a78ff5b9c8558}
+This method is called when player uses the object. 
+
+Reimplemented from \hyperlink{classc__graphic__object_a20fa3f61532b73f64f3307fd14b7dba6}{c\-\_\-graphic\-\_\-object}.
+
+\hypertarget{classc__map__object_a1ac16227e406d56484c55089ecbffd48}{\index{c\-\_\-map\-\_\-object@{c\-\_\-map\-\_\-object}!update\-\_\-controlled\-\_\-objects@{update\-\_\-controlled\-\_\-objects}}
+\index{update\-\_\-controlled\-\_\-objects@{update\-\_\-controlled\-\_\-objects}!c_map_object@{c\-\_\-map\-\_\-object}}
+\subsubsection[{update\-\_\-controlled\-\_\-objects}]{\setlength{\rightskip}{0pt plus 5cm}void c\-\_\-map\-\_\-object\-::update\-\_\-controlled\-\_\-objects (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classc__map__object_a1ac16227e406d56484c55089ecbffd48}
+Class destructor, frees all its memory. \hypertarget{classc__map__object_a38d45962c3bbc6ae6f2572811be93214}{\index{c\-\_\-map\-\_\-object@{c\-\_\-map\-\_\-object}!use@{use}}
+\index{use@{use}!c_map_object@{c\-\_\-map\-\_\-object}}
+\subsubsection[{use}]{\setlength{\rightskip}{0pt plus 5cm}void c\-\_\-map\-\_\-object\-::use (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{classc__map__object_a38d45962c3bbc6ae6f2572811be93214}
+Checks whether this object can be stepped over.
+
+\begin{DoxyReturn}{Returns}
+true if this object is stepable, otherwise false 
+\end{DoxyReturn}
+
+
+\subsection{Member Data Documentation}
+\hypertarget{classc__map__object_af9e944bd38ae90bfa3f9f051ec9dd8fa}{\index{c\-\_\-map\-\_\-object@{c\-\_\-map\-\_\-object}!bitmaps@{bitmaps}}
+\index{bitmaps@{bitmaps}!c_map_object@{c\-\_\-map\-\_\-object}}
+\subsubsection[{bitmaps}]{\setlength{\rightskip}{0pt plus 5cm}A\-L\-L\-E\-G\-R\-O\-\_\-\-B\-I\-T\-M\-A\-P$\ast$ c\-\_\-map\-\_\-object\-::bitmaps\mbox{[}5\mbox{]}\hspace{0.3cm}{\ttfamily [protected]}}}\label{classc__map__object_af9e944bd38ae90bfa3f9f051ec9dd8fa}
+identifies object state (on/off, open/closed etc.) \hypertarget{classc__map__object_af772ed08fc85de963e5cd18b403eecca}{\index{c\-\_\-map\-\_\-object@{c\-\_\-map\-\_\-object}!controlling@{controlling}}
+\index{controlling@{controlling}!c_map_object@{c\-\_\-map\-\_\-object}}
+\subsubsection[{controlling}]{\setlength{\rightskip}{0pt plus 5cm}{\bf c\-\_\-map\-\_\-object}$\ast$$\ast$ c\-\_\-map\-\_\-object\-::controlling\hspace{0.3cm}{\ttfamily [protected]}}}\label{classc__map__object_af772ed08fc85de963e5cd18b403eecca}
+true if this object can be stepped over \hypertarget{classc__map__object_a67285c4371f63f7a3e31e81d89696271}{\index{c\-\_\-map\-\_\-object@{c\-\_\-map\-\_\-object}!input@{input}}
+\index{input@{input}!c_map_object@{c\-\_\-map\-\_\-object}}
+\subsubsection[{input}]{\setlength{\rightskip}{0pt plus 5cm}bool c\-\_\-map\-\_\-object\-::input\hspace{0.3cm}{\ttfamily [protected]}}}\label{classc__map__object_a67285c4371f63f7a3e31e81d89696271}
+another link, negative number means it's not used \hypertarget{classc__map__object_a4563fd9421b83b1349e4e74559b22507}{\index{c\-\_\-map\-\_\-object@{c\-\_\-map\-\_\-object}!link\-\_\-id@{link\-\_\-id}}
+\index{link\-\_\-id@{link\-\_\-id}!c_map_object@{c\-\_\-map\-\_\-object}}
+\subsubsection[{link\-\_\-id}]{\setlength{\rightskip}{0pt plus 5cm}int c\-\_\-map\-\_\-object\-::link\-\_\-id\hspace{0.3cm}{\ttfamily [protected]}}}\label{classc__map__object_a4563fd9421b83b1349e4e74559b22507}
+type of the object \hypertarget{classc__map__object_a95575848075ef4b407907eb8e5c48e3c}{\index{c\-\_\-map\-\_\-object@{c\-\_\-map\-\_\-object}!link\-\_\-id2@{link\-\_\-id2}}
+\index{link\-\_\-id2@{link\-\_\-id2}!c_map_object@{c\-\_\-map\-\_\-object}}
+\subsubsection[{link\-\_\-id2}]{\setlength{\rightskip}{0pt plus 5cm}int c\-\_\-map\-\_\-object\-::link\-\_\-id2\hspace{0.3cm}{\ttfamily [protected]}}}\label{classc__map__object_a95575848075ef4b407907eb8e5c48e3c}
+identifies link between objects so they affect each other \hypertarget{classc__map__object_ad03a55702a3f84a90bfa46700ab7124c}{\index{c\-\_\-map\-\_\-object@{c\-\_\-map\-\_\-object}!number\-\_\-of\-\_\-controlled@{number\-\_\-of\-\_\-controlled}}
+\index{number\-\_\-of\-\_\-controlled@{number\-\_\-of\-\_\-controlled}!c_map_object@{c\-\_\-map\-\_\-object}}
+\subsubsection[{number\-\_\-of\-\_\-controlled}]{\setlength{\rightskip}{0pt plus 5cm}int c\-\_\-map\-\_\-object\-::number\-\_\-of\-\_\-controlled\hspace{0.3cm}{\ttfamily [protected]}}}\label{classc__map__object_ad03a55702a3f84a90bfa46700ab7124c}
+array of pointers to objects which are affected by this object \hypertarget{classc__map__object_a8bde4cfd4fed11a9f01389977504a10a}{\index{c\-\_\-map\-\_\-object@{c\-\_\-map\-\_\-object}!object\-\_\-state@{object\-\_\-state}}
+\index{object\-\_\-state@{object\-\_\-state}!c_map_object@{c\-\_\-map\-\_\-object}}
+\subsubsection[{object\-\_\-state}]{\setlength{\rightskip}{0pt plus 5cm}t\-\_\-object\-\_\-state c\-\_\-map\-\_\-object\-::object\-\_\-state\hspace{0.3cm}{\ttfamily [protected]}}}\label{classc__map__object_a8bde4cfd4fed11a9f01389977504a10a}
+true if this object is input (ie. lever, button, etc.) \hypertarget{classc__map__object_a57a973ea5b89a30e3b9f9b1332197493}{\index{c\-\_\-map\-\_\-object@{c\-\_\-map\-\_\-object}!sign\-\_\-text@{sign\-\_\-text}}
+\index{sign\-\_\-text@{sign\-\_\-text}!c_map_object@{c\-\_\-map\-\_\-object}}
+\subsubsection[{sign\-\_\-text}]{\setlength{\rightskip}{0pt plus 5cm}string c\-\_\-map\-\_\-object\-::sign\-\_\-text\hspace{0.3cm}{\ttfamily [protected]}}}\label{classc__map__object_a57a973ea5b89a30e3b9f9b1332197493}
+length of controlled array \hypertarget{classc__map__object_a89b2a794cb8409e93493a99adfe2d311}{\index{c\-\_\-map\-\_\-object@{c\-\_\-map\-\_\-object}!stepable@{stepable}}
+\index{stepable@{stepable}!c_map_object@{c\-\_\-map\-\_\-object}}
+\subsubsection[{stepable}]{\setlength{\rightskip}{0pt plus 5cm}bool c\-\_\-map\-\_\-object\-::stepable\hspace{0.3cm}{\ttfamily [protected]}}}\label{classc__map__object_a89b2a794cb8409e93493a99adfe2d311}
+bitmaps used to draw this object \hypertarget{classc__map__object_a9d47ec81d25e5785311adc675ea6377d}{\index{c\-\_\-map\-\_\-object@{c\-\_\-map\-\_\-object}!type@{type}}
+\index{type@{type}!c_map_object@{c\-\_\-map\-\_\-object}}
+\subsubsection[{type}]{\setlength{\rightskip}{0pt plus 5cm}t\-\_\-object\-\_\-type c\-\_\-map\-\_\-object\-::type\hspace{0.3cm}{\ttfamily [protected]}}}\label{classc__map__object_a9d47ec81d25e5785311adc675ea6377d}
+This class is a map object, such as a tree or a lever. 
+
+The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+magerage/map\-\_\-object.\-h\item 
+magerage/map\-\_\-object.\-cpp\end{DoxyCompactItemize}
